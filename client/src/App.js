@@ -1,12 +1,13 @@
-import Header from "./styles/Header";
-import Footer from "./styles/Footer";
+import Header from './components/static/Header';
+import Footer from './components/static/Footer';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-background">
       <Header />
       <div>asdf</div>
       <Footer />
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
     </div>
   );
 }
