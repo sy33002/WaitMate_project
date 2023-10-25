@@ -1,13 +1,16 @@
-import Header from './components/static/Header';
-import Footer from './components/static/Footer';
+import Header from './static/Header';
+import Footer from './static/Footer';
+import Sidebar from './static/SideBar';
+import { BrowserRouter, Route } from 'react-router-dom'; // Route를 추가로 임포트
 
 function App() {
   return (
-    <div className="App bg-background">
-      <Header />
-      <div>asdf</div>
-      <Footer />
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div className='bg-background w-full h-screen'>
+      <BrowserRouter>
+        <Header />
+        <Sidebar />
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }
