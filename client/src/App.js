@@ -1,7 +1,7 @@
 import Header from './static/Header';
 import Footer from './static/Footer';
 import Sidebar from './static/SideBar';
-import Main from './components/main/main';
+import Main from './components/main/Main';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'; // Route를 추가로 임포트
 
 function App() {

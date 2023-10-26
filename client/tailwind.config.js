@@ -10,6 +10,11 @@ module.exports = {
         background: '#FFFFF8',
         yellow : '#FEE500',
       },
+      spacing: {
+        '48': '12rem',
+        '52': '13rem',
+        '56': '14rem',
+      }
     },
   },
   plugins: [],
