@@ -1,74 +1,112 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState } = useForm();
+  const [imageFile, setImageFile] = useState('/images/someone.png');
 
   const onSubmit = (data) => {
-    console.log(data);
-    // 여기서 데이터를 처리.
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('address', data.address);
+    formData.append('gender', data.gender);
+    formData.append('age', data.age);
+    formData.append('introduction', data.introduction);
+    formData.append('image', imageFile);
+    console.log(formData);
   };
 
+  const onUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file); // 이미지 파일을 읽어 Base64로 변환
+    reader.onload = () => {
+      setImageFile(reader.result); // 이미지 파일 경로 설정
+    };
+  }
+
   return (
-    <div >
-      <p className='z-100'>aaaaaaaaaaaaaaaaaaaa</p>
-      <div className="relative">
+    <div>
+      <p className='text-xs'>you are my best proxy.</p>
+      <div className='relative'>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="absolute top-0 right-0 p-4 bg-primary shadow-md sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+          className="p-8 bg-primary rounded-lg"
         >
-          <div>
-            <Controller
-              name="name"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => <input {...field} />}
-            />
+          <p className='text-[10px] text-background'>프록시란(Proxy)?</p>
+          <p className='text-[10px]  text-background'>대신 웨이팅 할 사람을 지칭하는 말입니다! 저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
+          <div className='flex'>
+            <div>
+              <div className='aspect-w-16 aspect-h-9'>
+                  {imageFile && <img src={imageFile} alt="Preview" className="max-w-full max-h-40" />}
+              </div>
+              <label className="text-sm text-background m-1">Upload Image</label>
+                <input
+                  accept='image/*'
+                  multiple type='file'
+                  onChange={(e) => onUpload(e)}
+                  className=''
+                />
+              </div>
+              <div>
+                <div>
+                  <label className='text-sm text-background m-1'>Name</label>
+                  <Controller
+                    name="name"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => <input {...field} />}
+                  />
+                </div><br />
+                <div>
+                <label className='text-sm text-background m-1'>Address</label>
+
+                  <Controller
+                    name="address"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => <input {...field} />}
+                  />
+                </div><br />
+                <div>
+                <label className='text-sm text-background m-1'>Gender</label>
+                  <Controller
+                    name="gender"
+                    control={control}
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <select {...field}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    )}
+                  />
+                </div><br />
+              <div>
+              <label className='text-sm text-background m-1'>Age</label>
+                <Controller
+                  name="age"
+                  control={control}
+                  rules={{ required: true, min: 18 }}
+                  render={({ field }) => <input type="number" {...field} />}
+                />
+              </div><br />
+              <div>
+              <label className='text-sm text-background m-1'>Introduce yourself!</label><br/>
+                <Controller
+                  name="introduction"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => <textarea {...field} />}
+                />
+              </div><br />
+              <button type="submit" disabled={formState.isSubmitting}
+              className='text-background text-sm border'
+              >
+                register
+              </button>
+            </div>
           </div>
-          <div>
-            <label>주소</label>
-            <Controller
-              name="address"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => <input {...field} />}
-            />
-          </div>
-          <div>
-            <label>성별</label>
-            <Controller
-              name="gender"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => (
-                <select {...field}>
-                  <option value="male">남성</option>
-                  <option value="female">여성</option>
-                </select>
-              )}
-            />
-          </div>
-          <div>
-            <label>나이</label>
-            <Controller
-              name="age"
-              control={control}
-              rules={{ required: true, min: 18 }}
-              render={({ field }) => <input type="number" {...field} />}
-            />
-          </div>
-          <div>
-            <label>자기 소개</label>
-            <Controller
-              name="introduction"
-              control={control}
-              rules={{ required: true }}
-              render={({ field }) => <textarea {...field} />}
-            />
-          </div>
-          <button type="submit" disabled={formState.isSubmitting}>
-            제출
-          </button>
         </form>
       </div>
     </div>
