@@ -21,25 +21,25 @@ export default function Main() {
             <img
               src="/images/logo_clock.png"
               alt="로고"
-              className="w-60 h-60 sm:w-30 sm:h-30 md:w-48 md:h-48 lg:w-60 lg:h-60 rotate-animation"
+              className="w-80 h-80 sm:w-30 sm:h-30 md:w-48 md:h-48 lg:w-80 lg:h-80 rotate-animation"
             
             />
-            <img
+            {/* <img
               src="/images/logo_letter.png"
               alt="로고_글씨"
-              className="w-60 h-60 sm:w-30 sm:h-30 md:w-48 md:h-48 lg:w-60 lg:h-60"
-            />
+              className="w-30 h-30 sm:w-10 sm:h-10 md:w-20 md:h-20 lg:w-30 lg:h-30"
+            /> */}
           </div>
           {/* 도형 + 메세지 */}
           <div
-            className="flex relative top-12"
+            className="flex relative top-80"
             data-aos="fade-right"
             data-aos-delay="1000"
           >
             <img
               src="/images/Main_Union.png"
               alt="도형"
-              className="w-[1650px] h-[406px]"
+              className="w-[1450px] h-[406px]"
             />
             <div className="absolute inset-0 left-20 flex justify-start items-center text-primary text-shadow-lg font-bold text-5xl sm:text-3xl md:text-5xl lg:text-7xl">
               More Service Less Time
@@ -51,7 +51,7 @@ export default function Main() {
           {/* 보라색 div */}
           <div
             style={{
-              width: '60vw',
+              width: '20vw',
               height: '100vh',
               backgroundColor: '#4B4097',
             }}
@@ -60,7 +60,7 @@ export default function Main() {
           {/* 로그인 버튼 */}
           <div className="absolute bottom-72 right-32 ">
             <button
-              className="bg-primary rounded-sm px-6 py-3 text-white"
+              className="bg-primary rounded-md px-8 py-4 text-white"
               data-aos="fade-left"
               data-aos-delay="900"
             >
@@ -70,7 +70,7 @@ export default function Main() {
           {/* 카카오 로그인 버튼 */}
           <div className="absolute bottom-52 right-32 ">
             <button
-              className="bg-yellow rounded-sm px-6 py-3"
+              className="bg-yellow rounded-md px-8 py-4"
               data-aos="fade-left"
               data-aos-delay="1100"
               onClick={() => {
@@ -82,6 +82,11 @@ export default function Main() {
           </div>
         </div>
       </div>
+      <br/>
+      {/* 두번째 메인 */}
+      <hr/>
+      <div>dfdfdf</div>
+
     </>
   );
 }
