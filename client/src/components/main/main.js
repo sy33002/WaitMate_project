@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function main() {
+export default function Main() {
   return (
     <div>main</div>
   )

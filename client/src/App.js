@@ -1,16 +1,20 @@
 import Header from './static/Header';
 import Footer from './static/Footer';
-import Sidebar from './static/SideBar';
-import { BrowserRouter, Route } from 'react-router-dom'; // Route를 추가로 임포트
+import Template from './static/Template';
+import ProxyRegister from './components/proxy/ProxyRegister';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className='bg-background w-full h-screen'>
-      <BrowserRouter>
-        <Header />
-        <Sidebar />
-        <Footer />
-      </BrowserRouter>
+    <div className="bg-background">
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path='/' element='Main' />
+        <Route path='/proxyRegister' element={<Template><ProxyRegister /></Template>}></Route>
+      </Routes>
+      <Footer />
+    </BrowserRouter>
     </div>
   );
 }
