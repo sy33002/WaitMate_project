@@ -7,6 +7,7 @@ export default function Main() {
     AOS.init();
   });
 
+export default function Main() {
   return (
     <>
       <div className="flex justify-between items-start h-full">
