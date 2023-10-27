@@ -15,7 +15,7 @@ function SigninForm() {
         <img src="../" className="flex items-center justify-center" />
         <h1 className="text-2xl text-primary mb-4">Sign In</h1>
         <p className="mb-4 text-gray-400">Wellcome!</p>
-        <form onSubmit={handleSubmit} className="flex">
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="아이디를 입력하세요."
@@ -32,16 +32,14 @@ function SigninForm() {
             className="p-2 mb-2 w-80 border bg- rounded-md shadow-inner  shadow-gray-300"
           />
           <br />
-          <div className="flex ">
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                className="p-2 w-60 bg-background text-primary rounded-md mt-2 border-2 border-primary shadow-lg "
-              >
-                Log In
-              </button>
-            </div>
-          </div>
+
+          <button
+            type="submit"
+            className="p-2 w-60 bg-background text-primary rounded-md mt-2 border-2 border-primary shadow-lg "
+          >
+            Log In
+          </button>
+
           <br />
           <button className="p-2 w-60 bg-background text-primary rounded-md mt-2 border-2 border-primary shadow-lg">
             Sign Up
