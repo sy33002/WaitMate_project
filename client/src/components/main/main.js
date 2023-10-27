@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import '/Users/user/code/2nd_project/front-wait/client/src/components/main/main.css';
-
+import '/Users/ellin/code/2nd_project/front-wait/client/src/components/main/main.css'
 export default function Main() {
   useEffect(() => {
     AOS.init();
@@ -21,7 +20,7 @@ export default function Main() {
             <img
               src="/images/logo_clock.png"
               alt="로고"
-              className="w-80 h-80 sm:w-30 sm:h-30 md:w-48 md:h-48 lg:w-80 lg:h-80 rotate-animation"
+              className="w-80 h-80 sm:w-30 sm:h-30 md:w-48 md:h-48 lg:w-80 lg:h-80 "
             
             />
             {/* <img
@@ -36,11 +35,11 @@ export default function Main() {
             data-aos="fade-right"
             data-aos-delay="1000"
           >
-            <img
+            {/* <img
               src="/images/Main_Union.png"
               alt="도형"
               className="w-[1450px] h-[406px]"
-            />
+            /> */}
             <div className="absolute inset-0 left-20 flex justify-start items-center text-primary text-shadow-lg font-bold text-5xl sm:text-3xl md:text-5xl lg:text-7xl">
               More Service Less Time
             </div>
@@ -58,7 +57,7 @@ export default function Main() {
             className="relative"
           ></div>
           {/* 로그인 버튼 */}
-          <div className="absolute bottom-72 right-32 ">
+          <div className="absolute bottom-52 right-32 md:bottom-32 md:right-32 sm:bottom-72 sm:right-32">
             <button
               className="bg-primary rounded-md px-8 py-4 text-white"
               data-aos="fade-left"
