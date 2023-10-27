@@ -1,0 +1,12 @@
+@keyframes rotateClockInfinite {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-animation {
+  animation: rotateClockInfinite 2s linear infinite; /* 5s는 애니메이션의 지속 시간으로, 원하는 값으로 조절할 수 있습니다. */
+}
