@@ -33,17 +33,18 @@ function SigninForm() {
           />
           <br />
 
-          <button
-            type="submit"
-            className="p-2 w-60 bg-background text-primary rounded-md mt-2 border-2 border-primary shadow-lg "
-          >
-            Log In
-          </button>
+          <div className="flex flex-col items-center mt-4">
+            <button
+              type="submit"
+              className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg mb-2"
+            >
+              Log In
+            </button>
 
-          <br />
-          <button className="p-2 w-60 bg-background text-primary rounded-md mt-2 border-2 border-primary shadow-lg">
-            Sign Up
-          </button>
+            <button className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg">
+              Sign Up
+            </button>
+          </div>
           <p className="text-center mt-2">아이디/비밀번호 찾기</p>
         </form>
       </div>
