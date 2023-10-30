@@ -1,21 +1,71 @@
-import Header from './static/Header';
 import Footer from './static/Footer';
-import Sidebar from './static/SideBar';
-import { BrowserRouter, Route } from 'react-router-dom'; // Route를 추가로 임포트
-import SigninForm from './components/register/SigninForm';
-import SignupForm from './components/register/SignupForm';
-import UserInfo from './components/register/UserInfo';
-
+import Template from './static/Template';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ProxyRegister from './components/proxy/ProxyRegister';
+import ProxyList from './components/proxy/ProxyList';
+import Main from './components/main/main';
+import ProxyDetail from './components/proxy/ProxyDetail';
+import WaitMateRegister from './components/waitMate/WaitMateRegister';
+import WaitMateList from './components/waitMate/WaitMateList';
+import WaitMateDetail from './components/waitMate/WaitMateDetail';
 function App() {
   return (
-    <div className="bg-background w-full h-screen">
+    <div className="bg-background">
       <BrowserRouter>
-        <Header />
-        <Sidebar />
-        <Footer />
-        <SigninForm />
-        <SignupForm />
-        <UserInfo />
+        <Routes>
+          <Route path="/" element={<Main></Main>} />
+          <Route
+            path="/proxy/register"
+            element={
+              <Template>
+                <ProxyRegister />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/proxy/getter"
+            element={
+              <Template>
+                <ProxyList />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/proxy/:proxyId"
+            element={
+              <Template>
+                <ProxyDetail />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/waitMate/"
+            element={
+              <Template>
+                <WaitMateRegister />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/waitMate/list"
+            element={
+              <Template>
+                <WaitMateList />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/waitMate/detail"
+            element={
+              <Template>
+                <WaitMateDetail />
+              </Template>
+            }
+          ></Route>
+          {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
+          {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
+        </Routes>
+        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
