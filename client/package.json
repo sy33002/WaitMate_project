@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "autoprefixer": "^10.4.16",
     "css-loader": "^6.8.1",
     "postcss": "^8.4.31",
