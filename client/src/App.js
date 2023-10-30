@@ -4,6 +4,7 @@ import Sidebar from './static/SideBar';
 import { BrowserRouter, Route } from 'react-router-dom'; // Route를 추가로 임포트
 import SigninForm from './components/register/SigninForm';
 import SignupForm from './components/register/SignupForm';
+import UserInfo from './components/register/UserInfo';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         <Header />
         <Sidebar />
         <Footer />
+        <SigninForm />
+        <SignupForm />
+        <UserInfo />
       </BrowserRouter>
     </div>
   );

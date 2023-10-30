@@ -12,7 +12,6 @@ function SigninForm() {
   return (
     <div className="min-h-screen flex items-center justify-center background">
       <div className="p-4 shadow-lg background rounded-md">
-        <img src="../" className="flex items-center justify-center" />
         <h1 className="text-2xl text-primary mb-4">Sign In</h1>
         <p className="mb-4 text-gray-400">Wellcome!</p>
         <form onSubmit={handleSubmit}>
