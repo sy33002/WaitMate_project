@@ -13,9 +13,9 @@ function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+    <div className="min-h-screen flex items-center justify-center background">
       <div className="p-4 shadow-lg rounded-md w-1/3">
-        <h1 className="text-3xl text-center mb-6">회원가입 소정</h1>
+        <h1 className="text-3xl text-center mb-6">회원가입 수정</h1>
         <form onSubmit={handleSubmit}>
           <label className="block mb-4">
             <span className="text-gray-700">ID</span>
@@ -65,9 +65,9 @@ function SignupForm() {
 
           <button
             type="submit"
-            className="w-full p-2 bg-blue-500 text-white rounded-md mt-4"
+            className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
           >
-            승인하기
+            수정하기
           </button>
         </form>
       </div>
