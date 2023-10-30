@@ -1,0 +1,36 @@
+.avatar1 {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.avatar1 img {
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+}
+.avatar2 img {
+  width: 40px;
+  height: 40px;
+  border-radius: 25px;
+
+}
+textarea {
+  width: 40rem;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+    border: solid 1px black;
+    border-radius: 10px;
+
+
+    .input_container {
+        display: flex;
+        align-items: center;
+      
+    
+        
+      }
+      
+  }
