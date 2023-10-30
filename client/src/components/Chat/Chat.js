@@ -58,9 +58,8 @@ export default function Chat() {
           <MessageBox
             key={index}
             className="avatar1"
-            avatar={msg.avatar}
+            avatar={'/images/me.jpg'}
             size="xsmall"
-            avatarFlexible={true}
             type={'text'}
             title={msg.title}
             text={`${msg.time}  ${msg.message} `}
@@ -80,6 +79,14 @@ export default function Chat() {
               backgroundColor="white"
               text="Send"
               onClick={handleButtonClick}
+            />
+          }
+          leftButtons={
+            <Button
+              className="input_file_btn"
+              text=" 📎 "
+              backgroundColor="white"
+              onClick={() => document.getElementById('fileInput').click()}
             />
           }
           clear={(clear) => setClearFunction(clear)} // 수정
