@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import axios from 'axios';
 
 export default function ProxyListBox({title, age, gender}) {
 //   const [userImage, setUserImage] = useState('');
 //   const [userInfo, setUserInfo] = useState({});
     const [isHovered, setIsHoverd] = useState(false);
-    const [isDisplay, setIsDisplay] = useState(false);
 
 //   useEffect(() => {
 //     axios.get('/api/userData')
@@ -19,11 +18,9 @@ export default function ProxyListBox({title, age, gender}) {
 //   }, []);
 const handleHoverIn = () => {
     setIsHoverd(true);
-    setIsDisplay(true);
 };
 const handleHoverOut = () => {
 	setIsHoverd(false);
-	setIsDisplay(false);
 };
 return (
     <div className={`rounded-lg border-x-primary border-x-2 h-24 relative 
