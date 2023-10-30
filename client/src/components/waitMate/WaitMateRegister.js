@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import DaumPostcode from 'react-daum-postcode';
 
 export default function WaitMateRegister() {
   const { control, handleSubmit, formState } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
+  const [ modalState, setModalState ] = useState(false);
+  const [ inputAddressValue, setInputAddressValue ] = useState('');
 
   const onSubmit = (data) => {
     const formData = new FormData();
@@ -24,6 +27,15 @@ export default function WaitMateRegister() {
       setImageFile(reader.result);
     };
   }
+  const onCompletePost = data => {
+    setModalState(false);
+    setInputAddressValue(data.jibunAddress);
+  };
+
+  const handleAddressClick = () => {
+    const res = !modalState;
+    setModalState(res);
+  };
 
   return (
     <div>
@@ -62,7 +74,26 @@ export default function WaitMateRegister() {
                     name="address"
                     control={control}
                     rules={{ required: true }}
-                    render={({ field }) => <input {...field} />}
+                    render={({ field }) =>(
+                    <div className="relative">
+                      <input
+                        {...field}
+                        onChange={handleAddressClick}
+                        className="w-full"
+                        placeholder="주소"
+                        value={inputAddressValue}
+                      /><DaumPostcode
+                      onComplete={onCompletePost}
+                      className={`w-40 h-40 absolute top-12 ${modalState ? 'block' : 'hidden'}`}
+                    ></DaumPostcode>
+                    <button
+                      onClick={handleAddressClick}
+                      className="bg-primary text-white px-2 py-1 mt-2"
+                    >
+                      주소 찾기
+                    </button>
+                  </div>
+                )}
                   />
                 </div><br />
                 <div>

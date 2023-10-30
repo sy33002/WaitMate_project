@@ -8,6 +8,7 @@ import ProxyDetail from './components/proxy/ProxyDetail';
 import WaitMateRegister from './components/waitMate/WaitMateRegister';
 import WaitMateList from './components/waitMate/WaitMateList';
 import WaitMateDetail from './components/waitMate/WaitMateDetail';
+
 function App() {
   return (
     <div className="bg-background">
