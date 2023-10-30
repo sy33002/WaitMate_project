@@ -9,6 +9,7 @@ export default function ProxyRegister() {
   const [ inputAddressValue, setInputAddressValue ] = useState('');
 
   const onSubmit = (data) => {
+    console.log("onSubmit 들어옴!");
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('address', data.address);
@@ -91,7 +92,7 @@ export default function ProxyRegister() {
                       />
                       <DaumPostcode
                         onComplete={onCompletePost}
-                        className={`w-40 h-40 absolute top-12 ${modalState ? 'hidden' : 'block'}`}
+                        className={`w-40 h-40 absolute top-12 ${modalState ? 'block' : 'hidden'}`}
                       ></DaumPostcode>
                       <button
                         onClick={handleAddressClick}
