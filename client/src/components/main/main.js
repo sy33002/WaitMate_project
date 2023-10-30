@@ -124,6 +124,7 @@ export default function Main() {
           </div>
           <div className="w-1/2">
             <img src="/images/Chatting.png" alt="chatting" className="w-full" />
+            {/*  */}
           </div>
         </div>
       </div>
