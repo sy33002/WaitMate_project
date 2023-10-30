@@ -14,7 +14,7 @@ function SignupForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 shadow-lg rounded-md w-1/3">
+      <div className="p-4 shadow-lg rounded-md w-1/3 background">
         <h1 className="text-3xl text-center mb-6 text-primary">
           회원가입 수정
         </h1>
