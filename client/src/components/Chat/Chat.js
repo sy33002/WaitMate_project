@@ -1,11 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
 
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
-  const inputReference = useRef(null);
   const [messages, setMessages] = useState([]);
+  const [clearFunction, setClearFunction] = useState(null); // 추가
+
+  const handleButtonClick = () => {
+    sendMessage();
+    clearInput();
+  };
+  
+  const clearInput = () => {
+    if (clearFunction) {
+      clearFunction();
+    }
+  };
 
   const sendMessage = () => {
     console.log('sendMessage function called');
@@ -23,20 +34,15 @@ export default function Chat() {
         },
       ]);
       setInputValue('');
+      clearInput();
     }
 
     console.log('Updated inputValue:', setInputValue);
   };
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      // 파일 처리 로직. 예: 서버로 전송
-      console.log(file);
-    }
-  };
+
   return (
     <div className="container">
-      <div className="message_container">
+       <div className="message_container">
         <MessageBox
           className="avatar2"
           type={'text'}
@@ -45,7 +51,6 @@ export default function Chat() {
             photoURL: '/images/me.jpg',
             title: 'user2',
             titleColor: 'red',
-            position: 'right',
           }}
           notch={false}
         />
@@ -56,49 +61,30 @@ export default function Chat() {
             avatar={msg.avatar}
             size="xsmall"
             avatarFlexible={true}
-            position="right"
             type={'text'}
             title={msg.title}
             text={`${msg.time}  ${msg.message} `}
             notch={false}
           />
         ))}
+      </div>
+      <div className="input_container">
         <Input
-          className="input"
-          ref={inputReference}
           placeholder="Start chatting..."
           multiline={true}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
           rightButtons={
             <Button
               className="input_send_btn"
               color="purple"
               backgroundColor="white"
               text="Send"
-              onClick={sendMessage}
+              onClick={handleButtonClick}
             />
           }
-          leftButtons={
-            <Button
-              className="input_file_btn"
-              text=" 📎 "
-              backgroundColor="white"
-              onClick={() => document.getElementById('fileInput').click()}
-            />
-          }
-        />
-
-        <input
-          type="file"
-          id="fileInput"
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
+          clear={(clear) => setClearFunction(clear)} // 수정
         />
       </div>
     </div>
   );
 }
-
-//title : 사용자 이름
-//titleColor : 사용자 이름 색깔
