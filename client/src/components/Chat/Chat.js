@@ -14,15 +14,15 @@ export default function Chat() {
       const currentTime = new Date().toLocaleTimeString();
       console.log(currentTime);
       setMessages((prevMessages) => [
-          ...prevMessages,
-          {
-              avatar: '/images/me.jpg',
-              message: inputValue,
-              title: 'user1',
-              time: currentTime,
-            },
-        ]);
-        setInputValue('');
+        ...prevMessages,
+        {
+          avatar: '/images/me.jpg',
+          message: inputValue,
+          title: 'user1',
+          time: currentTime,
+        },
+      ]);
+      setInputValue('');
     }
 
     console.log('Updated inputValue:', setInputValue);
