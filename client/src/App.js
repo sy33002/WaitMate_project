@@ -69,15 +69,7 @@ function App() {
           ></Route>
           <Route path="/register/SigninForm" element={<SigninForm />}></Route>
           <Route path="/register/SignupForm" element={<SignupForm />}></Route>
-          <Route
-            path="/register/UserInfo"
-            element={
-              <Template>
-                {' '}
-                <UserInfo />
-              </Template>
-            }
-          ></Route>
+          <Route path="/register/UserInfo" element={<UserInfo />}></Route>
           <Route
             path="/mypage/MyProxy"
             element={

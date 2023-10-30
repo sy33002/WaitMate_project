@@ -2,7 +2,7 @@ import React from 'react';
 
 function MyProxy() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white">
+    <div className="min-h-screen flex flex-col items-center justify-center background">
       <h1 className="text-3xl mb-6">My Proxy</h1>
       <div className="flex space-x-4">
         <div className="border-2 p-32 text-center">

@@ -11,27 +11,24 @@ function SigninForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 shadow-lg background rounded-md">
+      <div className="p-4 w-1/4 shadow-lg background rounded-md">
         <h1 className="text-2xl text-primary mb-4">Sign In</h1>
         <p className="mb-4 text-gray-400">Wellcome!</p>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="flex flex-col items-center">
           <input
             type="text"
             placeholder="아이디를 입력하세요."
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="p-2 mb-2 w-80 border rounded-md shadow-inner  shadow-gray-300"
+            className="p-2 mb-4 w-full max-w-sm border rounded-md shadow-inner shadow-gray-300"
           />
-          <br />
           <input
             type="password"
             placeholder="비밀번호를 입력하세요."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="p-2 mb-2 w-80 border bg- rounded-md shadow-inner  shadow-gray-300"
+            className="p-2 mb-4 w-full max-w-sm border rounded-md shadow-inner shadow-gray-300"
           />
-          <br />
-
           <div className="flex flex-col items-center mt-4">
             <button
               type="submit"
@@ -39,7 +36,6 @@ function SigninForm() {
             >
               Log In
             </button>
-
             <button className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg">
               Sign Up
             </button>
