@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import '/Users/ellin/code/2nd_project/front-wait/client/src/components/main/main.css'
+import './main.css'
 export default function Main() {
   useEffect(() => {
     AOS.init();
