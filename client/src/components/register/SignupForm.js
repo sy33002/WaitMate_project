@@ -12,7 +12,7 @@ function SignupForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 shadow-md backgroud rounded-md">
+      <div className="p-4 shadow-md background rounded-md">
         <h2 className="text-2xl mb-4 text-primary">Sign Up</h2>
         <p className="mb-4">Let's Go Wait Mate!!!</p>
         <form onSubmit={handleSubmit}>

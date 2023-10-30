@@ -12,8 +12,6 @@ function App() {
         <Header />
         <Sidebar />
         <Footer />
-        <SigninForm />
-        <SignupForm />
       </BrowserRouter>
     </div>
   );
