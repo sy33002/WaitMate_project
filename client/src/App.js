@@ -13,7 +13,7 @@ function App() {
         <Route path='/proxyRegister' element={<Template><ProxyRegister /></Template>}></Route>
         <Route path='/proxyList' element={<Template><ProxyList /></Template>}></Route>
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
     </div>
   );
