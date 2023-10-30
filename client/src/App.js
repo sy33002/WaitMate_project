@@ -23,7 +23,7 @@ function App() {
         {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
         {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
     </div>
   );
