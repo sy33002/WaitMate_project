@@ -13,12 +13,15 @@ import SignupForm from './components/register/SignupForm';
 import UserInfo from './components/register/UserInfo';
 import MyProxy from './components/mypage/MyProxy';
 import MyWaitmate from './components/mypage/MyWaitmate';
+import Chat from './components/Chat/Chat';
 function App() {
   return (
     <div className="bg-background">
       <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<Main></Main>} />
+          <Route path='/proxyDetail/chat' element={<Template><Chat/></Template>}></Route>
           <Route
             path="/proxy/register"
             element={

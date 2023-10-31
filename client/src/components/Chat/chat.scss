@@ -13,14 +13,19 @@
   height: 40px;
   border-radius: 25px;
 }
+.container {
+  border: solid 1px black;
+  border-radius: 10px;
+}
+
 textarea {
-  width: 40rem;
+  width: 100%;
   display: flex;
   justify-content: center;
 }
 
-.container {
-  border: solid 1px black;
-  border-radius: 10px;
 
+.input_item {
+  display: flex;
+  justify-content: center;
 }

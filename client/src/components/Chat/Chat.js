@@ -5,17 +5,11 @@ import './chat.scss';
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
+  const inputReferance = React.createRef();
 
-  const handleButtonClick = () => {
-    sendMessage();
-    inputClear();
-  };
-
-  let inputClear = () => {};
+  console.log(inputValue);
 
   const sendMessage = () => {
-    console.log('sendMessage function called');
-
     if (inputValue.trim() !== '') {
       const currentTime = new Date().toLocaleTimeString();
       console.log(currentTime);
@@ -29,10 +23,8 @@ export default function Chat() {
         },
       ]);
       setInputValue('');
-      inputClear();
+      inputReferance.current.value = '';
     }
-
-    console.log('Updated inputValue:', setInputValue);
   };
 
   return (
@@ -64,16 +56,19 @@ export default function Chat() {
       </div>
       <div className="input_container">
         <Input
+          className="input_item"
+          referance={inputReferance}
           placeholder="Start chatting..."
           multiline={true}
           value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           rightButtons={
             <Button
               className="input_send_btn"
               color="purple"
               backgroundColor="white"
               text="Send"
-              onClick={handleButtonClick}
+              onClick={sendMessage}
             />
           }
           leftButtons={
@@ -84,9 +79,16 @@ export default function Chat() {
               onClick={() => document.getElementById('fileInput').click()}
             />
           }
-          clear={(clear) => (inputClear = clear)}
         />
       </div>
     </div>
   );
 }
+//기능 설명
+// 각각의 아바타들이 가지는 속성들
+// - 프로필 사진
+// - 프로필 이름
+// - 메세지 발송 시간
+// - 메세지
+// 인풋으로 넣을수 있는것
+// - 파일 첨부
