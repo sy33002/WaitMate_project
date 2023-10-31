@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import WaitMateBox from './WaitMateBox';
+import DaumPostcode from 'react-daum-postcode';
 
 export default function WaitMateList() {
   const [selectedOption, setSelectedOption] = useState('');
