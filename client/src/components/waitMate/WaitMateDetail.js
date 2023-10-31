@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useParams } from 'react-router-dom';
 
 export default function WaitMateDetail() {
+  const { wmId } = useParams();
+
+  useEffect(() => {
+    fetch(`/waitMate/detail?wmId=${wmId}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('데이터 가져오는 중 오류 발생!', error);
+    });
+  }, [wmId]);
+
   return (
     <div className='w-full h-full flex flex-col items-center'>
       <p className='text-xs text-primary'>00동 Wait Mate가 찾고 있는 조건이에요!</p>
@@ -9,7 +23,7 @@ export default function WaitMateDetail() {
           <img src='/images/me.jpg' className='rounded-lg h-full'></img>
         </div>
         <div className='h-3/4 m-2'>
-          <p>Title: </p>
+          <p>Title: <span></span></p>
           <p>Store Address: </p>
           <p>Date: </p>
           <p>Time: </p>
