@@ -56,7 +56,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/waitMate/detail"
+            path="/waitMate/detail/:wmId"
             element={
               <Template>
                 <WaitMateDetail />

@@ -9,7 +9,7 @@ export default function WaitMateRegister() {
   const [ modalState, setModalState ] = useState(false);
   const [ inputAddressValue, setInputAddressValue ] = useState('');
 
-  const onSubmit = (data, event) => {
+  const onSubmit = async (data, event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', data.title);
@@ -20,6 +20,20 @@ export default function WaitMateRegister() {
     formData.append('detail', data.detail);
     formData.append('image', imageFile);
     console.log(formData);
+    try {
+      const response = await fetch('/waitMate/register', {
+        method: 'POST',
+        body: formData,
+      });
+      if (response === 'success') {
+        const responseData = await response.json();
+        console.log('Server response: ', responseData);
+      } else {
+        console.error('Failed to submit the form');
+      }
+    } catch (error) {
+      console.error('Error!');
+    }
   };
 
   const onUpload = (e) => {
