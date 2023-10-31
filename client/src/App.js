@@ -14,6 +14,7 @@ import UserInfo from './components/register/UserInfo';
 import MyProxy from './components/mypage/MyProxy';
 import MyWaitmate from './components/mypage/MyWaitmate';
 import Chat from './components/Chat/Chat';
+
 function App() {
   return (
     <div className="bg-background">
@@ -63,7 +64,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/waitMate/detail"
+            path="/waitMate/detail/:wmId"
             element={
               <Template>
                 <WaitMateDetail />
@@ -73,23 +74,6 @@ function App() {
           <Route path="/register/SigninForm" element={<SigninForm />}></Route>
           <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route path="/register/UserInfo" element={<UserInfo />}></Route>
-          <Route
-            path="/mypage/MyProxy"
-            element={
-              <Template>
-                {' '}
-                <MyProxy />
-              </Template>
-            }
-          ></Route>
-          <Route
-            path="/mypage/MyWaitmate"
-            element={
-              <Template>
-                <MyWaitmate />
-              </Template>
-            }
-          ></Route>
 
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import DaumPostcode from 'react-daum-postcode';
+// import { Modal, Button } from "antd";
 
 export default function WaitMateRegister() {
   const { control, handleSubmit } = useForm();
-  const [imageFile, setImageFile] = useState('/images/someone.png');
+  const [imageFile, setImageFile] = useState('/images/waitMate.png');
   const [ modalState, setModalState ] = useState(false);
   const [ inputAddressValue, setInputAddressValue ] = useState('');
 
-  const onSubmit = (data, event) => {
+  const onSubmit = async (data, event) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', data.title);
@@ -19,6 +20,20 @@ export default function WaitMateRegister() {
     formData.append('detail', data.detail);
     formData.append('image', imageFile);
     console.log(formData);
+    try {
+      const response = await fetch('/waitMate/register', {
+        method: 'POST',
+        body: formData,
+      });
+      if (response === 'success') {
+        const responseData = await response.json();
+        console.log('Server response: ', responseData);
+      } else {
+        console.error('Failed to submit the form');
+      }
+    } catch (error) {
+      console.error('Error!');
+    }
   };
 
   const onUpload = (e) => {
@@ -41,9 +56,9 @@ export default function WaitMateRegister() {
   };
 
   return (
-    <div>
+    <div className='w-full'>
       <p className='text-xs'>좋은 웨이트메이트가 되어주세요!</p>
-      <div className='relative'>
+      <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-4 border border-primary rounded-lg"
@@ -51,7 +66,7 @@ export default function WaitMateRegister() {
           <div className='flex'>
             <div className='flex justify-center items-center w-1/4'>
               <div className='w-full'>
-                {imageFile && <img src={imageFile} alt="Preview" className="border border-primary rounded-lg w-full h-40" />}
+                {imageFile && <img src={imageFile} alt="Preview" className="border border-primary rounded-lg" />}
                 <label className="text-xs text-primary m-1">가게 사진 및 아이콘</label>
                   <input
                     accept='image/*'
@@ -61,9 +76,9 @@ export default function WaitMateRegister() {
                   />
               </div>
               </div>
-              <div className='bg-primary ml-3 w-full flex flex-col p-3'>
+              <div className='bg-primary ml-3 w-full flex flex-col p-3 rounded-lg'>
                 <div>
-                  <label className='text-sm text-background m-1'>title</label>
+                  <label className='text-sm text-background m-1'>*title</label>
                   <Controller
                     name="title"
                     control={control}
@@ -72,7 +87,7 @@ export default function WaitMateRegister() {
                   />
                 </div><br />
                 <div>
-                <label className='text-sm text-background m-1'>Store Address</label>
+                <label className='text-sm text-background m-1'>*Store Address</label>
                   <Controller
                     name="storeAddress"
                     control={control}
@@ -101,7 +116,7 @@ export default function WaitMateRegister() {
                   />
                 </div><br />
                 <div>
-                <label className='text-sm text-background m-1'>Date</label>
+                <label className='text-sm text-background m-1'>*Date</label>
                   <Controller
                     name="Date"
                     control={control}
@@ -117,7 +132,7 @@ export default function WaitMateRegister() {
                   name="time"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field }) => <input type="number" {...field} />}
+                  render={({ field }) => <input {...field} />}
                 />
               </div><br />
               <div>
@@ -126,7 +141,7 @@ export default function WaitMateRegister() {
                   name="pay"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field }) => <input type="number" {...field} />}
+                  render={({ field }) => <input {...field} />}
                 />
               </div><br />
               <div>
@@ -135,7 +150,7 @@ export default function WaitMateRegister() {
                   name="detail"
                   control={control}
                   rules={{ required: true }}
-                  render={({ field }) => <textarea {...field} />}
+                  render={({ field }) => <textarea {...field} className='w-full rounded-lg'/>}
                 />
               </div><br />
               <button type="submit"
