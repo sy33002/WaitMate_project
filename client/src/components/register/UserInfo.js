@@ -68,7 +68,7 @@ function UserInfo() {
   };
   return (
     <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 w-1/4 shadow-md background rounded-md">
+      <div className="p-4 w-1/3 shadow-md background rounded-md">
         <h1 className="text-3xl text-center mb-6 text-primary">
           회원가입 수정
         </h1>
@@ -129,7 +129,7 @@ function UserInfo() {
           <div className="flex flex-col items-center mt-4 w-full max-w-sm">
             <button
               type="submit"
-              className="p-2 w-full bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
             >
               수정하기
             </button>

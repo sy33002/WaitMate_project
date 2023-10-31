@@ -34,9 +34,10 @@ function SigninForm() {
 
   return (
     <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 w-1/4 shadow-lg background rounded-md">
+      <div className="p-4 w-1/3 shadow-lg background rounded-md">
         <h1 className="text-2xl text-primary mb-4">Sign In</h1>
         <p className="mb-4 text-gray-400">Wellcome!</p>
+
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
           <input
