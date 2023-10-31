@@ -5,18 +5,13 @@ import './chat.scss';
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
-  const [clearFunction, setClearFunction] = useState(null); // 추가
 
   const handleButtonClick = () => {
     sendMessage();
-    clearInput();
+    inputClear();
   };
-  
-  const clearInput = () => {
-    if (clearFunction) {
-      clearFunction();
-    }
-  };
+
+  let inputClear = () => {};
 
   const sendMessage = () => {
     console.log('sendMessage function called');
@@ -34,7 +29,7 @@ export default function Chat() {
         },
       ]);
       setInputValue('');
-      clearInput();
+      inputClear();
     }
 
     console.log('Updated inputValue:', setInputValue);
@@ -42,7 +37,7 @@ export default function Chat() {
 
   return (
     <div className="container">
-       <div className="message_container">
+      <div className="message_container">
         <MessageBox
           className="avatar2"
           type={'text'}
@@ -89,7 +84,7 @@ export default function Chat() {
               onClick={() => document.getElementById('fileInput').click()}
             />
           }
-          clear={(clear) => setClearFunction(clear)} // 수정
+          clear={(clear) => (inputClear = clear)}
         />
       </div>
     </div>
