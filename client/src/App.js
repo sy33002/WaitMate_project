@@ -11,8 +11,8 @@ import WaitMateDetail from './components/waitMate/WaitMateDetail';
 import SigninForm from './components/register/SigninForm';
 import SignupForm from './components/register/SignupForm';
 import UserInfo from './components/register/UserInfo';
-import MyProxy from './components/mypage/MyProxy';
-import MyWaitmate from './components/mypage/MyWaitmate';
+// import MyProxy from './components/mypage/MyProxy';
+// import MyWaitmate from './components/mypage/MyWaitmate';
 import Chat from './components/Chat/Chat';
 
 function App() {

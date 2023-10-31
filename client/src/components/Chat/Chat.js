@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
-
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
@@ -29,6 +28,7 @@ export default function Chat() {
 
   return (
     <div className="container">
+      <button>거래중</button> {/* 상태값 : 거래중, 예약중, 거래완료 추가 */}
       <div className="message_container">
         <MessageBox
           className="avatar2"
@@ -58,7 +58,7 @@ export default function Chat() {
         <Input
           className="input_item"
           referance={inputReferance}
-          placeholder="Start chatting..."
+          placeholder="Message..."
           multiline={true}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
@@ -74,7 +74,6 @@ export default function Chat() {
           leftButtons={
             <Button
               className="input_file_btn"
-              text=" 📎 "
               backgroundColor="white"
               onClick={() => document.getElementById('fileInput').click()}
             />
