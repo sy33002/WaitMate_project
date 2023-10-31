@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import DaumPostcode from 'react-daum-postcode';
 
 export default function WaitMateRegister() {
-  const { control, handleSubmit, formState } = useForm();
+  const { control, handleSubmit } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
+  const [ modalState, setModalState ] = useState(false);
+  const [ inputAddressValue, setInputAddressValue ] = useState('');
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, event) => {
+    event.preventDefault();
     const formData = new FormData();
     formData.append('title', data.title);
-    formData.append('address', data.address);
+    formData.append('address', data.storeAddress);
     formData.append('date', data.date);
     formData.append('time', data.time);
+    formData.append('pay', data.pay);
     formData.append('detail', data.detail);
     formData.append('image', imageFile);
     console.log(formData);
@@ -24,6 +29,16 @@ export default function WaitMateRegister() {
       setImageFile(reader.result);
     };
   }
+
+  const onCompletePost = data => {
+    setModalState(false);
+    setInputAddressValue(data.address);
+  };
+
+  const handleAddressClick = () => {
+    const res = !modalState;
+    setModalState(res);
+  };
 
   return (
     <div>
@@ -50,7 +65,7 @@ export default function WaitMateRegister() {
                 <div>
                   <label className='text-sm text-background m-1'>title</label>
                   <Controller
-                    name="name"
+                    name="title"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => <input {...field} />}
@@ -59,54 +74,71 @@ export default function WaitMateRegister() {
                 <div>
                 <label className='text-sm text-background m-1'>Store Address</label>
                   <Controller
-                    name="address"
+                    name="storeAddress"
                     control={control}
                     rules={{ required: true }}
-                    render={({ field }) => <input {...field} />}
+                    render={({ field }) =>(
+                    <div className="relative">
+                      <input
+                        {...field}
+                        onChange={handleAddressClick}
+                        className="w-full"
+                        placeholder="주소"
+                        value={inputAddressValue}
+                      />
+                      <DaumPostcode
+                      onComplete={onCompletePost}
+                      className={`w-40 h-40 absolute top-12 ${modalState ? 'block' : 'hidden'}`}
+                    ></DaumPostcode>
+                    <button
+                      onClick={handleAddressClick}
+                      className="bg-primary text-white px-2 py-1 mt-2"
+                    >
+                      주소 찾기
+                    </button>
+                  </div>
+                )}
                   />
                 </div><br />
                 <div>
                 <label className='text-sm text-background m-1'>Date</label>
                   <Controller
-                    name="gender"
+                    name="Date"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <select {...field}>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
+                      <input {...field} type="date" />
                     )}
                   />
                 </div><br />
               <div>
               <label className='text-sm text-background m-1'>Waiting Time</label>
                 <Controller
-                  name="age"
+                  name="time"
                   control={control}
-                  rules={{ required: true, min: 18 }}
+                  rules={{ required: true }}
                   render={({ field }) => <input type="number" {...field} />}
                 />
               </div><br />
               <div>
-              <label className='text-sm text-background m-1'>Hourly rate(시급)</label>
+              <label className='text-sm text-background m-1'>Pay(시급)</label>
                 <Controller
-                  name="age"
+                  name="pay"
                   control={control}
-                  rules={{ required: true, min: 18 }}
+                  rules={{ required: true }}
                   render={({ field }) => <input type="number" {...field} />}
                 />
               </div><br />
               <div>
               <label className='text-sm text-background m-1'>Datail explanation</label><br/>
                 <Controller
-                  name="introduction"
+                  name="detail"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => <textarea {...field} />}
                 />
               </div><br />
-              <button type="submit" disabled={formState.isSubmitting}
+              <button type="submit"
               className='text-background text-sm border'
               >
                 register
