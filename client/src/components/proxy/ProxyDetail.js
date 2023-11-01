@@ -2,6 +2,44 @@ import React from 'react'
 
 export default function ProxyDetail() {
   return (
-    <div>ProxyDetail</div>
+    <div className='h-full w-full flex justify-center items-center'>
+    <div className='h-4/5 w-4/5 bg-white flex'>
+      <div className='bg-primary w-1/3 h-full flex flex-col justify-center items-center'>
+        {imageFile && <img src={imageFile} alt="Preview" 
+                  className="max-w-full max-h-40" />}
+        <button className='bg-background text-primary mb-2'>프록시와 채팅하기</button>
+        <button className='bg-background text-primary'>프록시 픽하기</button>
+      </div>
+      <div className='flex flex-col h-full w-2/3'>
+        <div className='h-1/3 w-full flex justify-around'>
+          <div className='w-3/5 h-full flex flex-col  justify-center'>
+            <span className='text-primary text-lg'>Title: </span><br />
+            <span className='text-primary'>proxy ID: </span>
+          </div>
+          <div className='w-10 h-full bg-primary'></div>
+        </div>
+        <div className='w-full h-2/3 p-10'>
+          <div className='bg-primary w-1/3 flex justify-center items-center'>
+            <span className='text-background'>Age/ Gender</span>
+          </div>
+          <div className='flex justify-center items-center'>
+            <span>20대/ 여성</span>
+          </div><br />
+          <div className='bg-primary w-1/3 flex justify-center items-center'>
+            <span className='text-background'>Address</span>
+          </div>
+          <div className='flex justify-center items-center'>
+            <span>서울시 관악구</span>
+          </div><br />
+          <div className='bg-primary w-1/3 flex justify-center items-center'>
+            <span className='text-background'>Introduce</span>
+          </div>
+          <div className='flex justify-center items-center'>
+            <span>어쩌구저쩌구 ~~~</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   )
 }
