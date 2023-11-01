@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
+import sendButtonImage from './images/chatting_send_btn.png';
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
@@ -64,15 +65,17 @@ export default function Chat() {
           onChange={(e) => setInputValue(e.target.value)}
           rightButtons={
             <Button
+              src={sendButtonImage}
               className="input_send_btn"
               color="purple"
               backgroundColor="white"
-              text="Send"
+              
               onClick={sendMessage}
             />
           }
           leftButtons={
             <Button
+              text=' 📎 '
               className="input_file_btn"
               backgroundColor="white"
               onClick={() => document.getElementById('fileInput').click()}
