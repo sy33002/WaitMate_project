@@ -6,11 +6,6 @@ function SigninForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  // 세션 스토리지에 필요한 변수들
-  let [savedLoginId, setLoginId] = useState('');
-  let [savedLoginPassword, setSavedLoginPassword] = useState("");
-  let sessionStorage = window.sessionStorage;
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -24,11 +19,7 @@ function SigninForm() {
       });
 
       if (response.status === 200) {
-        // 로그인 성공 시 세션 스토리지에 저장함
-        sessionStorage.setItem("loginId", username);
-        sessionStorage.setItem("loginPw", password);
-        setSavedLoginId(username);
-        setSavedLoginPassword(password);
+
       }
     } catch (error) {
       if (error.response && error.response.data) {
@@ -65,12 +56,6 @@ function SigninForm() {
           <div className="flex flex-col items-center mt-4">
             <button
               type="submit"
-              onClick ={()=> {
-                sessionStorage.setItem("loginId", loginId);
-                sessionStorage.setItem("loginPw", loginPw);
-                setSavedLoginId(sessionStorage.getItem("loginId"));
-                setSavedLoginPassword(sessionStorage.getItem("loginPassword"));
-              }}
               className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg mb-2"
             >
               Log In
