@@ -14,6 +14,7 @@ import UserInfo from './components/register/UserInfo';
 // import MyProxy from './components/mypage/MyProxy';
 // import MyWaitmate from './components/mypage/MyWaitmate';
 import Chat from './components/Chat/Chat';
+import cities from './static/cities';
 
 function App() {
   return (
@@ -41,7 +42,7 @@ function App() {
             path="/proxy/getter"
             element={
               <Template>
-                <ProxyList />
+                <ProxyList cities={cities}/>
               </Template>
             }
           ></Route>
@@ -65,7 +66,7 @@ function App() {
             path="/waitMate/list"
             element={
               <Template>
-                <WaitMateList />
+                <WaitMateList cities={cities}/>
               </Template>
             }
           ></Route>
