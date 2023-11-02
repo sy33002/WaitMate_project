@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { axiosInstance } from '../common/axiosInstance';
 
 function UserInfo() {
   const [id, setId] = useState(''); // 초기 아이디 값
@@ -16,9 +17,10 @@ function UserInfo() {
     // 비동기 함수로 사용자 정보를 가져옵니다.
     const fetchUserData = async () => {
       try {
-        const response = await fetch('/api/user-info'); // 사용자 정보를 가져오는 API URL
-        const data = await response.json();
+        const response = await axiosInstance.get('/user/myinfo'); // 사용자 정보를 가져오는 API URL
+        const data = await response.data;
         setId(data.userId); // API 응답에서 사용자 아이디 설정
+        setNickname(data.nickname)
       } catch (error) {
         console.error('사용자 정보를 가져오는 데 실패했습니다.', error);
       }
@@ -30,7 +32,7 @@ function UserInfo() {
   const isPasswordMatch = () => password === confirmPassword;
   const isNicknameValid = () => nickname.length <= 8;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!isPasswordMatch()) {
@@ -42,10 +44,15 @@ function UserInfo() {
       setErrorMessage('닉네임은 최대 8자까지 입력할 수 있습니다.');
       return;
     }
-
+    const updateInfo = {}
+    if (password) {
+      updateInfo['password'] = password
+    }
+    if (nickname) {
+      updateInfo['nickname'] = nickname
+    }
     // 여기서 서버와 통신을 통해 사용자 정보를 수정할 수 있습니다.
-    console.log({ id, password, nickname });
-
+    const response = await axiosInstance.put('user', updateInfo)
     // Reset error message after successful submission
     setErrorMessage('');
     setShowModal(true);

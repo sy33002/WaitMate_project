@@ -14,12 +14,10 @@ function SignupForm() {
   const isValidForm = () => {
     const idRegex = /^[a-zA-Z0-9]{4,12}$/;
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
-
     if (!idRegex.test(id)) {
       alert('아이디는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.');
       return false;
     }
-
     if (!passwordRegex.test(password)) {
       alert(
         '비밀번호는 8자 이상이며, 영문자와 숫자를 최소 1개 이상 포함해야 합니다.'
