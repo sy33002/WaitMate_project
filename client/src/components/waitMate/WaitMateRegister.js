@@ -10,29 +10,31 @@ export default function WaitMateRegister() {
 
   const onSubmit = async (data, event) => {
     console.log('dd');
-    const address = inputAddressValue;
+    const wmAddress = inputAddressValue;
     const formData = new FormData();
+    formData.append('id',  1);
     formData.append('title', data.title);
-    formData.append('address', address);
+    formData.append('wmAddress', wmAddress);
     formData.append('date', data.date);
-    formData.append('time', data.time);
+    formData.append('waitTime', data.time);
     formData.append('pay', data.pay);
-    formData.append('detail', data.detail);
-    formData.append('image', imageFile);
+    formData.append('description', data.detail);
+    formData.append('photo', imageFile);
     // formData 출력
     for (var pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }    
     try {
-      const response = await fetch('/waitMate/register', {
+      const response = await fetch(`http://localhost:8080/waitMate`, {
         method: 'POST',
         body: formData,
       });
       if (response === 'success') {
-        const responseData = await response.json();
-        console.log('Server response: ', responseData);
+        // const responseData = await response.json();
+        console.log("aaaa");
       } else {
         console.error('Failed to submit the form');
+        console.log(response.status);
       }
     } catch (error) {
       console.error('Error!');
