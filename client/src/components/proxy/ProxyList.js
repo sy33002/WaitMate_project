@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import ProxyListBox from './ProxyListBox';
-export default function ProxyList() {
+
+export default function ProxyList({cities}) {
   const [selectedOption, setSelectedOption] = useState('');
 
   const handleOption = (e) => {

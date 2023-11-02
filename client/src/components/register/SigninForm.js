@@ -6,8 +6,7 @@ function SigninForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  const navigate = useNavigate(); // useNavigate를 추가해줍니다.
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +19,7 @@ function SigninForm() {
       });
 
       if (response.status === 200) {
-        // 로그인 성공 시 필요한 로직 (예: 페이지 리다이렉트)
+
       }
     } catch (error) {
       if (error.response && error.response.data) {
