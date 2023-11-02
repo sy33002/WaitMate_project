@@ -3,7 +3,7 @@ import Template from './static/Template';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProxyRegister from './components/proxy/ProxyRegister';
 import ProxyList from './components/proxy/ProxyList';
-import Main from './components/main/main';
+import Main from './components/main/Main';
 import ProxyDetail from './components/proxy/ProxyDetail';
 import WaitMateRegister from './components/waitMate/WaitMateRegister';
 import WaitMateList from './components/waitMate/WaitMateList';
