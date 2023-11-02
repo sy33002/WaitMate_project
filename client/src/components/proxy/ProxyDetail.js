@@ -1,6 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function ProxyDetail() {
+  const { proxyId } = useParams();
+  const [proxy, setProxy] = useState({});
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/proxy/detail?proxyId=${proxyId}`)
+    .then(response => response.json())
+    .then(data => {
+      setProxy(data.proxy);
+      console.log(proxy);
+    })
+    .catch(error => {
+      console.error('데이터 가져오는 중 오류 발생!', error);
+    });
+  }, []);
+
   return (
     <div className="h-full w-full flex justify-center items-center">
       <div className="h-4/5 w-4/5 bg-white flex">
@@ -10,7 +26,7 @@ export default function ProxyDetail() {
           <button className="bg-background text-primary mb-2">
             프록시와 채팅하기
           </button>
-          <button className="bg-background text-primary">프록시 픽하기</button>
+          {/* <button className="bg-background text-primary">프록시 픽하기</button> */}
         </div>
         <div className="flex flex-col h-full w-2/3">
           <div className="h-1/3 w-full flex justify-around">
@@ -26,22 +42,23 @@ export default function ProxyDetail() {
               <span className="text-background">Age/ Gender</span>
             </div>
             <div className="flex justify-center items-center">
-              <span>20대/ 여성</span>
+              <span>{proxy.age}/ {proxy.gender}</span>
             </div>
             <br />
             <div className="bg-primary w-1/3 flex justify-center items-center">
               <span className="text-background">Address</span>
             </div>
             <div className="flex justify-center items-center">
-              <span>서울시 관악구</span>
+              <span>{proxy.address}</span>
             </div>
             <br />
             <div className="bg-primary w-1/3 flex justify-center items-center">
               <span className="text-background">Introduce</span>
             </div>
             <div className="flex justify-center items-center">
-              <span>어쩌구저쩌구 ~~~</span>
+              <span>{proxy.proxyMsg}</span>
             </div>
+            <button>채팅하기</button>
           </div>
         </div>
       </div>
