@@ -29,3 +29,38 @@ textarea {
   display: flex;
   justify-content: center;
 }
+
+.me {
+  text-align: right; 
+  background-color: #a0e5e5; 
+  margin-right: 10px; 
+  
+ 
+  .rce-mbox-title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  
+  }
+  
+  
+  .rce-avatar-container.default.default {
+    width: 5vw;
+   
+  }
+}
+
+.other {
+  text-align: left; 
+  background-color: orange; 
+
+  .rce-avatar-container.default.default {
+    width: 5vw; 
+  
+  }
+}
+
+.message_container {
+  max-height: 75vh; 
+  overflow: auto;
+}

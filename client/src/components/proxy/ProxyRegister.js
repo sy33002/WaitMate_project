@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import DaumPostcode from 'react-daum-postcode';
+import axios from 'axios';
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState } = useForm();
@@ -11,12 +12,12 @@ export default function ProxyRegister() {
   const onSubmit = (data) => {
     console.log("onSubmit 들어옴!");
     const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('address', data.address);
+    formData.append('id', data.id);
+    formData.append('proxyAddress', data.proxyAddress);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
-    formData.append('introduction', data.introduction);
-    formData.append('image', imageFile);
+    formData.append('proxyMsg', data.proxyMsg);
+    // formData.append('image', imageFile);
     console.log(formData);
   };
 
