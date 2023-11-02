@@ -3,6 +3,7 @@ import Template from './static/Template';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ProxyRegister from './components/proxy/ProxyRegister';
 import ProxyList from './components/proxy/ProxyList';
+import Map from './components/map/map';
 import Main from './components/main/main';
 import ProxyDetail from './components/proxy/ProxyDetail';
 import WaitMateRegister from './components/waitMate/WaitMateRegister';
@@ -11,16 +12,33 @@ import WaitMateDetail from './components/waitMate/WaitMateDetail';
 import SigninForm from './components/register/SigninForm';
 import SignupForm from './components/register/SignupForm';
 import UserInfo from './components/register/UserInfo';
+// import MyProxy from './components/mypage/MyProxy';
+// import MyWaitmate from './components/mypage/MyWaitmate';
 import Chat from './components/Chat/Chat';
+import cities from './static/cities';
 
 function App() {
   return (
     <div className="bg-background">
       <BrowserRouter>
-      
         <Routes>
           <Route path="/" element={<Main></Main>} />
-          <Route path='/proxyDetail/chat' element={<Template><Chat/></Template>}></Route>z
+          <Route
+            path="/proxyDetail/chat"
+            element={
+              <Template>
+                <Chat />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/map"
+            element={
+              <Template>
+                <Map />
+              </Template>
+            }
+          ></Route>
           <Route
             path="/proxy/register"
             element={
@@ -33,7 +51,7 @@ function App() {
             path="/proxy/getter"
             element={
               <Template>
-                <ProxyList />
+                <ProxyList cities={cities}/>
               </Template>
             }
           ></Route>
@@ -57,7 +75,7 @@ function App() {
             path="/waitMate/list"
             element={
               <Template>
-                <WaitMateList />
+                <WaitMateList cities={cities}/>
               </Template>
             }
           ></Route>

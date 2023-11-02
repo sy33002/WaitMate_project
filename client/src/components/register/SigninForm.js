@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { axiosInstance } from '../common/axiosInstance';
 
 function SigninForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  const navigate = useNavigate(); // useNavigate를 추가해줍니다.
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/users/login', {
-        // 백엔드 API 경로를 수정해야 합니다.
-        username,
+      const response = await axiosInstance.post('user/login', {
+        userId : username,
         password,
       });
-
       if (response.status === 200) {
-        // 로그인 성공 시 필요한 로직 (예: 페이지 리다이렉트)
-      }
+        navigate('/map')
+      };
     } catch (error) {
       if (error.response && error.response.data) {
         // 백엔드에서 반환하는 오류 메시지를 설정합니다.
@@ -63,6 +61,7 @@ function SigninForm() {
             </button>
             <button
               className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              type='button'
               onClick={() => navigate('/register/SignupForm')} // 'Sign Up' 버튼 클릭 시 회원가입 페이지로 이동합니다.
             >
               Sign Up

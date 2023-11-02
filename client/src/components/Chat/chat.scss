@@ -16,18 +16,23 @@
 .container {
   border: solid 1px black;
   border-radius: 10px;
+  margin: 10px;
 }
 
 textarea {
   width: 100%;
-  display: flex;
-  justify-content: center;
 }
-
 
 .input_item {
   display: flex;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+}
+
+.rce-input-textarea {
+  margin: 0px 30px 0px 30px;
 }
 
 .me {
