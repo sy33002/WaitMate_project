@@ -12,15 +12,13 @@ function SigninForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/users/login', {
-        // 백엔드 API 경로를 수정해야 합니다.
+      const response = await axios.post('/users/login', {
         username,
         password,
       });
-
       if (response.status === 200) {
-
-      }
+        navigate('/map')
+      };
     } catch (error) {
       if (error.response && error.response.data) {
         // 백엔드에서 반환하는 오류 메시지를 설정합니다.

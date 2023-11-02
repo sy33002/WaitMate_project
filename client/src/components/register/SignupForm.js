@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import  { AxiosInstance, axiosInstance } from '../common/axiosInstance';
 
 function SignupForm() {
   const [id, setId] = useState('');
@@ -39,31 +40,42 @@ function SignupForm() {
     return true;
   };
 
-  const handleIdCheck = async () => {
+  const handleIdCheck = async (e) => {
     try {
-      const response = await axios.get(`/api/users/checkId/${id}`);
-      if (response.data.isDuplicate) {
-        alert('이미 사용 중인 아이디입니다.');
-      } else {
+      e.preventDefault()
+      const response = await axiosInstance.post(`user/check/userId`, {
+        userId : id
+      });
+      if (response.status === 200) {
         alert('사용 가능한 아이디입니다.');
       }
     } catch (error) {
       console.error(error);
-      alert('아이디 중복 확인 중 오류가 발생했습니다.');
+      if (error.response && error.response.status === 400) {
+        alert('이미 사용 중인 아이디입니다.');
+      } else {
+        console.error(error);
+        alert('아이디 중복 확인 중 오류가 발생했습니다.');
+      }
     }
   };
 
   const handleNicknameCheck = async () => {
     try {
-      const response = await axios.get(`/api/users/checkNickname/${nickName}`);
-      if (response.data.isDuplicate) {
-        alert('이미 사용 중인 닉네임입니다.');
-      } else {
+      const response = await axiosInstance.post(`user/check/nickname`, {
+        nickname : nickName
+      });
+      if (response.status === 200) {
         alert('사용 가능한 닉네임입니다.');
       }
     } catch (error) {
       console.error(error);
-      alert('닉네임 중복 확인 중 오류가 발생했습니다.');
+      if (error.response && error.response.status === 400) {
+        alert('이미 사용 중인 닉네임입니다.');
+      } else {
+        console.error(error);
+        alert('닉네임 중복 확인 중 오류가 발생했습니다.');
+      }
     }
   };
 
@@ -73,14 +85,13 @@ function SignupForm() {
     if (!isValidForm()) {
       return;
     }
-
     try {
-      const response = await axios.post('/api/users/register', {
-        id,
+      const response =  await axiosInstance.post(`user/register`, {
+        userId : id,
         password,
-        nickName,
+        nickname : nickName,
       });
-      if (response.status === 200) {
+      if (response.status === 201) {
         setShowModal(true);
       }
     } catch (error) {
@@ -115,7 +126,11 @@ function SignupForm() {
               onChange={(e) => setId(e.target.value)}
               className="p-2 mt-1 w-full border rounded-lg pl-3 pr-16 shadow-inner shadow-gray-300"
             />
-            <button className="absolute top-1/2 transform -translate-y-0.5 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg">
+            <button 
+              className="absolute top-1/2 transform -translate-y-0.5 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg"
+              type='button'
+              onClick={handleIdCheck}
+            >
               중복 확인
             </button>
           </div>
@@ -151,7 +166,11 @@ function SignupForm() {
               onChange={(e) => setNickName(e.target.value)}
               className="p-2 mt-1 w-full border rounded-lg pl-3 pr-16 shadow-inner shadow-gray-300"
             />
-            <button className="absolute top-1/2 transform -translate-y-0.5 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg shadow-lg">
+            <button 
+              type='button'
+              className="absolute top-1/2 transform -translate-y-0.5 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg shadow-lg"
+              onClick={handleNicknameCheck}
+            >
               중복 확인
             </button>
           </div>
