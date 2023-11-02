@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { axiosInstance } from '../common/axiosInstance';
 
 function SigninForm() {
   const [username, setUsername] = useState('');
@@ -12,15 +13,13 @@ function SigninForm() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/users/login', {
-        // 백엔드 API 경로를 수정해야 합니다.
-        username,
+      const response = await axiosInstance.post('user/login', {
+        userId : username,
         password,
       });
-
       if (response.status === 200) {
-
-      }
+        navigate('/map')
+      };
     } catch (error) {
       if (error.response && error.response.data) {
         // 백엔드에서 반환하는 오류 메시지를 설정합니다.
@@ -62,6 +61,7 @@ function SigninForm() {
             </button>
             <button
               className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              type='button'
               onClick={() => navigate('/register/SignupForm')} // 'Sign Up' 버튼 클릭 시 회원가입 페이지로 이동합니다.
             >
               Sign Up
