@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
+import {socket} from '../../socket';
 // import sendButtonImage from './images/chatting_send_btn.png';
 export default function Chat() {
+ 
+
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
+  const [sender, setSender] = useState(''); 
+  const [receiver, setReceiver] = useState('');
   const inputReferance = React.createRef();
 
-  console.log(inputValue);
+  
 
   const sendMessage = () => {
+    const messageData = {
+      room: 'your-room-id',
+      sender: sender,
+      receiver: receiver,
+      messageType: 'text',
+      messageContent: inputValue,
+    };
+     // 서버로 메시지를 전송합니다.
+     socket.emit('message', messageData);
+
     if (inputValue.trim() !== '') {
       const currentTime = new Date().toLocaleTimeString();
       console.log(currentTime);
@@ -18,7 +33,8 @@ export default function Chat() {
         {
           avatar: '/images/me.jpg',
           message: inputValue,
-          title: 'user1',
+          sender: sender,
+          receiver : receiver,
           time: currentTime,
         },
       ]);
@@ -27,8 +43,33 @@ export default function Chat() {
     }
   };
 
+  useEffect(() => {
+    socket.on('smessage', (messageData) => {
+      const currentTime = new Date().toLocaleTimeString();
+      const newMessage = {
+        avatar: '/images/me.jpg',
+        message: messageData.messageContent,
+        sender: messageData.sender,
+        receiver : messageData.receiver,
+        time: currentTime,
+      };
+
+
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+
+    return () => {
+      socket.off('smessage');
+    };
+  }, [sender]);
   return (
     <div className="container">
+      <div className="user-input">
+        <input
+          type="text"
+          placeholder="Enter your user ID"
+          value={sender}
+          onChange={(e) => setSender(e.target.value)}
       <button>거래중</button> {/* 상태값 : 거래중, 예약중, 거래완료 추가 */}
       <div className="message_container">
         <MessageBox
@@ -42,19 +83,23 @@ export default function Chat() {
           }}
           notch={false}
         />
-        {messages.map((msg, index) => (
-          <MessageBox
-            key={index}
-            className="avatar1"
-            avatar={'/images/me.jpg'}
-            size="xsmall"
-            type={'text'}
-            title={msg.title}
-            text={`${msg.time}  ${msg.message} `}
-            notch={false}
-          />
-        ))}
       </div>
+      <div className="message_container">
+          {messages.map((msg, index) => (
+            <MessageBox
+            key={index}
+            className={msg.sender === sender ? 'me' : 'other'}
+            avatar={msg.avatar}
+            size="xsmall"
+            type="text"
+            title={`${msg.sender} - ${msg.time}`}
+            text={msg.message}
+            notch={false}
+          >
+          </MessageBox>
+          ))}
+          
+        </div>
       <div className="input_container">
         <Input
           className="input_item"
