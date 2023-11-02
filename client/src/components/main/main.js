@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../main/main.css';
-import Footer from '../Footer';
+import Footer from '../../static/Footer';
 export default function Main() {
   useEffect(() => {
     AOS.init();
