@@ -1,7 +1,7 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
-import {socket} from '../../componen';
+import { socket } from '../../socket';
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
@@ -16,8 +16,8 @@ export default function Chat() {
       messageType: 'text',
       messageContent: inputValue,
     };
-     // 서버로 메시지를 전송합니다.
-     socket.emit('message', messageData);
+    // 서버로 메시지를 전송합니다.
+    socket.emit('message', messageData);
     if (inputValue.trim() !== '') {
       const currentTime = new Date().toLocaleTimeString();
       console.log(currentTime);
@@ -27,7 +27,7 @@ export default function Chat() {
           avatar: '/images/me.jpg',
           message: inputValue,
           sender: sender,
-          receiver : receiver,
+          receiver: receiver,
           time: currentTime,
         },
       ]);
@@ -42,7 +42,7 @@ export default function Chat() {
         avatar: '/images/me.jpg',
         message: messageData.messageContent,
         sender: messageData.sender,
-        receiver : messageData.receiver,
+        receiver: messageData.receiver,
         time: currentTime,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -62,8 +62,8 @@ export default function Chat() {
         />
       </div>
       <div className="message_container">
-          {messages.map((msg, index) => (
-            <MessageBox
+        {messages.map((msg, index) => (
+          <MessageBox
             key={index}
             className={msg.sender === sender ? 'me' : 'other'}
             avatar={msg.avatar}
@@ -72,10 +72,9 @@ export default function Chat() {
             title={`${msg.sender} - ${msg.time}`}
             text={msg.message}
             notch={false}
-          >
-          </MessageBox>
-          ))}
-        </div>
+          ></MessageBox>
+        ))}
+      </div>
       <div className="input_container">
         <Input
           className="input_item"

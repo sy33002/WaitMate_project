@@ -1,44 +1,45 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import DaumPostcode from 'react-daum-postcode';
+import AddressSearchModal from '../proxy/AddressSearchModal';
 
 export default function ProxyRegister() {
-  const { control, handleSubmit, formState } = useForm();
+  const { control, handleSubmit, formState,setValue } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
-  const [ modalState, setModalState ] = useState(false);
-  const [ inputAddressValue, setInputAddressValue ] = useState('');
+  const [inputAddressValue, setInputAddressValue] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log("onSubmit 들어옴!");
+    const address = inputAddressValue;
     const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('address', data.address);
+    formData.append('proxyAddress', address);
+    formData.append('id', data.id);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
-    formData.append('introduction', data.introduction);
+    formData.append('proxyMsg', data.introduction);
     formData.append('image', imageFile);
-    console.log(formData);
+    // formData 출력
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ': ' + pair[1]);
+    }
+    try {
+      const response = await fetch(`http://localhost:8080/proxy/register`, {
+        method: 'POST',
+        body: formData,
+      });
+      if (response === 'success') {
+        // const responseData = await response.json();
+        console.log("aaaa");
+      } else {
+        console.error('Failed to submit the form');
+        console.log(response.status);
+      }
+    } catch (error) {
+      console.error('Error!');
+    }
   };
 
-  const onUpload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file); // 이미지 파일을 읽어 Base64로 변환
-    reader.onload = () => {
-      setImageFile(reader.result); // 이미지 파일 경로 설정
-    };
-  }
-
-  const onCompletePost = data => {
-    setModalState(false);
-    setInputAddressValue(data.jibunAddress);
-  };
-
-  const handleAddressClick = () => {
-    const res = !modalState;
-    setModalState(res);
-  };
-  
   return (
     <div>
       <p className='text-xs'>you are my best proxy.</p>
@@ -61,49 +62,39 @@ export default function ProxyRegister() {
                 <input
                   accept='image/*'
                   multiple type='file'
-                  onChange={(e) => onUpload(e)}
                   className=''
                 />
               </div>
               <div>
                 <div>
-                  <label className='text-sm text-background m-1'>Name</label>
+                  <label className='text-sm text-background m-1'>*Id</label>
                   <Controller
-                    name="name"
+                    name="id"
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => <input {...field} placeholder="이름"/>}
                   />
                 </div><br />
                 <div>
-                <label className='text-sm text-background m-1'>Address</label>
-                <Controller
-                  name="address"
-                  control={control}
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <div className="relative">
-                      <input
-                        {...field}
-                        onChange={handleAddressClick}
-                        className="w-full"
-                        placeholder="주소"
-                        value={inputAddressValue}
-                      />
-                      <DaumPostcode
-                        onComplete={onCompletePost}
-                        className={`w-40 h-40 absolute top-12 ${modalState ? 'block' : 'hidden'}`}
-                      ></DaumPostcode>
-                      <button
-                        onClick={handleAddressClick}
-                        className="bg-primary text-white px-2 py-1 mt-2"
-                      >
-                        주소 찾기
-                      </button>
-                    </div>
-                  )}
-                />
-                </div>
+                <label className="text-sm text-background m-1">
+                  *Store Address
+                </label>
+                  <input
+                    name='address'
+                    className="w-full"
+                    placeholder="주소"
+                    value={inputAddressValue}
+                  />
+                <button onClick={() => {
+                  setIsModalOpen(true); 
+                  setValue('address', '');}}
+                  >주소 검색</button>
+                {isModalOpen && (
+                  <AddressSearchModal
+                    setInputAddressValue ={setInputAddressValue}
+                  />
+                )}
+              </div>
                   <br />
                 <div>
                 <label className='text-sm text-background m-1'>Gender</label>
@@ -113,19 +104,30 @@ export default function ProxyRegister() {
                     rules={{ required: true }}
                     render={({ field }) => (
                       <select {...field}>
+                        <option value="male">Select Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                       </select>
                     )}
                   />
                 </div><br />
-              <div>
-              <label className='text-sm text-background m-1'>Age</label>
+                <div>
+                <label className='text-sm text-background m-1'>*Age</label>
                 <Controller
                   name="age"
                   control={control}
-                  rules={{ required: true, min: 18 }}
-                  render={({ field }) => <input type="number" {...field} />}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <select {...field}>
+                      <option value="">Select Age</option>
+                      <option value="10대">10대</option>
+                      <option value="20대">20대</option>
+                      <option value="30대">30대</option>
+                      <option value="30대">40대</option>
+                      <option value="30대">50대</option>
+                      <option value="30대">60대 이상</option>
+                    </select>
+                  )}
                 />
               </div><br />
               <div>
@@ -133,13 +135,11 @@ export default function ProxyRegister() {
                 <Controller
                   name="introduction"
                   control={control}
-                  rules={{ required: true }}
+                  rules={{ required: false }}
                   render={({ field }) => <textarea {...field} />}
                 />
               </div><br />
-              <button type="submit" disabled={formState.isSubmitting}
-              className='text-background text-sm border'
-              >
+              <button type="submit" className="text-background text-sm border">
                 register
               </button>
               </div>
