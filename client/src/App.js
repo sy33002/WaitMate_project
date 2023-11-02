@@ -20,11 +20,24 @@ function App() {
   return (
     <div className="bg-background">
       <BrowserRouter>
-      
         <Routes>
           <Route path="/" element={<Main></Main>} />
-          <Route path='/proxyDetail/chat' element={<Template><Chat/></Template>}></Route>
-          <Route path='/map' element={<Template><Map/></Template>}></Route>
+          <Route
+            path="/proxyDetail/chat"
+            element={
+              <Template>
+                <Chat />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/map"
+            element={
+              <Template>
+                <Map />
+              </Template>
+            }
+          ></Route>
           <Route
             path="/proxy/register"
             element={
