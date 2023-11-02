@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import  { AxiosInstance, axiosInstance } from '../common/axiosInstance';
+import  { axiosInstance } from '../common/axiosInstance';
 
 function SignupForm() {
   const [id, setId] = useState('');
