@@ -1,6 +1,12 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import useUserStore from '../store/useUserStore';
+import useCookieStore from '../store/useCookieStore';
 function Header() {
+  const { setCookie } = useCookieStore()
+  const {id, nickname, photo, userId} = useUserStore()
+  useEffect(() => {
+    setCookie()
+  }, []) 
   return (
     <header className='bg-background flex justify-between items-center p-1'>
       <div>
@@ -13,7 +19,7 @@ function Header() {
           </div>
         </div>
         <button className="text-primary bg-transparent py-2 px-4 sm:py-2 sm:px-4 md:py-2 md:px-8 text-xs sm:text-sm md:text-base hover:bg-primary hover:text-white rounded-full">
-          <a href="/your-link">My Profile</a>
+          <a href="/your-link">{nickname}</a>
         </button>
       </div>
     </header>
