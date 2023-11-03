@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-
 export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
-
+  
   useEffect(() => {
-    fetch(`http://localhost:8080/proxy/detail?proxyId=${proxyId}`)
+    fetch(`http://localhost:8080/proxy/detail/${proxyId}`)
     .then(response => response.json())
     .then(data => {
-      setProxy(data.proxy);
-      console.log(proxy);
+      setProxy(data.result);
+      console.log(data.result);
     })
     .catch(error => {
       console.error('데이터 가져오는 중 오류 발생!', error);
     });
-  }, []);
+  }, [proxyId]);
 
   return (
     <div className="h-full w-full flex justify-center items-center">
@@ -33,7 +32,7 @@ export default function ProxyDetail() {
             <div className="w-3/5 h-full flex flex-col  justify-center">
               <span className="text-primary text-lg">Title: </span>
               <br />
-              <span className="text-primary">proxy ID: </span>
+              <span className="text-primary">proxy ID: {proxy.id}</span>
             </div>
             <div className="w-10 h-full bg-primary"></div>
           </div>
@@ -42,14 +41,14 @@ export default function ProxyDetail() {
               <span className="text-background">Age/ Gender</span>
             </div>
             <div className="flex justify-center items-center">
-              <span>{proxy.age}/ {proxy.gender}</span>
+              <span>{proxy.age}/{proxy.gender}</span>
             </div>
             <br />
             <div className="bg-primary w-1/3 flex justify-center items-center">
               <span className="text-background">Address</span>
             </div>
             <div className="flex justify-center items-center">
-              <span>{proxy.address}</span>
+              <span>{proxy.proxyAddress}</span>
             </div>
             <br />
             <div className="bg-primary w-1/3 flex justify-center items-center">
