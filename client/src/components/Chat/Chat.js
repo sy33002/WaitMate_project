@@ -95,7 +95,7 @@ export default function Chat() {
           leftButtons={
             <Button
               className="input_file_btn"
-              text=" "
+              text=" 📎 "
               backgroundColor="white"
               onClick={() => document.getElementById('fileInput').click()}
             />

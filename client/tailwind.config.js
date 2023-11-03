@@ -20,6 +20,11 @@ module.exports = {
         lg: '2px 2px 5px rgba(0, 0, 0, 0.2)',
         // 추가 원하는 그림자 스타일을 여기에 정의할 수 있습니다.
       },
+      fontFamily: {
+        coding: ['"Nanum Gothic Coding"'],
+        mono: ['monospace'],
+        hanna: ['hanna'],
+      },
     },
   },
   plugins: [],
