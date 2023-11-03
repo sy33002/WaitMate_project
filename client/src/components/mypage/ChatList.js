@@ -5,7 +5,7 @@ function ChatList() {
     {
       name: '바비킴',
       time: '23:11+8',
-      message: '가능하면 어떻게요? ...',
+      message: '거래 가능? ...',
     },
     // 추가적인 채팅 데이터...
   ];
