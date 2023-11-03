@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import DaumPostcode from 'react-daum-postcode';
 import AddressSearchModal from '../proxy/AddressSearchModal';
+import axios from 'axios'; 
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState,setValue } = useForm();
@@ -12,32 +13,29 @@ export default function ProxyRegister() {
   const onSubmit = async (data) => {
     console.log("onSubmit 들어옴!");
     const address = inputAddressValue;
-    const formData = new FormData();
-    formData.append('proxyAddress', address);
-    formData.append('id', data.id);
-    formData.append('gender', data.gender);
-    formData.append('age', data.age);
-    formData.append('proxyMsg', data.introduction);
-    formData.append('image', imageFile);
-    // formData 출력
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ': ' + pair[1]);
-    }
-    try {
-      const response = await fetch(`http://localhost:8080/proxy/register`, {
-        method: 'POST',
-        body: formData,
-      });
-      if (response === 'success') {
-        // const responseData = await response.json();
-        console.log("aaaa");
-      } else {
-        console.error('Failed to submit the form');
-        console.log(response.status);
-      }
-    } catch (error) {
-      console.error('Error!');
-    }
+    const addressParts = address.split(" ");
+    const combinedAddress = addressParts[0] + " " + addressParts[1];
+    console.log(combinedAddress);
+    const data1 = {
+      proxyAddress: combinedAddress,
+      title: data.title,
+      id: data.id,
+      gender: data.gender,
+      age: data.age,
+      proxyMsg: data.proxyMsg,
+    };
+    console.log(data1);
+    axios({
+      url : 'http://localhost:8080/proxy/proxyTest',
+      method : 'post',
+      data : data1,
+    })
+    .then((res)=>{
+      console.log(res.data);
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
   };
 
   return (
@@ -67,6 +65,15 @@ export default function ProxyRegister() {
               </div>
               <div>
                 <div>
+                    <label className='text-sm text-background m-1'>*Title</label>
+                    <Controller
+                      name="title"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field }) => <input {...field} placeholder="소개 제목"/>}
+                    />
+                  </div><br />
+                <div>
                   <label className='text-sm text-background m-1'>*Id</label>
                   <Controller
                     name="id"
@@ -77,10 +84,10 @@ export default function ProxyRegister() {
                 </div><br />
                 <div>
                 <label className="text-sm text-background m-1">
-                  *Store Address
+                  *Address
                 </label>
                   <input
-                    name='address'
+                    name='Address'
                     className="w-full"
                     placeholder="주소"
                     value={inputAddressValue}
@@ -97,7 +104,7 @@ export default function ProxyRegister() {
               </div>
                   <br />
                 <div>
-                <label className='text-sm text-background m-1'>Gender</label>
+                <label className='text-sm text-background m-1'>*Gender</label>
                   <Controller
                     name="gender"
                     control={control}
@@ -120,12 +127,12 @@ export default function ProxyRegister() {
                   render={({ field }) => (
                     <select {...field}>
                       <option value="">Select Age</option>
-                      <option value="10대">10대</option>
-                      <option value="20대">20대</option>
-                      <option value="30대">30대</option>
-                      <option value="30대">40대</option>
-                      <option value="30대">50대</option>
-                      <option value="30대">60대 이상</option>
+                      <option value="10">10대</option>
+                      <option value="20">20대</option>
+                      <option value="30">30대</option>
+                      <option value="40">40대</option>
+                      <option value="50">50대</option>
+                      <option value="60">60대 이상</option>
                     </select>
                   )}
                 />
@@ -133,7 +140,7 @@ export default function ProxyRegister() {
               <div>
               <label className='text-sm text-background m-1'>Introduce yourself!</label><br/>
                 <Controller
-                  name="introduction"
+                  name="proxyMsg"
                   control={control}
                   rules={{ required: false }}
                   render={({ field }) => <textarea {...field} />}
