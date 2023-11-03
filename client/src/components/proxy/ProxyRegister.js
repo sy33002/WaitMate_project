@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import DaumPostcode from 'react-daum-postcode';
 import AddressSearchModal from '../proxy/AddressSearchModal';
@@ -70,18 +70,12 @@ export default function ProxyRegister() {
                       name="title"
                       control={control}
                       rules={{ required: true }}
-                      render={({ field }) => <input {...field} placeholder="소개 제목"/>}
+                      render={({ field }) => <input {...field} placeholder="자기소개에 대한 제목을 지어주세요!"/>}
                     />
+                    {formState.errors.title && (
+                      <p className="text-red-500">제목은 필수 항목입니다 :D</p>
+                    )}
                   </div><br />
-                <div>
-                  <label className='text-sm text-background m-1'>*Id</label>
-                  <Controller
-                    name="id"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => <input {...field} placeholder="이름"/>}
-                  />
-                </div><br />
                 <div>
                 <label className="text-sm text-background m-1">
                   *Address
@@ -91,18 +85,22 @@ export default function ProxyRegister() {
                     className="w-full"
                     placeholder="주소"
                     value={inputAddressValue}
+                    readOnly
+                    onChange={(e) => setInputAddressValue(e.target.value)}
                   />
-                <button onClick={() => {
-                  setIsModalOpen(true); 
-                  setValue('address', '');}}
-                  >주소 검색</button>
-                {isModalOpen && (
-                  <AddressSearchModal
-                    setInputAddressValue ={setInputAddressValue}
-                  />
-                )}
-              </div>
-                  <br />
+                  <button onClick={() => {
+                    setIsModalOpen(true); 
+                    setValue('address', '');}}
+                    >주소 검색</button>
+                  {isModalOpen && (
+                    <AddressSearchModal
+                      setInputAddressValue ={setInputAddressValue}
+                    />
+                  )}
+                  {formState.errors.address && (
+                    <p className="text-red-500">주소는 필수 항목입니다.</p>
+                  )}
+                </div><br />
                 <div>
                 <label className='text-sm text-background m-1'>*Gender</label>
                   <Controller
@@ -117,6 +115,9 @@ export default function ProxyRegister() {
                       </select>
                     )}
                   />
+                  {formState.errors.gender && (
+                      <p className="text-red-500">성별은 필수 항목입니다 :D</p>
+                    )}
                 </div><br />
                 <div>
                 <label className='text-sm text-background m-1'>*Age</label>
@@ -136,6 +137,9 @@ export default function ProxyRegister() {
                     </select>
                   )}
                 />
+                {formState.errors.age && (
+                      <p className="text-red-500">나이는 필수 항목입니다 :D</p>
+                    )}
               </div><br />
               <div>
               <label className='text-sm text-background m-1'>Introduce yourself!</label><br/>
