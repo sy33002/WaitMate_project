@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import DaumPostcode from 'react-daum-postcode';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
 
