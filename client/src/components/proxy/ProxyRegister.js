@@ -9,33 +9,34 @@ export default function ProxyRegister() {
   const [imageFile, setImageFile] = useState('/images/someone.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clickRegister, setClickRegister] = useState(false);
 
   const onSubmit = async (data) => {
     console.log("onSubmit 들어옴!");
-    const address = inputAddressValue;
-    const addressParts = address.split(" ");
-    const combinedAddress = addressParts[0] + " " + addressParts[1];
-    console.log(combinedAddress);
-    const data1 = {
-      proxyAddress: combinedAddress,
-      title: data.title,
-      id: data.id,
-      gender: data.gender,
-      age: data.age,
-      proxyMsg: data.proxyMsg,
-    };
-    console.log(data1);
-    axios({
-      url : 'http://localhost:8080/proxy/proxyTest',
-      method : 'post',
-      data : data1,
-    })
-    .then((res)=>{
-      console.log(res.data);
-    })
-    .catch((err)=>{
-      console.error(err);
-    })
+      const address = inputAddressValue;
+      const addressParts = address.split(" ");
+      const combinedAddress = addressParts[0] + " " + addressParts[1];
+      console.log(combinedAddress);
+      const data1 = {
+        proxyAddress: combinedAddress,
+        title: data.title,
+        id: data.id,
+        gender: data.gender,
+        age: data.age,
+        proxyMsg: data.proxyMsg,
+      };
+      console.log(data1);
+      axios({
+        url : 'http://localhost:8080/proxy/proxyTest',
+        method : 'post',
+        data : data1,
+      })
+      .then((res)=>{
+        console.log(res.data);
+      })
+      .catch((err)=>{
+        console.error(err);
+      })
   };
 
   return (
@@ -72,7 +73,7 @@ export default function ProxyRegister() {
                       rules={{ required: true }}
                       render={({ field }) => <input {...field} placeholder="자기소개에 대한 제목을 지어주세요!"/>}
                     />
-                    {formState.errors.title && (
+                    {formState.errors.title && clickRegister && (
                       <p className="text-red-500">제목은 필수 항목입니다 :D</p>
                     )}
                   </div><br />
@@ -88,17 +89,14 @@ export default function ProxyRegister() {
                     readOnly
                     onChange={(e) => setInputAddressValue(e.target.value)}
                   />
-                  <button onClick={() => {
-                    setIsModalOpen(true); 
-                    setValue('address', '');}}
-                    >주소 검색</button>
+                  <button onClick={() => {setIsModalOpen(true); 
+                    setValue('address', '');}}>주소 검색</button>
                   {isModalOpen && (
                     <AddressSearchModal
-                      setInputAddressValue ={setInputAddressValue}
+                      setInputAddressValue={setInputAddressValue}
+                      isModalOpen={isModalOpen}
+                      setIsModalOpen={setIsModalOpen}
                     />
-                  )}
-                  {formState.errors.address && (
-                    <p className="text-red-500">주소는 필수 항목입니다.</p>
                   )}
                 </div><br />
                 <div>
@@ -115,7 +113,7 @@ export default function ProxyRegister() {
                       </select>
                     )}
                   />
-                  {formState.errors.gender && (
+                  {formState.errors.gender && clickRegister && (
                       <p className="text-red-500">성별은 필수 항목입니다 :D</p>
                     )}
                 </div><br />
@@ -137,7 +135,7 @@ export default function ProxyRegister() {
                     </select>
                   )}
                 />
-                {formState.errors.age && (
+                {formState.errors.age && clickRegister && (
                       <p className="text-red-500">나이는 필수 항목입니다 :D</p>
                     )}
               </div><br />
@@ -150,7 +148,9 @@ export default function ProxyRegister() {
                   render={({ field }) => <textarea {...field} />}
                 />
               </div><br />
-              <button type="submit" className="text-background text-sm border">
+              <button type="submit" 
+                onClick={() => setClickRegister(true)}
+                className="text-background text-sm border">
                 register
               </button>
               </div>
