@@ -14,7 +14,7 @@ export default function ProxyRegister() {
     console.log("onSubmit 들어옴!");
     const address = inputAddressValue;
     const addressParts = address.split(" ");
-    const combinedAddress = addressParts[0] + " " + addressParts[1] + " " + addressParts[2];
+    const combinedAddress = addressParts[0] + " " + addressParts[1];
     console.log(combinedAddress);
     const data1 = {
       proxyAddress: combinedAddress,
@@ -24,7 +24,7 @@ export default function ProxyRegister() {
       age: data.age,
       proxyMsg: data.proxyMsg,
     };
-
+    console.log(data1);
     axios({
       url : 'http://localhost:8080/proxy/proxyTest',
       method : 'post',
@@ -84,7 +84,7 @@ export default function ProxyRegister() {
                 </div><br />
                 <div>
                 <label className="text-sm text-background m-1">
-                  *Store Address
+                  *Address
                 </label>
                   <input
                     name='Address'
