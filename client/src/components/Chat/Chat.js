@@ -79,24 +79,20 @@ export default function Chat() {
         <Input
           className="input_item"
           referance={inputReferance}
-          placeholder="Start chatting..."
           multiline={true}
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           rightButtons={
             <Button
               className="input_send_btn"
-              color="purple"
-              backgroundColor="white"
-              text="Send"
+              backgroundColor="transparent"
               onClick={sendMessage}
             />
           }
           leftButtons={
             <Button
               className="input_file_btn"
-              text=" 📎 "
-              backgroundColor="white"
+              backgroundColor="transparent"
               onClick={() => document.getElementById('fileInput').click()}
             />
           }
