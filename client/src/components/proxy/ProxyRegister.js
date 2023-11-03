@@ -13,9 +13,12 @@ export default function ProxyRegister() {
   const onSubmit = async (data) => {
     console.log("onSubmit 들어옴!");
     const address = inputAddressValue;
-    console.log(address);
+    const addressParts = address.split(" ");
+    const combinedAddress = addressParts[0] + " " + addressParts[1] + " " + addressParts[2];
+    console.log(combinedAddress);
     const data1 = {
-      proxyAddress: address,
+      proxyAddress: combinedAddress,
+      title: data.title,
       id: data.id,
       gender: data.gender,
       age: data.age,
@@ -62,6 +65,15 @@ export default function ProxyRegister() {
               </div>
               <div>
                 <div>
+                    <label className='text-sm text-background m-1'>*Title</label>
+                    <Controller
+                      name="title"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field }) => <input {...field} placeholder="소개 제목"/>}
+                    />
+                  </div><br />
+                <div>
                   <label className='text-sm text-background m-1'>*Id</label>
                   <Controller
                     name="id"
@@ -92,7 +104,7 @@ export default function ProxyRegister() {
               </div>
                   <br />
                 <div>
-                <label className='text-sm text-background m-1'>Gender</label>
+                <label className='text-sm text-background m-1'>*Gender</label>
                   <Controller
                     name="gender"
                     control={control}
