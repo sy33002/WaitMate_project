@@ -3,6 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../main/main.css';
 import Footer from '../../static/Footer'
+import { Link } from 'react-router-dom';
 export default function Main() {
   useEffect(() => {
     AOS.init();
@@ -54,13 +55,15 @@ export default function Main() {
             ></div>
             {/* 로그인 버튼 */}
             <div className="absolute bottom-52 right-32 md:bottom-52 md:right-32 sm:bottom-52 sm:right-32">
-              <button
-                className="bg-primary rounded-md px-8 py-4 text-white"
-                data-aos="fade-left"
-                data-aos-delay="900"
-              >
-                로그인
-              </button>
+              <Link to="register/SigninForm">
+                <button
+                  className="bg-primary rounded-md px-8 py-4 text-white"
+                  data-aos="fade-left"
+                  data-aos-delay="900"
+                >
+                  로그인
+                </button>
+              </Link>
             </div>
             {/* 카카오 로그인 버튼 */}
             <div className="absolute bottom-32 right-32 md:bottom-32 md:right-32 sm:bottom-32 sm:right-32">

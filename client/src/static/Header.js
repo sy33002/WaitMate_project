@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
 import useCookieStore from '../store/useCookieStore';
+
 function Header() {
-  const { setCookie } = useCookieStore()
-  const {id, nickname, photo, userId} = useUserStore()
+  const { setCookie } = useCookieStore();
+  const {id, nickname, photo, userId} = useUserStore();
   useEffect(() => {
-    setCookie()
+    setCookie();
   }, []) 
   return (
     <header className='bg-background flex justify-between items-center p-1'>
       <div>
-        <img src='/images/logo.png' alt='로고' className='w-12 md:w-24 sm:w-20' />
+        <Link to="/map">
+          <img src='/images/logo.png' alt='로고' className='w-12 md:w-24 sm:w-20' />
+        </Link>
       </div>
       <div className="flex items-center">
         <div className="relative">
