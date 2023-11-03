@@ -56,7 +56,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/proxy/:proxyId"
+            path="/proxy/detail/:proxyId"
             element={
               <Template>
                 <ProxyDetail />
