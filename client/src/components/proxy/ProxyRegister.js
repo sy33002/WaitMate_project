@@ -34,6 +34,7 @@ export default function ProxyRegister() {
     const addressParts = address.split(" ");
     const combinedAddress = addressParts[0] + " " + addressParts[1];
     console.log(combinedAddress);
+
   
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
@@ -46,7 +47,6 @@ export default function ProxyRegister() {
     if (data.photo[0]) {
       formData.append('photo', data.photo[0]);
     }
-
     axios({
       url: 'http://localhost:8080/proxy/proxyTest',
       method: 'post',

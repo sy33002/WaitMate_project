@@ -3,6 +3,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import '../main/main.css';
 import Footer from '../../static/Footer'
+import { Link } from 'react-router-dom';
 export default function Main() {
   useEffect(() => {
     AOS.init();
@@ -36,7 +37,7 @@ export default function Main() {
               alt="도형"
               className="w-[1450px] h-[406px]"
             /> */}
-              <div className="absolute inset-0 left-20 flex justify-start items-center text-primary text-shadow-lg font-bold text-5xl sm:text-4xl md:text-5xl lg:text-7xl">
+              <div className="absolute inset-0 left-20 flex justify-start items-center text-primary text-shadow-lg font-hanna text-5xl sm:text-4xl md:text-5xl lg:text-7xl ">
                 More Service Less Time
               </div>
             </div>
@@ -54,13 +55,15 @@ export default function Main() {
             ></div>
             {/* 로그인 버튼 */}
             <div className="absolute bottom-52 right-32 md:bottom-52 md:right-32 sm:bottom-52 sm:right-32">
-              <button
-                className="bg-primary rounded-md px-8 py-4 text-white"
-                data-aos="fade-left"
-                data-aos-delay="900"
-              >
-                로그인
-              </button>
+              <Link to="register/SigninForm">
+                <button
+                  className="bg-primary rounded-md px-8 py-4 text-white"
+                  data-aos="fade-left"
+                  data-aos-delay="900"
+                >
+                  로그인
+                </button>
+              </Link>
             </div>
             {/* 카카오 로그인 버튼 */}
             <div className="absolute bottom-32 right-32 md:bottom-32 md:right-32 sm:bottom-32 sm:right-32">
@@ -80,11 +83,11 @@ export default function Main() {
         <br />
       </div>
       {/* 두번째 문단 */}
-      <div className="flex flex-wrap mt-10">
+      <div className="flex flex-wrap mt-10 font-hanna">
         {/* 프록시 소개 (왼쪽) */}
-        <div className="flex flex-col justify-center w-1/2 p-4">
-          <div className="mb-4">프록시란(Proxy)?</div>
-          <div className="mb-4">
+        <div className="flex flex-col justify-center w-1/2 p-4 font-hanna ">
+          <div className="mb-4 text-lg">프록시란(Proxy)?</div>
+          <div className="mb-4 text-lg">
             웨이트 메이트에게 요청을 받아 웨이팅 서비스를 제공하는 사람을
             말합니다!
           </div>
@@ -92,25 +95,25 @@ export default function Main() {
 
         {/* 프록시 이미지 (오른쪽) */}
         <div className="w-1/2 p-4">
-          <img src="" alt="proxy" className="w-full" />
+          <img src="./images/proxy.png" alt="proxy" className="w-full" />
         </div>
 
         {/* 웨이트메이트 이미지 (왼쪽) */}
         <div className="w-1/2 p-4 mt-10">
-          <img src="" alt="waitmate" className="w-full" />
+          <img src="./images/waitMate.png" alt="waitmate" className="w-full" />
         </div>
 
         {/* 웨이트메이트 소개 (오른쪽) */}
         <div className="flex flex-col justify-center w-1/2 p-4 mt-10">
-          <div className="mb-4">웨이트 메이트(Wait Mait)란?</div>
-          <div className="mb-4">
+          <div className="mb-4 text-3xl">웨이트 메이트(Wait Mait)란?</div>
+          <div className="mb-4 text-3xl">
             프록시에게 웨이팅 서비스를 요청하는 사람을 말합니다! 언제 어디서든
             프록시를 통해 웨이팅 서비스를 제공받으세요!
           </div>
         </div>
 
         <div className="p-4 mt-10">
-          <div className="mb-4">
+          <div className="mb-4 mt-4 text-3xl">
             프록시와 웨이트 메이트가 만나 웨이트 메이트는 프록시가 제공해주는
             서비스를 통해 시간을 아낄수 있고, 프록시는 웨이트 메이트의 요청을
             들어주고 만족할 만한 대가를 받을 수 있어요
@@ -118,7 +121,7 @@ export default function Main() {
         </div>
 
         <div className="flex w-full p-4 mt-10">
-          <div className="flex flex-col justify-center w-1/2">
+          <div className="flex flex-col justify-center w-1/2 text-3xl ">
             언제, 어디서든 채팅을 통해 웨이트메이트와 프록시가 만나 대화를
             나눠보세요!
           </div>
@@ -128,7 +131,7 @@ export default function Main() {
           </div>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </>
   );
 }

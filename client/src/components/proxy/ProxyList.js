@@ -25,7 +25,6 @@ export default function WaitMateList({cities}) {
         if (response.ok) {
           const {list} = await response.json();
           setItems(list);
-          console.log("aaaaaaaaaaa",list);
         } else {
           console.log('데이터 가져오기 실패!');
         }

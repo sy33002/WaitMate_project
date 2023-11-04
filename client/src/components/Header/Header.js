@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useEffect }  from "react";
 
 export default function Header() {
   return (
@@ -8,7 +8,6 @@ export default function Header() {
       </div>
       <div className="flex ">
         <div style={{height: '100vh'}}className="flex flex-col bg-var--bg-color justify-start w-10">
-          
         </div>
       </div>
     </div>
