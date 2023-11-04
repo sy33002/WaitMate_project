@@ -10,32 +10,56 @@ export default function ProxyRegister() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일을 넣어주십시오');
+       
+        e.target.value = '';
+      } else {
+        
+        setValue('photo', e.target.files);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImageFile(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
   const onSubmit = async (data) => {
     console.log("onSubmit 들어옴!");
-      const address = inputAddressValue;
-      const addressParts = address.split(" ");
-      const combinedAddress = addressParts[0] + " " + addressParts[1];
-      console.log(combinedAddress);
-      const data1 = {
-        proxyAddress: combinedAddress,
-        title: data.title,
-        id: data.id,
-        gender: data.gender,
-        age: data.age,
-        proxyMsg: data.proxyMsg,
-      };
-      console.log(data1);
-      axios({
-        url : 'http://localhost:8080/proxy/proxyTest',
-        method : 'post',
-        data : data1,
-      })
-      .then((res)=>{
+
+    const address = inputAddressValue;
+    const addressParts = address.split(" ");
+    const combinedAddress = addressParts[0] + " " + addressParts[1];
+    console.log(combinedAddress);
+
+  
+    const formData = new FormData();
+    formData.append('proxyAddress', combinedAddress);
+    formData.append('title', data.title);
+    formData.append('id', data.id);
+    formData.append('gender', data.gender);
+    formData.append('age', data.age);
+    formData.append('proxyMsg', data.proxyMsg);
+   
+    if (data.photo[0]) {
+      formData.append('photo', data.photo[0]);
+    }
+    axios({
+      url: 'http://localhost:8080/proxy/proxyTest',
+      method: 'post',
+      data: formData,
+    })
+      .then((res) => {
         console.log(res.data);
       })
-      .catch((err)=>{
+      .catch((err) => {
         console.error(err);
-      })
+      });
   };
 
   return (
@@ -57,10 +81,12 @@ export default function ProxyRegister() {
                   className="max-w-full max-h-40" />}
               </div>
               <label className="text-sm text-background m-1">Upload Image</label><br />
-                <input
-                  accept='image/*'
-                  multiple type='file'
-                  className=''
+              <input
+                  type="file"
+                  name="photo"
+                  onChange={(e) => {
+                    handleFileChange(e);
+                  }}
                 />
               </div>
               <div>
