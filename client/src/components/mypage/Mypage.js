@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function Mypage() {
+function Mypage({ id, nickname, photo, userId }) {
   const [activeTab, setActiveTab] = useState(null);
   const [profileImage, setProfileImage] = useState('👤');
   const [listItems, setListItems] = useState([]);

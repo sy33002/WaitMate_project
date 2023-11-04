@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-export default function ProxyDetail() {
+export default function ProxyDetail({ id, nickname, photo, userId }) {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
   

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
 import { socket } from '../../socket';
-export default function Chat() {
+export default function Chat({ id, nickname, photo, userId }) {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
   const [sender, setSender] = useState('');

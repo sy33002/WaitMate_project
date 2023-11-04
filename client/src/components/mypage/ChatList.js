@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ChatList() {
+function ChatList({ id, nickname, photo, userId }) {
   const chats = [
     {
       name: '바비킴',

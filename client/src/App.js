@@ -91,11 +91,11 @@ function App({id, nickname, photo, userId}) {
           ></Route>
           <Route 
             path="/register/SigninForm" 
-            element={<SigninForm id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+            element={<SigninForm />}>
           </Route>
           <Route 
             path="/register/SignupForm" 
-            element={<SignupForm id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+            element={<SignupForm />}>
           </Route>
           <Route 
             path="/register/UserInfo" 
