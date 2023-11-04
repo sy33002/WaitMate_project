@@ -1,122 +1,73 @@
-// import React from "react";
-// import GoogleMapReact from 'google-map-react';
-
-// const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-// export default function SimpleMap(){
-//   const defaultProps = {
-//     center: {git 
-//       lat: 10.99835602,
-//       lng: 77.01502627
-//     },
-//     zoom: 11
-//   };
-
-//   return (
-//     // Important! Always set the container height explicitly
-//     <div style={{ height: '100vh', width: '100%' }}>
-//       <GoogleMapReact
-//         bootstrapURLKeys={{ key: "" }}
-//         defaultCenter={defaultProps.center}
-//         defaultZoom={defaultProps.zoom}
-//       >
-//         <AnyReactComponent
-//           lat={59.955413}
-//           lng={30.337844}
-//           text="My Marker"
-//         />
-//       </GoogleMapReact>
-//     </div>
-//   );
-// }
-
-// import React from 'react';
-// import Map from 'react-kakao-maps-sdk';
-
-// export default function Map() {
-//   return (
-//     <Map
-//       center={{ lat: 33.5563, lng: 126.79581 }} // 지도의 중심 좌표
-//       style={{ width: '800px', height: '600px' }} // 지도 크기
-//       level={3} // 지도 확대 레벨
-//     ></Map>
-//   );
-// }
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-export default function MapComponent({ id, nickname, photo, userId }) {
-  const { kakao } = window;
-  const locations = [
-    { title: '카카오', latlng: { lat: 33.450705, lng: 126.570677 } },
-    { title: '생태연못', latlng: { lat: 33.450936, lng: 126.569477 } },
-    { title: '텃밭', latlng: { lat: 33.450879, lng: 126.56994 } },
-    { title: '근린공원', latlng: { lat: 33.451393, lng: 126.570738 } },
-  ];
+export default function MapComponent({ setLocationInfo }) {
+  const [userLocation, setUserLocation] = useState(null);
+  const [addressLocation, setAddressLocation] = useState(null);
+  const [inputAddressValue, setInputAddressValue] = useState('');
 
-  const [location, setLocation] = useState({ latitude: null, longitude: null });
-  const [address, setAddress] = useState(null);
+  // 사용자의 현재 위치를 가져오는 함수
+  function getCurrentLocation(callback) {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        callback({ lat: latitude, lng: longitude });
+      });
+    } else {
+      console.log('Geolocation is not supported by this browser.');
+      callback(null);
+    }
+  }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
+    // 컴포넌트가 처음 렌더링될 때 사용자의 현재 위치를 가져옵니다.
+    getCurrentLocation((location) => {
+      if (location) {
+        setUserLocation(location);
+      }
+    });
   }, []);
 
-  const successHandler = (response) => {
-    const { latitude, longitude } = response.coords;
-    setLocation({ latitude, longitude });
-  };
-
-  const errorHandler = (error) => {
-    console.log(error);
-  };
-
-  const getAddress = (lat, lng) => {
-    const geocoder = new kakao.maps.services.Geocoder();
-    const coord = new kakao.maps.LatLng(lat, lng);
-
-    const callback = function (result, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        setAddress(result[0].address);
-      }
-    };
-    geocoder.coord2Address(coord.getLng(), coord.getLat(), callback);
+  const waitMateAddress = () => {
+    console.log('data : ', addressLocation); // addressLocation을 사용
+    // setLocationInfo 함수를 호출하여 위치 정보 설정
+    setLocationInfo({
+      lat: addressLocation.lat,
+      lng: addressLocation.lng,
+    });
+    console.log('사용자 정보 호출', setLocationInfo);
   };
 
   return (
     <div>
       <Map
-        center={{
-          lat: location.latitude || 33.5563,
-          lng: location.longitude || 126.79581,
-        }}
-        style={{ width: '1000px', height: '800px' }}
+        className="map"
         level={3}
-        onClick={(e) => getAddress(e.latLng.getLat(), e.latLng.getLng())}
+        center={userLocation || addressLocation || { lat: 0, lng: 0 }} // 기본값 설정
+        style={{ width: '100%', height: '800px' }}
       >
-        {locations.map((loc, idx) => (
+        {/* 사용자의 위치를 마커로 표시 */}
+        {userLocation && (
           <MapMarker
-            key={`${loc.title}-${loc.latlng.lat}-${loc.latlng.lng}`}
-            position={loc.latlng}
+            position={userLocation}
+            text="Your Location"
             image={{
               src: './images/proxy.png',
               size: { width: 64, height: 64 },
             }}
-            title={loc.title}
-          />
-        ))}
-        {location.latitude && location.longitude && (
-          <MapMarker
-            position={{ lat: location.latitude, lng: location.longitude }}
           />
         )}
-        {address && (
-          <div>
-            현재 좌표의 주소는..
-            <p>address_name: {address.address_name}</p>
-            <p>region_1depth_name: {address.region_1depth_name}</p>
-            <p>region_2depth_name: {address.region_2depth_name}</p>
-            <p>region_3depth_name: {address.region_3depth_name}</p>
-          </div>
+
+        {/* 주소 검색 결과로 가져온 위치 정보를 마커로 표시 */}
+        {addressLocation && (
+          <MapMarker
+            position={waitMateAddress}
+            text={inputAddressValue}
+            image={{
+              src: './images/waitMate.png',
+              size: { width: 64, height: 64 },
+            }}
+          />
         )}
       </Map>
     </div>

@@ -1,34 +1,34 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
-
 export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, setValue, formState } = useForm();
   const [imageFile, setImageFile] = useState('/images/waitMate.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
+  const [locationInfo, setLocationInfo] = useState({});
 
   const onSubmit = async (data, event) => {
     console.log('dd');
     const wmAddress = inputAddressValue;
     const formData = new FormData();
-    formData.append('id',  1);
+    formData.append('id', 1);
     formData.append('title', data.title);
     formData.append('wmAddress', wmAddress);
     formData.append('date', data.date);
     formData.append('waitTime', data.time);
     formData.append('pay', data.pay);
     formData.append('description', data.detail);
-    formData.append('photo', imageFile);  
+    formData.append('photo', imageFile);
     try {
-      const response = await fetch(`http://localhost:8080/waitMate`, {
+      const response = await fetch(`http://localhost:3000/waitMate`, {
         method: 'POST',
         body: formData,
       });
       if (response === 'success') {
         // const responseData = await response.json();
-        console.log("aaaa");
+        console.log('aaaa');
       } else {
         console.error('Failed to submit the form');
         console.log(response.status);
@@ -56,9 +56,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                     className="border border-primary rounded-lg"
                   />
                 )}
-                <label className="text-xs text-primary m-1">
-                  가게 사진
-                </label>
+                <label className="text-xs text-primary m-1">가게 사진</label>
               </div>
             </div>
             <div className="bg-primary ml-3 w-full flex flex-col p-3 rounded-lg">
@@ -71,36 +69,41 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                   render={({ field }) => <input {...field} />}
                 />
                 {formState.errors.title && clickRegister && (
-                      <p className="text-red-500">
-                        {formState.errors.title.type === 'required'
-                          ? '제목은 필수 항목입니다 :D'
-                          : '제목은 100자 이내로 입력해주세요'}
-                      </p>
-                    )}
+                  <p className="text-red-500">
+                    {formState.errors.title.type === 'required'
+                      ? '제목은 필수 항목입니다 :D'
+                      : '제목은 100자 이내로 입력해주세요'}
+                  </p>
+                )}
               </div>
               <br />
               <div>
                 <label className="text-sm text-background m-1">
                   *Store Address
                 </label>
-                  <input
-                    name='address'
-                    className="w-full"
-                    placeholder="주소"
-                    value={inputAddressValue}
-                  />
-                <button onClick={() => {
-                  setIsModalOpen(true); 
-                  setValue('address', '');}}
-                  >주소 검색</button>
+                <input
+                  name="address"
+                  className="w-full"
+                  placeholder="주소"
+                  value={inputAddressValue}
+                />
+                <button
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    setValue('address', '');
+                  }}
+                >
+                  주소 검색
+                </button>
                 {isModalOpen && (
                   <AddressSearchModal
-                    setInputAddressValue ={setInputAddressValue}
-                    isModalOpen={isModalOpen}
-                    setIsModalOpen={setIsModalOpen}
+                    setInputAddressValue={setInputAddressValue}
+                    setLocationInfo={setLocationInfo}
                   />
                 )}
-                {inputAddressValue === ''  && clickRegister && (<p className="text-red-500">주소는 필수 항목입니다 :D</p>)}
+                {inputAddressValue === '' && clickRegister && (
+                  <p className="text-red-500">주소는 필수 항목입니다 :D</p>
+                )}
               </div>
               <br />
               <div>
@@ -112,8 +115,8 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                   render={({ field }) => <input {...field} type="date" />}
                 />
                 {formState.errors.date && clickRegister && (
-                      <p className="text-red-500">날짜는 필수 항목입니다 :D</p>
-                    )}
+                  <p className="text-red-500">날짜는 필수 항목입니다 :D</p>
+                )}
               </div>
               <br />
               <div>
@@ -153,9 +156,11 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                 />
               </div>
               <br />
-              <button type="submit" 
+              <button
+                type="submit"
                 onClick={() => setClickRegister(true)}
-                className="text-background text-sm border">
+                className="text-background text-sm border"
+              >
                 register
               </button>
             </div>
