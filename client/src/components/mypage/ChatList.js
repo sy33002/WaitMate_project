@@ -14,7 +14,7 @@ const fetchMoreChats = (cursor) => {
 };
 
 function ChatList({ id, nickname, photo, userId }) {
-  const chats = [
+  const [chats, setChats] = useState([
     {
       id: 'chat-0',
       nickname: '홍길동',
@@ -43,6 +43,7 @@ function ChatList({ id, nickname, photo, userId }) {
       profilePic: '/images/waitmate.png',
     },
   ]);
+
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
