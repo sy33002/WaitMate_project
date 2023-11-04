@@ -1,25 +1,53 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-// 이 함수는 API 또는 서버에서 더 많은 채팅 데이터를 가져오는 것을 시뮬레이션합니다
-const fetchMoreChats = () => {
-  // 여기서 일반적으로 채팅 데이터를 더 불러오기 위해 API 호출을 하게 됩니다.
-  // 시연을 위해 우리는 더 많은 가짜 채팅 데이터를 해결하는 Promise를 반환합니다.
+const fetchMoreChats = (cursor) => {
+  // 이 부분은 실제 API 호출 로직을 대체합니다
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([
-        // 여기에 추가 가짜 채팅 데이터를 추가합니다.
-      ]);
-    }, 1500); // 네트워크 요청 지연을 시뮬레이션합니다
+      const newChats = [
+        // 새로운 채팅 데이터를 추가
+        // cursor 값에 따라 분기하여 다른 데이터를 반환
+      ];
+      resolve({ data: newChats, nextCursor: cursor + newChats.length });
+    }, 1500);
   });
 };
 
 function ChatList() {
   const [chats, setChats] = useState([
-    // ... 초기 채팅 데이터 ...
+    // ... 초기 채팅 데이터
+    {
+      id: 'chat-0',
+      nickname: '홍길동',
+      time: '13:00+9',
+      message: '안녕하세요, 채팅리스트에 오신 것을 환영합니다!',
+      profilePic: '/images/someone.png',
+    },
+    {
+      id: 'chat-1',
+      nickname: '카일',
+      time: '13:00+9',
+      message: '웨메 신청 ...',
+    },
+    {
+      id: 'chat-2',
+      nickname: '꿍치',
+      time: '14:33+9',
+      message: '프록시 가능하세요?',
+      profilePic: '/images/waitmate.png',
+    },
+    {
+      id: 'chat-3',
+      nickname: '가을',
+      time: '15:40+2',
+      message: 'ㅇㅇ식당입니다!',
+      profilePic: '/images/waitmate.png',
+    },
   ]);
   const [loading, setLoading] = useState(false);
-  const [hasMore, setHasMore] = useState(true); // 더 불러올 채팅이 있는지 추적하는 상태
+  const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
+  const [cursor, setCursor] = useState(0);
 
   useEffect(() => {
     const options = {
@@ -33,7 +61,6 @@ function ChatList() {
       observer.observe(loader.current);
     }
 
-    // 컴포넌트가 언마운트될 때 옵저버를 정리합니다
     return () => {
       if (loader.current) {
         observer.unobserve(loader.current);
@@ -49,36 +76,56 @@ function ChatList() {
   }
 
   async function loadMoreChats() {
+    if (!hasMore || loading) return;
+
     setLoading(true);
-    const newChats = await fetchMoreChats();
-    if (newChats.length === 0) {
-      setHasMore(false); // 데이터가 더 없으면 모든 채팅을 불러왔다는 것을 알 수 있습니다
-    } else {
+    try {
+      const response = await fetchMoreChats(cursor);
+      const newChats = response.data;
+      const nextCursor = response.nextCursor;
+
       setChats((prevChats) => [...prevChats, ...newChats]);
+      setCursor(nextCursor);
+      setHasMore(newChats.length > 0);
+    } catch (error) {
+      console.error('채팅을 불러오는 중 문제가 발생했습니다:', error);
     }
     setLoading(false);
   }
 
   return (
     <div className="ml-40 mr-40 mt-10 mb-10 background">
-      {/* ... 헤더 ... */}
       <div className="flex justify-center mb-5">
         <h1 className="text-primary text-3xl">My Chat List</h1>
       </div>
       <div className="w-full h-96 overflow-y-auto p-5 rounded-lg bg-white border-primary border-2">
         <div className="overflow-y-auto">
-          {chats.map((chat, index) => (
+          {chats.map((chat) => (
             <div
-              key={index}
+              key={chat.id}
               className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary"
             >
-              {/* ... 채팅 아이템 ... */}
+              <img
+                src={chat.profilePic || '/images/someone.png'}
+                alt={`${chat.nickname}의 프로필 사진`}
+                className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
+              />
+              <div className="chat-item">
+                <div className="flex flex-row items-center">
+                  <div className="nickname">{chat.nickname}</div>
+                  <div className="time text-xs">{chat.time}</div>
+                </div>
+                <div className="message">{chat.message}</div>
+              </div>
             </div>
           ))}
-          {/* 로더 요소 */}
-          <div ref={loader} className="loading">
-            {loading && <div>채팅 정보 불러오는 중...</div>}
-          </div>
+          {loading && (
+            <div className="flex justify-center items-center">
+              <div className="loader"></div>
+              채팅 목록을 가져오는 중...
+            </div>
+          )}
+          <div ref={loader} />
         </div>
       </div>
     </div>
