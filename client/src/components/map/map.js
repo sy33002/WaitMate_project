@@ -45,7 +45,7 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-export default function MapComponent() {
+export default function MapComponent({ id, nickname, photo, userId }) {
   const { kakao } = window;
   const locations = [
     { title: '카카오', latlng: { lat: 33.450705, lng: 126.570677 } },

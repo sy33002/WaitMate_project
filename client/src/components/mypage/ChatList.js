@@ -13,9 +13,8 @@ const fetchMoreChats = (cursor) => {
   });
 };
 
-function ChatList() {
-  const [chats, setChats] = useState([
-    // ... 초기 채팅 데이터
+function ChatList({ id, nickname, photo, userId }) {
+  const chats = [
     {
       id: 'chat-0',
       nickname: '홍길동',

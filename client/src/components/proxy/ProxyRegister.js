@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
 
-export default function ProxyRegister() {
+export default function ProxyRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, formState,setValue } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
