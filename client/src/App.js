@@ -19,7 +19,7 @@ import cities from './static/cities';
 import Mypage from './components/mypage/Mypage';
 import ChatList from './components/mypage/ChatList';
 
-function App() {
+function App({id, nickname, photo, userId}) {
   return (
     <div className="bg-background">
       <BrowserRouter>
@@ -29,7 +29,7 @@ function App() {
             path="/proxyDetail/chat"
             element={
               <Template>
-                <Chat />
+                <Chat id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -37,7 +37,7 @@ function App() {
             path="/map"
             element={
               <Template>
-                <Map />
+                <Map id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -45,7 +45,7 @@ function App() {
             path="/proxy/register"
             element={
               <Template>
-                <ProxyRegister />
+                <ProxyRegister id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -53,7 +53,7 @@ function App() {
             path="/proxy/getter"
             element={
               <Template>
-                <ProxyList cities={cities} />
+                <ProxyList cities={cities} id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -61,7 +61,7 @@ function App() {
             path="/proxy/detail/:proxyId"
             element={
               <Template>
-                <ProxyDetail />
+                <ProxyDetail id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -69,7 +69,7 @@ function App() {
             path="/waitMate/"
             element={
               <Template>
-                <WaitMateRegister />
+                <WaitMateRegister id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -77,7 +77,7 @@ function App() {
             path="/waitMate/list"
             element={
               <Template>
-                <WaitMateList cities={cities} />
+                <WaitMateList cities={cities} id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
@@ -85,15 +85,30 @@ function App() {
             path="/waitMate/detail/:wmId"
             element={
               <Template>
-                <WaitMateDetail />
+                <WaitMateDetail id={id} nickname={nickname} photo={photo} userId={userId}/>
               </Template>
             }
           ></Route>
-          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
-          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
-          <Route path="/register/UserInfo" element={<UserInfo />}></Route>
-          <Route path="/mypage/Mypage" element={<Mypage />}></Route>
-          <Route path="/mypage/ChatList" element={<ChatList />}></Route>
+          <Route 
+            path="/register/SigninForm" 
+            element={<SigninForm id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+          </Route>
+          <Route 
+            path="/register/SignupForm" 
+            element={<SignupForm id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+          </Route>
+          <Route 
+            path="/register/UserInfo" 
+            element={<UserInfo id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+          </Route>
+          <Route 
+            path="/mypage/Mypage" 
+            element={<Mypage id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+          </Route>
+          <Route 
+           path="/mypage/ChatList" 
+           element={<ChatList id={id} nickname={nickname} photo={photo} userId={userId}/>}>
+          </Route>
 
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
