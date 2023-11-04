@@ -61,8 +61,10 @@ export default function MapComponent({ setLocationInfo }) {
         {/* 주소 검색 결과로 가져온 위치 정보를 마커로 표시 */}
         {addressLocation && (
           <MapMarker
-            position={waitMateAddress}
-            text={inputAddressValue}
+          position={{
+            lat: setLocation.lat,
+            lng: setLocation.lng
+          }}
             image={{
               src: './images/waitMate.png',
               size: { width: 64, height: 64 },
