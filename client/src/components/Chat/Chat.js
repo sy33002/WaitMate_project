@@ -19,7 +19,12 @@ export default function Chat() {
     // 서버로 메시지를 전송합니다.
     socket.emit('message', messageData);
     if (inputValue.trim() !== '') {
-      const currentTime = new Date().toLocaleTimeString();
+      const currentTime = new Date().toLocaleTimeString([], {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
       console.log(currentTime);
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -37,7 +42,12 @@ export default function Chat() {
   };
   useEffect(() => {
     socket.on('smessage', (messageData) => {
-      const currentTime = new Date().toLocaleTimeString();
+      const currentTime = new Date().toLocaleTimeString([], {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+
       const newMessage = {
         avatar: '/images/me.jpg',
         message: messageData.messageContent,
@@ -66,11 +76,16 @@ export default function Chat() {
           <MessageBox
             key={index}
             className={msg.sender === sender ? 'me' : 'other'}
-            avatar={msg.avatar}
+            avatar={
+              msg.sender !== sender &&
+              (index === 0 || messages[index - 1].sender !== msg.sender)
+                ? msg.avatar
+                : null
+            }
             size="xsmall"
             type="text"
-            title={`${msg.sender} - ${msg.time}`}
             text={msg.message}
+            title={index === 0 ? `${msg.sender}  ${msg.time}` : msg.time}
             notch={false}
           ></MessageBox>
         ))}
