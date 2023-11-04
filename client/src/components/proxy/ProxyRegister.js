@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import DaumPostcode from 'react-daum-postcode';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
 
@@ -10,29 +9,55 @@ export default function ProxyRegister() {
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일을 넣어주십시오');
+       
+        e.target.value = '';
+      } else {
+        
+        setValue('photo', e.target.files);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImageFile(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
   const onSubmit = async (data) => {
     console.log("onSubmit 들어옴!");
     const address = inputAddressValue;
-    console.log(address);
-    const data1 = {
-      proxyAddress: address,
-      id: data.id,
-      gender: data.gender,
-      age: data.age,
-      proxyMsg: data.proxyMsg,
-    };
+    const addressParts = address.split(" ");
+    const combinedAddress = addressParts[0] + " " + addressParts[1];
+    console.log(combinedAddress);
+  
+    const formData = new FormData();
+    formData.append('proxyAddress', combinedAddress);
+    formData.append('title', data.title);
+    formData.append('id', data.id);
+    formData.append('gender', data.gender);
+    formData.append('age', data.age);
+    formData.append('proxyMsg', data.proxyMsg);
+   
+    if (data.photo[0]) {
+      formData.append('photo', data.photo[0]);
+    }
 
     axios({
-      url : 'http://localhost:8080/proxy/proxyTest',
-      method : 'post',
-      data : data1,
+      url: 'http://localhost:8080/proxy/proxyTest',
+      method: 'post',
+      data: formData,
     })
-    .then((res)=>{
-      console.log(res.data);
-    })
-    .catch((err)=>{
-      console.error(err);
-    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -54,13 +79,24 @@ export default function ProxyRegister() {
                   className="max-w-full max-h-40" />}
               </div>
               <label className="text-sm text-background m-1">Upload Image</label><br />
-                <input
-                  accept='image/*'
-                  multiple type='file'
-                  className=''
+              <input
+                  type="file"
+                  name="photo"
+                  onChange={(e) => {
+                    handleFileChange(e);
+                  }}
                 />
               </div>
               <div>
+                <div>
+                    <label className='text-sm text-background m-1'>*Title</label>
+                    <Controller
+                      name="title"
+                      control={control}
+                      rules={{ required: true }}
+                      render={({ field }) => <input {...field} placeholder="소개 제목"/>}
+                    />
+                  </div><br />
                 <div>
                   <label className='text-sm text-background m-1'>*Id</label>
                   <Controller
@@ -72,7 +108,7 @@ export default function ProxyRegister() {
                 </div><br />
                 <div>
                 <label className="text-sm text-background m-1">
-                  *Store Address
+                  *Address
                 </label>
                   <input
                     name='Address'
@@ -92,7 +128,7 @@ export default function ProxyRegister() {
               </div>
                   <br />
                 <div>
-                <label className='text-sm text-background m-1'>Gender</label>
+                <label className='text-sm text-background m-1'>*Gender</label>
                   <Controller
                     name="gender"
                     control={control}
