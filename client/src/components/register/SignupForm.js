@@ -144,7 +144,7 @@ function SignupForm() {
               className="p-2 mt-1 w-full border rounded-lg pl-3 pr-16 shadow-inner shadow-gray-300"
             />
             <button
-              className="absolute top-1/2 transform -translate-y-0.5 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg"
+              className="absolute top-1/2 transform -translate-y-3 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg"
               type="button"
               onClick={handleIdCheck}
             >
@@ -185,6 +185,16 @@ function SignupForm() {
               }}
               className="p-2 mt-1 w-full border rounded-lg shadow-inner shadow-gray-300"
             />
+            {passwordValid ? (
+              <p className="text-xs mt-1 valid-message">
+                비밀번호는 숫자와 알파벳을 포함한 8자 이상입니다.
+              </p>
+            ) : (
+              <p className="text-xs mt-1 valid-message">
+                비밀번호는 숫자와 알파벳을 포함한 8자 이상입니다.
+              </p>
+            )}
+
             <p className={`text-xs mt-1 ${getPasswordMatchColor()}`}>
               {getPasswordMatchMessage()}
             </p>
@@ -203,13 +213,17 @@ function SignupForm() {
             />
             <button
               type="button"
-              className="absolute top-1/2 transform -translate-y-0.5 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg shadow-lg"
+              className="absolute top-1/2 transform -translate-y-3 right-3 flex items-center text-sm bg-white text-primary border-2 border-primary py-1 px-2 rounded-lg shadow-lg"
               onClick={handleNicknameCheck}
             >
               중복 확인
             </button>
-            {!nickNameValid && (
-              <p className="text-xs mt-1 text-red-500">
+            {nickNameValid ? (
+              <p className="text-xs mt-1 valid-message">
+                닉네임은 2~10자 이내로 입력해주세요.
+              </p>
+            ) : (
+              <p className="text-xs mt-1 valid-message">
                 닉네임은 2~10자 이내로 입력해주세요.
               </p>
             )}
