@@ -20,6 +20,7 @@ export default function ProxyDetail() {
     <div className="h-full w-full flex justify-center items-center">
       <div className="h-4/5 w-4/5 bg-white flex">
         <div className="bg-primary w-1/3 h-full flex flex-col justify-center items-center">
+          <img src={proxy.photo} alt="Proxy Photo" />
           {/* {imageFile && <img src={imageFile} alt="Preview"  */}
           {/* className="max-w-full max-h-40" />} */}
           <button className="bg-background text-primary mb-2">
@@ -30,9 +31,9 @@ export default function ProxyDetail() {
         <div className="flex flex-col h-full w-2/3">
           <div className="h-1/3 w-full flex justify-around">
             <div className="w-3/5 h-full flex flex-col  justify-center">
-              <span className="text-primary text-lg">Title: </span>
+              <span className="text-primary text-lg">Title: {proxy.title}</span>
               <br />
-              <span className="text-primary">proxy ID: {proxy.id}</span>
+              <span className="text-primary">proxy ID: {proxy.proxyId}</span>
             </div>
             <div className="w-10 h-full bg-primary"></div>
           </div>
