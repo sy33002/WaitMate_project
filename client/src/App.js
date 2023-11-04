@@ -16,6 +16,8 @@ import UserInfo from './components/register/UserInfo';
 // import MyWaitmate from './components/mypage/MyWaitmate';
 import Chat from './components/Chat/Chat';
 import cities from './static/cities';
+import Mypage from './components/mypage/Mypage';
+import ChatList from './components/mypage/ChatList';
 
 function App() {
   return (
@@ -51,7 +53,7 @@ function App() {
             path="/proxy/getter"
             element={
               <Template>
-                <ProxyList cities={cities}/>
+                <ProxyList cities={cities} />
               </Template>
             }
           ></Route>
@@ -75,7 +77,7 @@ function App() {
             path="/waitMate/list"
             element={
               <Template>
-                <WaitMateList cities={cities}/>
+                <WaitMateList cities={cities} />
               </Template>
             }
           ></Route>
@@ -90,6 +92,8 @@ function App() {
           <Route path="/register/SigninForm" element={<SigninForm />}></Route>
           <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route path="/register/UserInfo" element={<UserInfo />}></Route>
+          <Route path="/mypage/Mypage" element={<Mypage />}></Route>
+          <Route path="/mypage/ChatList" element={<ChatList />}></Route>
 
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}

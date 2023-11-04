@@ -16,7 +16,7 @@
 .container {
   border: solid 1px black;
   border-radius: 10px;
-  margin: 10px;
+  margin: 0.3rem;
 }
 
 textarea {
@@ -28,44 +28,70 @@ textarea {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  margin: 10px;
 }
 
 .rce-input-textarea {
-  margin: 0px 30px 0px 30px;
+  margin: 0px 0.2rem 0px 0.2rem;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  outline: none;
+  cursor: pointer;
+}
+
+.rce-input-textarea:focus {
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  outline-offset: 5px;
 }
 
 .me {
-  text-align: right; 
-  background-color: #a0e5e5; 
-  margin-right: 10px; 
-  
- 
+  text-align: right;
+  background-color: #a0e5e5;
+  margin-right: 10px;
+
   .rce-mbox-title {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-  
   }
-  
-  
+
   .rce-avatar-container.default.default {
     width: 5vw;
-   
   }
 }
 
 .other {
-  text-align: left; 
-  background-color: orange; 
+  text-align: left;
+  background-color: orange;
 
   .rce-avatar-container.default.default {
-    width: 5vw; 
-  
+    width: 5vw;
   }
 }
 
 .message_container {
-  max-height: 75vh; 
+  max-height: 75vh;
   overflow: auto;
+}
+
+.input_send_btn {
+  background-image: url('../../../public/images/chatting_send_btn.png');
+  background-size: 30px 30px; // 이미지가 버튼에 맞게 조절됩니다.
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none; // 기본 버튼의 테두리를 제거
+  width: 44px; // 버튼의 너비 (이미지의 너비에 맞게 설정)
+  height: 40px; // 버튼의 높이 (이미지의 높이에 맞게 설정)
+}
+.input_file_btn {
+  background-image: url('../../../public/images/file.png');
+  background-size: 30px 30px; // 이미지가 버튼에 맞게 조절됩니다.
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+  border: none; // 기본 버튼의 테두리를 제거
+  width: 44px; // 버튼의 너비 (이미지의 너비에 맞게 설정)
+  height: 40px; // 버튼의 높이 (이미지의 높이에 맞게 설정)
 }
