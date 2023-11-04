@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProxyListBox from './ProxyListBox';
 
-export default function WaitMateList({cities}) {
+export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);

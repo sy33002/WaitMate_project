@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
-export default function WaitMateDetail() {
+export default function WaitMateDetail({ id, nickname, photo, userId }) {
   const { wmId } = useParams();
   const [waitMate, setWaitMate] = useState({});
   const [liked, setLiked] = useState(false);

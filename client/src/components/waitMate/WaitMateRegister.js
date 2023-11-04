@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
 
-export default function WaitMateRegister() {
+export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, setValue, formState } = useForm();
   const [imageFile, setImageFile] = useState('/images/waitMate.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
