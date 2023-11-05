@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
-import useCookieStore from '../store/useCookieStore';
 
 function Header() {
-  const { setCookie } = useCookieStore();
-  const {id, nickname, photo, userId} = useUserStore();
+  const {id, nickname, photo, userId, setUserInfo} = useUserStore();
   useEffect(() => {
-    setCookie();
+    setUserInfo()
   }, []) 
   return (
     <header className='bg-background flex justify-between items-center p-1'>

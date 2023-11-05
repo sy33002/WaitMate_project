@@ -7,15 +7,16 @@ const useUserStore = create((set) => ({
   nickname : '',
   profileImg : '',
   setUserInfo : async () => {
-    const response = await axiosInstance.get('/user/myInfo')
-    console.log(response)
-    const {id, userId, nickname, photo} = response.data
-    set(({
-      id : id,
-      userId : userId,
-      nickname : nickname,
-      profileImg : photo
-    }))
+    if (useUserStore.getState().id === '') {
+      const response = await axiosInstance.get('/user/myInfo');
+      const {id, userId, nickname, photo} = response.data;
+      set(({
+        id : id,
+        userId : userId,
+        nickname : nickname,
+        profileImg : photo
+      }));
+    }
   } 
 }))
 
