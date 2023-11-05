@@ -1,6 +1,7 @@
 import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import axios from 'axios';
+import MapComponent from '../map/map';
 
 export default function AddressSearchModal({
   setInputAddressValue,
@@ -16,7 +17,8 @@ export default function AddressSearchModal({
       lat: data.y,
       lng: data.x,
     });
-
+    // console.log('setLocationInfo.lat called');
+    // console.log('lat:', setLocationInfo.lat, 'lng:', setLocationInfo.lng);
     const searchTxt = data.address;
     const config = {
       headers: {
@@ -35,6 +37,7 @@ export default function AddressSearchModal({
         const firstDocument = result.data.documents[0];
         console.log('x :', firstDocument.x);
         console.log('y :', firstDocument.y);
+
         if (firstDocument.x && firstDocument.y) {
           setLocationInfo({
             address_name: firstDocument.address.address_name,
