@@ -1,23 +1,47 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import {wmSubmenu} from './SideBarSub';
+import {proxySubmenu} from './SideBarSub';
+import {mychatSubmenu} from './SideBarSub';
 
-function SidebarItem({ text, textSize, url }) {
+function SidebarItem({ text, subMenu }) {
+  const [isSubMenuOpen, setSubMenuOpen] = useState(false);
+
+  const toggleSubMenu = () => {
+    setSubMenuOpen(!isSubMenuOpen);
+  };
+
   return (
-    <Link to={`/${url}`}>
-      <li className={`text-${textSize} text-primary sm:ml-2 sm:py-1 sm:px-2 md:ml-4 md:py-2 md:px-4 text-base sm:text-sm md:text-lg`}>
+    <div>
+      <li
+        className={`text-primary`}
+        onClick={toggleSubMenu}
+      >
         {text}
       </li>
-    </Link>
+      {isSubMenuOpen && <ul>{subMenu}</ul>}
+    </div>
   );
 }
 
 function Sidebar() {
   return (
-    <div className="w-1/5 p-4 h-screen mt-20 bg-background">
-      <ul className="h-full flex flex-col justify-start">
-        <SidebarItem text="Wait Mate" textSize="primary" url="waitmate" />
-        <SidebarItem text="Proxy" textSize="sm" url="proxy" />
-        <SidebarItem text="My Chat" textSize="md" url="mychat" />
+    <div className="p-4 bg-background w-58 h-screen mt-16">
+      <ul className="text-lg xl:text-xl h-full flex flex-col justify-start item-center text-center">
+        <div className='h-1/4'>
+        <SidebarItem 
+          text="Wait Mate" 
+          subMenu={wmSubmenu} />
+        </div>
+        <div className='h-1/4'>
+        <SidebarItem 
+          text="Proxy"
+         subMenu={proxySubmenu} />
+        </div>
+        <div className='h-1/4'>
+        <SidebarItem 
+          text="My Chat"
+         subMenu={mychatSubmenu} />
+        </div>
       </ul>
     </div>
   );
