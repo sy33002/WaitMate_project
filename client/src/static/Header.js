@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
-import useCookieStore from '../store/useCookieStore';
 
 function Header() {
   const { setCookie } = useCookieStore();
-  const { id, nickname, photo, userId } = useUserStore();
+   const {id, nickname, photo, userId, setUserInfo} = useUserStore();
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    setCookie();
-  }, []);
+    setUserInfo()
+  }, []) 
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
 
   const profileImage = photo || '/images/waitMate2.png';
-
+  
   return (
     <div>
     <header className='bg-background h-20 flex justify-between items-center p-2 w-full'>
