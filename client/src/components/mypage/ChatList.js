@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const fetchMoreChats = (cursor) => {
   // 이 부분은 실제 API 호출 로직을 대체합니다
@@ -50,10 +51,10 @@ function ChatList({ id, nickname, photo, userId }) {
       profilePic: '/images/waitmate.png',
     },
     {
-      id: 'chat-5',
-      nickname: '여름',
-      time: '08:55+2',
-      message: '굳 !',
+      id: 'chat-3',
+      nickname: '가을',
+      time: '15:40+2',
+      message: 'ㅇㅇ식당입니다!',
       profilePic: '/images/waitmate.png',
     },
   ]);
@@ -115,23 +116,22 @@ function ChatList({ id, nickname, photo, userId }) {
       <div className="w-full h-96 overflow-y-auto p-5 rounded-lg bg-white border-primary border-2">
         <div className="overflow-y-auto">
           {chats.map((chat) => (
-            <div
-              key={chat.id}
-              className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary"
-            >
-              <img
-                src={chat.profilePic || '/images/someone.png'}
-                alt={`${chat.nickname}의 프로필 사진`}
-                className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
-              />
-              <div className="chat-item">
-                <div className="flex flex-row items-center">
-                  <div className="nickname">{chat.nickname}</div>
-                  <div className="time text-xs">{chat.time}</div>
+            <Link to={`/chat/${chat.id}`} key={chat.id}>
+              <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
+                <img
+                  src={chat.profilePic || '/images/someone.png'}
+                  alt={`${chat.nickname}의 프로필 사진`}
+                  className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
+                />
+                <div className="chat-item">
+                  <div className="flex flex-row items-center">
+                    <div className="nickname">{chat.nickname}</div>
+                    <div className="time text-xs">{chat.time}</div>
+                  </div>
+                  <div className="message">{chat.message}</div>
                 </div>
-                <div className="message">{chat.message}</div>
               </div>
-            </div>
+            </Link>
           ))}
           {loading && (
             <div className="flex justify-center items-center">
