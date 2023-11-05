@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
-export default function MapComponent({ setLocationInfo }) {
+export default function MapComponent({ locationInfo }) {
   const [userLocation, setUserLocation] = useState(null);
-  const [addressLocation, setAddressLocation] = useState(null);
-  const [inputAddressValue, setInputAddressValue] = useState('');
 
   // 사용자의 현재 위치를 가져오는 함수
   function getCurrentLocation(callback) {
@@ -28,22 +26,17 @@ export default function MapComponent({ setLocationInfo }) {
     });
   }, []);
 
-  const waitMateAddress = () => {
-    console.log('data : ', addressLocation); // addressLocation을 사용
-    // setLocationInfo 함수를 호출하여 위치 정보 설정
-    setLocationInfo({
-      lat: addressLocation.lat,
-      lng: addressLocation.lng,
-    });
-    console.log('사용자 정보 호출', setLocationInfo);
+  const hardcodedLocationInfo = {
+    marker1: { lat: 37.123, lng: 127.456 },
+    marker2: { lat: 38.789, lng: 128.012 },
   };
-
+  
   return (
     <div>
       <Map
         className="map"
         level={3}
-        center={userLocation || addressLocation || { lat: 0, lng: 0 }} // 기본값 설정
+        center={userLocation || { lat: 0, lng: 0 }} // 기본값 설정
         style={{ width: '100%', height: '800px' }}
       >
         {/* 사용자의 위치를 마커로 표시 */}
@@ -58,19 +51,24 @@ export default function MapComponent({ setLocationInfo }) {
           />
         )}
 
-        {/* 주소 검색 결과로 가져온 위치 정보를 마커로 표시 */}
-        {addressLocation && (
-          <MapMarker
-          position={{
-            lat: setLocation.lat,
-            lng: setLocation.lng
-          }}
-            image={{
-              src: './images/waitMate.png',
-              size: { width: 64, height: 64 },
-            }}
-          />
-        )}
+        {/* locationInfo의 데이터를 마커로 표시 */}
+        {Object.keys(locationInfo).map((key, index) => {
+          const data = locationInfo[key];
+          console.log("data", data)
+          if (data && data.lat && data.lng) {
+            return (
+              <MapMarker
+                key={index}
+                position={{ lat: data.lat, lng: data.lng }}
+                text={key} // 각 데이터의 텍스트 표시 설정 (원하는 대로 수정 가능)
+                image={{
+                  src: './images/waitMate.png',
+                  size: { width: 64, height: 64 },
+                }}
+              />
+            );
+          }
+        })}
       </Map>
     </div>
   );

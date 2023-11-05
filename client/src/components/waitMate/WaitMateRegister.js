@@ -37,7 +37,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
       console.error('Error!');
     }
   };
-
+  console.log("setlocationInfo",setLocationInfo.lat);
   return (
     <div className="w-full">
       <p className="text-xs">좋은 웨이트메이트가 되어주세요!</p>
