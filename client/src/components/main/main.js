@@ -9,47 +9,62 @@ export default function Main() {
     AOS.init();
   });
   return (
-    <div class="container">
-      <div class="first_column">
-        <img class="waitMate"src="./images/main/WAITMATE.png"/>
-      <br/>
-        <img class="waitMate_letter" src="./images/main/WaitMate_letter.png"/>
-      <br/>
-
-        <button class="login"></button>
-        <button class="kakao_login"></button>
-      <br/>
-
-        <img
-          class="background_img"
-          src="./images/main/Rectangle_layer.png"
-        />
-      </div>
-      <br/>
-
-      <div class="character_column">
-        <div>
-          <img class="character_character"src="./images/main/Character.png" />
+    <>
+      <div class="container">
+        <div class="first_column">
+          <img class="waitMate" src="./images/main/WAITMATE.png" />
+          <br />
+          <img
+            class="waitMate_letter"
+            src="./images/main/WaitMate_letter.png"
+          />
+          <br />
+          <img class="waitMateProxy" src="./images/main/Group_1.png" />
+          <div class="button">
+            <button class="login"></button>
+            <button class="kakao_login"></button>
+          </div>
+          <br />
+          <img class="background_img" src="./images/main/Rectangle_layer.png" />
         </div>
-        <div>
-          <img class="character_character_Group_2" src="./images/main/Group_2.png" />
-          <img class="character_character_Group_7" src="./images/main/Group 7.png" />
-        </div>
-        <div>
-          <img class="character_character_Group_8"src="./images/main/Group 8.png" />
-        </div>
-      </div>
-      <br/>
-      <div class="strength_column">
-        <img class="strength_Waitmate_3"src="./images/main/Waitmate_3.png" />
-      </div>
-      <br/>
+        <br />
 
-      <div class="chatting_column">
-        <img  class="chatting_Group_3"src="./images/main/Group_3.png"/>
-        <img  class="chatting_Group_4"src="./images/main/Group_4.png"/>
+        <div class="character_column">
+          <div>
+            <img
+              class="character_character"
+              src="./images/main/Character.png"
+            />
+          </div>
+          <div>
+            <img class="character_background" src="./images/main/Group 8.png" />
+          </div>
+          <div>
+            <div class="character_group">
+              <img
+                class="character_character_Group_2"
+                src="./images/main/Group_2.png"
+              />
+              <img
+                class="character_character_Group_7"
+                src="./images/main/Group 7.png"
+              />
+            </div>
+          </div>
+        </div>
+        <br />
+
+        <div class="strength_column">
+          <img class="strength_Waitmate_3" src="./images/main/Waitmate_3.png" />
+        </div>
+        <br />
+
+        <div class="chatting_column">
+          <img class="chatting_Group_3" src="./images/main/Group_3.png" />
+          <img class="chatting_Group_4" src="./images/main/Group_4.png" />
+        </div>
+        {/* <Footer /> */}
       </div>
-      {/* <Footer /> */}
-    </div>
+    </>
   );
 }
