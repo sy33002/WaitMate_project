@@ -11,15 +11,22 @@ export default function Main() {
   return (
     <div class="container">
       <div class="first_column">
-        <img class="waitMate"src="./images/main/WAITMATE.png"></img>
-        <img class="waitMate_letter" src="./images/main/WaitMate_letter.png"></img>
+        <img class="waitMate"src="./images/main/WAITMATE.png"/>
+      <br/>
+        <img class="waitMate_letter" src="./images/main/WaitMate_letter.png"/>
+      <br/>
+
         <button class="login"></button>
         <button class="kakao_login"></button>
+      <br/>
+
         <img
           class="background_img"
           src="./images/main/Rectangle_layer.png"
-        ></img>
+        />
       </div>
+      <br/>
+
       <div class="character_column">
         <div>
           <img class="character_character"src="./images/main/Character.png" />
@@ -32,12 +39,15 @@ export default function Main() {
           <img class="character_character_Group_8"src="./images/main/Group 8.png" />
         </div>
       </div>
+      <br/>
       <div class="strength_column">
         <img class="strength_Waitmate_3"src="./images/main/Waitmate_3.png" />
       </div>
+      <br/>
+
       <div class="chatting_column">
-        <img  class="chatting_Group_3"src="./images/main/Group_3.png"></img>
-        <img  class="chatting_Group_4"src="./images/main/Group_4.png"></img>
+        <img  class="chatting_Group_3"src="./images/main/Group_3.png"/>
+        <img  class="chatting_Group_4"src="./images/main/Group_4.png"/>
       </div>
       {/* <Footer /> */}
     </div>

@@ -18,8 +18,8 @@
   .first_column {
     display: flex;
     .waitMate {
-    justify-content: center;
-
+      display: flex;
+      justify-content: center;
       width: 815px;
       height: 220px;
     }
@@ -61,10 +61,9 @@
       width: 530px;
       height: 830px;
     }
-    .character_character_Group_8{
+    .character_character_Group_8 {
       width: 1920px;
       height: 1254px;
-
     }
   }
   .strength_column {
@@ -74,11 +73,11 @@
     }
   }
   .chatting_column {
-    .chatting_Group_3{
+    .chatting_Group_3 {
       width: 551.11px;
       height: 700px;
     }
-    .chatting_Group_4{
+    .chatting_Group_4 {
       width: 561px;
       height: 187px;
     }
