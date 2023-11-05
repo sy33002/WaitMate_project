@@ -5,7 +5,7 @@ export default function MapComponent({ setLocationInfo }) {
   const [userLocation, setUserLocation] = useState(null);
   const [addressLocation, setAddressLocation] = useState(null);
   const [inputAddressValue, setInputAddressValue] = useState('');
-
+  const [location, setLocation] = useState();
   // 사용자의 현재 위치를 가져오는 함수
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
