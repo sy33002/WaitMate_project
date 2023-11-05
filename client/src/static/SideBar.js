@@ -18,24 +18,30 @@ function SidebarItem({ text, subMenu }) {
       >
         {text}
       </li>
-      {isSubMenuOpen && <ul className="pl-4">{subMenu}</ul>}
+      {isSubMenuOpen && <ul>{subMenu}</ul>}
     </div>
   );
 }
 
 function Sidebar() {
   return (
-    <div className="p-4 bg-background md:w-1/5 md:h-screen md:mt-20">
-      <ul className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl h-full flex flex-col justify-start item-center text-center">
+    <div className="p-4 bg-background w-58 h-screen mt-16">
+      <ul className="text-lg xl:text-xl h-full flex flex-col justify-start item-center text-center">
+        <div className='h-1/4'>
         <SidebarItem 
           text="Wait Mate" 
           subMenu={wmSubmenu} />
+        </div>
+        <div className='h-1/4'>
         <SidebarItem 
           text="Proxy"
          subMenu={proxySubmenu} />
+        </div>
+        <div className='h-1/4'>
         <SidebarItem 
           text="My Chat"
          subMenu={mychatSubmenu} />
+        </div>
       </ul>
     </div>
   );
