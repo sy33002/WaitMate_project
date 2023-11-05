@@ -42,6 +42,20 @@ function ChatList({ id, nickname, photo, userId }) {
       message: 'ㅇㅇ식당입니다!',
       profilePic: '/images/waitmate.png',
     },
+    {
+      id: 'chat-4',
+      nickname: '봄',
+      time: '20:33+4',
+      message: '두근두근',
+      profilePic: '/images/waitmate.png',
+    },
+    {
+      id: 'chat-5',
+      nickname: '여름',
+      time: '08:55+2',
+      message: '굳 !',
+      profilePic: '/images/waitmate.png',
+    },
   ]);
 
   const [loading, setLoading] = useState(false);
