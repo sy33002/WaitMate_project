@@ -1,0 +1,86 @@
+@keyframes rotateClockInfinite {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-animation {
+  animation: rotateClockInfinite 2s linear infinite;
+}
+
+.container {
+  background-color: #46178b;
+  display: flex;
+
+  .first_column {
+    display: flex;
+    .waitMate {
+    justify-content: center;
+
+      width: 815px;
+      height: 220px;
+    }
+    .waitMate_letter {
+      width: 610px;
+      height: 48px;
+    }
+    .login {
+      background-image: url('../../../../client/public/images/main/Group 5.png');
+      background-size: 252px 54px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+    }
+    .kakao_login {
+      background-image: url('../../../../client/public/images/main/Group 6.png');
+      background-size: 252px 54px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+    }
+  }
+  .character_column {
+    .character_character {
+      width: 348px;
+      height: 110px;
+    }
+    .character_character_Group_2 {
+      width: 530px;
+      height: 830px;
+    }
+    .character_character_Group_7 {
+      width: 530px;
+      height: 830px;
+    }
+    .character_character_Group_8{
+      width: 1920px;
+      height: 1254px;
+
+    }
+  }
+  .strength_column {
+    .strength_Waitmate_3 {
+      width: 815px;
+      height: 220px;
+    }
+  }
+  .chatting_column {
+    .chatting_Group_3{
+      width: 551.11px;
+      height: 700px;
+    }
+    .chatting_Group_4{
+      width: 561px;
+      height: 187px;
+    }
+  }
+}
