@@ -17,7 +17,21 @@ const useUserStore = create((set) => ({
         profileImg : photo
       }));
     }
-  } 
+  },
+  logout : async () => {
+    const response = await axiosInstance.get('/user/logOut');
+    if (response.status === 200) {
+      set(({
+        id : '',
+        userId : '',
+        nickname : '',
+        profileImg : ''
+      })); 
+    } else {
+      console.log('알 수 없는 서버 에러')
+    }
+
+  }
 }))
 
 export default useUserStore
