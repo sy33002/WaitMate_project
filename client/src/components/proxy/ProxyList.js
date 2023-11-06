@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProxyListBox from './ProxyListBox';
+import { Link } from 'react-router-dom';
+import Select from "react-select";
 
 export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
@@ -77,25 +79,25 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
             <option value='byRating'>평점순</option>
           </select>
         </div>
-        <select value={address} onChange={handleAddressChange}>
-          <option value={address}>{collectOption}</option>
-          {cities.map((city) => (
-            <optgroup label={city.label} key={city.label}>
-              {city.values.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
+        <Select
+          options={cities}
+          onChange={(selectedOption) => {
+            if (selectedOption) {
+              setAddress(selectedOption.value);
+            } else {
+              setAddress(null);
+            }
+          }}
+        />
         <div></div>
         <div></div>
       </div>
       <div className='w-full h-full m-8'>
         {currentItems.map((item, index) => (
           <div key={item.proxyId} className="flex w-full">
+            <Link to={`/proxy/detail/${item.proxyId}`}>
             <ProxyListBox item={item} />
+            </Link>
           </div>
         ))}
       </div>

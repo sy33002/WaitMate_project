@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import WaitMateBox from './WaitMateBox';
+import { Link } from 'react-router-dom';
+import Select from "react-select";
 
 export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(null);
+  const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
-  
+
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
@@ -16,6 +19,19 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const handleAddressChange = (e) => {
     const selectedValue = e.target.value;
     setAddress(selectedValue);
+  }
+
+  const filterAddresses = () => {
+    if (searchText) {
+      return cities.reduce((filteredCities, city) => {
+        const filteredValues = city.values.filter(value => value.includes(searchText));
+        if (filteredValues.length > 0) {
+          return [...filteredCities, { ...city, values: filteredValues }];
+        }
+        return filteredCities;
+      }, []);
+    }
+    return cities;
   }
 
   useEffect(() => {
@@ -57,8 +73,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
     }
   };
 
-  const collectOption = (address === '' ? '선택하세요' : address);
-
   return (
     <div className='h-full'>
       <div className='flex justify-between items-center space-x-4'>
@@ -69,18 +83,16 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
             <option value='byRating'>평점순</option>
           </select>
         </div>
-        <select value={address} onChange={handleAddressChange}>
-          <option value={address}>{collectOption}</option>
-          {cities.map((city) => (
-            <optgroup label={city.label} key={city.label}>
-              {city.values.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </optgroup>
-          ))}
-        </select>
+        <Select
+          options={cities}
+          onChange={(selectedOption) => {
+            if (selectedOption) {
+              setAddress(selectedOption.value);
+            } else {
+              setAddress(null);
+            }
+          }}
+        />
         <div></div>
         <div></div>
       </div>
@@ -91,8 +103,14 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           const nextItem = currentItems[index + 1];
           return (
             <div key={item.wdId} className="flex w-full">
-              <WaitMateBox item={item} />
-              {nextItem && <WaitMateBox item={nextItem} />}
+              <Link to={`/waitMate/detail/${item.wdId}`}>
+                <WaitMateBox item={item} />
+              </Link>
+              {nextItem && 
+              <Link to={`/waitMate/detail/${item.wdId}`}>
+                <WaitMateBox item={nextItem} />
+              </Link>
+              }
             </div>
           );
         }

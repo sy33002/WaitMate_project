@@ -5,6 +5,7 @@ import useUserStore from '../store/useUserStore';
 function Header() {
    const {id, nickname, photo, userId, setUserInfo} = useUserStore();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   useEffect(() => {
     setUserInfo();
@@ -12,6 +13,12 @@ function Header() {
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
+    setIsAlertOpen(false);
+  };
+
+  const toggleAlert = () => {
+    setIsAlertOpen(!isAlertOpen);
+    setMenuOpen(false);
   };
 
   const profileImage = photo || '/images/waitMate2.png';
@@ -38,6 +45,21 @@ function Header() {
               />
             </div>
           </Link>
+          <div>
+          <button
+              onClick={toggleAlert}
+              className="font-extrabold text-primary py-2 px-1 sm:py-2 sm:px-1 md:py-2 md:px-2 text-xs sm:text-sm md:text-baserounded-full relative"
+            >
+              🔔
+              {isAlertOpen && (
+                <div className="menu bg-white absolute right-0 top-full p-2 rounded-md shadow-md">
+                  <div className="text-primary w-24">
+                    <p>알림입니다!</p>
+                  </div>
+                </div>
+              )}
+            </button>
+          </div>
           <div className="flex flex-col">
             <button
               onClick={toggleMenu}
