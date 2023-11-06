@@ -6,9 +6,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#2F2772',
+        primary: '#541CA8',
+        primary_dark: '#46178C',
+        primary_light: '#8435FB',
         background: '#FFFFF8',
         yellow: '#FEE500',
+        green: '#B3E443'
       },
       spacing: {
         48: '12rem',
@@ -24,6 +27,8 @@ module.exports = {
         coding: ['"Nanum Gothic Coding"'],
         mono: ['monospace'],
         hanna: ['hanna'],
+        Line:['LINESeedKR-Bd'],
+        gmarket: ['GmarketSansMedium'],
       },
     },
   },

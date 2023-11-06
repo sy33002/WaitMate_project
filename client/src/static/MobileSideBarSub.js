@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 export const wmSubmenu = (
-  <div className='flex justify-center text-gray-500 text-sm'>
+  <div className='flex justify-center text-gray-500 text-sm font-gmarket mt-2'>
     <Link to='/waitMate/'>
       <div className='mx-3'>register</div>
     </Link>
@@ -12,7 +12,7 @@ export const wmSubmenu = (
 );
 
 export const proxySubmenu = (
-  <div className='flex justify-center text-gray-500 text-sm'>
+  <div className='flex justify-center text-gray-500 text-sm font-gmarket mt-2'>
   <Link to='/proxy/register'>
     <div className='mx-3' >register</div>
   </Link>
@@ -23,7 +23,7 @@ export const proxySubmenu = (
 );
 
 export const mychatSubmenu = (
-<div className='flex justify-center text-gray-500 text-sm'>
+<div className='flex justify-center text-gray-500 text-sm font-gmarket mt-2'>
   <Link to='/mypage/singup'>
     <div>Chat List</div>
   </Link>
