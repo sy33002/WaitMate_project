@@ -7,7 +7,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
   const [liked, setLiked] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/waitMate/detail?wmId=${wmId}&id=1`)
+    fetch(`http://localhost:8080/waitMate/detail?wmId=${wmId}&id=${id}`)
     .then(response => response.json())
     .then(data => {
       setWaitMate(data.waitMate);

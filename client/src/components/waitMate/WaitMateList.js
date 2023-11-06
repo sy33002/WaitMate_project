@@ -5,14 +5,17 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState('서울시 송파구');
-
+  const [address, setAddress] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
 
-  const handleAddressChange = (newAddress) => {
-    setAddress(newAddress);
+  const handleAddressChange = (e) => {
+    const selectedValue = e.target.value;
+    setAddress(selectedValue);
   }
 
   useEffect(() => {
@@ -25,7 +28,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         if (response.ok) {
           const {waitMates} = await response.json();
           setItems(waitMates);
-          console.log("aaaaaaaaaaa",waitMates);
         } else {
           console.log('데이터 가져오기 실패!');
         }
@@ -36,7 +38,27 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       }
     }
     fetchData();
-  }, []);
+  }, [address, selectedOption]);
+
+  //페이지 네이션
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+
+  const collectOption = (address === '' ? '선택하세요' : address);
 
   return (
     <div className='h-full'>
@@ -48,9 +70,8 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
             <option value='byRating'>평점순</option>
           </select>
         </div>
-        {/* <span className='text-[10px] text-primary' onClick={handleAddressChange}>{address}</span> */}
-        <select value={selectedOption} onChange={handleAddressChange}>
-          <option value={address}>선택하세요</option>
+        <select value={address} onChange={handleAddressChange}>
+          <option value={address}>{collectOption}</option>
           {cities.map((city) => (
             <optgroup label={city.label} key={city.label}>
               {city.values.map((value) => (
@@ -64,10 +85,28 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         <div></div>
         <div></div>
       </div>
-      <div className='w-2/5 h-1/3 m-8'>
-        {items.map((item) => (
-          <WaitMateBox key={item.wdId} item={item} />
-        ))}
+      <div className='w-full h-full m-8'>
+      {items.map((item, index) => {
+        if (index % 2 === 0) {
+          const nextItem = items[index + 1];
+          return (
+            <div key={item.wdId} className="flex space-x-4">
+              <WaitMateBox item={item} />
+              {nextItem && <WaitMateBox item={nextItem} />}
+            </div>
+          );
+        }
+        return null;
+        })}
+      <div className="pagination">
+      <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+        이전
+      </button>
+      <span>{`${currentPage} / ${totalPages}`}</span>
+      <button onClick={goToNextPage} disabled={currentPage === totalPages}>
+        다음
+      </button>
+    </div>
       </div>
     </div>
   );

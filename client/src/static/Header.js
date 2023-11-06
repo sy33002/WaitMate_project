@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
 
-function Header() {
-  const { setCookie } = useCookieStore();
-   const {id, nickname, photo, userId, setUserInfo} = useUserStore();
+function Header() {;
+  const {id, nickname, photo, userId, setUserInfo} = useUserStore();
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
