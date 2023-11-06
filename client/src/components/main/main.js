@@ -10,8 +10,9 @@ export default function Main() {
   });
   return (
     <>
-      <div class="container">
+      <div class="container_main">
         <div class="first_column">
+          <img class="background_img" src="./images/main/Rectangle_layer.png" />
           <img class="waitMate" src="./images/main/WAITMATE.png" />
           <br />
           <img
@@ -24,33 +25,21 @@ export default function Main() {
             <button class="login"></button>
             <button class="kakao_login"></button>
           </div>
-          <br />
-          <img class="background_img" src="./images/main/Rectangle_layer.png" />
         </div>
         <br />
 
         <div class="character_column">
-          <div>
-            <img
-              class="character_character"
-              src="./images/main/Character.png"
-            />
-          </div>
-          <div>
-            <img class="character_background" src="./images/main/Group 8.png" />
-          </div>
-          <div>
-            <div class="character_group">
-              <img
-                class="character_character_Group_2"
-                src="./images/main/Group_2.png"
-              />
-              <img
-                class="character_character_Group_7"
-                src="./images/main/Group 7.png"
-              />
-            </div>
-          </div>
+          <img class="character_character" src="./images/main/Character.png" />
+          <img
+            class="character_character_Group_7"
+            src="./images/main/Group 7.png"
+          />
+          <img
+            class="character_character_Group_2"
+            src="./images/main/Group_2.png"
+          />
+
+          <img class="character_background" src="./images/main/Group 8.png" />
         </div>
         <br />
 
