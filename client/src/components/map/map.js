@@ -3,10 +3,11 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-export default function MapComponent() {
+export default function MapComponent({ id }) {
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [waitMate, setWaitMate] = useState([]);
   const { wmId } = useParams();
 
   function getCurrentLocation(callback) {
@@ -45,6 +46,22 @@ export default function MapComponent() {
       });
   }, [wmId]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/waitMate/detail?wmId=${wmId}`)
+      .then((res) => {
+        const data = res.data;
+        setWaitMate(data);
+        console.log('waitMate 데이터:', data);
+        data.forEach((data) => {
+          console.log('data.wmId : ', data.wmId);
+        });
+      })
+      .catch((error) => {
+        console.error('데이터 가져오는 중 오류 발생!', error);
+      });
+  }, [wmId]);
+
   const stylingOverlay = () => {
     const style = {
       fontSize: 'x-large',
@@ -57,7 +74,8 @@ export default function MapComponent() {
       color: '#888',
       width: '17px',
       height: '17px',
-      background: 'url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png)',
+      background:
+        'url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png)',
     };
     const info_title = {
       padding: '5px 0 0 10px',
@@ -67,9 +85,9 @@ export default function MapComponent() {
       fontSize: '18px',
       fontWeight: 'bold',
     };
-    
+
     // 스타일 객체 반환
-    return { style, info_close, info_title};
+    return { style, info_close, info_title };
   };
   return (
     <div>
@@ -91,7 +109,6 @@ export default function MapComponent() {
         )}
 
         {userAddress.map((data, index) => {
-          console.log('data', data);
           if (data.lat && data.lng) {
             return (
               <MapMarker
@@ -102,47 +119,39 @@ export default function MapComponent() {
                   src: './images/waitMate.png',
                   size: { width: 64, height: 64 },
                 }}
-                
                 onClick={() => setIsOpen(true)}
               >
                 {isOpen && (
-                  <CustomOverlayMap position={{ lat: data.lat, lng: data.lng }} >
+                  <CustomOverlayMap position={{ lat: data.lat, lng: data.lng }}>
                     <div className="wrap">
                       <div className="info">
-                        <div className="title" style={stylingOverlay().info_title}>
-                          카카오 스페이스닷원
+                        <div
+                          className="title"
+                          style={stylingOverlay().info_title}
+                        >
+                          웨이트 메이트 장소
                           <div
                             className="close"
                             onClick={() => setIsOpen(false)}
                             title="닫기"
                             style={stylingOverlay().info_close}
-
                           ></div>
                         </div>
                         <div className="body">
-                          
                           <div className="desc">
-                            <div className="ellipsis">
-                              제주특별자치도 제주시 첨단로 242
-                            </div>
-                            <div className="jibun ellipsis">
-                              (우) 63309 (지번) 영평동 2181
-                            </div>
                             <div>
                               <a
-                                href="https://www.kakaocorp.com/main"
-                                
+                                href={`http://localhost:3000/waitMate/detail?wmId=${data.waitMate}`}
                                 className="link"
                                 rel="noreferrer"
                               >
-                                홈페이지
+                                웨이트 메이트 장소 바로가기
                               </a>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    ;
                   </CustomOverlayMap>
                 )}
               </MapMarker>

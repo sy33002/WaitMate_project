@@ -19,6 +19,13 @@ function SignupForm() {
   const handleIdCheck = async (e) => {
     try {
       e.preventDefault();
+
+      // 아이디 길이 유효성 검사
+      if (id.length < 4 || id.length > 12) {
+        alert('아이디는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.');
+        return;
+      }
+
       const response = await axiosInstance.post(`user/check/userId`, {
         userId: id,
       });
@@ -39,6 +46,12 @@ function SignupForm() {
   // 닉네임 중복 확인 함수
   const handleNicknameCheck = async () => {
     try {
+      // 닉네임 길이 유효성 검사
+      if (nickName.length < 2 || nickName.length > 10) {
+        alert('닉네임은 2~10자 이내로 입력해주세요.');
+        return;
+      }
+
       const response = await axiosInstance.post(`user/check/nickname`, {
         nickname: nickName,
       });
@@ -60,26 +73,32 @@ function SignupForm() {
     const idRegex = /^[a-zA-Z0-9]{4,12}$/;
     const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,}$/;
 
-    // 아이디 유효성 검사
-    const isIdValid = idRegex.test(id);
-    setIdValid(isIdValid);
+    // 아이디 길이 유효성 검사
+    if (id.length < 4 || id.length > 12) {
+      alert('아이디는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.');
+      return false;
+    }
 
-    // 비밀번호 유효성 검사
-    const isPasswordValid = passwordRegex.test(password);
-    setPasswordValid(isPasswordValid);
+    // 비밀번호 길이 유효성 검사
+    if (!idRegex.test(id)) {
+      alert('비밀번호는 숫자와 알파벳을 포함한 8자 이상입니다.');
+      return false;
+    }
 
     // 비밀번호 확인 유효성 검사
-    const isConfirmPasswordValid = password === confirmPassword;
-    setConfirmPasswordValid(isConfirmPasswordValid);
+    if (password !== confirmPassword) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return false;
+    }
 
     // 닉네임 길이 유효성 검사
-    const isNickNameValid = nickName.length >= 2 && nickName.length <= 10;
-    setNickNameValid(isNickNameValid);
+    if (nickName.length < 2 || nickName.length > 10) {
+      alert('닉네임은 2~10자 이내로 입력해주세요.');
+      return false;
+    }
 
     // 모든 유효성 검사 항목이 true여야 유효한 폼으로 간주
-    return (
-      isIdValid && isPasswordValid && isConfirmPasswordValid && isNickNameValid
-    );
+    return true;
   };
 
   // 비밀번호 일치 여부 메시지를 반환하는 함수

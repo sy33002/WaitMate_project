@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useUserStore from '../../store/useUserStore';
 
-function Mypage({ id, nickname, photo, userId }) {
+function Mypage() {
+  const {
+    id,
+    userId,
+    nickname,
+    profileImg,
+    setUserInfo,
+    logout,
+    setProfileImage,
+  } = useUserStore();
   const [activeTab, setActiveTab] = useState(null);
-  const [profileImage, setProfileImage] = useState('👤');
   const [listItems, setListItems] = useState([]);
+
+  useEffect(() => {
+    setUserInfo();
+  }, [setUserInfo]);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -69,7 +82,7 @@ function Mypage({ id, nickname, photo, userId }) {
           <div className="border w-52 h-60 border-primary rounded-lg flex flex-col items-center">
             <div className="w-44 h-44 mt-1 bg-gray-300 rounded-lg flex items-center justify-center text-6xl mb-2">
               <img
-                src={profileImage}
+                src={profileImg}
                 alt="Profile"
                 style={{ maxWidth: '100%', maxHeight: '100%' }}
               />
