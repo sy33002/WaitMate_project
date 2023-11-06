@@ -1,0 +1,144 @@
+@keyframes rotateClockInfinite {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-animation {
+  animation: rotateClockInfinite 2s linear infinite;
+}
+
+.container_main {
+  margin: 0;
+  padding: 0;
+  background-color: #46178b;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .first_column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .background_img {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+    z-index: 1;
+  }
+
+  .waitMate {
+    width: 815px;
+    height: 220px;
+    position: absolute;
+    top: 10%;
+    z-index: 99;
+  }
+
+  .waitMate_letter {
+    width: 610px;
+    height: 48px;
+    position: absolute;
+    top: 50%;
+    z-index: 99;
+  }
+
+  .waitMateProxy {
+    width: 736px;
+    height: 212px;
+    position: absolute;
+    top: 60%;
+
+    z-index: 99;
+  }
+  .button {
+    display: flex;
+    position: absolute;
+    top: 100%;
+
+    z-index: 99;
+
+    .login {
+      background-image: url('../../../../client/public/images/main/Group 5.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+      margin-right: 20px;
+      z-index: 99;
+    }
+
+    .kakao_login {
+      background-image: url('../../../../client/public/images/main/Group 6.png');
+      background-size: 252px 54px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+      z-index: 99;
+    }
+  }
+
+  .character_column {
+    display: flex;
+    align-items: center;
+    position: relative;
+    .character_character {
+      position: absolute;
+      top: 10%;
+      display: flex;
+      justify-content: center;
+      width: 348px;
+      height: 110px;
+      z-index: 90;
+    }
+
+    .character_background {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      z-index: 5;
+    }
+
+    .character_character_Group_2,
+    .character_character_Group_7 {
+      width: 530px;
+      height: 830px;
+      margin-right: 20px;
+      z-index: 100;
+    }
+  }
+
+  .strength_column {
+    .strength_Waitmate_3 {
+      width: 815px;
+      height: 220px;
+    }
+  }
+
+  .chatting_column {
+    display: flex;
+    justify-content: space-between;
+
+    .chatting_Group_3 {
+      width: 551.11px;
+      height: 700px;
+    }
+
+    .chatting_Group_4 {
+      width: 561px;
+      height: 187px;
+    }
+  }
+}
