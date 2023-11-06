@@ -27,7 +27,7 @@ function App({ id, nickname, photo, userId }) {
         <Routes>
           <Route path="/" element={<Main></Main>} />
           <Route
-            path="/proxyDetail/chat"
+            path="/proxy/detail/chat/:roomNumber"
             element={
               <Template>
                 <Chat
@@ -66,7 +66,7 @@ function App({ id, nickname, photo, userId }) {
             }
           ></Route>
           <Route
-            path="/proxy/getter"
+            path="/proxy/list"
             element={
               <Template>
                 <ProxyList
@@ -93,7 +93,7 @@ function App({ id, nickname, photo, userId }) {
             }
           ></Route>
           <Route
-            path="/waitMate/"
+            path="/waitMate/register"
             element={
               <Template>
                 <WaitMateRegister
