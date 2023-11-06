@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore'; // useUserStore를 import 합니다.
 import { axiosInstance } from '../common/axiosInstance';
 
 function SigninForm() {
@@ -9,23 +9,28 @@ function SigninForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
+  // useUserStore에서 setUserInfo 함수를 가져옵니다.
+  const setUserInfo = useUserStore((state) => state.setUserInfo);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       const response = await axiosInstance.post('user/login', {
-        userId : username,
+        userId: username,
         password,
       });
       if (response.status === 200) {
-        navigate('/map')
-      };
+        // 로그인 성공 시 setUserInfo 함수를 호출하여 상태를 업데이트합니다.
+        await setUserInfo();
+        navigate('/map'); // 성공적으로 로그인하면 맵 페이지로 리다이렉트합니다.
+      }
     } catch (error) {
       if (error.response && error.response.data) {
         // 백엔드에서 반환하는 오류 메시지를 설정합니다.
         setErrorMessage(error.response.data.message);
       } else {
-        setErrorMessage('로그인 중 오류가 발생했습니다.');
+        setErrorMessage('로그인에 실패했습니다.');
       }
     }
   };
@@ -61,7 +66,7 @@ function SigninForm() {
             </button>
             <button
               className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
-              type='button'
+              type="button"
               onClick={() => navigate('/register/SignupForm')} // 'Sign Up' 버튼 클릭 시 회원가입 페이지로 이동합니다.
             >
               Sign Up
