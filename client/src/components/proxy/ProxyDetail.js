@@ -21,12 +21,12 @@ export default function ProxyDetail({ id, nickname, photo, userId }) {
       <div className="h-4/5 w-4/5 bg-white flex">
         <div className="bg-primary w-1/3 h-full flex flex-col justify-center items-center">
           <img src={proxy.photo} alt="Proxy Photo" />
-          {/* {imageFile && <img src={imageFile} alt="Preview"  */}
-          {/* className="max-w-full max-h-40" />} */}
           <button className="bg-background text-primary mb-2">
             프록시와 채팅하기
           </button>
-          {/* <button className="bg-background text-primary">프록시 픽하기</button> */}
+          <button className="bg-background text-primary mb-2">
+            프록시 픽하기
+          </button>
         </div>
         <div className="flex flex-col h-full w-2/3">
           <div className="h-1/3 w-full flex justify-around">

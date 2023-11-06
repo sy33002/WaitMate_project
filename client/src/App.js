@@ -66,7 +66,7 @@ function App({ id, nickname, photo, userId }) {
             }
           ></Route>
           <Route
-            path="/proxy/getter"
+            path="/proxy/list"
             element={
               <Template>
                 <ProxyList
@@ -93,7 +93,7 @@ function App({ id, nickname, photo, userId }) {
             }
           ></Route>
           <Route
-            path="/waitMate/"
+            path="/waitMate/register"
             element={
               <Template>
                 <WaitMateRegister
