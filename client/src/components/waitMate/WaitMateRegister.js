@@ -37,7 +37,8 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
     formData.append('wmAddress', wmAddress);
     formData.append('wmDetailAddress', data.detailAddress);
     formData.append('date', data.date);
-    formData.append('waitTime', data.time);
+    formData.append('startTime', data.time_start);
+    formData.append('endTime', data.time_end);
     formData.append('pay', data.pay);
     formData.append('description', data.detail);
     formData.append('photo', imageFile);
@@ -165,14 +166,24 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
               <br />
               <div>
                 <label className="text-sm text-background m-1">
-                  Waiting Time
+                  *Waiting Time
                 </label>
                 <Controller
-                  name="time"
+                  name="time_start"
                   control={control}
-                  rules={{ required: false }}
-                  render={({ field }) => <input {...field} />}
+                  rules={{ required: true }}
+                  render={({ field }) => <input {...field} type="time"/>}
+                /><span className='text-background'> ~ </span><Controller
+                name="time_end"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => <input {...field} type="time"/>}
                 />
+                 {formState.errors.time_start && clickRegister && (
+                  <p className="text-red-500">시작 시간은 필수 항목입니다 :D</p>
+                )}{formState.errors.time_end && clickRegister && (
+                  <p className="text-red-500">끝날 시간은 필수 항목입니다 :D</p>
+                )}
               </div>
               <br />
               <div>
