@@ -12,10 +12,10 @@ export default function ProxyListBox({item}) {
       setIsHoverd(false);
     };
     return (
-      <div className={'rounded-lg border-x-primary border-x-2 h-24 relative mb-2'}
+      <div className={'rounded-lg border-x-primary border-x-2 w-full h-24 elative mb-2'}
       onMouseOver={handleHoverIn}
       onMouseOut={handleHoverOut}>
-        <div className='p-2 h-full flex items-center absolute z-10 w-full'>
+        <div className='p-2 h-24 flex items-center absolute z-10 w-full'>
           <div className='lg:overflow-hidden w-1/4 flex justify-end pr-6'>
               <img src='/images/me.jpg' alt='User' className='h-20 rounded-full' />
           </div>
@@ -27,7 +27,7 @@ export default function ProxyListBox({item}) {
           </div>
         </div>
         {isHovered && (
-            <div className="hover-info bg-opacity-80 absolute justify-center z-20 bg-gray-800 h-full w-full rounded-lg flex items-center">
+            <div className="hover-info bg-opacity-80 absolute justify-center z-20 bg-gray-800 h-24 w-full rounded-lg flex items-center">
               <div className='text-white'>{item.proxyMsg}</div>
             </div>
         )}

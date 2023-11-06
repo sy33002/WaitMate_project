@@ -22,7 +22,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/waitMate/list?wmAddress=${address}&order=${selectedOption}&pageNum=1`, {
+        const response = await fetch(`http://localhost:8080/waitMate/list?wmAddress=${address}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {
@@ -41,10 +41,13 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   }, [address, selectedOption]);
 
   //페이지 네이션
-  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfLastItem = currentPage * itemsPerPage; 
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
+  console.log("indexOfLastItem", indexOfLastItem);
+  console.log("indexOfFirstItem", indexOfFirstItem);
+  console.log("currentItems", currentItems);
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const goToPreviousPage = () => {
     if (currentPage > 1) {
@@ -56,7 +59,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       setCurrentPage(currentPage + 1);
     }
   };
-
 
   const collectOption = (address === '' ? '선택하세요' : address);
 
@@ -86,9 +88,10 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         <div></div>
       </div>
       <div className='w-full h-full m-8'>
-      {items.map((item, index) => {
+      {currentItems.map((item, index) => {
+        // 짝수 인덱스인 경우 현재 아이템과 다음 아이템 표시
         if (index % 2 === 0) {
-          const nextItem = items[index + 1];
+          const nextItem = currentItems[index + 1];
           return (
             <div key={item.wdId} className="flex space-x-4">
               <WaitMateBox item={item} />
@@ -97,8 +100,9 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           );
         }
         return null;
-        })}
+      })}
       <div className="pagination">
+      </div>
       <button onClick={goToPreviousPage} disabled={currentPage === 1}>
         이전
       </button>
@@ -106,7 +110,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       <button onClick={goToNextPage} disabled={currentPage === totalPages}>
         다음
       </button>
-    </div>
       </div>
     </div>
   );

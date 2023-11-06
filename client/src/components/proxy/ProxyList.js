@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ProxyListBox from './ProxyListBox';
 
 export default function WaitMateList({cities, id, nickname, photo, userId }) {
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const handleOption = (e) => {
     const selectedValue = e.target.value;
@@ -16,6 +18,23 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
     const selectedValue = e.target.value;
     setAddress(selectedValue);
   }
+
+  //페이지 네이션
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +48,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           });
         if (response.ok) {
           const {list} = await response.json();
+          console.log(list);
           setItems(list);
         } else {
           console.log('데이터 가져오기 실패!');
@@ -69,14 +89,21 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         <div></div>
         <div></div>
       </div>
-      <div className='w-2/5 h-1/3 m-8'>
-        {items && items.length > 0 ? (
-          items.map((item) => (
-            <ProxyListBox key={item.id} item={item} />
-          ))
-        ) : (
-          <p>No items to display</p>
-        )}
+      <div className='w-full h-full m-8'>
+        {currentItems.map((item) => (
+          <div key={item.id} className="flex space-x-4">
+            <ProxyListBox item={item} />
+          </div>
+        ))}
+        <div className="pagination">
+      <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+        이전
+      </button>
+      <span>{`${currentPage} / ${totalPages}`}</span>
+      <button onClick={goToNextPage} disabled={currentPage === totalPages}>
+        다음
+      </button>
+    </div>
       </div>
     </div>
   );
