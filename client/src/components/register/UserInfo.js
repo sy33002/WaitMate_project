@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
+import useUserStore from '../../store/useUserStore';
 
 function UserInfo() {
-  const [id, setId] = useState(''); // 초기 아이디 값
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [nickname, setNickname] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { id, nickname, setUserInfo } = useUserStore();
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   // useEffect로 컴포넌트 마운트 시 사용자 아이디를 설정합니다.
   useEffect(() => {
-    // 비동기 함수로 사용자 정보를 가져옵니다.
     const fetchUserData = async () => {
       try {
-        const response = await axiosInstance.get('/user/myinfo'); // 사용자 정보를 가져오는 API URL
-        const data = await response.data;
-        setId(data.userId); // API 응답에서 사용자 아이디 설정
-        setNickname(data.nickname)
+        const response = await axiosInstance.get('/user/myinfo');
+        const data = response.data;
+        // 여기서 setUserInfo를 사용하여 id와 nickname을 업데이트합니다.
+        setUserInfo({ id: data.userId, nickname: data.nickname });
       } catch (error) {
         console.error('사용자 정보를 가져오는 데 실패했습니다.', error);
       }
     };
 
     fetchUserData();
-  }, []);
+    setUserInfo();
+  }, [setUserInfo]);
 
   const isPasswordMatch = () => password === confirmPassword;
   const isNicknameValid = () => nickname.length <= 8;
@@ -44,15 +44,15 @@ function UserInfo() {
       setErrorMessage('닉네임은 최대 8자까지 입력할 수 있습니다.');
       return;
     }
-    const updateInfo = {}
+    const updateInfo = {};
     if (password) {
-      updateInfo['password'] = password
+      updateInfo['password'] = password;
     }
     if (nickname) {
-      updateInfo['nickname'] = nickname
+      updateInfo['nickname'] = nickname;
     }
     // 여기서 서버와 통신을 통해 사용자 정보를 수정할 수 있습니다.
-    const response = await axiosInstance.put('user', updateInfo)
+    const response = await axiosInstance.put('user', updateInfo);
     // Reset error message after successful submission
     setErrorMessage('');
     setShowModal(true);
@@ -124,7 +124,7 @@ function UserInfo() {
             <input
               type="text"
               value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              onChange={(e) => setUserInfo({ nickname: e.target.value })}
               placeholder="닉네임을 입력하세요."
               className="p-2 w-full border rounded-md shadow-inner shadow-gray-300"
             />
