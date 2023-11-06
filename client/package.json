@@ -21,6 +21,8 @@
     "react-router-dom": "^6.18.0",
     "sass": "^1.69.5",
     "socket.io-client": "^4.7.2",
+    "sweetalert2": "^11.9.0",
+    "sweetalert2-react-content": "^5.0.7",
     "web-vitals": "^2.1.4",
     "zustand": "^4.4.6"
   },
