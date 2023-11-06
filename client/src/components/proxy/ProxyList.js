@@ -19,23 +19,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
     setAddress(selectedValue);
   }
 
-  //페이지 네이션
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
-
-  const totalPages = Math.ceil(items.length / itemsPerPage);
-  const goToPreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-  const goToNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -48,7 +31,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           });
         if (response.ok) {
           const {list} = await response.json();
-          console.log(list);
           setItems(list);
         } else {
           console.log('데이터 가져오기 실패!');
@@ -61,6 +43,27 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
     }
     fetchData();
   }, [address, selectedOption]);
+
+  //페이지 네이션
+  const indexOfLastItem = currentPage * itemsPerPage; 
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  
+  console.log("indexOfLastItem >>>", indexOfLastItem);
+  console.log("indexOfFirstItem >>>", indexOfFirstItem);
+  console.log("currentItems >>>", currentItems);
+
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   const collectOption = (address === '' ? '선택하세요' : address);
 
@@ -90,12 +93,13 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         <div></div>
       </div>
       <div className='w-full h-full m-8'>
-        {currentItems.map((item) => (
-          <div key={item.id} className="flex space-x-4">
+        {currentItems.map((item, index) => (
+          <div key={item.proxyId} className="flex w-full">
             <ProxyListBox item={item} />
           </div>
         ))}
-        <div className="pagination">
+      </div>
+      <div className="pagination">
       <button onClick={goToPreviousPage} disabled={currentPage === 1}>
         이전
       </button>
@@ -103,7 +107,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       <button onClick={goToNextPage} disabled={currentPage === totalPages}>
         다음
       </button>
-    </div>
       </div>
     </div>
   );

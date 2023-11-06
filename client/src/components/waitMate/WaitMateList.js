@@ -45,9 +45,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
-  console.log("indexOfLastItem", indexOfLastItem);
-  console.log("indexOfFirstItem", indexOfFirstItem);
-  console.log("currentItems", currentItems);
   const totalPages = Math.ceil(items.length / itemsPerPage);
   const goToPreviousPage = () => {
     if (currentPage > 1) {
