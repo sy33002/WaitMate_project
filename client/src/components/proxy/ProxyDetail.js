@@ -1,9 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-export default function ProxyDetail({ id, nickname, photo, userId }) {
+import { useParams, useNavigate } from 'react-router-dom';
+import { socket } from '../../socket';
+import useUserStore from '../../store/useUserStore';
+
+
+export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
+  const [roomNumber, setRoomNumber] = useState(null);
+  const {id} = useUserStore();
+  const navigate = useNavigate();
   
+  const startChat = () => {
+    const usedRoomNumbers = [];
+
+    if(id === proxy.id){
+      console.log(id, proxy.id);
+      alert('둘의 정보값이 같아서 채팅 창을 만들 수 없습니다');
+      return;
+    }
+
+    socket.on('roomExists', (data) => {
+      console.log(`이미 존재하는 방 번호: ${data.roomNumber}`);
+      alert('이미 존재하는 채팅방이 있습니다');
+      navigate(`/proxy/detail/chat/${data.roomNumber}`);
+    });
+    
+    socket.emit('createRoom', {
+      sender: parseInt(id),
+      receiver: parseInt(proxy.id),
+      proxyId: parseInt(proxy.proxyId),
+    });
+
+    socket.on('roomCreated', (data) => {
+          if (usedRoomNumbers.includes(data.roomNumber)) {
+        
+        console.log('이미 사용 중인 방 번호입니다.');
+      } else {
+        setRoomNumber(data.roomNumber);
+        usedRoomNumbers.push(data.roomNumber);
+        console.log('Room number:', data.roomNumber);
+        navigate(`/proxy/detail/chat/${data.roomNumber}`);
+      }
+    });
+  };
+
   useEffect(() => {
     fetch(`http://localhost:8080/proxy/detail/${proxyId}`)
     .then(response => response.json())
@@ -21,7 +62,9 @@ export default function ProxyDetail({ id, nickname, photo, userId }) {
       <div className="h-4/5 w-4/5 bg-white flex">
         <div className="bg-primary w-1/3 h-full flex flex-col justify-center items-center">
           <img src={proxy.photo} alt="Proxy Photo" />
-          <button className="bg-background text-primary mb-2">
+          {/* {imageFile && <img src={imageFile} alt="Preview"  */}
+          {/* className="max-w-full max-h-40" />} */}
+          <button className="bg-background text-primary mb-2" onClick={startChat}>
             프록시와 채팅하기
           </button>
           <button className="bg-background text-primary mb-2">
@@ -58,7 +101,6 @@ export default function ProxyDetail({ id, nickname, photo, userId }) {
             <div className="flex justify-center items-center">
               <span>{proxy.proxyMsg}</span>
             </div>
-            <button>채팅하기</button>
           </div>
         </div>
       </div>

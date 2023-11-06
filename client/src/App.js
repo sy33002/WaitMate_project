@@ -27,7 +27,7 @@ function App({ id, nickname, photo, userId }) {
         <Routes>
           <Route path="/" element={<Main></Main>} />
           <Route
-            path="/proxyDetail/chat"
+            path="/proxy/detail/chat/:roomNumber"
             element={
               <Template>
                 <Chat

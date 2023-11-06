@@ -1,7 +1,6 @@
 import React from 'react';
 import DaumPostcode from 'react-daum-postcode';
 import axios from 'axios';
-import MapComponent from '../map/map';
 
 export default function AddressSearchModal({
   setInputAddressValue,

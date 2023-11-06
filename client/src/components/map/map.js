@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-export default function MapComponent({ locationInfo }) {
+export default function MapComponent() {
   const [userLocation, setUserLocation] = useState(null);
+  const [userAddress, setUserAddress] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+  const { wmId } = useParams();
 
-  // 사용자의 현재 위치를 가져오는 함수
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -18,7 +22,6 @@ export default function MapComponent({ locationInfo }) {
   }
 
   useEffect(() => {
-    // 컴포넌트가 처음 렌더링될 때 사용자의 현재 위치를 가져옵니다.
     getCurrentLocation((location) => {
       if (location) {
         setUserLocation(location);
@@ -26,20 +29,56 @@ export default function MapComponent({ locationInfo }) {
     });
   }, []);
 
-  const hardcodedLocationInfo = {
-    marker1: { lat: 37.123, lng: 127.456 },
-    marker2: { lat: 38.789, lng: 128.012 },
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/waitMate/mapList`)
+      .then((res) => {
+        const data = res.data;
+        setUserAddress(data);
+        console.log('waitMate 데이터:', data);
+        data.forEach((data) => {
+          console.log('data.lat', data.lat);
+        });
+      })
+      .catch((error) => {
+        console.error('데이터 가져오기 실패:', error);
+      });
+  }, [wmId]);
+
+  const stylingOverlay = () => {
+    const style = {
+      fontSize: 'x-large',
+      fontWeight: 'bold',
+    };
+    const info_close = {
+      position: 'absolute',
+      top: '10px',
+      right: '10px',
+      color: '#888',
+      width: '17px',
+      height: '17px',
+      background: 'url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png)',
+    };
+    const info_title = {
+      padding: '5px 0 0 10px',
+      height: '30px',
+      background: '#eee',
+      borderBottom: '1px solid #ddd',
+      fontSize: '18px',
+      fontWeight: 'bold',
+    };
+    
+    // 스타일 객체 반환
+    return { style, info_close, info_title};
   };
-  
   return (
     <div>
       <Map
         className="map"
         level={3}
-        center={userLocation || { lat: 0, lng: 0 }} // 기본값 설정
+        center={userLocation || { lat: 0, lng: 0 }}
         style={{ width: '100%', height: '800px' }}
       >
-        {/* 사용자의 위치를 마커로 표시 */}
         {userLocation && (
           <MapMarker
             position={userLocation}
@@ -51,21 +90,62 @@ export default function MapComponent({ locationInfo }) {
           />
         )}
 
-        {/* locationInfo의 데이터를 마커로 표시 */}
-        {Object.keys(locationInfo).map((key, index) => {
-          const data = locationInfo[key];
-          console.log("data", data)
-          if (data && data.lat && data.lng) {
+        {userAddress.map((data, index) => {
+          console.log('data', data);
+          if (data.lat && data.lng) {
             return (
               <MapMarker
                 key={index}
                 position={{ lat: data.lat, lng: data.lng }}
-                text={key} // 각 데이터의 텍스트 표시 설정 (원하는 대로 수정 가능)
+                text={data.key}
                 image={{
                   src: './images/waitMate.png',
                   size: { width: 64, height: 64 },
                 }}
-              />
+                
+                onClick={() => setIsOpen(true)}
+              >
+                {isOpen && (
+                  <CustomOverlayMap position={{ lat: data.lat, lng: data.lng }} >
+                    <div className="wrap">
+                      <div className="info">
+                        <div className="title" style={stylingOverlay().info_title}>
+                          카카오 스페이스닷원
+                          <div
+                            className="close"
+                            onClick={() => setIsOpen(false)}
+                            title="닫기"
+                            style={stylingOverlay().info_close}
+
+                          ></div>
+                        </div>
+                        <div className="body">
+                          
+                          <div className="desc">
+                            <div className="ellipsis">
+                              제주특별자치도 제주시 첨단로 242
+                            </div>
+                            <div className="jibun ellipsis">
+                              (우) 63309 (지번) 영평동 2181
+                            </div>
+                            <div>
+                              <a
+                                href="https://www.kakaocorp.com/main"
+                                
+                                className="link"
+                                rel="noreferrer"
+                              >
+                                홈페이지
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    ;
+                  </CustomOverlayMap>
+                )}
+              </MapMarker>
             );
           }
         })}
