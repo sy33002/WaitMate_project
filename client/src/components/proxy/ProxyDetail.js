@@ -13,7 +13,11 @@ export default function ProxyDetail() {
   
   const startChat = () => {
     const usedRoomNumbers = [];
-
+    if (!id) {
+      alert('로그인 먼저 진행하시기 바랍니다');
+      return;
+    }
+    
     if(id === proxy.id){
       console.log(id, proxy.id);
       alert('둘의 정보값이 같아서 채팅 창을 만들 수 없습니다');
@@ -46,6 +50,7 @@ export default function ProxyDetail() {
   };
 
   useEffect(() => {
+
     fetch(`http://localhost:8080/proxy/detail/${proxyId}`)
     .then(response => response.json())
     .then(data => {
