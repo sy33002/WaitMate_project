@@ -93,7 +93,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         if (index % 2 === 0) {
           const nextItem = currentItems[index + 1];
           return (
-            <div key={item.wdId} className="flex space-x-4">
+            <div key={item.wdId} className="flex w-full">
               <WaitMateBox item={item} />
               {nextItem && <WaitMateBox item={nextItem} />}
             </div>
