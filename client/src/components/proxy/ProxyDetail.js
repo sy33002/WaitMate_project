@@ -67,7 +67,9 @@ export default function ProxyDetail() {
           <button className="bg-background text-primary mb-2" onClick={startChat}>
             프록시와 채팅하기
           </button>
-          {/* <button className="bg-background text-primary">프록시 픽하기</button> */}
+          <button className="bg-background text-primary mb-2">
+            프록시 픽하기
+          </button>
         </div>
         <div className="flex flex-col h-full w-2/3">
           <div className="h-1/3 w-full flex justify-around">
