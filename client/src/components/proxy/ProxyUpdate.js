@@ -9,7 +9,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
   const [proxy, setProxy] = useState({});
 
   useEffect(() => {
-    fetch(`http://localhost:8080/proxy/detail/${proxyId}`)
+    fetch(`http://localhost:8080/proxy/update/${id}`)
     .then(response => response.json())
     .then(data => {
       setProxy(data.result);
@@ -18,7 +18,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     .catch(error => {
       console.error('데이터 가져오는 중 오류 발생!', error);
     });
-  }, [proxyId]);
+  }, []);
 
   const [inputAddressValue, setInputAddressValue] = useState(proxy.address);
   const [isModalOpen, setIsModalOpen] = useState(false);

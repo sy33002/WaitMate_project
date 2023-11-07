@@ -5,7 +5,7 @@ import axios from 'axios';
 
 export default function ProxyRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, formState,setValue } = useForm();
-  const [imageFile, setImageFile] = useState('/images/someone.png');
+  const [imageFile, setImageFile] = useState('/images/proxy.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
@@ -15,10 +15,8 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     if (file) {
       if (!file.type.startsWith('image/')) {
         alert('이미지 파일을 넣어주십시오');
-       
         e.target.value = '';
       } else {
-        
         setValue('photo', e.target.files);
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -30,14 +28,10 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
   };
 
   const onSubmit = async (data) => {
-    console.log("onSubmit 들어옴!");
-
     const address = inputAddressValue;
     const addressParts = address.split(" ");
     const combinedAddress = addressParts[0] + " " + addressParts[1];
-    console.log(combinedAddress);
 
-  
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
@@ -50,12 +44,15 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
       formData.append('photo', data.photo[0]);
     }
     axios({
-      url: 'http://localhost:8080/proxy/proxyTest',
+      url: 'http://localhost:8080/proxy/register',
       method: 'post',
       data: formData,
     })
       .then((res) => {
-        console.log(res.data);
+        const userConfirmed = window.confirm('등록 완료!');
+        if (userConfirmed) {
+          window.location.href = `/proxy/list`;
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -63,8 +60,8 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
   };
 
   return (
-    <div>
-      <p className='text-xs'>you are my best proxy.</p>
+    <div className='p-4'>
+      <p className='text-xs pl-1 pb-1'>you are my best proxy.</p>
       <div className='relative'>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -74,11 +71,11 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
             프록시란(Proxy)?</p>
           <p className='text-[10px]  text-background'>
             대신 웨이팅 할 사람을 지칭하는 말입니다! 저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
-          <div className='flex'>
-            <div>
-              <div className='aspect-w-16 aspect-h-9'>
+          <div className='flex justify-center items-center'>
+            <div className='w-1/3 m-2'>
+              <div className='w-full'>
                   {imageFile && <img src={imageFile} alt="Preview" 
-                  className="max-w-full max-h-40" />}
+                  className="w-full h-full" />}
               </div>
               <label className="text-sm text-background m-1">Upload Image</label><br />
               <input
