@@ -9,6 +9,7 @@ export default function ProxyDetail() {
   const [proxy, setProxy] = useState({});
   const [roomNumber, setRoomNumber] = useState(null);
   const {id} = useUserStore();
+  console.log('아이디값' + id);
   const navigate = useNavigate();
   
   const handleEditClick = () => {
@@ -55,7 +56,7 @@ export default function ProxyDetail() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:8080/proxy/detail/${proxyId}`)
+    fetch(`http://localhost:8080/proxy/detail/${proxyId}`, { withCredentials: true })
     .then(response => response.json())
     .then(data => {
       setProxy(data.result);
