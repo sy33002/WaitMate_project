@@ -19,6 +19,7 @@ import cities from './static/cities';
 import Mypage from './components/mypage/Mypage';
 import ChatList from './components/mypage/ChatList';
 import StarRating from './components/rating/StarRating';
+import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
 
 function App({ id, nickname, photo, userId }) {
   return (
@@ -93,6 +94,19 @@ function App({ id, nickname, photo, userId }) {
             }
           ></Route>
           <Route
+            path="/proxy/update/:proxyId"
+            element={
+              <Template>
+                <WaitMateUpdate
+                  id={id}
+                  nickname={nickname}
+                  photo={photo}
+                  userId={userId}
+                />
+              </Template>
+            }
+          ></Route>
+          <Route
             path="/waitMate/register"
             element={
               <Template>
@@ -124,6 +138,19 @@ function App({ id, nickname, photo, userId }) {
             element={
               <Template>
                 <WaitMateDetail
+                  id={id}
+                  nickname={nickname}
+                  photo={photo}
+                  userId={userId}
+                />
+              </Template>
+            }
+          ></Route>
+          <Route
+            path="/waitMate/update/:wmId"
+            element={
+              <Template>
+                <WaitMateUpdate
                   id={id}
                   nickname={nickname}
                   photo={photo}
