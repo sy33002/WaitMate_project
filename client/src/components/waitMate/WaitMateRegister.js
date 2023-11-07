@@ -9,20 +9,43 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const [clickRegister, setClickRegister] = useState(false);
   const [locationInfo, setLocationInfo] = useState({});
 
-  const onSubmit = async (data, event) => {
-    console.log('dd');
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        alert('이미지 파일을 넣어주십시오');
+       
+        e.target.value = '';
+      } else {
+        
+        setValue('photo', e.target.files);
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImageFile(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  };
+
+    const onSubmit = async (data, event) => {
     const wmAddress = inputAddressValue;
     const formData = new FormData();
-    formData.append('id', 1);
+    formData.append('id', id);
     formData.append('title', data.title);
     formData.append('wmAddress', wmAddress);
+    formData.append('wmDetailAddress', data.detailAddress);
     formData.append('date', data.date);
-    formData.append('waitTime', data.time);
+    formData.append('startTime', data.time_start);
+    formData.append('endTime', data.time_end);
     formData.append('pay', data.pay);
     formData.append('description', data.detail);
     formData.append('photo', imageFile);
+    formData.append('lng', locationInfo.x);
+    formData.append('lat', locationInfo.y);
+    console.log(imageFile);
     try {
-      const response = await fetch(`http://localhost:3000/waitMate`, {
+      const response = await fetch(`http://localhost:8080/waitMate/register`, {
         method: 'POST',
         body: formData,
       });
@@ -37,26 +60,33 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
       console.error('Error!');
     }
   };
-  console.log("setlocationInfo",setLocationInfo.lat);
+  console.log('setlocationInfo', setLocationInfo.lat);
   return (
-    <div className="w-full">
-      <p className="text-xs">좋은 웨이트메이트가 되어주세요!</p>
+    <div className="w-full p-8">
+      <p className="text-xs">you will be the best wait mate.</p>
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-4 border border-primary rounded-lg"
         >
           <div className="flex">
-            <div className="flex justify-center items-center w-1/4">
+            <div className="flex justify-center items-center w-1/3">
               <div className="w-full">
                 {imageFile && (
                   <img
                     src={imageFile}
                     alt="Preview"
-                    className="border border-primary rounded-lg"
+                    className="border border-primary rounded-lg w-full"
                   />
                 )}
-                <label className="text-xs text-primary m-1">가게 사진</label>
+                <label className="text-sm text-background m-1">Upload Image</label><br />
+                <input
+                    type="file"
+                    name="photo"
+                    onChange={(e) => {
+                      handleFileChange(e);
+                    }}
+                    />
               </div>
             </div>
             <div className="bg-primary ml-3 w-full flex flex-col p-3 rounded-lg">
@@ -107,6 +137,20 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
               </div>
               <br />
               <div>
+                <label className="text-sm text-background m-1">
+                  Detail Address
+                </label>
+                <br />
+                <Controller
+                  name="detailAddress"
+                  control={control}
+                  render={({ field }) => (
+                    <textarea {...field} className="w-full" />
+                  )}
+                />
+              </div>
+              <br />
+              <div>
                 <label className="text-sm text-background m-1">*Date</label>
                 <Controller
                   name="date"
@@ -121,14 +165,24 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
               <br />
               <div>
                 <label className="text-sm text-background m-1">
-                  Waiting Time
+                  *Waiting Time
                 </label>
                 <Controller
-                  name="time"
+                  name="time_start"
                   control={control}
-                  rules={{ required: false }}
-                  render={({ field }) => <input {...field} />}
+                  rules={{ required: true }}
+                  render={({ field }) => <input {...field} type="time"/>}
+                /><span className='text-background'> ~ </span><Controller
+                name="time_end"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => <input {...field} type="time"/>}
                 />
+                 {formState.errors.time_start && clickRegister && (
+                  <p className="text-red-500">시작 시간은 필수 항목입니다 :D</p>
+                )}{formState.errors.time_end && clickRegister && (
+                  <p className="text-red-500">끝날 시간은 필수 항목입니다 :D</p>
+                )}
               </div>
               <br />
               <div>

@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import ProxyListBox from './ProxyListBox';
+import { Link } from 'react-router-dom';
+import Select from "react-select";
 
 export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const handleOption = (e) => {
-    setSelectedOption(e.target.value);
+    const selectedValue = e.target.value;
+    setSelectedOption(selectedValue);
   }
 
   const handleAddressChange = (e) => {
-    setAddress(e.target.value);
+    const selectedValue = e.target.value;
+    setAddress(selectedValue);
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/proxy/getter?address=${address}&order=${selectedOption}`, {
+        const selectedCity = cities.find(city => city.values.includes(address));
+        const fullAddress = `${selectedCity.label} ${address}`;
+        console.log(fullAddress);
+        const response = await fetch(`http://localhost:8080/proxy/list?address=${fullAddress}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {
@@ -35,7 +44,30 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       }
     }
     fetchData();
-  }, []);
+  }, [address, selectedOption]);
+
+  //페이지 네이션
+  const indexOfLastItem = currentPage * itemsPerPage; 
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+  
+  console.log("indexOfLastItem >>>", indexOfLastItem);
+  console.log("indexOfFirstItem >>>", indexOfFirstItem);
+  console.log("currentItems >>>", currentItems);
+
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const collectOption = (address === '' ? '선택하세요' : address);
 
   return (
     <div className='h-full'>
@@ -47,26 +79,36 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
             <option value='byRating'>평점순</option>
           </select>
         </div>
-        {/* <span className='text-[10px] text-primary' onClick={handleAddressChange}>{address}</span> */}
-        <select value={selectedOption} onChange={handleAddressChange}>
-        <option value={address}>{address}</option>
-        {cities.map((city) => (
-          <optgroup label={city.label} key={city.label}>
-            {city.values.map((value) => (
-              <option key={value} value={value}>
-                {value}
-              </option>
-            ))}
-          </optgroup>
-        ))}
-      </select>
+        <Select
+          options={cities}
+          onChange={(selectedOption) => {
+            if (selectedOption) {
+              setAddress(selectedOption.value);
+            } else {
+              setAddress(null);
+            }
+          }}
+        />
         <div></div>
         <div></div>
       </div>
-      <div className='w-2/5 h-1/3 m-8'>
-        {items.map((item) => (
-          <ProxyListBox key={item.id} item={item} />
+      <div className='w-full h-full m-8'>
+        {currentItems.map((item, index) => (
+          <div key={item.proxyId} className="flex w-full">
+            <Link to={`/proxy/detail/${item.proxyId}`}>
+            <ProxyListBox item={item} />
+            </Link>
+          </div>
         ))}
+      </div>
+      <div className="pagination">
+      <button onClick={goToPreviousPage} disabled={currentPage === 1}>
+        이전
+      </button>
+      <span>{`${currentPage} / ${totalPages}`}</span>
+      <button onClick={goToNextPage} disabled={currentPage === totalPages}>
+        다음
+      </button>
       </div>
     </div>
   );
