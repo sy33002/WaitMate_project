@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import useUserStore from '../../store/useUserStore';
 
 const fetchMoreChats = (cursor) => {
   // 이 부분은 실제 API 호출 로직을 대체합니다
@@ -14,55 +16,35 @@ const fetchMoreChats = (cursor) => {
   });
 };
 
-function ChatList({ id, nickname, photo, userId }) {
-  const [chats, setChats] = useState([
-    {
-      id: 'chat-0',
-      nickname: '홍길동',
-      time: '13:00+9',
-      message: '안녕하세요, 채팅리스트에 오신 것을 환영합니다!',
-      profilePic: '/images/someone.png',
-    },
-    {
-      id: 'chat-1',
-      nickname: '카일',
-      time: '13:00+9',
-      message: '웨메 신청 ...',
-    },
-    {
-      id: 'chat-2',
-      nickname: '꿍치',
-      time: '14:33+9',
-      message: '프록시 가능하세요?',
-      profilePic: '/images/waitmate.png',
-    },
-    {
-      id: 'chat-3',
-      nickname: '가을',
-      time: '15:40+2',
-      message: 'ㅇㅇ식당입니다!',
-      profilePic: '/images/waitmate.png',
-    },
-    {
-      id: 'chat-4',
-      nickname: '봄',
-      time: '20:33+4',
-      message: '두근두근',
-      profilePic: '/images/waitmate.png',
-    },
-    {
-      id: 'chat-3',
-      nickname: '가을',
-      time: '15:40+2',
-      message: 'ㅇㅇ식당입니다!',
-      profilePic: '/images/waitmate.png',
-    },
-  ]);
-
+function ChatList() {
+  const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
+  const {id} = useUserStore();
   const [cursor, setCursor] = useState(0);
+
+  useEffect(() => {
+    async function loadChatList() {
+      setLoading(true);
+      try {
+        const response = await axios.get(`http://localhost:8080/proxy/listChatting`, { withCredentials: true });
+        const chatListData = response.data.list;
+        console.log(response.data.list);
+        if (Array.isArray(chatListData)) {
+          setChats(chatListData);
+        } else {
+          const chatList = Object.values(chatListData); 
+          setChats(chatList);
+        }
+      } catch (error) {
+        console.error('채팅 목록을 불러오는 중 문제가 발생했습니다:', error);
+      }
+      setLoading(false);
+    }
+
+    loadChatList();
+  }, []);
 
   useEffect(() => {
     const options = {
@@ -115,29 +97,30 @@ function ChatList({ id, nickname, photo, userId }) {
       </div>
       <div className="w-full h-96 overflow-y-auto p-5 rounded-lg bg-white border-primary border-2">
         <div className="overflow-y-auto">
-          {chats.map((chat) => (
-            <Link to={`/chat/${chat.id}`} key={chat.id}>
-              <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
-                <img
-                  src={chat.profilePic || '/images/someone.png'}
-                  alt={`${chat.nickname}의 프로필 사진`}
-                  className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
-                />
-                <div className="chat-item">
-                  <div className="flex flex-row items-center">
-                    <div className="nickname">{chat.nickname}</div>
-                    <div className="time text-xs">{chat.time}</div>
-                  </div>
-                  <div className="message">{chat.message}</div>
-                </div>
-              </div>
-            </Link>
-          ))}
-          {loading && (
+          {loading ? (
             <div className="flex justify-center items-center">
               <div className="loader"></div>
               채팅 목록을 가져오는 중...
             </div>
+          ) : (
+            chats.map((chat) => (
+              <Link to={`/chat/${chat.id}`} key={chat.id}>
+                <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
+                  <img
+                    src={chat.profilePic || '/images/someone.png'}
+                    alt={`${chat.nickname}의 프로필 사진`}
+                    className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
+                  />
+                  <div className="chat-item">
+                    <div className="flex flex-row items-center">
+                      <div className="nickname">{chat.nickname}</div>
+                      <div className="time text-xs">{chat.time}</div>
+                    </div>
+                    <div className="message">{chat.message}</div>
+                  </div>
+                </div>
+              </Link>
+            ))
           )}
           <div ref={loader} />
         </div>
