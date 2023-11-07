@@ -82,7 +82,7 @@ function Header() {
                       <p className="p-2 mt-1">My ChatList</p>
                     </Link>
                     <hr className="border-gray-300 w-full" />
-                    <Link to="#" onClick={handleLogout}>
+                    <Link to="/" onClick={handleLogout}>
                       <p className="p-2">Logout</p>
                     </Link>
                   </div>
