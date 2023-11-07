@@ -8,30 +8,12 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState('');
-  const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
-  }
-
-  const handleAddressChange = (e) => {
-    const selectedValue = e.target.value;
-    setAddress(selectedValue);
-  }
-
-  const filterAddresses = () => {
-    if (searchText) {
-      return cities.reduce((filteredCities, city) => {
-        const filteredValues = city.values.filter(value => value.includes(searchText));
-        if (filteredValues.length > 0) {
-          return [...filteredCities, { ...city, values: filteredValues }];
-        }
-        return filteredCities;
-      }, []);
-    }
-    return cities;
   }
 
   useEffect(() => {
@@ -74,19 +56,22 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   };
 
   return (
-    <div className='h-2/3 p-4 flex flex-col item-center justify-center text-center'>
-      <div className='flex justify-between items-center space-x-4'>
+    <div className='h-screen p-4 mt-4 flex flex-col item-center justify-center text-center'>
+      <div className='flex justify-between items-center space-x-4 '>
         <div>
-        <p className='text-[13px] text-green font-Line'>근처에 있는 <span className='text-primary'>웨이트 메이트</span>를 찾아보세요!</p>
+        <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-green font-Line`}>
+          근처에 있는 
+            <span className='text-primary'>웨이트 메이트</span>
+          를 찾아보세요!</p>
           <select value={selectedOption} onChange={handleOption} 
-          className='text-primary p-2 font-Line text-[12px] bg-background'>
+          className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
             <option value='updatedAt'>최근 목록순</option>
             <option value='pay'>시급순</option>
             <option value='count'>조회순</option>
           </select>
         </div>
         <Select
-          className='w-1/3 text-primary font-Line text-sm'
+          className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-1/3'} text-primary font-Line text-sm'}`}
           options={cities}
           onChange={(selectedOption) => {
             if (selectedOption) {
@@ -101,20 +86,19 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       </div>
       <div className='w-full h-full p-2 '>
       {currentItems.map((item, index) => {
-        // 짝수 인덱스인 경우 현재 아이템과 다음 아이템 표시
         if (index % 2 === 0) {
           const nextItem = currentItems[index + 1];
           return (
             <div key={item.wdId} className="flex w-full h-1/2justify-center item-center">
               <div className='w-1/2 p-1'>
               <Link to={`/waitMate/detail/${item.wdId}`}>
-                <WaitMateBox item={item} />
+                <WaitMateBox item={item} isSmallScreen={isSmallScreen}/>
               </Link>
               </div>
               <div className='w-1/2 p-1'>
               {nextItem && 
               <Link to={`/waitMate/detail/${item.wdId}`}>
-                <WaitMateBox item={nextItem} />
+                <WaitMateBox item={nextItem} isSmallScreen={isSmallScreen}/>
               </Link>
               }
               </div>
@@ -125,8 +109,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       })}
       <div className="pagination">
       </div>
-      </div>
-      <div>
+      <div className='relative bottom-0 left-0 w-full flex justify-center items-center'>
         <button onClick={goToPreviousPage} disabled={currentPage === 1}
         className='text-sm text-gray-500 font-Line'>
           prev
@@ -138,6 +121,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         className='text-sm text-gray-500 font-Line'>
           next
         </button>
+      </div>
       </div>
     </div>
   );
