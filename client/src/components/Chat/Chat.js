@@ -4,6 +4,7 @@ import './chat.scss';
 import { socket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
+import axios from 'axios';
 
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
@@ -18,6 +19,19 @@ export default function Chat() {
   const { roomNumber } = useParams();
   
   useEffect(() => {
+    axios({
+      url : `http://localhost:8080/proxy/chat/${roomNumber}`,
+      method : 'GET',
+    })
+    .then((res)=>{
+      console.log(res.data.list);
+      console.log(res.data);
+      setMessages(res.data.list);
+    })
+    .catch((err)=>{
+      console.error(err);
+    })
+
     socket.emit('getRoomInfo', roomNumber);
     if(!id){
       alert('로그인 먼저 진행하시기 바랍니다');
@@ -53,6 +67,8 @@ export default function Chat() {
     };
   }, []);
   
+  
+
   const sendMessage = () => {
     const messageData = {
       roomNumber: roomNumber,
@@ -117,23 +133,19 @@ export default function Chat() {
         />
       </div>
       <div className="message_container">
-        {messages.map((msg, index) => (
-          <MessageBox
-            key={index}
-            className={msg.sender === sender ? 'me' : 'other'}
-            photo={
-              msg.sender !== sender &&
-              (index === 0 || messages[index - 1].sender !== msg.sender)
-                ? msg.photo
-                : null
-            }
-            size="xsmall"
-            type="text"
-            text={msg.message}
-            title={index === 0 ? `${msg.sender}  ${msg.time}` : msg.time}
-            notch={false}
-          ></MessageBox>
-        ))}
+      {messages.map((msg, index) => (
+           
+            <MessageBox
+              key={index}
+              className={msg.sender === sender ? 'me' : 'other'}
+              photo={msg.sender !== sender ? msg.photo : null}
+              size="xsmall"
+              type={msg.messageType}
+              text={msg.messageContent}
+              title={`${msg.sender} ${msg.createdAt}`}
+              notch={false}
+            ></MessageBox>
+          ))}
       </div>
       <div className="input_container">
         <Input
