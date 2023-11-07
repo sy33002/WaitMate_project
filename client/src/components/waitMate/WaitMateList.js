@@ -7,7 +7,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState('');
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
@@ -74,16 +74,19 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   };
 
   return (
-    <div className='h-full'>
+    <div className='h-2/3 p-4 flex flex-col item-center justify-center text-center'>
       <div className='flex justify-between items-center space-x-4'>
         <div>
-          <p className='text-[10px] text-primary'>근처에 있는 웨이트메이트 목록</p>
-          <select value={selectedOption} onChange={handleOption} className='text-primary text-[10px] bg-background'>
+        <p className='text-[13px] text-green font-Line'>근처에 있는 <span className='text-primary'>웨이트 메이트</span>를 찾아보세요!</p>
+          <select value={selectedOption} onChange={handleOption} 
+          className='text-primary p-2 font-Line text-[12px] bg-background'>
             <option value='updatedAt'>최근 목록순</option>
-            <option value='byRating'>평점순</option>
+            <option value='pay'>시급순</option>
+            <option value='count'>조회순</option>
           </select>
         </div>
         <Select
+          className='w-1/3 text-primary font-Line text-sm'
           options={cities}
           onChange={(selectedOption) => {
             if (selectedOption) {
@@ -96,21 +99,25 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         <div></div>
         <div></div>
       </div>
-      <div className='w-full h-full m-8'>
+      <div className='w-full h-full p-2 '>
       {currentItems.map((item, index) => {
         // 짝수 인덱스인 경우 현재 아이템과 다음 아이템 표시
         if (index % 2 === 0) {
           const nextItem = currentItems[index + 1];
           return (
-            <div key={item.wdId} className="flex w-full">
+            <div key={item.wdId} className="flex w-full h-1/2justify-center item-center">
+              <div className='w-1/2 p-1'>
               <Link to={`/waitMate/detail/${item.wdId}`}>
                 <WaitMateBox item={item} />
               </Link>
+              </div>
+              <div className='w-1/2 p-1'>
               {nextItem && 
               <Link to={`/waitMate/detail/${item.wdId}`}>
                 <WaitMateBox item={nextItem} />
               </Link>
               }
+              </div>
             </div>
           );
         }
@@ -118,13 +125,19 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
       })}
       <div className="pagination">
       </div>
-      <button onClick={goToPreviousPage} disabled={currentPage === 1}>
-        이전
-      </button>
-      <span>{`${currentPage} / ${totalPages}`}</span>
-      <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-        다음
-      </button>
+      </div>
+      <div>
+        <button onClick={goToPreviousPage} disabled={currentPage === 1}
+        className='text-sm text-gray-500 font-Line'>
+          prev
+        </button>
+        <span
+          className='font-Line text-xs text-primary_dark m-2'
+        >{`${currentPage} / ${totalPages}`}</span>
+        <button onClick={goToNextPage} disabled={currentPage === totalPages}
+        className='text-sm text-gray-500 font-Line'>
+          next
+        </button>
       </div>
     </div>
   );

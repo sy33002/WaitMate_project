@@ -70,16 +70,19 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const collectOption = (address === '' ? '선택하세요' : address);
 
   return (
-    <div className='h-full'>
-      <div className='flex justify-between items-center space-x-4'>
+    <div className='h-2/3 p-4'>
+      <div className='flex justify-between items-center space-x-4 text-center'>
         <div>
-          <p className='text-[10px] text-primary'>근처에 있는 프록시 목록</p>
-          <select value={selectedOption} onChange={handleOption} className='text-primary text-[10px] bg-background'>
+          <p className='text-[13px] text-green font-Line'>근처에 있는 <span className='text-primary'>프록시</span>를 찾아보세요!</p>
+          <select value={selectedOption} onChange={handleOption} 
+          className='text-primary p-2 font-Line text-[12px] bg-background'>
             <option value='updatedAt'>최근 목록순</option>
-            <option value='byRating'>평점순</option>
+            <option value='pay'>시급순</option>
+            <option value='count'>조회순</option>
           </select>
         </div>
         <Select
+          className='w-1/3 text-primary font-Line text-sm'
           options={cities}
           onChange={(selectedOption) => {
             if (selectedOption) {
@@ -106,10 +109,10 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         이전
       </button>
       <span>{`${currentPage} / ${totalPages}`}</span>
+      </div>
       <button onClick={goToNextPage} disabled={currentPage === totalPages}>
         다음
       </button>
-      </div>
     </div>
   );
 }

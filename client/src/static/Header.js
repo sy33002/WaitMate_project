@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
 
 function Header() {
-   const {id, nickname, photo, userId, setUserInfo} = useUserStore();
+  const { id, nickname, photo, userId, setUserInfo, logout } = useUserStore();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setUserInfo();
@@ -19,6 +20,10 @@ function Header() {
   const toggleAlert = () => {
     setIsAlertOpen(!isAlertOpen);
     setMenuOpen(false);
+  };
+  const handleLogout = () => {
+    logout();
+    navigate('/');
   };
 
   const profileImage = photo || '/images/waitMate2.png';
@@ -46,7 +51,7 @@ function Header() {
             </div>
           </Link>
           <div>
-          <button
+            <button
               onClick={toggleAlert}
               className="font-extrabold text-primary py-2 px-1 sm:py-2 sm:px-1 md:py-2 md:px-2 text-xs sm:text-sm md:text-baserounded-full relative"
             >
@@ -69,15 +74,15 @@ function Header() {
               {isMenuOpen && (
                 <div className="menu bg-gray-100 absolute right-0 top-full p-2 rounded-md shadow-md">
                   <div className="text-primary text-xs w-28 font-gmarket">
-                    <Link to="/mypage/myPage">
+                    <Link to="/mypage/Mypage">
                       <p className="p-2">My Page</p>
                     </Link>
-                    <hr className='border-gray-300 w-full'/>
-                    <Link to="/mypage/myPage">
+                    <hr className="border-gray-300 w-full" />
+                    <Link to="/mypage/ChatList">
                       <p className="p-2 mt-1">My ChatList</p>
                     </Link>
-                    <hr className='border-gray-300 w-full'/>
-                    <Link to="/mypage/myPage">
+                    <hr className="border-gray-300 w-full" />
+                    <Link to="/" onClick={handleLogout}>
                       <p className="p-2">Logout</p>
                     </Link>
                   </div>

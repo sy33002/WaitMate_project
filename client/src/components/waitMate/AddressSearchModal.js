@@ -6,7 +6,7 @@ export default function AddressSearchModal({
   setInputAddressValue,
   setLocationInfo,
 }) {
-  const KAKAO_API_KEY = 'd6b027213f554936dffa4ecfc423cd06';
+  const apiKey = process.env.REACT_APP_REST_ADDRESS_KAKAO_API_KEY;
 
   const handleAddressChange = (data) => {
     setInputAddressValue(data.address);
@@ -19,7 +19,7 @@ export default function AddressSearchModal({
     const searchTxt = data.address;
     const config = {
       headers: {
-        Authorization: `KakaoAK ${KAKAO_API_KEY}`,
+        Authorization: `KakaoAK ${apiKey}`,
         'Content-Type': 'application/json;charset=UTF-8',
       },
     };
