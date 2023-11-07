@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
 
 export default function ProxyRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, formState,setValue } = useForm();
-  const [imageFile, setImageFile] = useState('/images/proxy.png');
-  const [inputAddressValue, setInputAddressValue] = useState('');
+  const [imageFile, setImageFile] = useState('/images/someone.png');
+  const [proxy, setProxy] = useState({});
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/proxy/update/${id}`)
+    .then(response => response.json())
+    .then(data => {
+      setProxy(data.result);
+      console.log(data.result);
+    })
+    .catch(error => {
+      console.error('데이터 가져오는 중 오류 발생!', error);
+    });
+  }, []);
+
+  const [inputAddressValue, setInputAddressValue] = useState(proxy.address);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
 
@@ -15,8 +29,10 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     if (file) {
       if (!file.type.startsWith('image/')) {
         alert('이미지 파일을 넣어주십시오');
+       
         e.target.value = '';
       } else {
+        
         setValue('photo', e.target.files);
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -31,7 +47,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     const address = inputAddressValue;
     const addressParts = address.split(" ");
     const combinedAddress = addressParts[0] + " " + addressParts[1];
-
+  
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
@@ -40,28 +56,38 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
    
-    if (data.photo[0]) {
-      formData.append('photo', data.photo[0]);
-    }
-    axios({
-      url: 'http://localhost:8080/proxy/register',
-      method: 'post',
-      data: formData,
-    })
-      .then((res) => {
-        const userConfirmed = window.confirm('등록 완료!');
-        if (userConfirmed) {
-          window.location.href = `/proxy/list`;
-        }
-      })
-      .catch((err) => {
-        console.error(err);
+    try {
+      const response = await fetch(`http://localhost:8080/proxy/`, {
+        method: 'PATCH',
+        body: formData,
       });
+      if (response === 'success') {
+        // const responseData = await response.json();
+        console.log('aaaa');
+      } else {
+        console.error('Failed to submit the form');
+        console.log(response.status);
+      }
+    } catch (error) {
+      console.error('Error!');
+    }
   };
 
+  useEffect(() => {
+    if (Object.keys(proxy).length > 0) {
+      setValue('title', proxy.title);
+      setValue('address', proxy.proxyAddress);
+      setValue('gender', proxy.gender);
+      setValue('age', proxy.age);
+      setValue('proxyMsg', proxy.proxyMsg);
+      setImageFile(proxy.photo);
+    }
+  }, [proxy]);
+
+
   return (
-    <div className='p-4'>
-      <p className='text-xs pl-1 pb-1'>you are my best proxy.</p>
+    <div>
+      <p className='text-xs'>you are my best proxy.</p>
       <div className='relative'>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -71,11 +97,11 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
             프록시란(Proxy)?</p>
           <p className='text-[10px]  text-background'>
             대신 웨이팅 할 사람을 지칭하는 말입니다! 저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
-          <div className='flex justify-center items-center'>
-            <div className='w-1/3 m-2'>
-              <div className='w-full'>
+          <div className='flex'>
+            <div>
+              <div className='aspect-w-16 aspect-h-9'>
                   {imageFile && <img src={imageFile} alt="Preview" 
-                  className="w-full h-full" />}
+                  className="max-w-full max-h-40" />}
               </div>
               <label className="text-sm text-background m-1">Upload Image</label><br />
               <input
@@ -178,7 +204,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
               <button type="submit" 
                 onClick={() => setClickRegister(true)}
                 className="text-background text-sm border">
-                register
+                Update
               </button>
               </div>
           </div>

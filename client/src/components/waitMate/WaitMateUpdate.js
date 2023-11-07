@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
+import { useParams } from 'react-router-dom';
 
-export default function WaitMateRegister({ id, nickname, photo, userId }) {
+export default function WaitMateUpdate({ id, nickname, photo, userId }) {
+  const { wmId } = useParams();
   const { control, handleSubmit, setValue, formState } = useForm();
-  const [imageFile, setImageFile] = useState('/images/waitMate.png');
-  const [inputAddressValue, setInputAddressValue] = useState('');
+  const [waitMate, setWaitMate] = useState({});
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/waitMate/detail?wmId=${wmId}&id=${id}`)
+    .then(response => response.json())
+    .then(data => {
+      setWaitMate(data.waitMate);
+      console.log(data.waitMate);
+    })
+    .catch(error => {
+      console.error('데이터 가져오는 중 오류 발생!', error);
+    });
+  }, []);
+
+  const [imageFile, setImageFile] = useState(waitMate.photo);
+  const [inputAddressValue, setInputAddressValue] = useState(waitMate.wmAddress);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
   const [locationInfo, setLocationInfo] = useState({});
@@ -30,24 +46,26 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   };
 
     const onSubmit = async (data, event) => {
-    const wmAddress = inputAddressValue;
-    const formData = new FormData();
-    formData.append('id', id);
-    formData.append('title', data.title);
-    formData.append('wmAddress', wmAddress);
-    formData.append('wmDetailAddress', data.detailAddress);
-    formData.append('date', data.date);
-    formData.append('startTime', data.time_start);
-    formData.append('endTime', data.time_end);
-    formData.append('pay', data.pay);
-    formData.append('description', data.detail);
-    formData.append('photo', imageFile);
-    formData.append('lng', locationInfo.x);
-    formData.append('lat', locationInfo.y);
-    console.log(imageFile);
+      const wmAddress = inputAddressValue;
+      const formData = new FormData();
+      formData.append('id', id);
+      formData.append('wmId', wmId);
+      formData.append('title', data.title);
+      formData.append('wmAddress', wmAddress);
+      formData.append('wmDetailAddress', data.detailAddress);
+      formData.append('date', data.date);
+      formData.append('startTime', data.time_start);
+      formData.append('endTime', data.time_end);
+      formData.append('waitTime', 11);
+      formData.append('pay', data.pay);
+      formData.append('description', data.detail);
+      formData.append('photo', imageFile);
+      formData.append('lng', locationInfo.x);
+      formData.append('lat', locationInfo.y);
+
     try {
-      const response = await fetch(`http://localhost:8080/waitMate/register`, {
-        method: 'POST',
+      const response = await fetch(`http://localhost:8080/waitMate/`, {
+        method: 'PATCH',
         body: formData,
       });
       if (response === 'success') {
@@ -61,33 +79,47 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
       console.error('Error!');
     }
   };
-  console.log('setlocationInfo', setLocationInfo.lat);
+
+  useEffect(() => {
+    if (Object.keys(waitMate).length > 0) {
+      setValue('title', waitMate.title);
+      setValue('address', waitMate.wmAddress);
+      setValue('detailAddress', waitMate.wmDetailAddress);
+      setValue('date', waitMate.date);
+      setValue('time_start', waitMate.startTime);
+      setValue('time_end', waitMate.endTime);
+      setValue('pay', waitMate.pay);
+      setValue('detail', waitMate.description);
+      setImageFile(waitMate.photo);
+    }
+  }, [waitMate]);
+
   return (
-    <div className="w-full p-8">
-      <p className="text-xs">you will be the best wait mate.</p>
+    <div className="w-full m-4">
+      <p className="text-xs">좋은 웨이트메이트가 되어주세요!</p>
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-4 border border-primary rounded-lg"
         >
           <div className="flex">
-            <div className="flex justify-center items-center w-1/3">
+            <div className="flex justify-center items-center w-1/4">
               <div className="w-full">
                 {imageFile && (
                   <img
                     src={imageFile}
                     alt="Preview"
-                    className="border border-primary rounded-lg w-full"
+                    className="border border-primary rounded-lg"
                   />
                 )}
                 <label className="text-sm text-background m-1">Upload Image</label><br />
-                <input
-                    type="file"
-                    name="photo"
-                    onChange={(e) => {
-                      handleFileChange(e);
-                    }}
-                    />
+              <input
+                  type="file"
+                  name="photo"
+                  onChange={(e) => {
+                    handleFileChange(e);
+                  }}
+                />
               </div>
             </div>
             <div className="bg-primary ml-3 w-full flex flex-col p-3 rounded-lg">
@@ -216,7 +248,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                 onClick={() => setClickRegister(true)}
                 className="text-background text-sm border"
               >
-                register
+                Update
               </button>
             </div>
           </div>
