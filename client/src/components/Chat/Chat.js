@@ -17,7 +17,7 @@ export default function Chat() {
   const Navigate = useNavigate();
   const inputReferance = React.createRef();
   const { roomNumber } = useParams();
-  console.log('아이디값' + id);
+ 
 
   const [loading, setLoading] = useState(true);
 
@@ -25,19 +25,14 @@ export default function Chat() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!id) {
-          console.log('아이디값' + id);
-          alert('로그인 먼저 진행하시기 바랍니다');
-          return;
-        }
+        
 
         // 데이터 로딩 및 소켓 연결
         const response = await axios({
           url: `http://localhost:8080/proxy/chat/${roomNumber}`,
           method: 'GET',
         });
-        console.log(response.data.list);
-        console.log(response.data);
+        
         setMessages(response.data.list);
 
         socket.emit('getRoomInfo', roomNumber);
@@ -49,6 +44,7 @@ export default function Chat() {
     };
 
     fetchData();
+    setSender({ userId: '' });
   }, [roomNumber, id]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
@@ -76,8 +72,7 @@ export default function Chat() {
               setReceiver(data.sender);
               setLoading(false);
             }
-            console.log(data.sender);
-            console.log(data.receiver);
+            
           }
         }
       });
@@ -86,37 +81,40 @@ export default function Chat() {
   
 
   const sendMessage = () => {
-    const messageData = {
-      roomNumber: roomNumber,
-      sender: sender.userId,
-      receiver: receiver.userId,
-      messageType: 'text',
-      messageContent: inputValue,
-    };
-    // 서버로 메시지를 전송합니다.
-    socket.emit('message', messageData);
     if (inputValue.trim() !== '') {
+      const messageData = {
+        roomNumber: roomNumber,
+        sender: sender.userId,
+        receiver: receiver.userId,
+        messageType: 'text',
+        messageContent: inputValue,
+      };
+  
+      socket.emit('message', messageData);
+  
       const currentTime = new Date().toLocaleTimeString([], {
         hour12: false,
         hour: '2-digit',
         minute: '2-digit',
       });
-
-      console.log(currentTime);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          photo: proxy,
-          message: inputValue,
-          sender: sender.userId,
-          receiver: receiver.userId,
-          time: currentTime,
-        },
-      ]);
+  
+      // 메시지를 먼저 뷰에 표시
+      const newMessage = {
+        photo: proxy,
+        messageContent: inputValue,
+        sender: sender.userId,
+        receiver: receiver.userId,
+        time: currentTime,
+      };
+  
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+  
+      // 입력값 초기화
       setInputValue('');
       inputReferance.current.value = '';
     }
   };
+
   useEffect(() => {
     socket.on('smessage', (messageData) => {
       const currentTime = new Date().toLocaleTimeString([], {
@@ -124,47 +122,42 @@ export default function Chat() {
         hour: '2-digit',
         minute: '2-digit',
       });
-
+    
+      
       const newMessage = {
-        photo: messageData.photo,
-        message: messageData.messageContent,
-        sender: messageData.sender,
-        receiver: messageData.receiver,
+        photo: messageData.photo || null,
+        messageContent: messageData.messageContent || '',
+        sender: messageData.sender || '',
+        receiver: messageData.receiver || '',
         time: currentTime,
       };
+    
+     
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
-    return () => {
-      socket.off('smessage');
-    };
-  }, [sender]);
+  return () => {
+    socket.off('smessage');
+  };
+}, []);
   
   return (
     <div className="container">
-      {!id ? ( // id 값이 없는 경우 (로딩 중 또는 로그인되지 않은 경우)
+      {!id ? ( 
         <div>로딩 중...</div>
       ) : (
         <div>
-          <div className="user-input">
-            <input
-              type="text"
-              placeholder="Enter your user ID"
-              value={sender.userId}
-              onChange={(e) => setSender(e.target.value)}
-            />
-          </div>
-          {loading ? ( // 데이터 로딩 중인 경우
+          {loading ? ( 
             <div>로딩 중...</div>
           ) : (
-            // 데이터 로딩이 완료된 경우
+          
             <div>
-              {/* 채팅 내용 표시 */}
+              <p>현재 회원님의 아이디는 {sender.userId}입니다</p>
               <div className="message_container">
                 {messages.map((msg, index) => (
                   <MessageBox
                     key={index}
                     className={msg.sender === sender ? 'me' : 'other'}
-                    photo={msg.sender !== sender ? msg.photo : null}
+                    photo={msg.sender !== sender ? (msg.photo || null) : null}
                     size="xsmall"
                     type={msg.messageType}
                     text={msg.messageContent}
@@ -173,7 +166,7 @@ export default function Chat() {
                   ></MessageBox>
                 ))}
               </div>
-              {/* 채팅 입력 */}
+            
               <div className="input_container">
                 <Input
                   className="input_item"
@@ -181,18 +174,16 @@ export default function Chat() {
                   multiline={true}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      sendMessage();
+                    }
+                  }}
                   rightButtons={
                     <Button
                       className="input_send_btn"
                       backgroundColor="transparent"
-                      onClick={sendMessage} // sendMessage 함수 호출
-                    />
-                  }
-                  leftButtons={
-                    <Button
-                      className="input_file_btn"
-                      backgroundColor="transparent"
-                      onClick={() => document.getElementById('fileInput').click()}
+                      onClick={sendMessage} 
                     />
                   }
                 />
