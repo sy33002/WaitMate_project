@@ -36,11 +36,11 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
-    formData.append('id', data.id);
+    formData.append('id', id);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-   
+    console.log(data);
     if (data.photo[0]) {
       formData.append('photo', data.photo[0]);
     }
@@ -118,8 +118,8 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
                 </label><br />
                 <button onClick={() => {setIsModalOpen(true); 
                   setValue('address', '');}}
-                  className='bg-green p-1 font-Line rounded-lg mb-1'
-                  >주소 검색</button> <span className='text-red-300 text-xs font-Line pl-1'>저희는 구체적인 프록시의 주소는 받지 않아요!</span>
+                  className={`${isSmallScreen ? 'text-[10px]' : 'text-sm'} bg-green p-1 font-Line rounded-lg mb-1`}
+                  >주소 검색</button> <br /><span className={`${isSmallScreen ? 'text-[8px]': 'text-xs'} text-red-300  font-Line pl-1`}>저희는 구체적인 프록시의 주소는 받지 않아요!</span>
                   <input
                     name='Address'
                     className='w-full rounded-lg'

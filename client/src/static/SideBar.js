@@ -21,7 +21,7 @@ function SidebarItem({ text, subMenu, activeSubMenu, setActiveSubMenu }) {
       <li className={`relative m-2 rounded-sm p-2 cursor-pointer font-gmarket font-bold transition-all duration-300 ${
       isHovered ? 'text-green bg-primary_dark transition-transform transform translate-x-0 hover:translate-x-4' : 'text-primary_dark bg-background'
     } ${
-      isSubMenuOpen ? 'bg-red-200 shadow-lg ' : ''
+      isSubMenuOpen ? ' bg-red-200 shadow-lg ' : ''
     }`}
         onClick={toggleSubMenu}
         onMouseEnter={() => setHovered(true)}

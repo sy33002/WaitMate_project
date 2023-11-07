@@ -67,7 +67,7 @@ function Header() {
             >
               ▽
               {isMenuOpen && (
-                <div className="menu bg-gray-100 absolute right-0 top-full p-2 rounded-md shadow-md">
+                <div className="menu z-20 bg-gray-100 absolute right-0 top-full p-2 rounded-md shadow-md">
                   <div className="text-primary text-xs w-28 font-gmarket">
                     <Link to="/mypage/myPage">
                       <p className="p-2">My Page</p>

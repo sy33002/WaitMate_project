@@ -11,26 +11,29 @@ export default function ProxyListBox({item}) {
     const handleHoverOut = () => {
       setIsHoverd(false);
     };
+
     return (
-      <div className={'rounded-lg border-x-primary border-x-2 w-full h-24 elative mb-2'}
+      <div className={'border-x-2 border-primary w-full h-24 elative mb-4'}
       onMouseOver={handleHoverIn}
-      onMouseOut={handleHoverOut}>
-        <div className='p-2 h-24 flex items-center absolute z-10 w-full'>
-          <div className='lg:overflow-hidden w-1/4 flex justify-end pr-6'>
-              <img src='/images/me.jpg' alt='User' className='h-20 rounded-full' />
+      onMouseOut={handleHoverOut}
+      style={{ overflow: 'hidden' }}>
+        <div className='p-2 h-24 flex items-center realtive w-full'>
+          <div className='w-1/3 flex justify-end pr-6'>
+              <img src={`${item.photo}`} alt='User' className=' border border-primary_light h-20 w-20 rounded-full z-2' />
           </div>
           <div className='p-2 text-center w-3/4 pr-8'>
-              <p>{item.id}</p>
-              <p>{item.proxyAddress}</p>
-              <p>{item.gender}</p>
-              <p>{item.age}</p>
+              <p className='font-Line text-primary_dark text-sm bg-green rounded-lg p-1'>{item.title}</p>
+              <p className='font-Line text-primary text-xs'>{item.proxyAddress}</p>
+              <p className='font-Line text-gray-500 text-xs'>{item.gender}</p>
+              <p className='font-Line text-gray-500 text-xs'>{item.age}</p>
           </div>
-        </div>
         {isHovered && (
-            <div className="hover-info bg-opacity-80 absolute justify-center z-20 bg-gray-800 h-24 w-full rounded-lg flex items-center">
+            <div className="z-3 hover-info w-4/5 bg-opacity-80 absolute justify-center bg-gray-800 h-24 flex items-center"
+            style={{}}>
               <div className='text-white'>{item.proxyMsg}</div>
             </div>
         )}
+        </div>
       </div>
   );
 }

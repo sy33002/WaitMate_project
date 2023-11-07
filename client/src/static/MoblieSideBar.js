@@ -21,7 +21,7 @@ function SidebarItem({ text, subMenu, activeSubMenu, setActiveSubMenu }) {
     return (
       <div>
         <div 
-          className={`relative m-2 rounded-sm p-2 cursor-pointer font-bold font-gmarket transition-all duration-300 ${
+          className={`relative m-2 text-xs rounded-sm p-2 cursor-pointer font-bold font-gmarket transition-all duration-300 ${
             isHovered ? 'text-background bg-primary_dark transition-transform transform translate-x-0 hover:translate-x-2' : 'text-primary bg-background'
           } ${
             isSubMenuOpen ? 'bg-red-200 shadow-lg text-green' : ''
