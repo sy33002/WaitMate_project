@@ -141,7 +141,7 @@ export default function MapComponent({ id }) {
                           <div className="desc">
                             <div>
                               <a
-                                href={`http://localhost:3000/waitMate/detail?wmId=${data.waitMate}`}
+                                href={`http://localhost:3000/waitMate/detail?wmId=${data.wmId}`}
                                 className="link"
                                 rel="noreferrer"
                               >

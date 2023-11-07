@@ -1,14 +1,48 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './main.scss';
 // import Footer from '../../static/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 export default function Main() {
+  const navigate = useNavigate();
+  const [scrollPos, setScrollPos] = useState(0);
   useEffect(() => {
     AOS.init();
   });
-  const navigate = useNavigate();
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrollPos(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  useEffect(() => {
+    const waitMateElement = document.querySelector('.container_main');
+
+    if (!waitMateElement) return;
+
+    const waitMatePosition = waitMateElement.getBoundingClientRect().top;
+    const startStopPosition = waitMatePosition + 100;
+
+    const handleScroll = (e) => {
+      if (scrollPos >= startStopPosition) {
+        e.preventDefault(); // 스크롤 이벤트를 중단
+        setTimeout(() => {
+          // 일정 시간(2초) 후에 다시 스크롤 이벤트를 허용
+          window.removeEventListener('scroll', handleScroll); // 스크롤 이벤트 제거
+        }, 5000); // 2초 (2000 밀리초)
+      }
+    };
+
+    if (scrollPos >= startStopPosition) {
+      window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 리스너 추가
+    }
+  }, [scrollPos]);
   return (
     <>
       <div class="container_main">
@@ -80,13 +114,13 @@ export default function Main() {
           <img
             class="chatting_Group_3"
             data-aos="flip-left"
-            data-aos-delay="200"
+            data-aos-delay="100"
             src="./images/main/Group_3.png"
           />
           <img
             class="chatting_Group_4"
             data-aos="flip-left"
-            data-aos-delay="200"
+            data-aos-delay="100"
             src="./images/main/Group_4.png"
           />
         </div>

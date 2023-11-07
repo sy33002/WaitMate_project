@@ -46,7 +46,7 @@
     width: 610px;
     height: 48px;
     position: absolute;
-    top: 50%;
+    top: 40%;
     z-index: 99;
   }
 
@@ -110,17 +110,17 @@
     cursor: pointer;
     transition: transform 3s;
   }
-.character_character_Group_7{
-  transition: transform 3s;
-}
-.character_character_Group_2{
-  transition: transform 3s;
-}
+  .character_character_Group_7 {
+    transition: transform 3s;
+  }
+  .character_character_Group_2 {
+    transition: transform 3s;
+  }
 
-.character_character_Group_7:hover {
+  .character_character_Group_7:hover {
     transform: rotateY(120deg);
   }
-.character_character_Group_2:hover {
+  .character_character_Group_2:hover {
     transform: rotateY(120deg);
   }
   // .character_background {
