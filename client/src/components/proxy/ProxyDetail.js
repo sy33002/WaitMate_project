@@ -11,6 +11,10 @@ export default function ProxyDetail() {
   const {id} = useUserStore();
   const navigate = useNavigate();
   
+  const handleEditClick = () => {
+    navigate(`/proxy/update/${proxyId}`);
+  };
+
   const startChat = () => {
     const usedRoomNumbers = [];
     if (!id) {
@@ -106,6 +110,7 @@ export default function ProxyDetail() {
             <div className="flex justify-center items-center">
               <span>{proxy.proxyMsg}</span>
             </div>
+          <button onClick={handleEditClick}>수정하기</button>
           </div>
         </div>
       </div>

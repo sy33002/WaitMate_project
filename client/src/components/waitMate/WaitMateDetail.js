@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function WaitMateDetail({ id, nickname, photo, userId }) {
   const { wmId } = useParams();
   const [waitMate, setWaitMate] = useState({});
   const [liked, setLiked] = useState(false);
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+    navigate(`/waitMate/update/${wmId}`);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:8080/waitMate/detail?wmId=${wmId}&id=${id}`)
@@ -64,6 +70,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
           <span>지원자: </span>
           <span>관심: </span>
           <button onClick={handleLikeToggle}>찜하기</button>
+          <button onClick={handleEditClick}>수정하기</button>
         </div>
       </div>
     </div>
