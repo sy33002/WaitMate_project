@@ -62,19 +62,25 @@ export default function MapComponent({ id }) {
         'url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png)',
     };
     const info_title = {
-      padding: '5px 0 0 10px',
+      padding: '5px 0 0 20px',
       height: '30px',
       background: '#eee',
       borderBottom: '1px solid #ddd',
-      fontSize: '18px',
+      fontSize: '17px',
       fontWeight: 'bold',
     };
-    const display_none = {
-      display: 'none',
+    const info_link = {
+      padding: '10px 0 50px 10px',
+      height: '80px', // Adjust the height as needed
+      background: '#FCFFF6',
+      borderBottom: '1px solid #ddd',
+      fontSize: '17px',
+      fontWeight: 'bold',
+      lineHeight: '80px', // Vertically center the content
     };
 
     // Styles object
-    return { style, info_close, info_title };
+    return { style, info_close, info_title , info_link};
   };
 
   // Function to open the custom overlay
@@ -100,7 +106,7 @@ export default function MapComponent({ id }) {
       <div class="waitMate_letter_second">
         <span>
           <img src="./images/proxy.png" />
-           프록시<span class="waitMate_letter">는 자신의 위치입니다!</span>
+          프록시<span class="waitMate_letter">는 자신의 위치입니다!</span>
         </span>
       </div>
 
@@ -153,14 +159,15 @@ export default function MapComponent({ id }) {
                       style={stylingOverlay().info_close}
                     ></div>
                   </div>
-                  <div className="body">
-                    <div className="desc">
+                  <div className="body" >
+                    <div className="desc" style={stylingOverlay().info_link}>
                       <div>
                         <a
                           href={`http://localhost:8080/waitMate/detail?wmId=${selectedMarker.waitMate}`}
                           target="_blank"
                           className="link"
                           rel="noreferrer"
+                          style={stylingOverlay().info_link}
                         >
                           웨이트 메이트 공고 바로가기
                         </a>
