@@ -95,10 +95,22 @@ function Mypage() {
             />
             <label
               htmlFor="profile-upload"
-              className="background text-primary w-44 py-2 rounded-lg text-center text-sm border border-2 border-primary cursor-pointer"
+              className="background text-primary w-44 h-8 py-1 rounded-lg text-center text-sm border border-2 border-primary cursor-pointer"
             >
               프로필 사진 Edit
             </label>
+            <div className="flex flex-row w-44 py-2">
+              <div className="pr-2">
+                <button className="text-primary w-16 h-8 text-sm rounded-lg border-2 border-primary">
+                  Log Out
+                </button>
+              </div>
+              <div className="pl-2">
+                <button className="text-primary text-sm w-24 h-8 rounded-lg border-2 border-primary">
+                  회원정보 수정
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div>
