@@ -67,14 +67,16 @@ function Header() {
             >
               ▽
               {isMenuOpen && (
-                <div className="menu bg-white absolute right-0 top-full p-2 rounded-md shadow-md">
-                  <div className="text-primary w-full">
+                <div className="menu bg-gray-100 absolute right-0 top-full p-2 rounded-md shadow-md">
+                  <div className="text-primary text-xs w-28 font-gmarket">
                     <Link to="/mypage/myPage">
                       <p className="p-2">My Page</p>
                     </Link>
+                    <hr className='border-gray-300 w-full'/>
                     <Link to="/mypage/myPage">
-                      <p className="p-2">My ChatList</p>
+                      <p className="p-2 mt-1">My ChatList</p>
                     </Link>
+                    <hr className='border-gray-300 w-full'/>
                     <Link to="/mypage/myPage">
                       <p className="p-2">Logout</p>
                     </Link>
@@ -85,7 +87,7 @@ function Header() {
           </div>
         </div>
       </header>
-      <hr className="border-t border-gray-200 w-full" />
+      <hr className="border-t border-gray-300 w-full" />
     </div>
   );
 }
