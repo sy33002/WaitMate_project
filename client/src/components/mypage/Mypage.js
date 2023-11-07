@@ -5,8 +5,7 @@ import { axiosInstance } from '../common/axiosInstance';
 
 function Mypage() {
   const {
-    id,
-    userId,
+    userId, //
     nickname,
     profileImg,
     setUserInfo,
@@ -17,24 +16,20 @@ function Mypage() {
   const [activeTab, setActiveTab] = useState('');
   const [listItems, setListItems] = useState([]);
   const [error, setError] = useState('');
-  const [showModal, setShowModal] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
+  // Fetch the relevant items depending on the active tab
   useEffect(() => {
-    setUserInfo();
-    fetchItems();
-  }, [activeTab]);
+    const urls = {
+      proxy: '',
+      waitmate: '',
+    };
+    const fetchItems = async () => {
+      const url = urls[activeTab];
+      if (!url) return;
 
-  const fetchItems = async () => {
-    let url;
-    if (activeTab === 'proxy') {
-      url = 'YOUR_BACKEND_URL_FOR_PROXY';
-    } else if (activeTab === 'waitmate') {
-      url = 'YOUR_BACKEND_URL_FOR_WAITMATE';
-    }
-
-    if (url) {
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -44,11 +39,17 @@ function Mypage() {
         console.error('Error:', error);
         setError('데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.');
       }
-    }
-  };
+    };
 
+    setUserInfo();
+    fetchItems();
+  }, [activeTab, setUserInfo]);
+
+  // Handle the profile image upload
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
+    if (!file) return;
+
     const formData = new FormData();
     formData.append('file', file);
 
@@ -70,13 +71,13 @@ function Mypage() {
     }
   };
 
-  const toggleEditButton = () => {
-    setShowEditButton((prev) => !prev);
+  // Navigate to the edit resume page
+  const handleEditResume = () => {
+    navigate('/edit-resume');
   };
 
-  const handleEditResume = () => {
-    // 이력서 수정 페이지로 이동하는 로직을 추가
-    // 예시: navigate('/edit-resume');
+  const toggleEditButton = () => {
+    setShowEditButton((prev) => !prev);
   };
 
   const renderButtons = () => {
@@ -90,7 +91,12 @@ function Mypage() {
             >
               나의 이력서
             </button>
-            {/* 다른 버튼들 */}
+            <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+              내가 찜한 웨메 리스트
+            </button>
+            <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+              내가 픽한 웨메 리스트
+            </button>
           </div>
           {showEditButton && (
             <button
@@ -106,17 +112,25 @@ function Mypage() {
     if (activeTab === 'waitmate') {
       return (
         <div className="flex space-x-2 mb-4">
-          {/* 대기자 목록과 프록시 목록을 위한 버튼들 */}
+          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+            내가 등록한 웨메 리스트
+          </button>
+          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+            내가 픽한 프록시 리스트
+          </button>
         </div>
       );
     }
     return null; // 활성 탭이 없을 때는 버튼을 렌더링하지 않음
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   const handleModalConfirm = () => {
     setShowModal(false);
