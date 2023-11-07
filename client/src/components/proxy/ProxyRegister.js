@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
+import useUserStore from '../../store/useUserStore';
 
-export default function ProxyRegister({ id, nickname, photo, userId }) {
+export default function ProxyRegister() {
   const { control, handleSubmit, formState,setValue } = useForm();
   const [imageFile, setImageFile] = useState('/images/proxy.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
+  const {id} = useUserStore();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
