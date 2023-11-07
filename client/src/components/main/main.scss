@@ -158,7 +158,7 @@
       margin: 0 auto;
       position: relative;
       text-align: center;
-      width: 1600px;
+      width: 1300px;
       height: 320px;
     }
   }
@@ -179,3 +179,214 @@
     }
   }
 }
+@media (min-width: 769px) and (max-width: 1200px) {
+  .first_column {
+    .waitMate {
+      width: 90%;
+      height: auto;
+      margin-top: 10%;
+    }
+
+    .waitMate_letter {
+      width: 80%;
+      height: auto;
+
+      margin-top: 10%;
+    }
+    .waitMateProxy {
+      width: 736px;
+      height: 212px;
+      position: absolute;
+      margin-top: 15%;
+
+      z-index: 99;
+    }
+  }
+
+  .character_character_Group_7 {
+    position: relative;
+    display: inline-block;
+    margin: 40px auto;
+
+    top: 30%;
+    width: 530px;
+    height: 830px;
+    // z-index: 8;
+  }
+  .character_column {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .character_character_div {
+    position: relative;
+    margin-top: 30%;
+    
+    
+    .character_character {
+      display: block;
+      text-align: center;
+      margin: 220px auto;
+      padding: 20px;
+      justify-content: center;
+      width: 550px;
+      height: 100px;
+    }
+  }
+  .character_group {
+    margin: 20px;
+  }
+  .button {
+    display: flex;
+    position: absolute;
+    margin-top: 30%;
+    z-index: 99;
+
+    .login {
+      background-image: url('../../../../client/public/images/main/Group 5.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+      margin-right: 20px;
+      z-index: 99;
+    }
+
+    .kakao_login {
+      background-image: url('../../../../client/public/images/main/Group 6.png');
+      background-size: 252px 54px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+      z-index: 99;
+    }
+  }
+  .chatting_column {
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    margin: 80px auto;
+    .chatting_Group_3 {
+      width: 451.11px;
+      height: 700px;
+      margin-right: 50px;
+    }
+
+    .chatting_Group_4 {
+      width: 561px;
+      height: 187px;
+    }
+  }
+  
+}
+@media (min-width: 300px) and (max-width: 768px) {
+  .first_column {
+    .waitMate {
+      width: 78%;
+      height: auto;
+      margin-top: 10%;
+    }
+
+    .waitMate_letter {
+      width: 70%;
+      height: auto;
+
+      margin-top: 10%;
+    }
+    .waitMateProxy {
+      width: 436px;
+      height: 112px;
+      position: absolute;
+      margin-top: 15%;
+
+      z-index: 99;
+    }
+  }
+
+  .character_character_Group_7 {
+    position: relative;
+    display: inline-block;
+    margin: 40px auto;
+
+    top: 30%;
+    width: 530px;
+    height: 830px;
+    // z-index: 8;
+  }
+  .character_column {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  .character_character_div {
+    position: relative;
+    margin-top: 30%;
+    
+    
+    .character_character {
+      display: block;
+      text-align: center;
+      margin: 220px auto;
+      padding: 20px;
+      justify-content: center;
+      width: 550px;
+      height: 100px;
+    }
+  }
+  .character_group {
+    margin: 20px;
+  }
+  .button {
+    display: flex;
+    position: absolute;
+    margin-top: 30%;
+    z-index: 99;
+
+    .login {
+      background-image: url('../../../../client/public/images/main/Group 5.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+      margin-right: 20px;
+      z-index: 99;
+    }
+
+    .kakao_login {
+      background-image: url('../../../../client/public/images/main/Group 6.png');
+      background-size: 52px 54px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 252px;
+      height: 54px;
+      z-index: 99;
+    }
+  }
+  .chatting_column {
+    display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    margin: 80px auto;
+    .chatting_Group_3 {
+      width: 451.11px;
+      height: 700px;
+      margin-right: 50px;
+    }
+
+    .chatting_Group_4 {
+      width: 561px;
+      height: 187px;
+    }
+  }
+  .strength_column {
+    .strength_Waitmate_3 {
+    }
+  }}
+
