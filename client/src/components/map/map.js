@@ -7,7 +7,6 @@ export default function MapComponent({ id }) {
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [waitMate, setWaitMate] = useState([]);
   const { wmId } = useParams();
 
   function getCurrentLocation(callback) {
@@ -46,21 +45,7 @@ export default function MapComponent({ id }) {
       });
   }, [wmId]);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:8080/waitMate/detail?wmId=${wmId}`)
-      .then((res) => {
-        const data = res.data;
-        setWaitMate(data);
-        console.log('waitMate 데이터:', data);
-        data.forEach((data) => {
-          console.log('data.wmId : ', data.wmId);
-        });
-      })
-      .catch((error) => {
-        console.error('데이터 가져오는 중 오류 발생!', error);
-      });
-  }, [wmId]);
+
 
   const stylingOverlay = () => {
     const style = {
@@ -141,7 +126,7 @@ export default function MapComponent({ id }) {
                           <div className="desc">
                             <div>
                               <a
-                                href={`http://localhost:3000/waitMate/detail?wmId=${data.waitMate}`}
+                                href={`http://localhost:8080/waitMate/detail?wmId=${data.waitMate}`}
                                 className="link"
                                 rel="noreferrer"
                               >

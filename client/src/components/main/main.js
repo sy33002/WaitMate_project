@@ -50,7 +50,7 @@ export default function Main() {
           <img class="background_img" src="./images/main/Rectangle_layer.png" />
           <img
             class="waitMate"
-            data-aos="fade-zoom-in"
+            data-aos="zoom-out-up"
             data-aos-delay="100"
             data-aos-anchor-placement="top-bottom"
             src="./images/main/WAITMATE.png"
@@ -85,7 +85,12 @@ export default function Main() {
         <br />
 
         <div class="character_character_div">
-          <img class="character_character" src="./images/main/Character.png" />
+          <img
+            class="character_character"
+            data-aos="fade-right"
+            data-aos-delay="200"
+            src="./images/main/Character.png"
+          />
         </div>
         <div class="character_column">
           <img
@@ -106,7 +111,12 @@ export default function Main() {
         <br />
 
         <div class="strength_column">
-          <img class="strength_Waitmate_3" src="./images/main/Waitmate_3.png" />
+          <img
+            class="strength_Waitmate_3"
+            data-aos="fade-up"
+            data-aos-delay="300"
+            src="./images/main/Waitmate_3.png"
+          />
         </div>
         <br />
 
