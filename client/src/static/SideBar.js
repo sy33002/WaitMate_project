@@ -7,7 +7,6 @@ import './sideBar.css';
 function SidebarItem({ text, subMenu }) {
   const [isSubMenuOpen, setSubMenuOpen] = useState(false);
   const [isHovered, setHovered] = useState(false);
-  let url;
 
   const toggleSubMenu = () => {
     setSubMenuOpen(!isSubMenuOpen);
@@ -34,7 +33,7 @@ function SidebarItem({ text, subMenu }) {
 
 function Sidebar() {
   return (
-    <div className="p-4 bg-background w-58 h-screen mt-16">
+    <div className="p-4 bg-background w-58 h-screen mt-10">
       <ul className="text-lg xl:text-xl h-full flex flex-col justify-start item-center text-center">
         <div className='h-1/5'>
         <Link to='/waitMate/register'>
