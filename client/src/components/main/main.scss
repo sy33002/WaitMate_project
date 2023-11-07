@@ -46,7 +46,7 @@
     width: 610px;
     height: 48px;
     position: absolute;
-    top: 50%;
+    top: 40%;
     z-index: 99;
   }
 
@@ -94,7 +94,7 @@
     .character_character {
       display: block;
       text-align: center;
-      margin: 220px auto; /* 수평 가운데 정렬을 위해 사용 */
+      margin: 180px auto; /* 수평 가운데 정렬을 위해 사용 */
       padding: 20px;
       justify-content: center;
       width: 550px;
@@ -106,21 +106,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     cursor: pointer;
     transition: transform 3s;
   }
-.character_character_Group_7{
-  transition: transform 3s;
-}
-.character_character_Group_2{
-  transition: transform 3s;
-}
+  .character_character_Group_7 {
+    transition: transform 3s;
+  }
+  .character_character_Group_2 {
+    transition: transform 3s;
+  }
 
-.character_character_Group_7:hover {
+  .character_character_Group_7:hover {
     transform: rotateY(120deg);
   }
-.character_character_Group_2:hover {
+  .character_character_Group_2:hover {
     transform: rotateY(120deg);
   }
   // .character_background {
@@ -133,7 +132,7 @@
   .character_character_Group_7 {
     position: relative;
     display: inline-block;
-    margin: 100px auto;
+    margin: 0 auto;
 
     top: 30%;
     width: 530px;

@@ -19,7 +19,6 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
        
         e.target.value = '';
       } else {
-        
         setValue('photo', e.target.files);
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -45,7 +44,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
     formData.append('photo', imageFile);
     formData.append('lng', locationInfo.x);
     formData.append('lat', locationInfo.y);
-    console.log(imageFile);
+    
     try {
       const response = await fetch(`http://localhost:8080/waitMate/register`, {
         method: 'POST',
@@ -64,25 +63,31 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   };
  
   return (
-    <div className="w-full p-6">
-      <p className="text-xs font-Line">you will be the best wait mate.</p>
+    <div className={`${isSmallScreen ? 'p-1 ' : 'p-6'} w-full`}>
+      <p className="text-xs font-Line">you will be the best Wait Mate.</p>
       <div >
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className={`p-4 border border-primary rounded-lg w-full`}
+          className={`p-4 border bg-primary border-primary rounded-lg w-full`}
         >
-          <div className={`${isSmallScreen ? 'flex flex-col ' : 'flex'} justify-center items-center`}>
+          <p className='text-[12px] text-green font-Line'>
+            웨이트메이트란(Wait Mate)?</p>
+          <p className='text-[12px]  text-background font-Line'>
+            대신 웨이팅 할 사람을 구하는 사람을 지칭하는 말입니다. </p>
+            <p className='text-[12px]  text-background font-Line'>
+            저희 프록시를 구해서 웨이팅 시간을 줄여보아요!</p>
+          <div className={`${isSmallScreen ? 'flex flex-col ' : 'flex'}  justify-center items-center`}>
             <div className={`${isSmallScreen ? 'w-1/2' : 'w-1/2'} flex flex-col text-center pb-2`}>
               <div className="w-full">
                 {imageFile && (
                   <img
                     src={imageFile}
                     alt="Preview"
-                    className="border border-primary rounded-lg w-full"
+                    className="border mt-2 bg-background border-primary rounded-lg w-full"
                   />
                 )}
-                <label className="text-sm text-background m-1 relative cursor-pointer">
-                <span className="bg-primary text-white text-xs p-2 rounded-md font-Line">Upload your Image</span>
+                <label className="text-sm text-background relative cursor-pointer">
+                <span className="bg-primary text-white p-2 text-xs rounded-md font-Line">Upload your Image</span>
                 <input
                   type="file"
                   name="photo"
@@ -176,7 +181,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                 <label className="text-sm text-green font-Line m-1">
                   * Waiting Time
                 </label><br />
-                <span className='text-xs text-background font-Line'>about </span>
+                <span className='text-xs text-background font-Line'>About </span>
                 <Controller
                   name="time_start"
                   control={control}
