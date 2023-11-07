@@ -141,7 +141,7 @@ export default function Chat() {
             size="xsmall"
             type={msg.messageType}
             text={msg.messageContent}
-            title={`${msg.sender} ${msg.createdAt.slice(11, 16)}`}
+            title={`${msg.sender} ${msg.createdAt}`}
             notch={false}
           ></MessageBox>
         ))}

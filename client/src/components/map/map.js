@@ -6,7 +6,8 @@ import axios from 'axios';
 export default function MapComponent({ id }) {
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Control the overlay visibility
+  const [selectedMarker, setSelectedMarker] = useState(null); // Store the selected marker
   const { wmId } = useParams();
 
   function getCurrentLocation(callback) {
@@ -45,8 +46,6 @@ export default function MapComponent({ id }) {
       });
   }, [wmId]);
 
-
-
   const stylingOverlay = () => {
     const style = {
       fontSize: 'x-large',
@@ -70,10 +69,26 @@ export default function MapComponent({ id }) {
       fontSize: '18px',
       fontWeight: 'bold',
     };
+    const display_none = {
+      display: 'none',
+    };
 
-    // 스타일 객체 반환
+    // Styles object
     return { style, info_close, info_title };
   };
+
+  // Function to open the custom overlay
+  const openOverlay = (marker) => {
+    setSelectedMarker(marker);
+    setIsOpen(true);
+  };
+
+  // Function to close the custom overlay
+  const closeOverlay = () => {
+    setSelectedMarker(null);
+    setIsOpen(false);
+  };
+
   return (
     <div>
       <Map
@@ -99,50 +114,47 @@ export default function MapComponent({ id }) {
               <MapMarker
                 key={index}
                 position={{ lat: data.lat, lng: data.lng }}
-                text={data.key}
                 image={{
                   src: './images/waitMate.png',
                   size: { width: 64, height: 64 },
                 }}
-                onClick={() => setIsOpen(true)}
-              >
-                {isOpen && (
-                  <CustomOverlayMap position={{ lat: data.lat, lng: data.lng }}>
-                    <div className="wrap">
-                      <div className="info">
-                        <div
-                          className="title"
-                          style={stylingOverlay().info_title}
-                        >
-                          웨이트 메이트 장소
-                          <div
-                            className="close"
-                            onClick={() => setIsOpen(false)}
-                            title="닫기"
-                            style={stylingOverlay().info_close}
-                          ></div>
-                        </div>
-                        <div className="body">
-                          <div className="desc">
-                            <div>
-                              <a
-                                href={`http://localhost:8080/waitMate/detail?wmId=${data.waitMate}`}
-                                className="link"
-                                rel="noreferrer"
-                              >
-                                웨이트 메이트 장소 바로가기
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CustomOverlayMap>
-                )}
-              </MapMarker>
+                onClick={() => openOverlay(data)} // Open the overlay on marker click
+              />
             );
           }
         })}
+
+        {isOpen && selectedMarker && (
+          <CustomOverlayMap position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}>
+            <div className="wrap">
+              <div className="info">
+                <div className="title" style={stylingOverlay().info_title}>
+                  웨이트 메이트 장소
+                  <div
+                    className="close"
+                    onClick={closeOverlay} // Close the overlay
+                    title="닫기"
+                    style={stylingOverlay().info_close}
+                  ></div>
+                </div>
+                <div className="body">
+                  <div className="desc">
+                    <div>
+                      <a
+                        href={`http://localhost:8080/waitMate/detail?wmId=${selectedMarker.waitMate}`}
+                        target="_blank"
+                        className="link"
+                        rel="noreferrer"
+                      >
+                        웨이트 메이트 공고 바로가기
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CustomOverlayMap>
+        )}
       </Map>
     </div>
   );
