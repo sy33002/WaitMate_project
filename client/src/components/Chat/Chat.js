@@ -5,7 +5,6 @@ import { socket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
@@ -17,36 +16,25 @@ export default function Chat() {
   const Navigate = useNavigate();
   const inputReferance = React.createRef();
   const { roomNumber } = useParams();
- 
-
   const [loading, setLoading] = useState(true);
-
   // 데이터 로딩을 처리하는 useEffect
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-
         // 데이터 로딩 및 소켓 연결
         const response = await axios({
           url: `http://localhost:8080/proxy/chat/${roomNumber}`,
           method: 'GET',
         });
-        
         setMessages(response.data.list);
-
+        console.log(response.data.list);
         socket.emit('getRoomInfo', roomNumber);
-
-
       } catch (err) {
         console.error(err);
       }
     };
-
     fetchData();
-    setSender({ userId: '' });
   }, [roomNumber, id]);
-
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
     if (id) {
@@ -66,22 +54,27 @@ export default function Chat() {
               setSender(data.sender);
               setReceiver(data.receiver);
               setLoading(false);
+              console.log('안녕' + data.proxyData.photo);
             } else if (data.receiver.id === id) {
               setSender(data.receiver);
               setProxy(data.proxyData.photo);
               setReceiver(data.sender);
               setLoading(false);
+              console.log('안녕' + data.proxyData.photo);
             }
-            
           }
         }
       });
     }
   }, [id, Navigate]);
-  
-
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
+      const currentTime = new Date().toLocaleTimeString([], {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+      // 서버로 메시지를 전송합니다.
       const messageData = {
         roomNumber: roomNumber,
         sender: sender.userId,
@@ -89,32 +82,21 @@ export default function Chat() {
         messageType: 'text',
         messageContent: inputValue,
       };
-  
       socket.emit('message', messageData);
-  
-      const currentTime = new Date().toLocaleTimeString([], {
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-  
       // 메시지를 먼저 뷰에 표시
       const newMessage = {
-        photo: proxy,
         messageContent: inputValue,
         sender: sender.userId,
         receiver: receiver.userId,
         time: currentTime,
       };
-  
+      console.log('안정값', newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
-  
       // 입력값 초기화
       setInputValue('');
       inputReferance.current.value = '';
     }
   };
-
   useEffect(() => {
     socket.on('smessage', (messageData) => {
       const currentTime = new Date().toLocaleTimeString([], {
@@ -122,43 +104,37 @@ export default function Chat() {
         hour: '2-digit',
         minute: '2-digit',
       });
-    
-      
+      console.log('뭐가 찍히나요', messageData);
       const newMessage = {
-        photo: messageData.photo || null,
+        photo: proxy || null,
         messageContent: messageData.messageContent || '',
-        sender: messageData.sender || '',
-        receiver: messageData.receiver || '',
+        sender: messageData.receiver || '',
+        receiver: messageData.sender || '',
         time: currentTime,
       };
-    
-     
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
   return () => {
     socket.off('smessage');
   };
 }, []);
-  
   return (
     <div className="container">
-      {!id ? ( 
-        <div>로딩 중...</div>
+      {!id ? (
+        <div>로그인을 먼저 해주시기 바랍니다...</div>
       ) : (
         <div>
-          {loading ? ( 
+          {loading ? (
             <div>로딩 중...</div>
           ) : (
-          
             <div>
               <p>현재 회원님의 아이디는 {sender.userId}입니다</p>
               <div className="message_container">
                 {messages.map((msg, index) => (
                   <MessageBox
                     key={index}
-                    className={msg.sender === sender ? 'me' : 'other'}
-                    photo={msg.sender !== sender ? (msg.photo || null) : null}
-                    size="xsmall"
+                    className={msg.sender === sender.userId ? 'me' : 'other'}
+                    photo={msg.receiver !== receiver.userId ? (proxy  || null) : null}
                     type={msg.messageType}
                     text={msg.messageContent}
                     title={`${msg.sender} ${msg.createdAt}`}
@@ -166,7 +142,6 @@ export default function Chat() {
                   ></MessageBox>
                 ))}
               </div>
-            
               <div className="input_container">
                 <Input
                   className="input_item"
@@ -183,7 +158,7 @@ export default function Chat() {
                     <Button
                       className="input_send_btn"
                       backgroundColor="transparent"
-                      onClick={sendMessage} 
+                      onClick={sendMessage}
                     />
                   }
                 />
@@ -195,11 +170,3 @@ export default function Chat() {
     </div>
   );
 }
-//기능 설명
-// 각각의 아바타들이 가지는 속성들
-// - 프로필 사진
-// - 프로필 이름
-// - 메세지 발송 시간
-// - 메세지
-// 인풋으로 넣을수 있는것
-// - 파일 첨부
