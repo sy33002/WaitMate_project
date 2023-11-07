@@ -20,18 +20,14 @@ const useUserStore = create((set) => ({
     }
   },
   logout: async () => {
-    try {
-      const response = await axiosInstance.get('/user/logOut');
-      if (response.status === 200) {
-        set({
-          id: '',
-          userId: '',
-          nickname: '',
-          profileImg: '',
-        });
-      }
-    } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
+    const response = await axiosInstance.get('/user/logout');
+    if (response.status === 200) {
+      set({
+        id: '',
+        userId: '',
+        nickname: '',
+        profileImg: '',
+      });
     }
   },
 }));
