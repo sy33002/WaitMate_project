@@ -13,31 +13,30 @@ export default function Chat() {
   const [receiver, setReceiver] = useState('');
   const [proxy, setProxy] = useState('');
   const [error, setError] = useState(null);
-  const {id} = useUserStore();
+  const { id } = useUserStore();
   const Navigate = useNavigate();
   const inputReferance = React.createRef();
   const { roomNumber } = useParams();
-  
+
   useEffect(() => {
     axios({
-      url : `http://localhost:8080/proxy/chat/${roomNumber}`,
-      method : 'GET',
+      url: `http://localhost:8080/proxy/chat/${roomNumber}`,
+      method: 'GET',
     })
-    .then((res)=>{
-      console.log(res.data.list);
-      console.log(res.data);
-      setMessages(res.data.list);
-    })
-    .catch((err)=>{
-      console.error(err);
-    })
+      .then((res) => {
+        console.log(res.data.list);
+        console.log(res.data);
+        setMessages(res.data.list);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
     socket.emit('getRoomInfo', roomNumber);
-    if(!id){
+    if (!id) {
       alert('로그인 먼저 진행하시기 바랍니다');
-      
     }
-   
+
     socket.on('roomInfo', (data) => {
       if (data.error) {
         setError(data.error);
@@ -47,29 +46,30 @@ export default function Chat() {
           Navigate(-1);
         } else {
           if (data.sender.id === id) {
-              setSender(data.sender);
-              setReceiver(data.receiver);
-              
-            } else if (data.receiver.id === id) {
-              setSender(data.receiver);
-              setProxy(data.proxy.photo);
-              setReceiver(data.sender);
-            }
-            console.log(data.sender);
-            console.log(data.receiver);
+            setSender(data.sender);
+            setReceiver(data.receiver);
+          } else if (data.receiver.id === id) {
+            setSender(data.receiver);
+            setProxy(data.proxy.photo);
+            setReceiver(data.sender);
+          }
+          console.log(data.sender);
+          console.log(data.receiver);
         }
       }
     });
 
-    
     return () => {
       socket.off('roomInfo');
     };
   }, []);
-  
-  
 
   const sendMessage = () => {
+    const currentTime = new Date().toLocaleTimeString([], {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+    });
     const messageData = {
       roomNumber: roomNumber,
       sender: sender.userId,
@@ -133,19 +133,18 @@ export default function Chat() {
         />
       </div>
       <div className="message_container">
-      {messages.map((msg, index) => (
-           
-            <MessageBox
-              key={index}
-              className={msg.sender === sender ? 'me' : 'other'}
-              photo={msg.sender !== sender ? msg.photo : null}
-              size="xsmall"
-              type={msg.messageType}
-              text={msg.messageContent}
-              title={`${msg.sender} ${msg.createdAt}`}
-              notch={false}
-            ></MessageBox>
-          ))}
+        {messages.map((msg, index) => (
+          <MessageBox
+            key={index}
+            className={msg.sender === sender ? 'me' : 'other'}
+            photo={msg.sender !== sender ? msg.photo : null}
+            size="xsmall"
+            type={msg.messageType}
+            text={msg.messageContent}
+            title={`${msg.sender} ${msg.createdAt.slice(11, 16)}`}
+            notch={false}
+          ></MessageBox>
+        ))}
       </div>
       <div className="input_container">
         <Input
@@ -161,13 +160,7 @@ export default function Chat() {
               onClick={sendMessage}
             />
           }
-          leftButtons={
-            <Button
-              className="input_file_btn"
-              backgroundColor="transparent"
-              onClick={() => document.getElementById('fileInput').click()}
-            />
-          }
+          
         />
       </div>
     </div>
