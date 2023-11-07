@@ -13,38 +13,39 @@ function Mypage() {
     logout,
     setProfileImage,
   } = useUserStore();
-  const [activeTab, setActiveTab] = useState('null');
+
+  const [activeTab, setActiveTab] = useState('');
   const [listItems, setListItems] = useState([]);
   const [error, setError] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [showEditButton, setShowEditButton] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setUserInfo();
-    const fetchItems = async () => {
-      let url;
-      if (activeTab === 'proxy') {
-        url = 'YOUR_BACKEND_URL_FOR_PROXY';
-      } else if (activeTab === 'waitmate') {
-        url = 'YOUR_BACKEND_URL_FOR_WAITMATE';
-      }
-
-      if (url) {
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-          setListItems(data);
-          setError('');
-        } catch (error) {
-          console.error('Error:', error);
-          setError(
-            '데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.'
-          );
-        }
-      }
-    };
-
     fetchItems();
-  }, [activeTab, setUserInfo]);
+  }, [activeTab]);
+
+  const fetchItems = async () => {
+    let url;
+    if (activeTab === 'proxy') {
+      url = 'YOUR_BACKEND_URL_FOR_PROXY';
+    } else if (activeTab === 'waitmate') {
+      url = 'YOUR_BACKEND_URL_FOR_WAITMATE';
+    }
+
+    if (url) {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setListItems(data);
+        setError('');
+      } catch (error) {
+        console.error('Error:', error);
+        setError('데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.');
+      }
+    }
+  };
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -52,7 +53,6 @@ function Mypage() {
     formData.append('file', file);
 
     try {
-      // 이미지를 서버로 업로드하고 결과 URL을 받아옴
       const response = await axiosInstance.post(
         '/user/uploadProfileImage',
         formData,
@@ -63,62 +63,64 @@ function Mypage() {
         }
       );
 
-      // 서버로부터 받은 이미지 URL로 상태 업데이트
-      const newImageUrl = response.data.imageUrl; // 서버 응답에 따라서 'imageUrl'을 적절한 필드명으로 변경해야 할 수 있습니다.
-      useUserStore.getState().setProfileImage(newImageUrl);
+      const newImageUrl = response.data.imageUrl;
+      setProfileImage(newImageUrl);
     } catch (error) {
       console.error('Error uploading image:', error);
     }
   };
 
+  const toggleEditButton = () => {
+    setShowEditButton((prev) => !prev);
+  };
+
+  const handleEditResume = () => {
+    // 이력서 수정 페이지로 이동하는 로직을 추가
+    // 예시: navigate('/edit-resume');
+  };
+
   const renderButtons = () => {
     if (activeTab === 'proxy') {
-      fetch('YOUR_BACKEND_URL_FOR_PROXY') // 백엔드 API 호출 예시
-        .then((response) => response.json())
-        .then((data) => setListItems(data))
-        .catch((error) => console.error('Error:', error));
-
       return (
-        <div className="flex space-x-2 mb-4">
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
-            나의 이력서
-          </button>
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
-            내가 찜한 웨메 리스트
-          </button>
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
-            내가 픽한 웨메 리스트
-          </button>
+        <div className="flex flex-col space-y-2 mb-4">
+          <div className="flex space-x-2">
+            <button
+              onClick={toggleEditButton}
+              className="background text-primary w-52 py-2 rounded-lg border-2 border-primary"
+            >
+              나의 이력서
+            </button>
+            {/* 다른 버튼들 */}
+          </div>
+          {showEditButton && (
+            <button
+              onClick={handleEditResume}
+              className="background text-primary w-52 py-2 rounded-lg border-2 border-primary mt-2"
+            >
+              수정하기
+            </button>
+          )}
         </div>
       );
     }
     if (activeTab === 'waitmate') {
-      fetch('YOUR_BACKEND_URL_FOR_WAITMATE') // 백엔드 API 호출 예시
-        .then((response) => response.json())
-        .then((data) => setListItems(data))
-        .catch((error) => console.error('Error:', error));
-
       return (
         <div className="flex space-x-2 mb-4">
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
-            내가 등록한 웨메 리스트
-          </button>
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
-            내가 픽한 프록시 리스트
-          </button>
+          {/* 대기자 목록과 프록시 목록을 위한 버튼들 */}
         </div>
       );
     }
+    return null; // 활성 탭이 없을 때는 버튼을 렌더링하지 않음
   };
 
-  const navigate = useNavigate();
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
   const handleModalConfirm = () => {
     setShowModal(false);
-    navigate('/register/UserInfo'); // 회원정보수정 페이지로 이동
-  };
-  const handleLogout = () => {
-    logout(); // useUserStore의 logout 함수를 호출하여 로그아웃 처리
-    navigate('/'); // 로그아웃 후 홈 페이지로 이동
+    navigate('/register/UserInfo');
   };
 
   return (
