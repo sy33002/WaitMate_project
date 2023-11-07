@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
+import './sideBar.css';
 
 export const wmSubmenu = (
-  <div className='text-gray-500 text-base'>
-    <Link to='/waitMate/'>
+  <div className='text-gray-500 text-base font-gmarket mt-2'>
+    <Link to='/waitMate/register'>
       <li>register</li>
     </Link>
     <Link to='/waitMate/list'>
@@ -12,20 +13,12 @@ export const wmSubmenu = (
 );
 
 export const proxySubmenu = (
-  <div className='text-gray-500 text-base'>
+  <div className='text-gray-500 text-base font-gmarket mt-2'>
     <Link to='/proxy/register'>
       <li>register</li>
     </Link>
     <Link to='/proxy/list'>
       <li>list</li>
     </Link>
-  </div>
-);
-
-export const mychatSubmenu = (
-  <div className='text-gray-500 text-base'>
-  <Link to='/mypage/singup'>
-    <li>Chat List</li>
-  </Link>
   </div>
 );

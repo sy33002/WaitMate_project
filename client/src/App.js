@@ -137,34 +137,40 @@ function App({ id, nickname, photo, userId }) {
           <Route
             path="/register/UserInfo"
             element={
-              <UserInfo
-                id={id}
-                nickname={nickname}
-                photo={photo}
-                userId={userId}
-              />
+              <Template>
+                <UserInfo
+                  id={id}
+                  nickname={nickname}
+                  photo={photo}
+                  userId={userId}
+                />
+              </Template>
             }
           ></Route>
           <Route
             path="/mypage/Mypage"
             element={
-              <Mypage
-                id={id}
-                nickname={nickname}
-                photo={photo}
-                userId={userId}
-              />
+              <Template>
+                <Mypage
+                  id={id}
+                  nickname={nickname}
+                  photo={photo}
+                  userId={userId}
+                />
+              </Template>
             }
           ></Route>
           <Route
             path="/mypage/ChatList"
             element={
-              <ChatList
-                id={id}
-                nickname={nickname}
-                photo={photo}
-                userId={userId}
-              />
+              <Template>
+                <ChatList
+                  id={id}
+                  nickname={nickname}
+                  photo={photo}
+                  userId={userId}
+                />
+              </Template>
             }
           ></Route>
 

@@ -9,7 +9,6 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const [clickRegister, setClickRegister] = useState(false);
   const [locationInfo, setLocationInfo] = useState({});
 
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -37,7 +36,8 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
     formData.append('wmAddress', wmAddress);
     formData.append('wmDetailAddress', data.detailAddress);
     formData.append('date', data.date);
-    formData.append('waitTime', data.time);
+    formData.append('startTime', data.time_start);
+    formData.append('endTime', data.time_end);
     formData.append('pay', data.pay);
     formData.append('description', data.detail);
     formData.append('photo', imageFile);
@@ -62,31 +62,31 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   };
   console.log('setlocationInfo', setLocationInfo.lat);
   return (
-    <div className="w-full m-4">
-      <p className="text-xs">좋은 웨이트메이트가 되어주세요!</p>
+    <div className="w-full p-8">
+      <p className="text-xs">you will be the best wait mate.</p>
       <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-4 border border-primary rounded-lg"
         >
           <div className="flex">
-            <div className="flex justify-center items-center w-1/4">
+            <div className="flex justify-center items-center w-1/3">
               <div className="w-full">
                 {imageFile && (
                   <img
                     src={imageFile}
                     alt="Preview"
-                    className="border border-primary rounded-lg"
+                    className="border border-primary rounded-lg w-full"
                   />
                 )}
                 <label className="text-sm text-background m-1">Upload Image</label><br />
-              <input
-                  type="file"
-                  name="photo"
-                  onChange={(e) => {
-                    handleFileChange(e);
-                  }}
-                />
+                <input
+                    type="file"
+                    name="photo"
+                    onChange={(e) => {
+                      handleFileChange(e);
+                    }}
+                    />
               </div>
             </div>
             <div className="bg-primary ml-3 w-full flex flex-col p-3 rounded-lg">
@@ -165,14 +165,24 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
               <br />
               <div>
                 <label className="text-sm text-background m-1">
-                  Waiting Time
+                  *Waiting Time
                 </label>
                 <Controller
-                  name="time"
+                  name="time_start"
                   control={control}
-                  rules={{ required: false }}
-                  render={({ field }) => <input {...field} />}
+                  rules={{ required: true }}
+                  render={({ field }) => <input {...field} type="time"/>}
+                /><span className='text-background'> ~ </span><Controller
+                name="time_end"
+                control={control}
+                rules={{ required: true }}
+                render={({ field }) => <input {...field} type="time"/>}
                 />
+                 {formState.errors.time_start && clickRegister && (
+                  <p className="text-red-500">시작 시간은 필수 항목입니다 :D</p>
+                )}{formState.errors.time_end && clickRegister && (
+                  <p className="text-red-500">끝날 시간은 필수 항목입니다 :D</p>
+                )}
               </div>
               <br />
               <div>
