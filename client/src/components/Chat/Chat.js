@@ -142,6 +142,47 @@ export default function Chat() {
   
   return (
     <div className="container">
+<<<<<<< HEAD
+      <div className="user-input">
+        <input
+          type="text"
+          placeholder="Enter your user ID"
+          value={sender.userId}
+          onChange={(e) => setSender(e.target.value)}
+        />
+      </div>
+      <div className="message_container">
+        {messages.map((msg, index) => (
+          <MessageBox
+            key={index}
+            className={msg.sender === sender ? 'me' : 'other'}
+            photo={msg.sender !== sender ? msg.photo : null}
+            size="xsmall"
+            type={msg.messageType}
+            text={msg.messageContent}
+            title={`${msg.sender} ${msg.createdAt}`}
+            notch={false}
+          ></MessageBox>
+        ))}
+      </div>
+      <div className="input_container">
+        <Input
+          className="input_item"
+          referance={inputReferance}
+          multiline={true}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          rightButtons={
+            <Button
+              className="input_send_btn"
+              backgroundColor="transparent"
+              onClick={sendMessage}
+            />
+          }
+          
+        />
+      </div>
+=======
       {!id ? ( 
         <div>로딩 중...</div>
       ) : (
@@ -192,6 +233,7 @@ export default function Chat() {
           )}
         </div>
       )}
+>>>>>>> origin
     </div>
   );
 }
