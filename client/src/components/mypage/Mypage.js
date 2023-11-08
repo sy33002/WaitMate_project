@@ -25,7 +25,7 @@ function Mypage() {
 
   useEffect(() => {
     const fetchItems = async () => {
-      if (!userId) return;
+      if (!userId || !activeTab) return;
 
       let url;
       let queryParams = { params: { id: userId } };
@@ -43,11 +43,7 @@ function Mypage() {
       }
 
       try {
-        const response = await axiosInstance.get('/likeWait/list', {
-          params: {
-            id: userId, // 또는 다른 필요한 매개변수 추가
-          },
-        });
+        const response = await axiosInstance.get(url, queryParams);
         console.log('응답 데이터:', response.data);
         setListItems(response.data);
         setError('');
@@ -95,15 +91,11 @@ function Mypage() {
     formData.append('file', file);
 
     try {
-      const response = await axiosInstance.post(
-        '/user/uploadProfileImage',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await axiosInstance.post('/user/profileImg', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       const newImageUrl = response.data.imageUrl;
       setProfileImage(newImageUrl);
