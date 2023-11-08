@@ -30,12 +30,14 @@ function ChatList() {
       try {
         const response = await axios.get(`http://localhost:8080/proxy/listChatting`, { withCredentials: true });
         const chatListData = response.data.list;
-        console.log(response.data.list);
+        console.log(chatListData);
         if (Array.isArray(chatListData)) {
           setChats(chatListData);
+          
         } else {
           const chatList = Object.values(chatListData); 
           setChats(chatList);
+         
         }
       } catch (error) {
         console.error('채팅 목록을 불러오는 중 문제가 발생했습니다:', error);
@@ -80,7 +82,7 @@ function ChatList() {
       const response = await fetchMoreChats(cursor);
       const newChats = response.data;
       const nextCursor = response.nextCursor;
-
+      console.log(response);
       setChats((prevChats) => [...prevChats, ...newChats]);
       setCursor(nextCursor);
       setHasMore(newChats.length > 0);
@@ -104,7 +106,7 @@ function ChatList() {
             </div>
           ) : (
             chats.map((chat) => (
-              <Link to={`/chat/${chat.id}`} key={chat.id}>
+              <Link to={`/proxy/detail/chat/${chat.roomNumber}`} key={chat.roomNumber}>
                 <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
                   <img
                     src={chat.profilePic || '/images/someone.png'}
@@ -116,7 +118,7 @@ function ChatList() {
                       <div className="nickname">{chat.nickname}</div>
                       <div className="time text-xs">{chat.time}</div>
                     </div>
-                    <div className="message">{chat.message}</div>
+                    <div className="message">{chat.roomNumber}</div>
                   </div>
                 </div>
               </Link>

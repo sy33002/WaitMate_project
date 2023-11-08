@@ -91,6 +91,7 @@ export default function Chat() {
         hour: '2-digit',
         minute: '2-digit',
       });
+
       // 서버로 메시지를 전송합니다.
       const messageData = {
         roomNumber: roomNumber,
@@ -100,15 +101,21 @@ export default function Chat() {
         messageContent: inputValue,
       };
       socket.emit('message', messageData);
+
       // 메시지를 먼저 뷰에 표시
       const newMessage = {
         messageContent: inputValue,
         sender: sender.userId,
+        messageType : 'text',
         receiver: receiver.userId,
-        time: currentTime,
+        createdAt: currentTime,
       };
       console.log('안정값', newMessage);
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      console.log('메세지값', inputValue);
+
+      // setMessages((prevMessages) => [...prevMessages, newMessage]);
+      
+      setMessages([...messages, newMessage]);
       // 입력값 초기화
       setInputValue('');
       inputReferance.current.value = '';
@@ -126,9 +133,10 @@ export default function Chat() {
       const newMessage = {
         photo: proxy || null,
         messageContent: messageData.messageContent || '',
-        sender: messageData.receiver || '',
-        receiver: messageData.sender || '',
-        time: currentTime,
+        messageType: 'text',
+        sender: messageData.sender || '',
+        receiver: messageData.receiver || '',
+        createdAt: currentTime,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
@@ -178,7 +186,10 @@ export default function Chat() {
                 현재 회원님의 아이디는 {sender.userId}입니다
               </p>
               <div className="message_container" ref={chatContainerRef}>
-                {messages.map((msg, index) => (
+                {messages.map((msg, index) => {
+                  console.log('>>', msg)
+                  return  (
+                    // <div key={index} className={msg.sender === sender.userId ? 'me' : 'other'}>{`${msg.sender} ${msg.createdAt}`} === {msg.messageContent}</div>
                   <MessageBox
                     key={index}
                     className={msg.sender === sender.userId ? 'me' : 'other'}
@@ -190,7 +201,7 @@ export default function Chat() {
                     title={`${msg.sender} ${msg.createdAt}`}
                     notch={false}
                   ></MessageBox>
-                ))}
+                )})}
               </div>
               <div className="input_container">
                 <Input
