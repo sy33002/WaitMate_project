@@ -69,7 +69,7 @@ export default function MapComponent({ id }) {
         <span>
           <img src="./images/waitMate.png" alt="WaitMate" />
         </span>
-        웨이트메이트를 찾아보세요!
+         내 위치 주변의 웨이트메이트를 찾아보세요!
       </div>
       <div className="waitMate_letter_second">
         <span>
