@@ -210,7 +210,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                   name="pay"
                   control={control}
                   rules={{ required: false }}
-                  render={({ field }) => <input {...field} placeholder=' 0원' className='rounded-lg w-full'/>}
+                  render={({ field }) => <input {...field} placeholder=' 0000원' type='number' className='rounded-lg w-1/3'/>}
                 />
               </div>
               <br />
