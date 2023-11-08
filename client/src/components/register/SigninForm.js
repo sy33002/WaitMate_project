@@ -36,10 +36,10 @@ function SigninForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 background">
-      <div className="p-4 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl shadow-lg background rounded-md">
+    <div className="min-h-screen flex items-center justify-center background">
+      <div className="p-4 w-1/3 shadow-lg background rounded-md">
         <h1 className="text-2xl text-primary mb-4">Sign In</h1>
-        <p className="mb-4 text-gray-400">Welcome!</p>
+        <p className="mb-4 text-gray-400">Wellcome!</p>
 
         {errorMessage && <p className="text-red-500">{errorMessage}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
@@ -48,26 +48,26 @@ function SigninForm() {
             placeholder="아이디를 입력하세요."
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="p-2 mb-4 w-full border rounded-md shadow-inner shadow-gray-300"
+            className="p-2 mb-4 w-full max-w-sm border rounded-md shadow-inner shadow-gray-300"
           />
           <input
             type="password"
             placeholder="비밀번호를 입력하세요."
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="p-2 mb-4 w-full border rounded-md shadow-inner shadow-gray-300"
+            className="p-2 mb-4 w-full max-w-sm border rounded-md shadow-inner shadow-gray-300"
           />
-          <div className="flex flex-col items-center w-full mt-4">
+          <div className="flex flex-col items-center mt-4">
             <button
               type="submit"
-              className="p-2 w-full bg-background text-primary rounded-md border-2 border-primary shadow-lg mb-2"
+              className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg mb-2"
             >
               Log In
             </button>
             <button
-              className="p-2 w-full bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
               type="button"
-              onClick={() => navigate('/register/SignupForm')}
+              onClick={() => navigate('/register/SignupForm')} // 'Sign Up' 버튼 클릭 시 회원가입 페이지로 이동합니다.
             >
               Sign Up
             </button>
