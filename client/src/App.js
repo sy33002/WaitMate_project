@@ -20,16 +20,7 @@ import Mypage from './components/mypage/Mypage';
 import ChatList from './components/mypage/ChatList';
 import StarRating from './components/rating/StarRating';
 import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
-import Error404 from './static/404';
-import useUserStore from './store/useUserStore';
-
-function App() {
-  // const {id, nickname, photo, userId} = useUserStore();
-  const id = 1;
-  const nickname = 'user';
-  const photo = 'asdf';
-  const userId = 1;
-
+function App({ id, nickname, photo, userId }) {
   return (
     <div className="bg-background">
       <BrowserRouter>
@@ -48,8 +39,6 @@ function App() {
               </Template>
             }
           ></Route>
-          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
-          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route
             path="/map"
             element={
@@ -73,7 +62,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-               </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -87,7 +76,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -100,7 +89,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -113,7 +102,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -126,7 +115,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                   </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -140,7 +129,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                   </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -153,7 +142,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                  </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -166,10 +155,11 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
-
+          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
+          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route
             path="/register/UserInfo"
             element={
@@ -180,7 +170,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                  </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -193,7 +183,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -206,12 +196,10 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
-
           <Route path="/rating/StarRating" element={<StarRating />}></Route>
-          <Route path="/*" element={<Error404 />} />
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>
@@ -220,5 +208,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
