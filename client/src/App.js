@@ -22,6 +22,11 @@ import StarRating from './components/rating/StarRating';
 import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
 import Error404 from './static/404';
 
+function isAuthenticated(id) {
+  // id 값이 있는 경우 사용자는 인증된 상태로 간주
+  return id != null;
+}
+
 function App({ id, nickname, photo, userId }) {
   return (
     <div className="bg-background">
@@ -41,9 +46,12 @@ function App({ id, nickname, photo, userId }) {
               </Template>
             }
           ></Route>
+          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
+          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route
             path="/map"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <Map
                   id={id}
@@ -51,12 +59,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+              </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/proxy/register"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <ProxyRegister
                   id={id}
@@ -64,12 +74,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+               </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/proxy/list"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <ProxyList
                   cities={cities}
@@ -78,12 +90,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/proxy/detail/:proxyId"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <ProxyDetail
                   id={id}
@@ -91,12 +105,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/proxy/update/:proxyId"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <WaitMateUpdate
                   id={id}
@@ -104,12 +120,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                 </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/waitMate/register"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <WaitMateRegister
                   id={id}
@@ -117,12 +135,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                   </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/waitMate/list"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <WaitMateList
                   cities={cities}
@@ -131,12 +151,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                   </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/waitMate/detail/:wmId"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <WaitMateDetail
                   id={id}
@@ -144,12 +166,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                  </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/waitMate/update/:wmId"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <WaitMateUpdate
                   id={id}
@@ -157,14 +181,15 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                 </Template>):(
+                <Error404 /> )
             }
           ></Route>
-          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
-          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
+
           <Route
             path="/register/UserInfo"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <UserInfo
                   id={id}
@@ -172,12 +197,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                  </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/mypage/Mypage"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <Mypage
                   id={id}
@@ -185,12 +212,14 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                 </Template>):(
+                <Error404 /> )
             }
           ></Route>
           <Route
             path="/mypage/ChatList"
             element={
+              isAuthenticated(id) ? (
               <Template>
                 <ChatList
                   id={id}
@@ -198,7 +227,8 @@ function App({ id, nickname, photo, userId }) {
                   photo={photo}
                   userId={userId}
                 />
-              </Template>
+                 </Template>):(
+                <Error404 /> )
             }
           ></Route>
 
