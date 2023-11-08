@@ -5,6 +5,8 @@ import './main.scss';
 // import Footer from '../../static/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 export default function Main() {
+  const apiUrl = process.env.REACT_APP_URL;
+
   const navigate = useNavigate();
   const [scrollPos, setScrollPos] = useState(0);
   useEffect(() => {
@@ -77,7 +79,7 @@ export default function Main() {
             <button
               class="kakao_login"
               onClick={() => {
-                window.location.href = `https://kauth.kakao.com/oauth/authorize?redirect_uri=http://ec2-3-39-238-189.ap-northeast-2.compute.amazonaws.com:8080/user/kakao&client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&response_type=code`;
+                window.location.href = `https://kauth.kakao.com/oauth/authorize?redirect_uri=${apiUrl}/user/kakao&client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&response_type=code`;
               }}
             ></button>
           </div>

@@ -11,16 +11,19 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
+  console.log(apiUrl);
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/waitMate/list?wmAddress=${address}&order=${selectedOption}`, {
+        const response = await fetch(`${apiUrl}/waitMate/list?wmAddress=${address}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {
@@ -91,14 +94,14 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           return (
             <div key={item.wdId} className="flex w-full h-1/2justify-center item-center">
               <div className='w-1/2 p-1'>
-              <Link to={`/waitMate/detail/${item.wdId}`}>
-                <WaitMateBox item={item} isSmallScreen={isSmallScreen}/>
+              <Link to={`/waitMate/detail/${item.wmId}`}>
+                <WaitMateBox item={item} isSmallScreen={isSmallScreen} />
               </Link>
               </div>
               <div className='w-1/2 p-1'>
               {nextItem && 
-              <Link to={`/waitMate/detail/${item.wdId}`}>
-                <WaitMateBox item={nextItem} isSmallScreen={isSmallScreen}/>
+              <Link to={`/waitMate/detail/${item.wmId}`}>
+                <WaitMateBox item={nextItem} isSmallScreen={isSmallScreen} />
               </Link>
               }
               </div>

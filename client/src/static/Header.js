@@ -51,24 +51,11 @@ function Header() {
             </div>
           </Link>
           <div>
-            <button
-              onClick={toggleAlert}
-              className="font-extrabold text-primary py-2 px-1 sm:py-2 sm:px-1 md:py-2 md:px-2 text-xs sm:text-sm md:text-baserounded-full relative"
-            >
-              🔔
-              {isAlertOpen && (
-                <div className="menu bg-white absolute right-0 top-full p-2 rounded-md shadow-md">
-                  <div className="text-primary w-24">
-                    <p>알림입니다!</p>
-                  </div>
-                </div>
-              )}
-            </button>
           </div>
           <div className="flex flex-col">
             <button
               onClick={toggleMenu}
-              className="font-extrabold text-primary py-2 px-1 sm:py-2 sm:px-1 md:py-2 md:px-2 text-xs sm:text-sm md:text-baserounded-full relative"
+              className="font-extrabold text-background bg-primary_light rounded-lg py-1 px-3 md:py-2 md:px-2 text-lg relative"
             >
               ▽
               {isMenuOpen && (

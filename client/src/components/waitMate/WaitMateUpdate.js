@@ -8,9 +8,10 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
   const { control, handleSubmit, setValue, formState } = useForm();
   const [waitMate, setWaitMate] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
-    fetch(`http://localhost:8080/waitMate/detail?wmId=${wmId}&id=${id}`)
+    fetch(`${apiUrl}/waitMate/detail?wmId=${wmId}&id=${id}`)
     .then(response => response.json())
     .then(data => {
       setWaitMate(data.waitMate);
@@ -65,7 +66,7 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
       formData.append('lat', locationInfo.y);
 
     try {
-      const response = await fetch(`http://localhost:8080/waitMate/`, {
+      const response = await fetch(`${apiUrl}/waitMate/`, {
         method: 'PATCH',
         body: formData,
       });

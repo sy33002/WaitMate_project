@@ -17,7 +17,7 @@ export default function ProxyListBox({item}) {
       onMouseOver={handleHoverIn}
       onMouseOut={handleHoverOut}
       style={{ overflow: 'hidden' }}>
-        <div className='p-2 h-24 flex items-center realtive w-full'>
+        <div className='p-2 h-24 flex items-center relative w-full'>
           <div className='w-1/3 flex justify-end pr-6'>
               <img src={`${item.photo}`} alt='User' className=' border border-primary_light h-20 w-20 rounded-full z-2' />
           </div>
@@ -28,7 +28,7 @@ export default function ProxyListBox({item}) {
               <p className='font-Line text-gray-500 text-xs'>{item.age}</p>
           </div>
         {isHovered && (
-            <div className="z-3 hover-info w-4/5 bg-opacity-80 absolute justify-center bg-gray-800 h-24 flex items-center"
+            <div className="z-3 hover-info w-full bg-opacity-80 absolute top-0 left-0 justify-center bg-gray-800 h-24 flex items-center"
             style={{}}>
               <div className='text-white'>{item.proxyMsg}</div>
             </div>

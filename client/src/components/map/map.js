@@ -9,6 +9,7 @@ export default function MapComponent({ id }) {
   const [isOpen, setIsOpen] = useState(false); // Control the overlay visibility
   const [selectedMarker, setSelectedMarker] = useState(null); // Store the selected marker
   const { wmId } = useParams();
+  const apiUrl = process.env.REACT_APP_URL;
 
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
@@ -32,7 +33,7 @@ export default function MapComponent({ id }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/waitMate/mapList`)
+      .get(`${apiUrl}/waitMate/mapList`)
       .then((res) => {
         const data = res.data;
         setUserAddress(data);
@@ -163,7 +164,7 @@ export default function MapComponent({ id }) {
                     <div className="desc" style={stylingOverlay().info_link}>
                       <div>
                         <a
-                          href={`http://localhost:8080/waitMate/detail?wmId=${selectedMarker.waitMate}`}
+                          href={`${apiUrl}/waitMate/detail?wmId=${selectedMarker.waitMate}`}
                           target="_blank"
                           className="link"
                           rel="noreferrer"
