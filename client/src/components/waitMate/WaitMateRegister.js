@@ -13,7 +13,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-
+  const apiUrl = process.env.REACT_APP_URL;
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -54,14 +54,13 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
     formData.append('lng', locationInfo.x);
     formData.append('lat', locationInfo.y);
     try {
-      const response = await fetch(`http://localhost:8080/waitMate/register`, {
+      const response = await fetch(`${apiUrl}/waitMate/register`, {
         method: 'POST',
         body: formData,
       });
       if (response.ok) {
         setShowModal(true);
       } else {
-        console.error('Failed to submit the form');
         console.log(response.status);
       }
     } catch (error) {

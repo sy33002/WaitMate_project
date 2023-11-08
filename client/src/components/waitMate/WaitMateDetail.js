@@ -9,10 +9,12 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
   const [recentHiresCount, setRecentHiresCount] = useState(0);
   const [waitMateApplyCount, setWaitMateApplyCount] = useState(0);
   const [isLikeWait, setIsLikeWait] = useState(false);
+  const [state, setState] = useState(false);
   const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
-    fetch(`http://localhost:8080/waitMate/detail?wmId=${wmId}&proxyId=3`)
+    fetch(`${apiUrl}/waitMate/detail?wmId=${wmId}&proxyId=3`)
     .then(response => response.json())
     .then(data => {
       setWaitMate(data.waitMate);
@@ -34,14 +36,14 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
           id: id,
         });
 
-        await fetch(`http://localhost:8080/likeWait`, {
+        await fetch(`${apiUrl}/likeWait`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',},
           body: requestBody,
         });
       } else {
-        await fetch(`http://localhost:8080/likeWait?wmId=${wmId}&id=${id}`, {
+        await fetch(`${apiUrl}/likeWait?wmId=${wmId}&id=${id}`, {
           method: 'DELETE',
         });
       }
@@ -93,7 +95,10 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
           ) : (
             <span>🤍 찜하기</span>
           )}</button>
-          {/* <button className='text-background text-lg font-Line' onClick={handleEditClick}>수정하기</button> */}
+           <button  className='text-background text-lg font-Line p-2 w-full'>
+            {state ? (<span className='bg-red-300 w-full'>예약중!</span>) : 
+            (<span className='bg-primary_light w-full'>예약을 기다리고 있어요!</span>)}
+          </button>
         </div>
       </div>
     </div>

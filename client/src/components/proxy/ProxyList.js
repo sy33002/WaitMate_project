@@ -11,6 +11,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
   
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
@@ -20,7 +21,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/proxy/list?address=${address}&order=${selectedOption}`, {
+        const response = await fetch(`${apiUrl}/proxy/list?address=${address}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {

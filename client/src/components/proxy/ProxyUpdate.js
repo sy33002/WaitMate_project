@@ -8,9 +8,10 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
   const [imageFile, setImageFile] = useState('/images/someone.png');
   const [proxy, setProxy] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
-    fetch(`http://localhost:8080/proxy/update/${id}`)
+    fetch(`${apiUrl}/proxy/update/${id}`)
     .then(response => response.json())
     .then(data => {
       setProxy(data.result);
@@ -58,7 +59,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     formData.append('proxyMsg', data.proxyMsg);
    
     try {
-      const response = await fetch(`http://localhost:8080/proxy/`, {
+      const response = await fetch(`${apiUrl}/proxy/`, {
         method: 'PATCH',
         body: formData,
       });

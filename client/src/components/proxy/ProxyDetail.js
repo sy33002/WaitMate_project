@@ -12,6 +12,7 @@ export default function ProxyDetail() {
   console.log('아이디값' + id);
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
 
   const handleEditClick = () => {
     navigate(`/proxy/update/${proxyId}`);
@@ -57,7 +58,7 @@ export default function ProxyDetail() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:8080/proxy/detail/${proxyId}`, { withCredentials: true })
+    fetch(`${apiUrl}/proxy/detail/${proxyId}`, { withCredentials: true })
     .then(response => response.json())
     .then(data => {
       setProxy(data.result);

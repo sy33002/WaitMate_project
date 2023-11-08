@@ -41,6 +41,7 @@ export default function ProxyRegister() {
     const address = inputAddressValue;
     const addressParts = address.split(" ");
     const combinedAddress = addressParts[0] + " " + addressParts[1];
+    const apiUrl = process.env.REACT_APP_URL;
 
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
@@ -56,7 +57,7 @@ export default function ProxyRegister() {
       formData.append('photo', imageFile);
     }
     axios({
-      url: 'http://localhost:8080/proxy/register',
+      url: `${apiUrl}/proxy/register`,
       method: 'post',
       data: formData,
     })
