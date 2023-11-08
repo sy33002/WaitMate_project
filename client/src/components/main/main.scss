@@ -1,3 +1,5 @@
+@import '~include-media/dist/include-media';
+
 @keyframes rotateClockInfinite {
   from {
     transform: rotate(0deg);
@@ -75,6 +77,16 @@
       height: 54px;
       margin-right: 20px;
       z-index: 99;
+      @include media('<768px') {
+        width: 130px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      @include media('<300px') {
+        width: 130px;
+        height: 80px;
+        border-radius: 50%;
+      }
     }
 
     .kakao_login {
@@ -87,6 +99,16 @@
       width: 252px;
       height: 54px;
       z-index: 99;
+      @include media('<768px') {
+        width: 130px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      @include media('<300px') {
+        width: 130px;
+        height: 80px;
+        border-radius: 50%;
+      }
     }
   }
   .character_character_div {
@@ -99,6 +121,14 @@
       justify-content: center;
       width: 550px;
       height: 190px;
+      @include media('<768px') {
+        width: 440px;
+        height: 140px;
+      }
+      @include media('<300px') {
+        width: 400px;
+        height: 100px;
+      }
     }
   }
 
@@ -160,25 +190,33 @@
       text-align: center;
       width: 1300px;
       height: 320px;
-    }
-  }
-
-  .chatting_column {
-    display: flex;
-    justify-content: center;
-    margin: 80px auto;
-    .chatting_Group_3 {
-      width: 551.11px;
-      height: 700px;
-      margin-right: 50px;
-    }
-
-    .chatting_Group_4 {
-      width: 561px;
-      height: 187px;
+      @include media('<768px') {
+        width: 2000px;
+      }
+      @include media('<300px') {
+        width: 2300px;
+        display: none;
+      }
     }
   }
 }
+
+.chatting_column {
+  display: flex;
+  justify-content: center;
+  margin: 80px auto;
+  .chatting_Group_3 {
+    width: 551.11px;
+    height: 700px;
+    margin-right: 50px;
+  }
+
+  .chatting_Group_4 {
+    width: 561px;
+    height: 187px;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1200px) {
   .first_column {
     .waitMate {
@@ -220,8 +258,7 @@
   .character_character_div {
     position: relative;
     margin-top: 30%;
-    
-    
+
     .character_character {
       display: block;
       text-align: center;
@@ -281,7 +318,6 @@
       height: 187px;
     }
   }
-  
 }
 @media (min-width: 300px) and (max-width: 768px) {
   .first_column {
@@ -324,8 +360,7 @@
   .character_character_div {
     position: relative;
     margin-top: 30%;
-    
-    
+
     .character_character {
       display: block;
       text-align: center;
@@ -385,9 +420,4 @@
       height: 187px;
     }
   }
-  
-  .strength_Waitmate_3{
-    width: 123px;
-  }
-  }
-
+}
