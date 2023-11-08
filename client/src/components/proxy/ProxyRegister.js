@@ -46,15 +46,15 @@ export default function ProxyRegister() {
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
-    formData.append('id', id);
+    formData.append('id', 2);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
     console.log(data);
-    if (data.photo[0]) {
+    if (data.photo && data.photo[0]) {
       formData.append('photo', data.photo[0]);
     } else {
-      formData.append('photo', imageFile);
+      formData.append('photo', new File([''], '/images/proxy.png', { type: 'image/png' }));
     }
     axios({
       url: `${apiUrl}/proxy/register`,
@@ -84,7 +84,7 @@ export default function ProxyRegister() {
             저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
           <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} justify-center items-center`}>
             <div className={`flex flex-col ${isSmallScreen ? 'w-full' : 'w-1/3'}`}>
-              <div className='w-full h-28 bg-background p-2 rounded-lg'>
+              <div className='w-full h-full bg-background p-2 rounded-lg'>
                   {imageFile && <img src={imageFile} alt="Preview" 
                   className="w-full h-full" />}
               </div>
