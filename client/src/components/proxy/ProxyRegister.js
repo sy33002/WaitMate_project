@@ -3,6 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
 import useUserStore from '../../store/useUserStore';
+import {  useNavigate } from 'react-router-dom';
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState,setValue } = useForm();
@@ -12,6 +13,8 @@ export default function ProxyRegister() {
   const [clickRegister, setClickRegister] = useState(false);
   const {id} = useUserStore();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -30,6 +33,10 @@ export default function ProxyRegister() {
     }
   };
 
+  const handleModalConfirm = () => {
+    navigate('/proxy/list')
+  };
+
   const onSubmit = async (data) => {
     const address = inputAddressValue;
     const addressParts = address.split(" ");
@@ -45,6 +52,8 @@ export default function ProxyRegister() {
     console.log(data);
     if (data.photo[0]) {
       formData.append('photo', data.photo[0]);
+    } else {
+      formData.append('photo', imageFile);
     }
     axios({
       url: 'http://localhost:8080/proxy/register',
@@ -52,10 +61,7 @@ export default function ProxyRegister() {
       data: formData,
     })
       .then((res) => {
-        const userConfirmed = window.confirm('등록 완료!');
-        if (userConfirmed) {
-          window.location.href = `/proxy/list`;
-        }
+        setShowModal(true);
       })
       .catch((err) => {
         console.error(err);
@@ -63,18 +69,17 @@ export default function ProxyRegister() {
   };
 
   return (
-    <div className='p-4'>
-      <p className='text-xs pl-1 pb-1 font-Line'>you are my best proxy.</p>
+    <div className='p-4 mt-2'>
       <div className='relative w-full'>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-8 bg-primary rounded-lg"
         >
-          <p className='text-[12px] text-green font-Line'>
+          <p className={`${isSmallScreen ? 'text-[15px]': 'text-[20px]'} text-green font-Line`}>
             프록시란(Proxy)?</p>
-          <p className='text-[12px]  text-background font-Line'>
+          <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
             대신 웨이팅 할 사람을 지칭하는 말입니다! </p>
-            <p className='text-[12px]  text-background font-Line'>
+            <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
             저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
           <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} justify-center items-center`}>
             <div className={`flex flex-col ${isSmallScreen ? 'w-full' : 'w-1/3'}`}>
@@ -197,6 +202,19 @@ export default function ProxyRegister() {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md w-1/3 text-center">
+            <p className="mb-4">등록 완료!</p>
+            <button
+              onClick={handleModalConfirm}
+              className="p-2 bg-primary text-white rounded-md"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

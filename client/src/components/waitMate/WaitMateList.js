@@ -15,6 +15,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,14 +92,14 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           return (
             <div key={item.wdId} className="flex w-full h-1/2justify-center item-center">
               <div className='w-1/2 p-1'>
-              <Link to={`/waitMate/detail/${item.wdId}`}>
-                <WaitMateBox item={item} isSmallScreen={isSmallScreen}/>
+              <Link to={`/waitMate/detail/${item.wmId}`}>
+                <WaitMateBox item={item} isSmallScreen={isSmallScreen} />
               </Link>
               </div>
               <div className='w-1/2 p-1'>
               {nextItem && 
-              <Link to={`/waitMate/detail/${item.wdId}`}>
-                <WaitMateBox item={nextItem} isSmallScreen={isSmallScreen}/>
+              <Link to={`/waitMate/detail/${item.wmId}`}>
+                <WaitMateBox item={nextItem} isSmallScreen={isSmallScreen} />
               </Link>
               }
               </div>

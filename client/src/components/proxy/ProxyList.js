@@ -67,9 +67,8 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
             onChange={handleOption}
             className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}
           >
-            <option value="updatedAt">최근 목록순</option>
-            <option value="pay">시급순</option>
-            <option value="count">조회순</option>
+            <option value="latest">최근 목록순</option>
+            <option value="star">평점순</option>
           </select>
         </div>
         <Select

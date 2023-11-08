@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { socket } from '../../socket';
-import useUserStore from '../../store/useUserStore';
-
+import useUserStore from '../../store/useUserStore'; 
 
 export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
   const [roomNumber, setRoomNumber] = useState(null);
-  const {id} = useUserStore();
+  const {id, nickname} = useUserStore();
+
   console.log('아이디값' + id);
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
@@ -88,7 +88,7 @@ export default function ProxyDetail() {
             <div className={`${isSmallScreen? 'mt-8' : 'mt-8'} w-4/5 h-full flex flex-col justify-end`}>
               <span className="text-primary ml-3 text-lg font-gmarket font-bold w-full">Title: 
               <br style={{display: isSmallScreen ? 'block' : 'none'}}/> <span>{proxy.title}</span></span><br />
-              <span className="text-primary_light ml-3 font-Line text-md">proxy ID: {proxy.proxyId}</span><br />
+              <span className="text-primary_light ml-3 font-Line text-md">proxy ID: {nickname}</span><br />
             </div>
             <div className="w-6 h-full flex align-end bg-primary rounded-b-lg font-Line text-xs text-background p-1" 
             style={{ writingMode: 'vertical-rl', display: isSmallScreen ? 'none' : 'block' }}>proxy's resume</div>
