@@ -63,20 +63,19 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   };
  
   return (
-    <div className={`${isSmallScreen ? 'p-1 ' : 'p-6'} w-full`}>
-      <p className="text-xs font-Line">you will be the best Wait Mate.</p>
+    <div className={`${isSmallScreen ? 'p-1 mt-3 ' : 'p-6'} w-full`}>
       <div >
         <form
           onSubmit={handleSubmit(onSubmit)}
           className={`p-4 border bg-primary border-primary rounded-lg w-full`}
         >
-          <p className='text-[12px] text-green font-Line'>
-            웨이트메이트란(Wait Mate)?</p>
-          <p className='text-[12px]  text-background font-Line'>
+          <p className={`${isSmallScreen ? 'text-[15px]': 'text-[20px]'} text-green font-Line`}>
+            웨이트 메이트란 (Wait Mate) ?</p>
+          <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
             대신 웨이팅 할 사람을 구하는 사람을 지칭하는 말입니다. </p>
-            <p className='text-[12px]  text-background font-Line'>
+            <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
             저희 프록시를 구해서 웨이팅 시간을 줄여보아요!</p>
-          <div className={`${isSmallScreen ? 'flex flex-col ' : 'flex'}  justify-center items-center`}>
+          <div className={`${isSmallScreen ? 'flex flex-col mt-6' : 'flex'}  justify-center items-center`}>
             <div className={`${isSmallScreen ? 'w-1/2' : 'w-1/2'} flex flex-col text-center pb-2`}>
               <div className="w-full">
                 {imageFile && (

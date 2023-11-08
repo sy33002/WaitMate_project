@@ -105,3 +105,53 @@ textarea {
   width: 44px; // 버튼의 너비 (이미지의 너비에 맞게 설정)
   height: 40px; // 버튼의 높이 (이미지의 높이에 맞게 설정)
 }
+.container {
+  z-index: 1;
+}
+.waitMate_letter {
+  font-size: x-large;
+  color: #2f2772;
+  font-weight: bold;
+}
+.waitMate_letter_second {
+  font-size: x-large;
+  color: #b3e443;
+  font-weight: bold;
+}
+.waitMate_letter {
+  white-space: nowrap;
+}
+
+.waitMate_letter span {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.waitMate_letter_second span {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.message_container {
+  max-height: 800px; /* Set a maximum height for the chat container */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+.message_container::-webkit-scrollbar {
+  display: none;
+}
+.chat_header {
+  background-color: #2f2772;
+  border-radius: 5px;
+  color: white;
+  padding: 15px;
+  font-size: x-large;
+
+}
+.chat_header_status {
+  background-color: transparent;
+  border-radius: 5px;
+  color: white;
+  font-size: x-large;
+  padding:10px;
+}
