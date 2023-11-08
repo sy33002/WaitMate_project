@@ -22,15 +22,14 @@ function ChatList() {
   const loader = useRef(null);
   const { id } = useUserStore();
   const [cursor, setCursor] = useState(0);
+  const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
     async function loadChatList() {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `http://localhost:8080/proxy/listChatting`,
-          { withCredentials: true }
-        );
+        const response = await axios.get(`${apiUrl}/proxy/listChatting`, 
+                                         { withCredentials: true });
         const chatListData = response.data.list;
         console.log('chatListData', chatListData); // undefined 상태...
         if (Array.isArray(chatListData)) {

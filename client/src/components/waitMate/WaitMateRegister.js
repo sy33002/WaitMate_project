@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, set } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
+import {  useNavigate } from 'react-router-dom';
 
 export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, setValue, formState } = useForm();
@@ -10,6 +11,9 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const [clickRegister, setClickRegister] = useState(false);
   const [locationInfo, setLocationInfo] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+  const apiUrl = process.env.REACT_APP_URL;
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -29,6 +33,11 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
     }
   };
 
+  const handleModalConfirm = () => {
+    navigate('/waitMate/list')
+  };
+
+
     const onSubmit = async (data, event) => {
     const wmAddress = inputAddressValue;
     const formData = new FormData();
@@ -44,17 +53,14 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
     formData.append('photo', imageFile);
     formData.append('lng', locationInfo.x);
     formData.append('lat', locationInfo.y);
-    
     try {
-      const response = await fetch(`http://localhost:8080/waitMate/register`, {
+      const response = await fetch(`${apiUrl}/waitMate/register`, {
         method: 'POST',
         body: formData,
       });
-      if (response === 'success') {
-        // const responseData = await response.json();
-        console.log('aaaa');
+      if (response.ok) {
+        setShowModal(true);
       } else {
-        console.error('Failed to submit the form');
         console.log(response.status);
       }
     } catch (error) {
@@ -226,7 +232,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
               <br />
               <button
                 type="submit"
-                onClick={() => setClickRegister(true)}
+                onClick={() => {setClickRegister(true)}}
                 className="text-background text-lg border font-Line border-green p-2 rounded-lg w-full"
               >
                 register
@@ -235,6 +241,19 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md w-1/3 text-center">
+            <p className="mb-4">등록 완료!</p>
+            <button
+              onClick={handleModalConfirm}
+              className="p-2 bg-primary text-white rounded-md"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

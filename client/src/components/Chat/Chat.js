@@ -21,7 +21,8 @@ export default function Chat() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("거래중");
   const menuItems = ['예약중', '거래 완료', '거래중'];
-
+  const apiUrl = process.env.REACT_APP_URL;
+  
   // Create a reference for the container element that holds the chat messages
   const chatContainerRef = useRef();
 
@@ -34,7 +35,7 @@ export default function Chat() {
       try {
         // Data loading and socket connection
         const response = await axios({
-          url: `http://localhost:8080/proxy/chat/${roomNumber}`,
+          url: `${apiUrl}/proxy/chat/${roomNumber}`,
           method: 'GET',
         });
         setMessages(response.data.list);
