@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { socket } from '../../socket';
-import useUserStore from '../../store/useUserStore';
-
+import useUserStore from '../../store/useUserStore'; 
 
 export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
   const [roomNumber, setRoomNumber] = useState(null);
-  const {id} = useUserStore();
+  const {id, nickname} = useUserStore();
+
   console.log('아이디값' + id);
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
 
   const handleEditClick = () => {
     navigate(`/proxy/update/${proxyId}`);
@@ -57,7 +58,7 @@ export default function ProxyDetail() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:8080/proxy/detail/${proxyId}`, { withCredentials: true })
+    fetch(`${apiUrl}/proxy/detail/${proxyId}`, { withCredentials: true })
     .then(response => response.json())
     .then(data => {
       setProxy(data.result);
@@ -70,48 +71,52 @@ export default function ProxyDetail() {
 
   return (
     <>
-    <p className={`${isSmallScreen ? 'mt-4' : 'mt-10'} font-Line text-xs`}>프록시의 디테일한 자기소개 페이지입니다!</p>
-    <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} h-full w-full`}>
+    <p className={`${isSmallScreen ? 'mt-4 text-[18px]' : 'mt-10 text-[20px]'} text-primary_dark font-Line`}>
+      프록시의 디테일한 자기소개 페이지입니다!</p>
+    <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} h-4/5 w-full`}>
       <div className={`${isSmallScreen ? 'flex flex-col' : 'flex' } w-full h-3/5 bg-white shadow-lg`}>
         <div className={`${isSmallScreen ? 'h-1/3 w-full' : 'h-full w-1/3' } bg-primary flex flex-col justify-center items-center`}>
+          <div className='w-full p-3 flex justify-center'>
+            <img className={`${isSmallScreen ? 'w-3/5 h-2/5' : 'w-full'}`} src='/images/whiteWaitMate.png'></img>
+          </div>
           <img src={'/images/me.jpg'} alt="Proxy Photo" className={`${isSmallScreen ? 'w-4/5 h-1/3 mt-4 mb-2' : 'w-4/5 h-1/3' } border border-background rounded-lg`}/>
-          <button className={`${isSmallScreen? 'mb-2' : 'mt-4'} bg-background text-green font-Line p-3 rounded-sm`} onClick={startChat}>
+          <button className={`${isSmallScreen? 'mb-2' : 'mt-4'} shadow-lg bg-background text-green font-Line p-3 rounded-sm`} onClick={startChat}>
             Chat with Proxy
           </button>
         </div>
         <div className={`${isSmallScreen? 'w-full' : 'w-2/3' } flex flex-col h-full`}>
-          <div className="h-1/3 w-full flex justify-around ">
-            <div className="w-4/5 h-full flex flex-col justify-end">
-              <img src='/images/proxy.png'  style={{display: isSmallScreen ? 'none' : 'block'}} className='w-3/5 h-2/5'></img><br />
-              <span className="text-primary text-lg font-gmarket font-bold w-full">Title: {proxy.title}</span><br />
-              <span className="text-primary_light font-Line text-md">proxy ID: {proxy.proxyId}</span><br />
+          <div className="h-1/4 w-full flex justify-around ">
+            <div className={`${isSmallScreen? 'mt-8' : 'mt-8'} w-4/5 h-full flex flex-col justify-end`}>
+              <span className="text-primary ml-3 text-lg font-gmarket font-bold w-full">Title: 
+              <br style={{display: isSmallScreen ? 'block' : 'none'}}/> <span>{proxy.title}</span></span><br />
+              <span className="text-primary_light ml-3 font-Line text-md">proxy ID: {nickname}</span><br />
             </div>
             <div className="w-6 h-full flex align-end bg-primary rounded-b-lg font-Line text-xs text-background p-1" 
             style={{ writingMode: 'vertical-rl', display: isSmallScreen ? 'none' : 'block' }}>proxy's resume</div>
             </div>
-          <div className="w-full h-2/3 p-10 ">
-            <div className="font-Line bg-primary w-1/3 flex justify-center items-center rounded-t-lg">
-              <span className={`${isSmallScreen? 'text-[10px]' : ''} text-background p-2`}>Age/ Gender</span>
-            </div><br />
-            <div className="flex justify-center items-center">
+          <div className="w-full h-2/3 p-10">
+            <div className="font-Line bg-primary w-1/2 flex justify-center items-center rounded-t-lg">
+              <span className={`${isSmallScreen? 'text-[15px]' : ''} text-background p-2`}>Age/ Gender</span>
+            </div>
+            <div className="flex justify-center w-full p-4 items-center border-2 boder-gray-200">
               <span className='text-gray-700 font-Line text-md'>{proxy.age}대/  {proxy.gender}</span>
             </div>
             <br />
-            <div className="font-Line bg-primary w-1/3 flex justify-center items-center rounded-t-lg">
-              <span className={`${isSmallScreen? 'text-[10px]' : ''} text-background p-2`}>Address</span>
-            </div><br />
-            <div className="flex justify-center items-center">
+            <div className="font-Line bg-primary w-1/2 flex justify-center items-center rounded-t-lg">
+              <span className={`${isSmallScreen? 'text-[15px]' : ''} text-background p-2`}>Address</span>
+            </div>
+            <div className="flex justify-center w-full p-4 items-center border-2 boder-gray-200">
               <span className='text-gray-700 font-Line text-md'>{proxy.proxyAddress}</span>
             </div>
             <br />
-            <div className="font-Line bg-primary w-1/3 flex justify-center items-center rounded-t-lg">
-              <span className={`${isSmallScreen? 'text-[10px]' : ''} text-background p-2`}>Introduce</span>
-            </div><br />
-            <div className="flex justify-center items-center">
-              <span className='text-gray-700 font-Line text-md'>{proxy.proxyMsg}</span>
+            <div className="font-Line bg-primary w-1/2 flex justify-center items-center rounded-t-lg">
+              <span className={`${isSmallScreen? 'text-[15px]' : ''} text-background p-2`}>Introduce</span>
             </div>
+            <div className="flex justify-center w-full p-4 items-center border-2 border-gray-200">
+            <span className='text-gray-700 font-Line text-md break-all'>{proxy.proxyMsg}</span>
           </div>
-          <button onClick={handleEditClick}>수정하기</button>
+          </div>
+          {/* <button onClick={handleEditClick}>수정하기</button> */}
         </div>
       </div>
     </div>

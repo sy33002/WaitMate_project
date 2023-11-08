@@ -8,20 +8,25 @@ const useUserStore = create((set) => ({
   profileImg: '',
   setProfileImage: (newImage) => set(() => ({ profileImg: newImage })),
   setUserInfo: async () => {
-    if (useUserStore.getState().id === '') {
+    try {
       const response = await axiosInstance.get('/user/myInfo');
-      const { id, userId, nickname, photo } = response.data;
-      set({
-        id: id,
-        userId: userId,
-        nickname: nickname,
-        profileImg: photo,
-      });
+      if (response.data) {
+        const { id, userId, nickname, photo } = response.data;
+        set({
+          id: id,
+          userId: userId,
+          nickname: nickname,
+          profileImg: photo,
+        });
+      }
+    } catch (error) {
+      console.error('Failed to fetch user info:', error);
+      // 필요하다면 여기서 에러 핸들링을 할 수 있습니다.
     }
   },
   logout: async () => {
     try {
-      const response = await axiosInstance.get('/user/logOut');
+      const response = await axiosInstance.get('/user/logout');
       if (response.status === 200) {
         set({
           id: '',
@@ -31,7 +36,8 @@ const useUserStore = create((set) => ({
         });
       }
     } catch (error) {
-      console.error('로그아웃 중 오류 발생:', error);
+      console.error('Failed to logout:', error);
+      // 필요하다면 여기서 에러 핸들링을 할 수 있습니다.
     }
   },
 }));

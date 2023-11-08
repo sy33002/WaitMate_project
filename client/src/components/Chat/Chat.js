@@ -20,6 +20,8 @@ export default function Chat() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('거래중');
   const menuItems = ['예약중', '거래 완료', '거래중'];
+  const apiUrl = process.env.REACT_APP_URL;
+  
   // Create a reference for the container element that holds the chat messages
   const chatContainerRef = useRef();
   const toggleMenu = () => {
@@ -31,7 +33,7 @@ export default function Chat() {
       try {
         // Data loading and socket connection
         const response = await axios({
-          url: `http://localhost:8080/proxy/chat/${roomNumber}`,
+          url: `${apiUrl}/proxy/chat/${roomNumber}`,
           method: 'GET',
         });
         setMessages(response.data.list);
@@ -85,6 +87,7 @@ export default function Chat() {
         hour: '2-digit',
         minute: '2-digit',
       });
+
       // 서버로 메시지를 전송합니다.
       const messageData = {
         roomNumber: roomNumber,
@@ -94,17 +97,20 @@ export default function Chat() {
         messageContent: inputValue,
       };
       socket.emit('message', messageData);
+
       // 메시지를 먼저 뷰에 표시
       const newMessage = {
         messageContent: inputValue,
         sender: sender.userId,
-        messageType: 'text',
+        messageType : 'text',
         receiver: receiver.userId,
         createdAt: currentTime,
       };
       console.log('안정값', newMessage);
       console.log('메세지값', inputValue);
+
       // setMessages((prevMessages) => [...prevMessages, newMessage]);
+      
       setMessages([...messages, newMessage]);
       // 입력값 초기화
       setInputValue('');
