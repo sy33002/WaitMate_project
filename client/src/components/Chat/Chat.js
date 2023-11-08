@@ -14,19 +14,24 @@ export default function Chat() {
   const [error, setError] = useState(null);
   const { id } = useUserStore();
   const Navigate = useNavigate();
-  const inputReferance = React.createRef();
+  const inputReference = useRef();
   const { roomNumber } = useParams();
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('거래중');
   const menuItems = ['예약중', '거래 완료', '거래중'];
   const apiUrl = process.env.REACT_APP_URL;
-  
-  // Create a reference for the container element that holds the chat messages
   const chatContainerRef = useRef();
+
+  // Create a reference for the container element that holds the chat messages
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
+useEffect(() => {
+  if (chatContainerRef.current) {
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }
+}, []);
   // Data loading
   useEffect(() => {
     const fetchData = async () => {
@@ -39,12 +44,15 @@ export default function Chat() {
         setMessages(response.data.list);
         console.log(response.data.list);
         socket.emit('getRoomInfo', roomNumber);
+
+      
       } catch (err) {
         console.error(err);
       }
     };
     fetchData();
   }, [roomNumber, id]);
+
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
     if (id) {
@@ -103,7 +111,7 @@ export default function Chat() {
       const newMessage = {
         messageContent: inputValue,
         sender: sender.userId,
-        messageType : 'text',
+        messageType: 'text',
         receiver: receiver.userId,
         createdAt: currentTime,
       };
@@ -111,11 +119,11 @@ export default function Chat() {
       console.log('메세지값', inputValue);
 
       // setMessages((prevMessages) => [...prevMessages, newMessage]);
-      
+
       setMessages([...messages, newMessage]);
       // 입력값 초기화
       setInputValue('');
-      inputReferance.current.value = '';
+      inputReference.current.value = '';
     }
   };
   useEffect(() => {
@@ -141,11 +149,14 @@ export default function Chat() {
       socket.off('smessage');
     };
   }, []);
-  // Check if chatContainerRef is defined before attempting to scroll
-  if (chatContainerRef.current) {
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }
 
+  // Check if chatContainerRef is defined before attempting to scroll
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
   const parseDate = (dateString) => {
     return dateString.slice(11, 16);
   };
@@ -163,7 +174,7 @@ export default function Chat() {
           {loading ? (
             <div>로딩 중...</div>
           ) : (
-            <div>
+            <div className='initial-chat-container'>
               <p class="chat_header">
                 <button
                   onClick={toggleMenu}
@@ -204,7 +215,7 @@ export default function Chat() {
                     <MessageBox
                       key={index}
                       className={msg.sender === sender.userId ? 'me' : 'other'}
-                      photo={msg.receiver !== receiver.userId ? proxy : null}
+                      avatar={msg.receiver !== receiver.userId ? proxy : null}
                       type={msg.messageType}
                       text={msg.messageContent}
                       title={`${msg.sender} ${parseDate(msg.createdAt)}`}
@@ -216,7 +227,7 @@ export default function Chat() {
               <div className="input_container">
                 <Input
                   className="input_item"
-                  referance={inputReferance}
+                  referance={inputReference}
                   multiline={true}
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
