@@ -95,6 +95,7 @@ export default function Chat() {
         receiver: receiver.userId,
         messageType: 'text',
         messageContent: inputValue,
+        createdAt: currentTime,
       };
       socket.emit('message', messageData);
 
