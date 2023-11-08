@@ -16,7 +16,7 @@ function SigninForm() {
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post('user/login', {
+      const response = await axiosInstance.post('/user/login', {
         userId: username,
         password,
       });
