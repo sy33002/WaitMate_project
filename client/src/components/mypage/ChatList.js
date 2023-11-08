@@ -5,11 +5,10 @@ import useUserStore from '../../store/useUserStore';
 
 const fetchMoreChats = async (cursor) => {
   try {
-    // 백엔드 API 호출로 수정합니다. 여기서 cursor는 페이지 번호나 다른 페이징 인자가 될 수 있습니다.
     const response = await axios.get(
-      `http://localhost:8080/proxy/listChatting/chats?cursor=${cursor}`
+      `http://localhost:8080/proxy/listChatting/chats?cursor=${cursor}` // 404error, 경로 확인해봐야함
     );
-    return response.data; // 백엔드 응답 구조에 맞게 변경해야 할 수 있습니다.
+    return response.data;
   } catch (error) {
     console.error('Additional chats fetching failed:', error);
     throw error;
@@ -33,7 +32,7 @@ function ChatList() {
           { withCredentials: true }
         );
         const chatListData = response.data.list;
-        console.log(response.data.list);
+        console.log('chatListData', chatListData); // undefined 상태...
         if (Array.isArray(chatListData)) {
           setChats(chatListData);
         } else {
@@ -94,7 +93,7 @@ function ChatList() {
   }
 
   return (
-    <div className="ml-40 mr-40 mt-10 mb-10 background">
+    <div className="ml-20 mr-20 mt-10 mb-10 background">
       <div className="flex justify-center mb-5">
         <h1 className="text-primary text-3xl">My Chat List</h1>
       </div>
