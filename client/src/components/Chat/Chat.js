@@ -174,7 +174,7 @@ export default function Chat() {
           {loading ? (
             <div>로딩 중...</div>
           ) : (
-            <div>
+            <div className='initial-chat-container'>
               <p class="chat_header">
                 <button
                   onClick={toggleMenu}
