@@ -27,11 +27,11 @@ export default function Chat() {
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-    }
-  }, []);
+useEffect(() => {
+  if (chatContainerRef.current) {
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }
+}, []);
   // Data loading
   useEffect(() => {
     const fetchData = async () => {
