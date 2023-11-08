@@ -27,7 +27,11 @@ export default function Chat() {
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
-
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, []);
   // Data loading
   useEffect(() => {
     const fetchData = async () => {
@@ -41,11 +45,7 @@ export default function Chat() {
         console.log(response.data.list);
         socket.emit('getRoomInfo', roomNumber);
 
-        // 스크롤을 로딩 후 설정
-        if (chatContainerRef.current) {
-          chatContainerRef.current.scrollTop =
-            chatContainerRef.current.scrollHeight;
-        }
+      
       } catch (err) {
         console.error(err);
       }
