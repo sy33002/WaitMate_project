@@ -198,20 +198,19 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
                 rules={{ required: true }}
                 render={({ field }) => <input {...field} type="time" className='rounded-lg w-1/3'/>}
                 />
-                 {formState.errors.time_start && clickRegister && (
-                  <p className="text-red-300 text-xs p-2">시작 시간은 필수 항목입니다 :D</p>
-                )}{formState.errors.time_end && clickRegister && (
-                  <p className="text-red-300 text-xs p-2">끝날 시간은 필수 항목입니다 :D</p>
+                 {(formState.errors.time_start || formState.errors.time_end) && clickRegister && (
+                  <p className="text-red-300 text-xs p-2">시작 시간과 끝날 시간 필수 항목입니다 :D</p>
                 )}
               </div>
               <br />
               <div>
                 <label className="text-sm text-green font-Line m-1">Pay(시급)</label><br />
+                <p className="text-red-300 text-xs font-Line pl-1">숫자 형태로만 적어주세요!</p>
                 <Controller
                   name="pay"
                   control={control}
                   rules={{ required: false }}
-                  render={({ field }) => <input {...field} className='rounded-lg w-full'/>}
+                  render={({ field }) => <input {...field} placeholder=' 0000원' type='number' className='rounded-lg w-1/3'/>}
                 />
               </div>
               <br />

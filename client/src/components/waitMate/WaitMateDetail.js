@@ -59,7 +59,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
       <p className='text-base text-primary font-Line'>Wait Mate가 Proxy를 찾고 있는 조건이에요!</p>
       <div className='flex flex-col w-full bg-primary h-full p-2 rounded-lg justify-center items-center align-middle mb-5'>
         <div className='w-full h-2/5 flex justify-center p-3'>
-          <img src={waitMate.photo} alt='store' className='rounded-lg w-2/3 h-full shadow-lg'></img>
+          <img src={waitMate.photo} alt='store' className='rounded-lg w-2/3 h-full shadow-lg bg-background'></img>
         </div>
         <div className='h-3/4 p-2 w-full mt-4 text-lg'>
           <p className='font-Line text-red-300 p-1 ml-4'>Title : 
@@ -95,11 +95,11 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
           ) : (
             <span>🤍 찜하기</span>
           )}</button>
-           <button  className='text-background text-lg font-Line p-2 w-full'>
-            {state ? (<span className='bg-red-300 w-full'>예약중!</span>) : 
-            (<span className='bg-primary_light w-full'>예약을 기다리고 있어요!</span>)}
-          </button>
         </div>
+           <button  className='bg-primary_dark text-background text-lg font-Line p-3 w-full'>
+            {state ? (<span className='bg-red-300 p-2 rounded-lg'>예약중!</span>) : 
+            (<span className=' p-2 rounded-lg bg-gray-400'>예약을 기다리고 있어요!</span>)}
+          </button>
       </div>
     </div>
   )
