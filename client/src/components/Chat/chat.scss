@@ -21,6 +21,7 @@ textarea {
   justify-content: center;
   align-items: center;
   padding: 10px;
+
 }
 
 .rce-input-textarea {
@@ -83,6 +84,7 @@ textarea {
 .message_container {
   max-height: 75vh;
   overflow: auto;
+
 }
 
 .input_send_btn {
@@ -107,6 +109,7 @@ textarea {
 }
 .container {
   z-index: 1;
+  padding-bottom: 20px;
 }
 .waitMate_letter {
   font-size: x-large;
@@ -134,24 +137,22 @@ textarea {
 }
 
 .message_container {
-  max-height: 800px; /* Set a maximum height for the chat container */
+  max-height: 400px; /* Set a maximum height for the chat container */
   overflow-y: auto; /* Enable vertical scrolling */
 }
-.message_container::-webkit-scrollbar {
-  display: none;
-}
+
+
 .chat_header {
   background-color: #2f2772;
   border-radius: 5px;
   color: white;
   padding: 15px;
   font-size: x-large;
-
 }
 .chat_header_status {
   background-color: transparent;
   border-radius: 5px;
   color: white;
   font-size: x-large;
-  padding:10px;
+  padding: 10px;
 }
