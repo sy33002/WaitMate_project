@@ -19,7 +19,7 @@ export default function Chat() {
   const { roomNumber } = useParams();
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState("거래중");
+  const [selectedStatus, setSelectedStatus] = useState('거래중');
   const menuItems = ['예약중', '거래 완료', '거래중'];
 
   // Create a reference for the container element that holds the chat messages
@@ -98,6 +98,7 @@ export default function Chat() {
         receiver: receiver.userId,
         messageType: 'text',
         messageContent: inputValue,
+        createdAt: currentTime,
       };
       socket.emit('message', messageData);
       // 메시지를 먼저 뷰에 표시
@@ -108,6 +109,7 @@ export default function Chat() {
         time: currentTime,
       };
       console.log('안정값', newMessage);
+      console.log('currentTime:', newMessage.time);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       // 입력값 초기화
       setInputValue('');
@@ -124,7 +126,7 @@ export default function Chat() {
       });
       console.log('뭐가 찍히나요', messageData);
       const newMessage = {
-        photo: proxy || null,
+        avatar: proxy || null,
         messageContent: messageData.messageContent || '',
         sender: messageData.receiver || '',
         receiver: messageData.sender || '',
@@ -142,6 +144,10 @@ export default function Chat() {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
 
+  const parseDate = (dateString) => {
+    return dateString.slice(11, 16);
+  };
+
   return (
     <div className="container">
       {!id ? (
@@ -157,7 +163,7 @@ export default function Chat() {
                   onClick={toggleMenu}
                   className="font-extrabold text-primary py-2 px-1 sm:py-2 sm:px-1 md:py-2 md:px-2 text-xs sm:text-sm md:text-baserounded-full relative"
                 >
-                  <div className="chat_header_status">  {selectedStatus}     ▽</div>
+                  <div className="chat_header_status"> {selectedStatus} ▽</div>
                   {isMenuOpen && (
                     <div className="menu bg-gray-100 absolute right-0 top-full p-2 rounded-md shadow-md">
                       {menuItems.map((item, index) => (
@@ -178,19 +184,22 @@ export default function Chat() {
                 현재 회원님의 아이디는 {sender.userId}입니다
               </p>
               <div className="message_container" ref={chatContainerRef}>
-                {messages.map((msg, index) => (
-                  <MessageBox
-                    key={index}
-                    className={msg.sender === sender.userId ? 'me' : 'other'}
-                    photo={
-                      msg.receiver !== receiver.userId ? proxy || null : null
-                    }
-                    type={msg.messageType}
-                    text={msg.messageContent}
-                    title={`${msg.sender} ${msg.createdAt}`}
-                    notch={false}
-                  ></MessageBox>
-                ))}
+                {messages.map((msg, index) => {
+                  console.log(msg);
+                  return (
+                    <MessageBox
+                      key={index}
+                      className={msg.sender === sender.userId ? 'me' : 'other'}
+                      avatar={
+                        msg.receiver !== receiver.userId ? proxy || null : null
+                      }
+                      type={msg.messageType}
+                      text={msg.messageContent}
+                      title={`${msg.sender} ${parseDate(msg.createdAt)}`}
+                      notch={false}
+                    ></MessageBox>
+                  );
+                })}
               </div>
               <div className="input_container">
                 <Input
