@@ -82,7 +82,7 @@ function ChatList() {
       const response = await fetchMoreChats(cursor);
       const newChats = response.data;
       const nextCursor = response.nextCursor;
-
+      console.log(response);
       setChats((prevChats) => [...prevChats, ...newChats]);
       setCursor(nextCursor);
       setHasMore(newChats.length > 0);
@@ -106,7 +106,10 @@ function ChatList() {
             </div>
           ) : (
             chats.map((chat) => (
-              <Link to={`/chat/${chat.id}`} key={chat.id}>
+              <Link
+                to={`/proxy/detail/chat/${chat.roomNumber}`}
+                key={chat.roomNumber}
+              >
                 <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
                   <img
                     src={chat.profilePic || '/images/someone.png'}
@@ -118,7 +121,7 @@ function ChatList() {
                       <div className="nickname">{chat.nickname}</div>
                       <div className="time text-xs">{chat.time}</div>
                     </div>
-                    <div className="message">{chat.message}</div>
+                    <div className="message">{chat.roomNumber}</div>
                   </div>
                 </div>
               </Link>
