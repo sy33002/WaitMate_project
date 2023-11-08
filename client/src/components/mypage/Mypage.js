@@ -19,6 +19,12 @@ function Mypage() {
   const [showEditButton, setShowEditButton] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const basicButtonClasses =
+    'py-2 px-4 text-white bg-primary border-2 border-primary rounded-lg transition-colors duration-300';
+  const baseButtonClasses =
+    'py-2 px-4 text-primary border-2 border-primary rounded-lg transition-colors duration-300';
+  const responsiveButtonClasses =
+    'w-full sm:w-52 md:w-64 lg:w-72 xl:w-80 my-2 sm:my-0';
 
   // Fetch the relevant items depending on the active tab
   useEffect(() => {
@@ -83,39 +89,45 @@ function Mypage() {
   const renderButtons = () => {
     if (activeTab === 'proxy') {
       return (
-        <div className="flex flex-col space-y-2 mb-4">
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
           <div className="flex space-x-2">
             <button
               onClick={toggleEditButton}
-              className="background text-primary w-52 py-2 rounded-lg border-2 border-primary"
+              className={`${baseButtonClasses} ${responsiveButtonClasses}`}
             >
               나의 이력서
             </button>
-            <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+            <button
+              className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+            >
               내가 찜한 웨메 리스트
             </button>
-            <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+            <button
+              className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+            >
               내가 픽한 웨메 리스트
             </button>
           </div>
-          {showEditButton && (
-            <button
-              onClick={handleEditResume}
-              className="background text-primary w-52 py-2 rounded-lg border-2 border-primary mt-2"
-            >
-              수정하기
-            </button>
-          )}
+          <div>
+            {showEditButton && (
+              <button
+                onClick={handleEditResume}
+                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+              >
+                수정하기
+              </button>
+            )}
+          </div>
         </div>
       );
     }
     if (activeTab === 'waitmate') {
       return (
         <div className="flex space-x-2 mb-4">
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+          <button className={`${baseButtonClasses} ${responsiveButtonClasses}`}>
             내가 등록한 웨메 리스트
           </button>
-          <button className="background text-primary w-52 py-2 rounded-lg  border-2 border-primary">
+          <button className={`${baseButtonClasses} ${responsiveButtonClasses}`}>
             내가 픽한 프록시 리스트
           </button>
         </div>
@@ -139,13 +151,13 @@ function Mypage() {
 
   return (
     <div className="background min-h-screen">
-      <h1 className="ml-10 mt-10 text-6xl text-primary font-semibold mb-2 text-left">
+      <h1 className="ml-10 mt-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-semibold mb-2">
         My Page
       </h1>
 
-      <div className="mt-10 flex items-start mb-6">
-        <div className="ml-10 mr-4 flex flex-col items-center">
-          <div className="border w-52 h-60 border-primary rounded-lg flex flex-col items-center">
+      <div className="mt-10 flex flex-col md:flex-row items-start mb-6">
+        <div className="ml-10 mr-4 flex flex-col items-center mb-6 md:mb-0">
+          <div className="border w-full md:w-52 lg:w-60 border-primary rounded-lg p-4 flex flex-col items-center">
             <img
               src={profileImg}
               alt="Profile"
@@ -185,25 +197,28 @@ function Mypage() {
             </div>
           </div>
         </div>
-        <div>
-          <div className="space-x-4">
+        <div className="flex-grow">
+          <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-4">
+            {/* 버튼에 반응형 클래스 사용 */}
             <button
               onClick={() => setActiveTab('proxy')}
-              className="w-80 bg-primary text-white py-2 px-4 rounded-lg"
+              className={`${basicButtonClasses} ${responsiveButtonClasses}`}
             >
               My Proxy
             </button>
             <button
               onClick={() => setActiveTab('waitmate')}
-              className="w-80 bg-primary text-white py-2 px-4 rounded-lg"
+              className={`${basicButtonClasses} ${responsiveButtonClasses}`}
             >
               My WaitMate
             </button>
           </div>
           <div className="mt-4">{renderButtons()}</div>
-          <div className="bg-white rounded-lg h-96 mt-4  border-2 border-primary">
+          <div className="bg-white rounded-lg mt-4 p-4 h-80 border-2 border-primary overflow-auto">
             {listItems.map((item, index) => (
-              <div key={index}>{item}</div>
+              <div key={index} className="p-2">
+                {item}
+              </div>
             ))}
           </div>
         </div>

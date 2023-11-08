@@ -146,9 +146,10 @@ function SignupForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 w-1/3 shadow-md background rounded-md">
-        <h2 className="text-2xl mb-4 text-primary">Sign Up</h2>
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="p-4 w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl shadow-md rounded-md">
+        <h2 className="text-xl sm:text-2xl mb-4 text-primary">Sign Up</h2>
+
         <p className="mb-4 text-gray-400">Let's Go Wait Mate!!!</p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4 relative">
@@ -171,11 +172,11 @@ function SignupForm() {
             </button>
             {idValid ? (
               <p className="text-xs mt-1 valid-message">
-                아이디는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.
+                ID는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.
               </p>
             ) : (
               <p className="text-xs mt-1 invalid-message">
-                아이디는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.
+                ID는 4~12자의 영문 대소문자, 숫자만 사용 가능합니다.
               </p>
             )}
           </div>
@@ -206,11 +207,11 @@ function SignupForm() {
             />
             {passwordValid ? (
               <p className="text-xs mt-1 valid-message">
-                비밀번호는 숫자와 알파벳을 포함한 8자 이상입니다.
+                PW는 숫자와 알파벳을 포함한 8자 이상입니다.
               </p>
             ) : (
               <p className="text-xs mt-1 valid-message">
-                비밀번호는 숫자와 알파벳을 포함한 8자 이상입니다.
+                PW는 숫자와 알파벳을 포함한 8자 이상입니다.
               </p>
             )}
 
@@ -239,18 +240,18 @@ function SignupForm() {
             </button>
             {nickNameValid ? (
               <p className="text-xs mt-1 valid-message">
-                닉네임은 2~10자 이내로 입력해주세요.
+                Nickname은 2~10자 이내로 입력해주세요.
               </p>
             ) : (
               <p className="text-xs mt-1 valid-message">
-                닉네임은 2~10자 이내로 입력해주세요.
+                Nickname은 2~10자 이내로 입력해주세요.
               </p>
             )}
           </div>
           <div className="flex flex-col items-center mt-4">
             <button
               type="submit"
-              className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              className="p-2 w-full sm:w-auto sm:px-10 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
             >
               Sign Up
             </button>
@@ -266,10 +267,9 @@ function SignupForm() {
           </Link>
         </p>
       </div>
-      {/* 모달창 시작 */}
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded-md w-1/3 text-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-md w-full sm:w-auto sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl text-center">
             <p className="mb-4">회원가입이 완료되었습니다.</p>
             <button
               onClick={handleModalConfirm}
