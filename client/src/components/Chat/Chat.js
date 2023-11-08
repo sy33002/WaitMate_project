@@ -5,7 +5,6 @@ import { socket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-
 export default function Chat() {
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
@@ -19,13 +18,12 @@ export default function Chat() {
   const { roomNumber } = useParams();
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
-  const [selectedStatus, setSelectedStatus] = useState("거래중");
+  const [selectedStatus, setSelectedStatus] = useState('거래중');
   const menuItems = ['예약중', '거래 완료', '거래중'];
   const apiUrl = process.env.REACT_APP_URL;
   
   // Create a reference for the container element that holds the chat messages
   const chatContainerRef = useRef();
-
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -45,12 +43,9 @@ export default function Chat() {
         console.error(err);
       }
     };
-
     fetchData();
   }, [roomNumber, id]);
-
   // id 값이 업데이트될 때 소켓 이벤트 처리
-
   useEffect(() => {
     if (id) {
       socket.emit('getRoomInfo', roomNumber);
@@ -70,21 +65,21 @@ export default function Chat() {
             if (data.sender.id === id) {
               setSender(data.sender);
               setReceiver(data.receiver);
+              setProxy(data.proxyData.photo);
               setLoading(false);
-              console.log('안녕' + data.proxyData.photo);
+              console.log('sender안녕' + data.proxyData.photo);
             } else if (data.receiver.id === id) {
               setSender(data.receiver);
               setProxy(data.proxyData.photo);
               setReceiver(data.sender);
               setLoading(false);
-              console.log('안녕' + data.proxyData.photo);
+              console.log('receiver안녕' + data.proxyData.photo);
             }
           }
         }
       });
     }
   }, [id, Navigate]);
-
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
       const currentTime = new Date().toLocaleTimeString([], {
@@ -100,6 +95,7 @@ export default function Chat() {
         receiver: receiver.userId,
         messageType: 'text',
         messageContent: inputValue,
+        createdAt: currentTime,
       };
       socket.emit('message', messageData);
 
@@ -122,7 +118,6 @@ export default function Chat() {
       inputReferance.current.value = '';
     }
   };
-
   useEffect(() => {
     socket.on('smessage', (messageData) => {
       const currentTime = new Date().toLocaleTimeString([], {
@@ -132,7 +127,7 @@ export default function Chat() {
       });
       console.log('뭐가 찍히나요', messageData);
       const newMessage = {
-        photo: proxy || null,
+        photo: messageData.photo || null,
         messageContent: messageData.messageContent || '',
         messageType: 'text',
         sender: messageData.sender || '',
@@ -140,17 +135,25 @@ export default function Chat() {
         createdAt: currentTime,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
+      console.log('receiver의 값', newMessage);
     });
     return () => {
       socket.off('smessage');
     };
   }, []);
-
   // Check if chatContainerRef is defined before attempting to scroll
   if (chatContainerRef.current) {
     chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
   }
 
+  const parseDate = (dateString) => {
+    return dateString.slice(11, 16);
+  };
+
+  // const parseImgData = (dataStringImg) => {
+
+  //   return dataStringImg
+  // }
   return (
     <div className="container">
       {!id ? (
@@ -166,7 +169,7 @@ export default function Chat() {
                   onClick={toggleMenu}
                   className="font-extrabold text-primary py-2 px-1 sm:py-2 sm:px-1 md:py-2 md:px-2 text-xs sm:text-sm md:text-baserounded-full relative"
                 >
-                  <div className="chat_header_status">  {selectedStatus}     ▽</div>
+                  <div className="chat_header_status"> {selectedStatus} ▽</div>
                   {isMenuOpen && (
                     <div className="menu bg-gray-100 absolute right-0 top-full p-2 rounded-md shadow-md">
                       {menuItems.map((item, index) => (
@@ -188,21 +191,27 @@ export default function Chat() {
               </p>
               <div className="message_container" ref={chatContainerRef}>
                 {messages.map((msg, index) => {
-                  console.log('>>', msg)
-                  return  (
+                  console.log('msg', msg);
+                  console.log('msg.receiver:', msg.receiver);
+                  console.log('receiver.userId:', receiver.userId);
+                  console.log('proxy:', msg.photoData);
+                  console.log(
+                    'photo:',
+                    msg.receiver !== receiver.userId ? proxy : null
+                  );
+                  return (
                     // <div key={index} className={msg.sender === sender.userId ? 'me' : 'other'}>{`${msg.sender} ${msg.createdAt}`} === {msg.messageContent}</div>
-                  <MessageBox
-                    key={index}
-                    className={msg.sender === sender.userId ? 'me' : 'other'}
-                    photo={
-                      msg.receiver !== receiver.userId ? proxy || null : null
-                    }
-                    type={msg.messageType}
-                    text={msg.messageContent}
-                    title={`${msg.sender} ${msg.createdAt}`}
-                    notch={false}
-                  ></MessageBox>
-                )})}
+                    <MessageBox
+                      key={index}
+                      className={msg.sender === sender.userId ? 'me' : 'other'}
+                      photo={msg.receiver !== receiver.userId ? proxy : null}
+                      type={msg.messageType}
+                      text={msg.messageContent}
+                      title={`${msg.sender} ${parseDate(msg.createdAt)}`}
+                      notch={false}
+                    ></MessageBox>
+                  );
+                })}
               </div>
               <div className="input_container">
                 <Input

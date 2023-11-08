@@ -4,9 +4,11 @@ import axios from 'axios';
 import useUserStore from '../../store/useUserStore';
 
 const fetchMoreChats = async (cursor) => {
+  const apiUrl = process.env.REACT_APP_URL;
+
   try {
     const response = await axios.get(
-      `http://localhost:8080/proxy/listChatting/chats?cursor=${cursor}` // 404error, 경로 확인해봐야함
+      `${apiUrl}/proxy/listChatting/chats?cursor=${cursor}` // 404error, 경로 확인해봐야함
     );
     return response.data;
   } catch (error) {
