@@ -20,6 +20,7 @@ import Mypage from './components/mypage/Mypage';
 import ChatList from './components/mypage/ChatList';
 import StarRating from './components/rating/StarRating';
 import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
+import Error404 from './static/404';
 
 function App({ id, nickname, photo, userId }) {
   return (
@@ -202,7 +203,7 @@ function App({ id, nickname, photo, userId }) {
           ></Route>
 
           <Route path="/rating/StarRating" element={<StarRating />}></Route>
-
+          <Route path="/*" element={<Error404 />} />
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>
