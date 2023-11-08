@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useUserStore from '../../store/useUserStore';
 
-const fetchMoreChats = (cursor) => {
-  // 이 부분은 실제 API 호출 로직을 대체합니다
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const newChats = [
-        // 새로운 채팅 데이터를 추가
-        // cursor 값에 따라 분기하여 다른 데이터를 반환
-      ];
-      resolve({ data: newChats, nextCursor: cursor + newChats.length });
-    }, 1500);
-  });
+const fetchMoreChats = async (cursor) => {
+  try {
+    // 백엔드 API 호출로 수정합니다. 여기서 cursor는 페이지 번호나 다른 페이징 인자가 될 수 있습니다.
+    const response = await axios.get(
+      `http://localhost:8080/proxy/listChatting/chats?cursor=${cursor}`
+    );
+    return response.data; // 백엔드 응답 구조에 맞게 변경해야 할 수 있습니다.
+  } catch (error) {
+    console.error('Additional chats fetching failed:', error);
+    throw error;
+  }
 };
 
 function ChatList() {
@@ -21,20 +21,23 @@ function ChatList() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
-  const {id} = useUserStore();
+  const { id } = useUserStore();
   const [cursor, setCursor] = useState(0);
 
   useEffect(() => {
     async function loadChatList() {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8080/proxy/listChatting`, { withCredentials: true });
+        const response = await axios.get(
+          `http://localhost:8080/proxy/listChatting`,
+          { withCredentials: true }
+        );
         const chatListData = response.data.list;
         console.log(response.data.list);
         if (Array.isArray(chatListData)) {
           setChats(chatListData);
         } else {
-          const chatList = Object.values(chatListData); 
+          const chatList = Object.values(chatListData);
           setChats(chatList);
         }
       } catch (error) {
