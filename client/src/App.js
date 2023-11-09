@@ -20,7 +20,6 @@ import Mypage from './components/mypage/Mypage';
 import ChatList from './components/mypage/ChatList';
 import StarRating from './components/rating/StarRating';
 import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
-
 function App({ id, nickname, photo, userId }) {
   return (
     <div className="bg-background">
@@ -200,9 +199,7 @@ function App({ id, nickname, photo, userId }) {
               </Template>
             }
           ></Route>
-
           <Route path="/rating/StarRating" element={<StarRating />}></Route>
-
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>
@@ -211,5 +208,4 @@ function App({ id, nickname, photo, userId }) {
     </div>
   );
 }
-
 export default App;

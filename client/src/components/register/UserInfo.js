@@ -74,14 +74,14 @@ function UserInfo() {
     navigate('/register/SigninForm'); // 로그인 페이지로 이동
   };
   return (
-    <div className="min-h-screen flex items-center justify-center background">
-      <div className="p-4 w-1/3 shadow-md background rounded-md">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 background">
+      <div className="p-4 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl shadow-md background rounded-md">
         <h1 className="text-3xl text-center mb-6 text-primary">
           회원가입 수정
         </h1>
         {errorMessage && <p className="text-red-500 mb-4">{errorMessage}</p>}
         <form onSubmit={handleSubmit} className="flex flex-col items-center">
-          <label className="block w-full max-w-sm mb-4">
+          <label className="block w-full mb-4">
             <span className="text-gray-700 block mb-2">ID</span>
             <input
               type="text"
@@ -91,7 +91,7 @@ function UserInfo() {
             />
           </label>
 
-          <label className="block w-full max-w-sm mb-4">
+          <label className="block w-full mb-4">
             <span className="text-gray-700 block mb-2">PassWord</span>
             <input
               type="password"
@@ -119,7 +119,7 @@ function UserInfo() {
             </p>
           </label>
 
-          <label className="block w-full max-w-sm mb-4">
+          <label className="block w-full mb-4">
             <span className="text-gray-700 block mb-2">Nick Name</span>
             <input
               type="text"
@@ -133,10 +133,10 @@ function UserInfo() {
             </p>
           </label>
 
-          <div className="flex flex-col items-center mt-4 w-full max-w-sm">
+          <div className="flex flex-col items-center mt-4 w-full">
             <button
               type="submit"
-              className="p-2 w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              className="p-2 w-full sm:w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
             >
               수정하기
             </button>
@@ -144,8 +144,8 @@ function UserInfo() {
         </form>
       </div>
       {showModal && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center">
-          <div className="p-4 w-1/4 bg-white shadow-lg rounded-md">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="p-4 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl bg-white shadow-lg rounded-md">
             <p className="text-center mb-4">
               수정이 완료되었습니다.
               <br />

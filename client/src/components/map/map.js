@@ -7,8 +7,9 @@ export default function MapComponent({ id }) {
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState([]);
   const [isOpen, setIsOpen] = useState(false); // Control the overlay visibility
-  const [selectedMarker, setSelectedMarker] = useState(null); // Store the selected marker
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const { wmId } = useParams();
+  const apiUrl = process.env.REACT_APP_URL;
 
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
@@ -32,14 +33,10 @@ export default function MapComponent({ id }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/waitMate/mapList`)
+      .get(`${apiUrl}/waitMate/mapList`)
       .then((res) => {
         const data = res.data;
         setUserAddress(data);
-        console.log('waitMate 데이터:', data);
-        data.forEach((data) => {
-          console.log('data.lat', data.lat);
-        });
       })
       .catch((error) => {
         console.error('데이터 가져오기 실패:', error);
@@ -47,75 +44,46 @@ export default function MapComponent({ id }) {
   }, [wmId]);
 
   const stylingOverlay = () => {
-    const style = {
-      fontSize: 'x-large',
-      fontWeight: 'bold',
-    };
-    const info_close = {
-      position: 'absolute',
-      top: '10px',
-      right: '10px',
-      color: '#888',
-      width: '17px',
-      height: '17px',
-      background:
-        'url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png)',
-    };
-    const info_title = {
-      padding: '5px 0 0 20px',
-      height: '30px',
-      background: '#eee',
-      borderBottom: '1px solid #ddd',
-      fontSize: '17px',
-      fontWeight: 'bold',
-    };
-    const info_link = {
-      padding: '10px 0 50px 10px',
-      height: '80px', // Adjust the height as needed
-      background: '#FCFFF6',
-      borderBottom: '1px solid #ddd',
-      fontSize: '17px',
-      fontWeight: 'bold',
-      lineHeight: '80px', // Vertically center the content
-    };
-
-    // Styles object
-    return { style, info_close, info_title , info_link};
+    // 스타일 함수 내용은 그대로 유지
+    // ...
   };
 
-  // Function to open the custom overlay
   const openOverlay = (marker) => {
     setSelectedMarker(marker);
     setIsOpen(true);
   };
 
-  // Function to close the custom overlay
   const closeOverlay = () => {
     setSelectedMarker(null);
     setIsOpen(false);
   };
 
+  // 화면 크기를 변경할 때 높이를 조정
+  const getMapHeight = () => {
+    return window.innerWidth > 768 ? '800px' : '400px';
+  };
+
   return (
     <>
-      <div class="waitMate_letter">
+      <div className="waitMate_letter">
         <span>
-          <img src="./images/waitMate.png" />
+          <img src="./images/waitMate.png" alt="WaitMate" />
         </span>
-        웨이트메이트를 찾아보세요!
+         내 위치 주변의 웨이트메이트를 찾아보세요!
       </div>
-      <div class="waitMate_letter_second">
+      <div className="waitMate_letter_second">
         <span>
-          <img src="./images/proxy.png" />
-          프록시<span class="waitMate_letter">는 자신의 위치입니다!</span>
+          <img src="./images/proxy.png" alt="Proxy" />
+          프록시<span className="waitMate_letter">는 자신의 위치입니다!</span>
         </span>
       </div>
 
-      <div class="container">
+      <div className="container">
         <Map
           className="map"
           level={3}
           center={userLocation || { lat: 0, lng: 0 }}
-          style={{ width: '100%', height: '800px' }}
+          style={{ width: '100%', height: getMapHeight() }}
         >
           {userLocation && (
             <MapMarker
@@ -159,11 +127,11 @@ export default function MapComponent({ id }) {
                       style={stylingOverlay().info_close}
                     ></div>
                   </div>
-                  <div className="body" >
+                  <div className="body">
                     <div className="desc" style={stylingOverlay().info_link}>
                       <div>
                         <a
-                          href={`http://localhost:8080/waitMate/detail?wmId=${selectedMarker.waitMate}`}
+                          href={`${apiUrl}/waitMate/detail?wmId=${selectedMarker.waitMate}`}
                           target="_blank"
                           className="link"
                           rel="noreferrer"

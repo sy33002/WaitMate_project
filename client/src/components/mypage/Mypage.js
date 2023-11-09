@@ -4,64 +4,98 @@ import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
 
 function Mypage() {
-  const {
-    id,
-    userId,
-    nickname,
-    profileImg,
-    setUserInfo,
-    logout,
-    setProfileImage,
-  } = useUserStore();
+  const { userId, nickname, profileImg, setProfileImage, logout } =
+    useUserStore();
 
   const [activeTab, setActiveTab] = useState('');
   const [listItems, setListItems] = useState([]);
   const [error, setError] = useState('');
+  const [selectedEdit, setSelectedEdit] = useState([]);
+  const [selectedItem, setSelectedItem] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
   const navigate = useNavigate();
 
+  const basicButtonClasses =
+    'py-2 px-4 text-white bg-primary border-2 border-primary rounded-lg transition-colors duration-300';
+  const baseButtonClasses =
+    'py-2 px-4 text-primary border-2 border-primary rounded-lg transition-colors duration-300';
+  const responsiveButtonClasses =
+    'w-full sm:w-52 md:w-64 lg:w-72 xl:w-80 my-2 sm:my-0';
+
   useEffect(() => {
-    setUserInfo();
-    fetchItems();
-  }, [activeTab]);
+    const fetchItems = async () => {
+      if (!userId || !activeTab) return;
 
-  const fetchItems = async () => {
-    let url;
-    if (activeTab === 'proxy') {
-      url = 'YOUR_BACKEND_URL_FOR_PROXY';
-    } else if (activeTab === 'waitmate') {
-      url = 'YOUR_BACKEND_URL_FOR_WAITMATE';
-    }
+      let url;
+      let queryParams = { params: { id: userId } };
 
-    if (url) {
+      switch (activeTab) {
+        case 'proxy':
+          url = '/likeWait/list';
+          break;
+        case 'waitmate':
+          url = '/waitMate/myWaitMate';
+          break;
+        default:
+          // 탭에 대한 처리가 없을 때는 기본적으로 return
+          return;
+      }
+
       try {
-        const response = await fetch(url);
-        const data = await response.json();
-        setListItems(data);
+        const response = await axiosInstance.get(url, queryParams);
+        console.log('응답 데이터:', response.data);
+        setListItems(response.data);
         setError('');
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Error fetching data:', error);
         setError('데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.');
       }
+    };
+
+    fetchItems();
+  }, [userId, activeTab]);
+
+  const fetchMyResumeClick = async () => {
+    if (!selectedItem || !selectedItem.id) {
+      setError('프록시를 선택해주세요.');
+      return;
     }
+
+    const proxyId = selectedItem.id;
+
+    try {
+      const response = await axiosInstance.get(`/proxy/getter/${proxyId}`);
+      console.log('Proxy information: ', response.data);
+    } catch (error) {
+      console.error('Error fetching proxy information:', error);
+      setError(
+        '프록시 정보를 가져오는데 실패했습니다. 나중에 다시 시도해주세요.'
+      );
+    }
+  };
+
+  const handleMyLikedWaitMatesClick = async () => {
+    setActiveTab('proxy');
+  };
+
+  const handleMyPickedWaitMatesClick = async () => {
+    setActiveTab('waitmate');
   };
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
+    if (!file) return;
+
     const formData = new FormData();
     formData.append('file', file);
 
     try {
-      const response = await axiosInstance.post(
-        '/user/uploadProfileImage',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await axiosInstance.post('/user/profileImg', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       const newImageUrl = response.data.imageUrl;
       setProfileImage(newImageUrl);
@@ -70,68 +104,133 @@ function Mypage() {
     }
   };
 
+  const handleMyResumeClick = () => {
+    setSelectedEdit('proxy');
+  };
+
+  const handleMyWaitMateClick = () => {
+    setSelectedEdit('waitmate');
+  };
+
   const toggleEditButton = () => {
     setShowEditButton((prev) => !prev);
   };
 
+  const handleSelectItem = (item) => {
+    setSelectedItem(item);
+  };
+
   const handleEditResume = () => {
-    // 이력서 수정 페이지로 이동하는 로직을 추가
-    // 예시: navigate('/edit-resume');
+    console.log(selectedItem);
+    if (selectedItem) {
+      const proxyId = selectedItem.id; // proxyId를 얻어옴
+      navigate(`/proxy/update/${proxyId}`);
+    }
+  };
+
+  const handleEditWaitmate = () => {
+    console.log(selectedItem);
+    if (selectedItem) {
+      const wmId = selectedItem.id; // wmId를 얻어옴
+      navigate(`/waitMate/update/${wmId}`);
+    }
   };
 
   const renderButtons = () => {
     if (activeTab === 'proxy') {
       return (
-        <div className="flex flex-col space-y-2 mb-4">
+        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
           <div className="flex space-x-2">
             <button
-              onClick={toggleEditButton}
-              className="background text-primary w-52 py-2 rounded-lg border-2 border-primary"
+              onClick={handleMyResumeClick}
+              className={`${baseButtonClasses} ${responsiveButtonClasses}`}
             >
               나의 이력서
             </button>
-            {/* 다른 버튼들 */}
-          </div>
-          {showEditButton && (
             <button
-              onClick={handleEditResume}
-              className="background text-primary w-52 py-2 rounded-lg border-2 border-primary mt-2"
+              className={`${baseButtonClasses} ${responsiveButtonClasses}`}
             >
-              수정하기
+              내가 찜한 웨메 리스트
             </button>
-          )}
+            <button
+              className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+            >
+              내가 픽한 웨메 리스트
+            </button>
+          </div>
+          <div>
+            {selectedEdit === 'proxy' && (
+              <button
+                onClick={handleEditResume}
+                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+              >
+                수정하기
+              </button>
+            )}
+          </div>
         </div>
       );
     }
     if (activeTab === 'waitmate') {
       return (
         <div className="flex space-x-2 mb-4">
-          {/* 대기자 목록과 프록시 목록을 위한 버튼들 */}
+          <button
+            onClick={handleMyWaitMateClick}
+            className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+          >
+            내가 등록한 웨메 리스트
+          </button>
+          <button className={`${baseButtonClasses} ${responsiveButtonClasses}`}>
+            내가 픽한 프록시 리스트
+          </button>
+          <div>
+            {selectedEdit === 'waitmate' && (
+              <button
+                onClick={handleEditWaitmate}
+                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+              >
+                수정하기
+              </button>
+            )}
+          </div>
         </div>
       );
     }
-    return null; // 활성 탭이 없을 때는 버튼을 렌더링하지 않음
+    return null;
   };
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
 
   const handleModalConfirm = () => {
     setShowModal(false);
     navigate('/register/UserInfo');
   };
 
+  const renderListItems = () => {
+    return listItems.map((item, index) => (
+      <div key={index} className="p-2" onClick={() => handleSelectItem(item)}>
+        <h4>{item.name}</h4>
+        <p>{item.description}</p>
+      </div>
+    ));
+  };
+
   return (
     <div className="background min-h-screen">
-      <h1 className="ml-10 mt-10 text-6xl text-primary font-semibold mb-2 text-left">
+      <h1 className="ml-10 mt-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-semibold mb-2">
         My Page
       </h1>
 
-      <div className="mt-10 flex items-start mb-6">
-        <div className="ml-10 mr-4 flex flex-col items-center">
-          <div className="border w-52 h-60 border-primary rounded-lg flex flex-col items-center">
+      <div className="mt-10 flex flex-col md:flex-row items-start mb-6">
+        <div className="ml-10 mr-4 flex flex-col items-center mb-6 md:mb-0">
+          <div className="border w-full md:w-52 lg:w-60 border-primary rounded-lg p-4 flex flex-col items-center">
             <img
               src={profileImg}
               alt="Profile"
@@ -171,26 +270,28 @@ function Mypage() {
             </div>
           </div>
         </div>
-        <div>
-          <div className="space-x-4">
+        <div className="flex-grow">
+          <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-4">
             <button
               onClick={() => setActiveTab('proxy')}
-              className="w-80 bg-primary text-white py-2 px-4 rounded-lg"
+              className={`${basicButtonClasses} ${responsiveButtonClasses}`}
             >
               My Proxy
             </button>
             <button
               onClick={() => setActiveTab('waitmate')}
-              className="w-80 bg-primary text-white py-2 px-4 rounded-lg"
+              className={`${basicButtonClasses} ${responsiveButtonClasses}`}
             >
               My WaitMate
             </button>
           </div>
           <div className="mt-4">{renderButtons()}</div>
-          <div className="bg-white rounded-lg h-96 mt-4  border-2 border-primary">
-            {listItems.map((item, index) => (
-              <div key={index}>{item}</div>
-            ))}
+          <div className="bg-white rounded-lg mt-4 p-4 h-80 border-2 border-primary overflow-auto">
+            {listItems.length === 0 ? (
+              <p>데이터가 없습니다.</p>
+            ) : (
+              renderListItems()
+            )}
           </div>
         </div>
       </div>

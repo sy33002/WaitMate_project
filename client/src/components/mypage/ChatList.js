@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import useUserStore from '../../store/useUserStore';
 
-const fetchMoreChats = (cursor) => {
-  // 이 부분은 실제 API 호출 로직을 대체합니다
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const newChats = [
-        // 새로운 채팅 데이터를 추가
-        // cursor 값에 따라 분기하여 다른 데이터를 반환
-      ];
-      resolve({ data: newChats, nextCursor: cursor + newChats.length });
-    }, 1500);
-  });
+const fetchMoreChats = async (cursor) => {
+  const apiUrl = process.env.REACT_APP_URL;
+
+  try {
+    const response = await axios.get(
+      `${apiUrl}/proxy/listChatting/chats?cursor=${cursor}` // 404error, 경로 확인해봐야함
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Additional chats fetching failed:', error);
+    throw error;
+  }
 };
 
 function ChatList() {
@@ -21,23 +22,24 @@ function ChatList() {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
-  const {id} = useUserStore();
+  const { id } = useUserStore();
   const [cursor, setCursor] = useState(0);
+  const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
     async function loadChatList() {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8080/proxy/listChatting`, { withCredentials: true });
+        const response = await axios.get(`${apiUrl}/proxy/listChatting`, {
+          withCredentials: true,
+        });
         const chatListData = response.data.list;
-        console.log(chatListData);
+        console.log('chatListData', chatListData); // undefined 상태...
         if (Array.isArray(chatListData)) {
           setChats(chatListData);
-          
         } else {
-          const chatList = Object.values(chatListData); 
+          const chatList = Object.values(chatListData);
           setChats(chatList);
-         
         }
       } catch (error) {
         console.error('채팅 목록을 불러오는 중 문제가 발생했습니다:', error);
@@ -93,7 +95,7 @@ function ChatList() {
   }
 
   return (
-    <div className="ml-40 mr-40 mt-10 mb-10 background">
+    <div className="ml-20 mr-20 mt-10 mb-10 background">
       <div className="flex justify-center mb-5">
         <h1 className="text-primary text-3xl">My Chat List</h1>
       </div>
@@ -106,7 +108,10 @@ function ChatList() {
             </div>
           ) : (
             chats.map((chat) => (
-              <Link to={`/proxy/detail/chat/${chat.roomNumber}`} key={chat.roomNumber}>
+              <Link
+                to={`/proxy/detail/chat/${chat.roomNumber}`}
+                key={chat.roomNumber}
+              >
                 <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
                   <img
                     src={chat.profilePic || '/images/someone.png'}
