@@ -4,7 +4,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 
-const StarRating = ({ nickname, transactionCompleted }) => {
+const StarRating = ({ nickname, transactionCompleted, id }) => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [showRatingModal, setShowRatingModal] = useState(false);
@@ -16,6 +16,32 @@ const StarRating = ({ nickname, transactionCompleted }) => {
     }
   }, [transactionCompleted]);
 
+  // 평점을 백엔드로 보내는 함수
+  const sendRatingToServer = async (rating) => {
+    try {
+      const response = await fetch('/review', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ score: rating, id: id }), // 평점을 JSON 형태로 변환
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Rating submitted:', data);
+        // 추가적인 성공 처리 로직
+      } else {
+        // 서버에서 오류 응답을 받은 경우 처리 로직
+        throw new Error('Failed to submit rating');
+      }
+    } catch (error) {
+      console.error('Error submitting rating:', error);
+      // 오류 처리 로직
+    }
+  };
+
+  // handleRating 함수 내에서 평점을 백엔드로 보내는 로직 추가
   const handleRating = (rate) => {
     setRating(rate);
     MySwal.fire({
@@ -24,6 +50,7 @@ const StarRating = ({ nickname, transactionCompleted }) => {
       icon: 'success',
     }).then(() => {
       setShowRatingModal(false); // 평점이 매겨지면 모달을 닫는다.
+      sendRatingToServer(rate); // 평점을 백엔드로 전송
     });
   };
 

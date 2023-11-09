@@ -13,12 +13,11 @@ function Mypage() {
     setUserInfo,
     logout,
   } = useUserStore();
-
   const [activeTab, setActiveTab] = useState('');
   const [listItems, setListItems] = useState([]);
   const [error, setError] = useState('');
   const [selectedEdit, setSelectedEdit] = useState([]);
-  const [selectedItem, setSelectedItem] = useState([]);
+  const [selectedItem, setSelectedItem] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
   const navigate = useNavigate();
@@ -147,10 +146,12 @@ function Mypage() {
     setSelectedItem(item);
   };
 
-  const handleEditResume = () => {
+  const handleEditResume = (item) => {
+    console.log(item);
     console.log(selectedItem);
     if (selectedItem) {
       const proxyId = selectedItem.id; // proxyId를 얻어옴
+      console.log(proxyId);
       navigate(`/proxy/update/${proxyId}`);
     }
   };
@@ -186,16 +187,6 @@ function Mypage() {
             >
               내가 픽한 웨메 리스트
             </button>
-          </div>
-          <div>
-            {showEditButton && (
-              <button
-                onClick={handleEditResume}
-                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
-              >
-                수정하기
-              </button>
-            )}
           </div>
         </div>
       );
