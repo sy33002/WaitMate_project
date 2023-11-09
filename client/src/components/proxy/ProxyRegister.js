@@ -7,7 +7,7 @@ import {  useNavigate } from 'react-router-dom';
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState,setValue } = useForm();
-  const [imageFile, setImageFile] = useState('/images/proxy.png');
+  const [imageFile, setImageFile] = useState('/waitmate/images/proxy.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);

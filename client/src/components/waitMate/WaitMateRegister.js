@@ -5,7 +5,7 @@ import {  useNavigate } from 'react-router-dom';
 
 export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const { control, handleSubmit, setValue, formState } = useForm();
-  const [imageFile, setImageFile] = useState('/images/waitMate.png');
+  const [imageFile, setImageFile] = useState('/waitmate/images/waitMate.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
