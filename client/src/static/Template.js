@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from './SideBar.js';
 import Header from './Header.js';
 import MobileSidebar from './MoblieSideBar';
+import Footer from './Footer.js';
 
 export default function Template({ children }) {
   const isMobile = window.innerWidth < 700;
@@ -17,6 +18,7 @@ export default function Template({ children }) {
             </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

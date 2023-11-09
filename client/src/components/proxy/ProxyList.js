@@ -58,33 +58,32 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
 
   return (
     <div className="h-2/3 p-4 mt-4 flex flex-col item-center justify-center text-center w-full">
-      <div className="flex justify-between items-center space-x-4 text-center">
-        <div>
         <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-green font-Line`}>
           근처에 있는 <span className="text-primary">프록시</span>를
           찾아보세요!</p>
-          <select
-            value={selectedOption}
-            onChange={handleOption}
-            className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}
-          >
-            <option value="latest">최근 목록순</option>
-            <option value="star">평점순</option>
-          </select>
+          <div className='flex justify-between items-center space-x-4 text-center'>
+        <div className={`${isSmallScreen? 'justify-between' : ''} flex w-full justify-between`}>
+            <select value={selectedOption} onChange={handleOption} 
+            className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
+              <option value="latest">최근 목록순</option>
+              <option value="star">평점순</option>
+            </select>
+            <div className='flex items-center w-64'>
+            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
+            <Select
+              className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-2/3'} text-primary font-Line text-sm'}`}
+              options={cities}
+              onChange={(selectedOption) => {
+                if (selectedOption) {
+                  setAddress(selectedOption.value);
+                } else {
+                  setAddress(null);
+                }
+              }}
+            />
+            </div>
+            <div className={`${isSmallScreen ? 'w-0' : 'w-20'}`}></div>
         </div>
-        <Select
-          className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-1/3'} text-primary z-20 font-Line text-sm'}`}
-          options={cities}
-          onChange={(selectedOption) => {
-            if (selectedOption) {
-              setAddress(selectedOption.value);
-            } else {
-              setAddress(null);
-            }
-          }}
-        />
-        <div></div>
-        <div></div>
       </div>
       <div className="w-full h-full  p-2">
         {currentItems.map((item) => {

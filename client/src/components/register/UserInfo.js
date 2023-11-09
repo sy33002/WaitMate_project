@@ -7,7 +7,7 @@ function UserInfo() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const { id, nickname, setUserInfo } = useUserStore();
+  const { userId, nickname, setUserInfo } = useUserStore();
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -85,7 +85,7 @@ function UserInfo() {
             <span className="text-gray-700 block mb-2">ID</span>
             <input
               type="text"
-              value={id}
+              value={userId}
               readOnly // 아이디 입력 필드를 수정 불가능하게 만듭니다.
               className="p-2 w-full border rounded-md shadow-inner shadow-gray-300"
             />
