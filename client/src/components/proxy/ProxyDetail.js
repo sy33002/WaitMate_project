@@ -4,6 +4,7 @@ import { socket } from '../../socket';
 import useUserStore from '../../store/useUserStore';
 import ChatListModal from '../Chat/chatListModal';
 
+
 export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
@@ -106,7 +107,7 @@ export default function ProxyDetail() {
               ></img>
             </div>
             <img
-              src={'/images/me.jpg'}
+              src={proxy.photo}
               alt="Proxy Photo"
               className={`${
                 isSmallScreen ? 'w-4/5 h-1/3 mt-4 mb-2' : 'w-4/5 h-1/3'
