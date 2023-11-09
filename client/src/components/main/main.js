@@ -49,13 +49,13 @@ export default function Main() {
     <>
       <div class="container_main">
         <div class="first_column">
-          <img class="background_img" src="/waitmate/images/main/Rectangle_layer.png" />
+          <img class="background_img" src="https://sesac-projects.site/waitmate/images/main/Rectangle_layer.png" />
           <img
             class="waitMate"
             data-aos="zoom-out-up"
             data-aos-delay="100"
             data-aos-anchor-placement="top-bottom"
-            src="/waitmate/images/main/WAITMATE.png"
+            src="https://sesac-projects.site/waitmate/images/main/WAITMATE.png"
           />
           <br />
           <img
@@ -63,13 +63,13 @@ export default function Main() {
             data-aos="fade-up"
             data-aos-delay="200"
             data-aos-anchor-placement="top-bottom"
-            src="/waitmate/images/main/WaitMate_letter.png"
+            src="https://sesac-projects.site/waitmate/images/main/WaitMate_letter.png"
           />
           <br />
           <img
             class="waitMateProxy"
             data-aos="zoom-in-up"
-            src="/waitmate/images/main/Group_1.png"
+            src="https://sesac-projects.site/waitmate/images/main/Group_1.png"
           />
           <div class="button">
             <button
@@ -91,7 +91,7 @@ export default function Main() {
             class="character_character"
             data-aos="fade-right"
             data-aos-delay="200"
-            src="/waitmate/images/main/Character.png"
+            src="https://sesac-projects.site/waitmate/images/main/Character.png"
           />
         </div>
         <div class="character_column">
@@ -99,13 +99,13 @@ export default function Main() {
             class="character_character_Group_7"
             data-aos="flip-left"
             data-aos-delay="200"
-            src="/waitmate/images/main/Group 7.png"
+            src="https://sesac-projects.site/waitmate/images/main/Group 7.png"
           />
           <img
             class="character_character_Group_2"
             data-aos="flip-left"
             data-aos-delay="200"
-            src="/waitmate/images/main/Group_2.png"
+            src="https://sesac-projects.site/waitmate/images/main/Group_2.png"
           />
 
           {/* <img class="character_background" src="./images/main/Group 8.png" /> */}
@@ -117,7 +117,7 @@ export default function Main() {
             class="strength_Waitmate_3"
             data-aos="fade-up"
             data-aos-delay="300"
-            src="/waitmate/images/main/Waitmate_3.png"
+            src="https://sesac-projects.site/waitmate/images/main/Waitmate_3.png"
           />
         </div>
         <br />
@@ -127,13 +127,13 @@ export default function Main() {
             class="chatting_Group_3"
             data-aos="flip-left"
             data-aos-delay="100"
-            src="/waitmate/images/main/Group_3.png"
+            src="https://sesac-projects.site/waitmate/images/main/Group_3.png"
           />
           <img
             class="chatting_Group_4"
             data-aos="flip-left"
             data-aos-delay="100"
-            src="/waitmate/images/main/Group_4.png"
+            src="https://sesac-projects.site/waitmate/images/main/Group_4.png"
           />
         </div>
         {/* <Footer /> */}
