@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { socket } from '../../socket';
 import useUserStore from '../../store/useUserStore';
-import ChatListModal from '../Chat/ChatListModal';
+import ChatListModal from '../Chat/chatListModal';
 
 
 export default function ProxyDetail() {
