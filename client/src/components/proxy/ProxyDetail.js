@@ -4,7 +4,6 @@ import { socket } from '../../socket';
 import useUserStore from '../../store/useUserStore';
 import ChatListModal from '../Chat/chatListModal';
 
-
 export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
