@@ -102,11 +102,11 @@ export default function ProxyDetail() {
             <div className="w-full p-3 flex justify-center">
               <img
                 className={`${isSmallScreen ? 'w-3/5 h-2/5' : 'w-full'}`}
-                src="/images/whiteWaitMate.png"
+                src="/waitmate/images/whiteWaitMate.png"
               ></img>
             </div>
             <img
-              src={'/images/me.jpg'}
+              src={proxy.photo}
               alt="Proxy Photo"
               className={`${
                 isSmallScreen ? 'w-4/5 h-1/3 mt-4 mb-2' : 'w-4/5 h-1/3'
