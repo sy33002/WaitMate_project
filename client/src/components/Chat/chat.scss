@@ -148,3 +148,25 @@ textarea {
   font-size: x-large;
   padding: 10px;
 }
+
+.input_container {
+  position: relative;
+  
+  .input_item {
+    // Your existing styles...
+
+    leftButtons {
+      .paymentButton {
+        color: #4CAF50;
+        background-color: transparent;
+        border: 1px solid #4CAF50;
+        padding: 8px; // Adjust padding as needed
+
+        &:hover {
+          background-color: #2f2772;
+          border: 1px solid #2f2772;
+        }
+      }
+    }
+  }
+}

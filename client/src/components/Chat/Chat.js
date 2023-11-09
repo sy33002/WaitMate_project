@@ -11,6 +11,9 @@ export default function Chat() {
   const [sender, setSender] = useState('');
   const [receiver, setReceiver] = useState('');
   const [proxy, setProxy] = useState('');
+  const [wm, setWm] = useState('');
+  const [userPayId, setUserPayId] = useState('');
+  const [proxyPayId, setProxyPayId] = useState('');
   const [error, setError] = useState(null);
   const { id } = useUserStore();
   const Navigate = useNavigate();
@@ -95,15 +98,21 @@ export default function Chat() {
           } else {
             if (data.sender.id === id) {
               setSender(data.sender);
+              setUserPayId(data.sender.id);
               setReceiver(data.receiver);
               setProxy(data.proxyData.photo);
+              setProxyPayId(data.proxyData.proxyId);
               setLoading(false);
+              setWm(data.wmData);
+              console.log('wm', data.wmData);
               console.log('sender안녕' + data.proxyData.photo);
             } else if (data.receiver.id === id) {
               setSender(data.receiver);
-              setProxy(data.proxyData.photo);
+              setProxy(data.proxyData);
+              setWm(data.wmData);
               setReceiver(data.sender);
               setLoading(false);
+              console.log('wm', data.wmData);
               console.log('receiver안녕' + data.proxyData.photo);
             }
           }
@@ -203,6 +212,30 @@ useEffect(()=>{
 
   //   return dataStringImg
   // }
+
+  //결제 기능
+  const PaymentsList = () => {
+    console.log('페이먼츠', wm.id, proxyPayId);
+    if (wm && proxy) {
+      axios({
+        url: `${process.env.REACT_APP_URL}/payment/kakao`,
+        method: 'post',
+        data: {
+          wmId: wm.wmId,
+          id: proxyPayId,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      console.error('wm나 proxy가 없습니다.');
+    }
+  };
+ 
   return (
     <div className="container">
       {!id ? (
@@ -246,14 +279,14 @@ useEffect(()=>{
                   console.log('proxy:', msg.photoData);
                   console.log(
                     'photo:',
-                    msg.receiver !== receiver.userId ? proxy : null
+                    msg.receiver !== receiver.userId ? proxy.photo : null
                   );
                   return (
                     // <div key={index} className={msg.sender === sender.userId ? 'me' : 'other'}>{`${msg.sender} ${msg.createdAt}`} === {msg.messageContent}</div>
                     <MessageBox
                       key={index}
                       className={msg.sender === sender.userId ? 'me' : 'other'}
-                      avatar={msg.receiver !== receiver.userId ? proxy : null}
+                      avatar={msg.receiver !== receiver.userId ? proxy.photo : null}
                       type={msg.messageType}
                       text={msg.messageContent}
                       title={`${msg.sender} ${parseDate(msg.createdAt)}`}
@@ -274,6 +307,17 @@ useEffect(()=>{
                       sendMessage();
                     }
                   }}
+                  leftButtons={
+                      id === userPayId && (
+                        <Button
+                          key="paymentButton"
+                          color="#4CAF50"
+                          backgroundColor="transparent"
+                          text="결제하기"
+                          onClick={PaymentsList}
+                        />
+                      )
+                  }
                   rightButtons={
                     <Button
                       className="input_send_btn"

@@ -12,8 +12,8 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
   const [locationInfo, setLocationInfo] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_URL;
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];

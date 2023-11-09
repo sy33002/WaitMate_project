@@ -25,7 +25,6 @@ const cities = [
     { label: '서울 송파구', value: '서울 송파구' },
     { label: '서울 강동구', value: '서울 강동구' },
     { label: '경기 수원시', value: '경기 수원시' },
-    { label: '경기 수원시', value: '경기 수원시' },
     { label: '경기 성남시', value: '경기 성남시' },
     { label: '경기 고양시', value: '경기 고양시' },
     { label: '경기 용인시', value: '경기 용인시' },
