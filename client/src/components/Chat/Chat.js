@@ -27,11 +27,12 @@ export default function Chat() {
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
-useEffect(() => {
-  if (chatContainerRef.current) {
-    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
-  }
-}, []);
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, []);
   // Data loading
   useEffect(() => {
     const fetchData = async () => {
@@ -44,8 +45,6 @@ useEffect(() => {
         setMessages(response.data.list);
         console.log(response.data.list);
         socket.emit('getRoomInfo', roomNumber);
-
-      
       } catch (err) {
         console.error(err);
       }
@@ -174,7 +173,7 @@ useEffect(() => {
           {loading ? (
             <div>로딩 중...</div>
           ) : (
-            <div className='initial-chat-container'>
+            <div className="initial-chat-container">
               <p class="chat_header">
                 <button
                   onClick={toggleMenu}
