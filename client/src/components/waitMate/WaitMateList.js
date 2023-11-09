@@ -2,23 +2,26 @@ import React, { useState, useEffect } from 'react';
 import WaitMateBox from './WaitMateBox';
 import { Link } from 'react-router-dom';
 import Select from "react-select";
+import { useCookies } from "react-cookie";
 
 export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState('');
+  const [cookies, setCookie] = useCookies(['address']);
+  const initialAddress = cookies.address || '';
+  const [address, setAddress] = useState(initialAddress);
+  console.log(cookies.address);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const isSmallScreen = window.innerWidth < 700;
   const apiUrl = process.env.REACT_APP_URL;
-  console.log(apiUrl);
+  const itemsPerPage = 4;
+
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
   
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,6 +32,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         if (response.ok) {
           const {waitMates} = await response.json();
           setItems(waitMates);
+          console.log('waitMates >>', waitMates);
         } else {
           console.log('데이터 가져오기 실패!');
         }
@@ -73,13 +77,16 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
               <option value='count'>조회순</option>
             </select>
             <div className='flex items-center w-64'>
-            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
+            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>{address}</span>
             <Select
+              value='서울 관악구'
               className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-2/3'} text-primary font-Line text-sm'}`}
               options={cities}
               onChange={(selectedOption) => {
                 if (selectedOption) {
                   setAddress(selectedOption.value);
+                  setCookie('address', address, 
+                  { path: '/', maxAge: 10, secure: false });
                 } else {
                   setAddress(null);
                 }

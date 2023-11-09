@@ -22,7 +22,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
       setRecentHiresCount(data.recentHiresCount);
       setWaitMateApplyCount(data.waitMateApplyCount);
       setIsLikeWait(data.isLikeWait);
-      setChangeDate(data.waitMate.waitTime.split("T")[0]);
+      setChangeDate(data.waitMate.waitTime.split(" ")[0]);
       console.log(data.isLikeWait);
     })
     .catch(error => {
@@ -61,7 +61,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
       <p className='text-base text-primary font-Line'>Wait Mate가 Proxy를 찾고 있는 조건이에요!</p>
       <div className='flex flex-col w-full bg-primary h-full p-2 rounded-lg justify-center items-center align-middle mb-5'>
         <div className='w-full h-2/5 flex justify-center p-3'>
-          <img src={waitMate.photo} alt='store' className='rounded-lg w-2/3 h-full shadow-lg bg-background'></img>
+          <img src={`${apiUrl}${waitMate.photo}`} alt='store' className='rounded-lg w-2/3 h-full shadow-lg bg-background'></img>
         </div>
         <div className='h-3/4 p-2 w-full mt-4 text-lg'>
           <p className='font-Line text-red-300 p-1 ml-4'>Title : 
@@ -81,13 +81,13 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
         <div className='w-full flex p-4 bg-primary_dark font-Line'>
           <div className='w-1/2 p-1'>
           <span className='text-primary_light'>최근 채용 횟수:
-          <span className='text-gray-300'>{recentHiresCount}</span></span><br />
+          <span className='text-gray-300 pl-2'>{recentHiresCount}</span></span><br />
           <span className='text-primary_light'>게시물 조회수:
-          <span className='text-gray-300'>{waitMate.count}</span></span>
+          <span className='text-gray-300 pl-2'>{waitMate.count}</span></span>
           </div>
           <div className='w-1/2 p-1'>
           <span className='text-primary_light'>지원자:
-          <span className='text-gray-300'>{waitMateApplyCount}</span></span><br />
+          <span className='text-gray-300 pl-2'>{waitMateApplyCount}</span></span><br />
           </div>
         </div>
         <div className={`${isLikeWait ? 'bg-green' : 'bg-primary_dark' } flex flex-col w-full justify-items-centerrounded-b-lg`}>
