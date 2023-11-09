@@ -82,14 +82,14 @@ export default function ProxyRegister() {
             대신 웨이팅 할 사람을 지칭하는 말입니다! </p>
             <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
             저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
-          <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} justify-center items-center`}>
-            <div className={`flex flex-col ${isSmallScreen ? 'w-full' : 'w-1/3'}`}>
+          <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} justify-center w-full h-full items-center`}>
+            <div className={`flex flex-col ${isSmallScreen ? 'w-full' : 'w-1/2'} items-center`}>
               <div className='w-full h-full bg-background p-2 rounded-lg'>
                   {imageFile && <img src={imageFile} alt="Preview" 
-                  className="w-full h-full" />}
+                  className="w-full h-48" />}
               </div>
               <label className="text-sm text-background m-1 relative cursor-pointer">
-              <span className="bg-primary text-white px-3 py-1 rounded-md font-Line ">Upload your Image</span>
+              <span className="bg-primary text-white px-3 py-1 rounded-md font-Line ">Upload Image</span>
               <input
                 type="file"
                 name="photo"
@@ -152,7 +152,7 @@ export default function ProxyRegister() {
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
-                      <select {...field} className='w-1/2 rounded-lg'>
+                      <select {...field} className='w-full rounded-lg'>
                         <option value="">Select Gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -170,7 +170,7 @@ export default function ProxyRegister() {
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <select {...field} className='w-1/2 rounded-lg'>
+                    <select {...field} className='w-full rounded-lg'>
                       <option value=""> Select Age</option>
                       <option value="10">10대</option>
                       <option value="20">20대</option>
