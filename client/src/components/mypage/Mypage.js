@@ -21,7 +21,7 @@ function Mypage() {
   const baseButtonClasses =
     'py-2 px-4 text-primary border-2 border-primary rounded-lg transition-colors duration-300';
   const responsiveButtonClasses =
-    'w-full sm:w-auto md:w-1/2 lg:w-1/2   xl:w-1/2 my-2 sm:my-0';
+    'w-full sm:w-auto md:w-1/2 lg:w-1/3 xl:w-1/4 my-2 sm:my-0';
 
   const responsiveProfileClasses = 'w-full md:w-52 lg:w-60';
   const responsiveImageClasses =
@@ -38,14 +38,22 @@ function Mypage() {
       let queryParams = { params: { id: userId } };
 
       switch (activeTab) {
+        case 'resume':
+          url = '/proxy/getter';
+          break;
         case 'proxy':
           url = '/likeWait/list';
           break;
         case 'waitmate':
           url = '/waitMate/myWaitMate';
           break;
+        case 'pickedWaitmate':
+          url = '/wwmReservation/wmlist';
+          break;
+        case 'pickedProxy':
+          url = '/wmReservation/proxyList';
+          break;
         default:
-          // 탭에 대한 처리가 없을 때는 기본적으로 return
           return;
       }
 
@@ -146,8 +154,8 @@ function Mypage() {
   const renderButtons = () => {
     if (activeTab === 'proxy') {
       return (
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-          <div className="flex space-x-2">
+        <div className="w-[600px] flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
+          <div className="flex space-x-2 w-[600px]">
             <button
               onClick={handleMyResumeClick}
               className={`${baseButtonClasses} ${responsiveButtonClasses}`}
@@ -165,16 +173,6 @@ function Mypage() {
               내가 픽한 웨메 리스트
             </button>
           </div>
-          <div>
-            {selectedEdit === 'proxy' && (
-              <button
-                onClick={handleEditResume}
-                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
-              >
-                수정하기
-              </button>
-            )}
-          </div>
         </div>
       );
     }
@@ -190,16 +188,6 @@ function Mypage() {
           <button className={`${baseButtonClasses} ${responsiveButtonClasses}`}>
             내가 픽한 프록시 리스트
           </button>
-          <div>
-            {selectedEdit === 'waitmate' && (
-              <button
-                onClick={handleEditWaitmate}
-                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
-              >
-                수정하기
-              </button>
-            )}
-          </div>
         </div>
       );
     }
@@ -315,6 +303,26 @@ function Mypage() {
                   <p>{item.description}</p>
                 </div>
               ))
+            )}
+          </div>
+          <div className="mt-2">
+            {selectedEdit === 'proxy' && (
+              <button
+                onClick={handleEditResume}
+                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+              >
+                나의 이력서 수정하기
+              </button>
+            )}
+          </div>
+          <div className="mt-2">
+            {selectedEdit === 'waitmate' && (
+              <button
+                onClick={handleEditWaitmate}
+                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+              >
+                나의 웨메 수정하기
+              </button>
             )}
           </div>
         </div>
