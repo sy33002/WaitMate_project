@@ -4,8 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
 
 function Mypage() {
-  const { userId, nickname, profileImg, setProfileImage, logout } =
-    useUserStore();
+  const {
+    id,
+    userId,
+    nickname,
+    profileImg,
+    setProfileImage,
+    setUserInfo,
+    logout,
+  } = useUserStore();
 
   const [activeTab, setActiveTab] = useState('');
   const [listItems, setListItems] = useState([]);
@@ -15,6 +22,7 @@ function Mypage() {
   const [showModal, setShowModal] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
   const navigate = useNavigate();
+  const [url, setUrl] = useState('');
 
   const basicButtonClasses =
     'py-2 px-4 text-white bg-primary border-2 border-primary rounded-lg transition-colors duration-300';
@@ -32,44 +40,47 @@ function Mypage() {
 
   useEffect(() => {
     const fetchItems = async () => {
-      if (!userId || !activeTab) return;
-
-      let url;
-      let queryParams = { params: { id: userId } };
-
-      switch (activeTab) {
-        case 'resume':
-          url = '/proxy/getter';
-          break;
-        case 'proxy':
-          url = '/likeWait/list';
-          break;
-        case 'waitmate':
-          url = '/waitMate/myWaitMate';
-          break;
-        case 'pickedWaitmate':
-          url = '/wwmReservation/wmlist';
-          break;
-        case 'pickedProxy':
-          url = '/wmReservation/proxyList';
-          break;
-        default:
-          return;
-      }
-
       try {
-        const response = await axiosInstance.get(url, queryParams);
-        console.log('응답 데이터:', response.data);
-        setListItems(response.data);
-        setError('');
+        if (url !== '') {
+          console.log('send request');
+          fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data);
+              setListItems(data);
+            })
+            .catch((error) => {
+              console.error('데이터 가져오는 중 오류 발생!', error);
+            });
+          setError('');
+        }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error:', error);
         setError('데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.');
       }
     };
 
+    setUserInfo();
     fetchItems();
-  }, [userId, activeTab]);
+  }, [url, setUserInfo]);
+
+  const getLikeWMList = () => {
+    // 내가 찜한 웨메리스트
+    setUrl(`${process.env.REACT_APP_URL}/likeWait/list?id=${id}`);
+  };
+  const getPickedWMList = () => {
+    // 내가 픽한 웨메리스트
+    setUrl(`${process.env.REACT_APP_URL}/wmReservation/wmList?id=${id}`);
+  };
+  const getMyWMList = () => {
+    // 내가 등록한 웨메리스트
+    setUrl(`${process.env.REACT_APP_URL}/waitMate/myWaitMate?id=${id}`);
+  };
+  const getPickedProxyList = () => {
+    console.log(id);
+    // 내가 픽한 프록시 리스트
+    setUrl(`${process.env.REACT_APP_URL}/wmReservation/proxyList?id=${id}`);
+  };
 
   const fetchMyResumeClick = async () => {
     if (!selectedItem || !selectedItem.id) {
@@ -163,15 +174,27 @@ function Mypage() {
               나의 이력서
             </button>
             <button
+              onClick={getLikeWMList}
               className={`${baseButtonClasses} ${responsiveButtonClasses}`}
             >
               내가 찜한 웨메 리스트
             </button>
             <button
+              onClick={getPickedWMList}
               className={`${baseButtonClasses} ${responsiveButtonClasses}`}
             >
               내가 픽한 웨메 리스트
             </button>
+          </div>
+          <div>
+            {showEditButton && (
+              <button
+                onClick={handleEditResume}
+                className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+              >
+                수정하기
+              </button>
+            )}
           </div>
         </div>
       );
@@ -180,12 +203,15 @@ function Mypage() {
       return (
         <div className="flex space-x-2 mb-4">
           <button
-            onClick={handleMyWaitMateClick}
+            onClick={getMyWMList}
             className={`${baseButtonClasses} ${responsiveButtonClasses}`}
           >
             내가 등록한 웨메 리스트
           </button>
-          <button className={`${baseButtonClasses} ${responsiveButtonClasses}`}>
+          <button
+            onClick={getPickedProxyList}
+            className={`${baseButtonClasses} ${responsiveButtonClasses}`}
+          >
             내가 픽한 프록시 리스트
           </button>
         </div>
