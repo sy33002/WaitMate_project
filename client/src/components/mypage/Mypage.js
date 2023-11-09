@@ -21,7 +21,14 @@ function Mypage() {
   const baseButtonClasses =
     'py-2 px-4 text-primary border-2 border-primary rounded-lg transition-colors duration-300';
   const responsiveButtonClasses =
-    'w-full sm:w-52 md:w-64 lg:w-72 xl:w-80 my-2 sm:my-0';
+    'w-full sm:w-auto md:w-1/2 lg:w-1/2   xl:w-1/2 my-2 sm:my-0';
+
+  const responsiveProfileClasses = 'w-full md:w-52 lg:w-60';
+  const responsiveImageClasses =
+    'w-44 md:w-52 lg:w-60 h-36 md:h-44 lg:h-52 bg-gray-300 rounded-lg';
+  const responsiveButtonContainer =
+    'flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2';
+  const responsiveListItem = 'p-2';
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -223,55 +230,61 @@ function Mypage() {
   };
 
   return (
-    <div className="background min-h-screen">
+    <div className="background min-h-screen ">
       <h1 className="ml-10 mt-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-semibold mb-2">
         My Page
       </h1>
 
-      <div className="mt-10 flex flex-col md:flex-row items-start mb-6">
-        <div className="ml-10 mr-4 flex flex-col items-center mb-6 md:mb-0">
-          <div className="border w-full md:w-52 lg:w-60 border-primary rounded-lg p-4 flex flex-col items-center">
-            <img
-              src={profileImg}
-              alt="Profile"
-              style={{ maxWidth: '100%', maxHeight: '100%' }}
-              className="w-44 h-36 mt-1 bg-gray-300 rounded-lg flex items-center justify-center text-6xl mb-2"
-            />
-
-            <input
-              type="file"
-              onChange={handleImageUpload}
-              style={{ display: 'none' }}
-              id="profile-upload"
-            />
-            <label
-              htmlFor="profile-upload"
-              className="background text-primary w-44 h-8 py-1 rounded-lg text-center text-sm  border-2 border-primary cursor-pointer"
+      <div className="mx-4 md:mx-10 flex flex-row">
+        <div className="w-60">
+          <div className="flex flex-col md:flex-row items-start mb-6 border-primary">
+            <div
+              className={`ml-10 mr-4 flex flex-col items-center mb-6 md:mb-0 ${responsiveProfileClasses}`}
             >
-              프로필 사진 Edit
-            </label>
-            <div className="flex flex-row w-44 py-2">
-              <div className="pr-2">
-                <button
-                  onClick={handleLogout}
-                  className="text-primary w-16 h-8 text-sm rounded-lg border-2 border-primary"
-                >
-                  Log Out
-                </button>
-              </div>
-              <div className="pl-2">
-                <button
-                  onClick={handleModalConfirm}
-                  className="text-primary text-sm w-24 h-8 rounded-lg border-2 border-primary"
-                >
-                  회원정보 수정
-                </button>
+              <img
+                src={profileImg}
+                alt="Profile"
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                className={`my-1 ${responsiveImageClasses}`}
+              />
+
+              <input
+                type="file"
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}
+                id="profile-upload"
+              />
+              <label
+                htmlFor="profile-upload"
+                className="background text-primary w-44 h-8 py-1 rounded-lg text-center text-sm  border-2 border-primary cursor-pointer"
+              >
+                프로필 사진 Edit
+              </label>
+              <div className="flex flex-row w-44 py-2">
+                <div className="pr-2">
+                  <button
+                    onClick={handleLogout}
+                    className="text-primary w-16 h-8 text-sm rounded-lg border-2 border-primary"
+                  >
+                    Log Out
+                  </button>
+                </div>
+                <div className="pl-2">
+                  <button
+                    onClick={handleModalConfirm}
+                    className="text-primary text-sm w-24 h-8 rounded-lg border-2 border-primary"
+                  >
+                    회원정보 수정
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div className="flex-grow">
-          <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-4">
+          <div
+            className={`${responsiveButtonContainer} justify-center md:justify-start`}
+          >
             <button
               onClick={() => setActiveTab('proxy')}
               className={`${basicButtonClasses} ${responsiveButtonClasses}`}
@@ -285,12 +298,23 @@ function Mypage() {
               My WaitMate
             </button>
           </div>
+
           <div className="mt-4">{renderButtons()}</div>
-          <div className="bg-white rounded-lg mt-4 p-4 h-80 border-2 border-primary overflow-auto">
+
+          <div className="bg-white rounded-lg mt-4 p-4 w-[600px] h-80 border-2 border-primary overflow-auto">
             {listItems.length === 0 ? (
               <p>데이터가 없습니다.</p>
             ) : (
-              renderListItems()
+              listItems.map((item, index) => (
+                <div
+                  key={index}
+                  className={`${responsiveListItem} cursor-pointer`}
+                  onClick={() => handleSelectItem(item)}
+                >
+                  <h4>{item.name}</h4>
+                  <p>{item.description}</p>
+                </div>
+              ))
             )}
           </div>
         </div>
