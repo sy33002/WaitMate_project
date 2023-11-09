@@ -32,6 +32,7 @@ function Mypage() {
     'w-full sm:w-auto md:w-1/2 lg:w-1/3 xl:w-1/4 my-2 sm:my-0';
 
   const responsiveProfileClasses = 'w-full md:w-52 lg:w-60';
+
   const responsiveImageClasses =
     'w-44 md:w-52 lg:w-60 h-36 md:h-44 lg:h-52 bg-gray-300 rounded-lg';
   const responsiveButtonContainer =
