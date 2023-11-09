@@ -85,8 +85,8 @@ export default function MapComponent({ id }) {
             모양의 핀은 "자신의 위치"입니다!</p>
           </span>
           </div>
-            <div className={`${isSmallScreen ? 'text-[9px]' : 'text-[14px]'} text-primary `}>
-            <span>채팅을 통해 프록시와 대화후 웨이팅을 요청해보세요!</span>
+            <div className={`${isSmallScreen ? 'text-[9px]' : 'text-[14px]'} text-gray-600 mb-2`}>
+            <span>채팅을 통해 웨이트메이트와 대화후 웨이팅을 요청해보세요!</span>
             <p>
               프록시는 자신의 위치를 기반으로 주변 웨이트메이트 공고를 찾아볼수
               있습니다!
@@ -105,8 +105,8 @@ export default function MapComponent({ id }) {
               position={userLocation}
               text="Your Location"
               image={{
-                src: './images/proxy.png',
-                size: { width: 92, height: 64 },
+                src: './images/mapProxy.png',
+                size: { width: 92, height: 76 },
               }}
             />
           )}
@@ -118,7 +118,7 @@ export default function MapComponent({ id }) {
                   key={index}
                   position={{ lat: data.lat, lng: data.lng }}
                   image={{
-                    src: './images/waitMate.png',
+                    src: './images/mapWaitMate.png',
                     size: { width: 64, height: 64 },
                   }}
                   onClick={() => openOverlay(data)} // Open the overlay on marker click
