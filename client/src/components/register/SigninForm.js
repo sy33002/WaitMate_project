@@ -4,8 +4,12 @@ import useUserStore from '../../store/useUserStore'; // useUserStore를 import �
 import { axiosInstance } from '../common/axiosInstance';
 
 function SigninForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  // 테스트 계정
+  const testUsername = 'test';
+  const testPassword = '1234';
+
+  const [username, setUsername] = useState(testUsername);
+  const [password, setPassword] = useState(testPassword);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 

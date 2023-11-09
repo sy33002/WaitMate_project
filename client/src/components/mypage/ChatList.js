@@ -30,8 +30,9 @@ function ChatList() {
     async function loadChatList() {
       setLoading(true);
       try {
-        const response = await axios.get(`${apiUrl}/proxy/listChatting`, 
-                                         { withCredentials: true });
+        const response = await axios.get(`${apiUrl}/proxy/listChatting`, {
+          withCredentials: true,
+        });
         const chatListData = response.data.list;
         console.log('chatListData', chatListData); // undefined 상태...
         if (Array.isArray(chatListData)) {
