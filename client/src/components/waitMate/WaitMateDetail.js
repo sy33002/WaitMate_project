@@ -10,23 +10,26 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
   const [waitMateApplyCount, setWaitMateApplyCount] = useState(0);
   const [isLikeWait, setIsLikeWait] = useState(false);
   const [state, setState] = useState(false);
+  const [changeDate, setChangeDate] = useState('');
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
-    fetch(`${apiUrl}/waitMate/detail?wmId=${wmId}&proxyId=3`)
+    fetch(`${apiUrl}/waitMate/detail?wmId=${wmId}&id=${id}`)
     .then(response => response.json())
     .then(data => {
       setWaitMate(data.waitMate);
       setRecentHiresCount(data.recentHiresCount);
       setWaitMateApplyCount(data.waitMateApplyCount);
       setIsLikeWait(data.isLikeWait);
+      setChangeDate(data.waitMate.waitTime.split("T")[0]);
       console.log(data.isLikeWait);
     })
     .catch(error => {
       console.error('데이터 가져오는 중 오류 발생!', error);
     });
   }, []);
+
 
   const handleLikeToggle = async () => {
     try {
@@ -47,7 +50,6 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
           method: 'DELETE',
         });
       }
-      console.log(isLikeWait);
       setIsLikeWait(!isLikeWait); // 찜 상태를 토글
     } catch (error) {
       console.error('찜하기/해제하기 오류:', error);
@@ -55,7 +57,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
   };
 
   return (
-    <div className='w-full h-full flex flex-col items-center mt-6'>
+    <div className='w-full h-4/5 flex flex-col items-center mt-6'>
       <p className='text-base text-primary font-Line'>Wait Mate가 Proxy를 찾고 있는 조건이에요!</p>
       <div className='flex flex-col w-full bg-primary h-full p-2 rounded-lg justify-center items-center align-middle mb-5'>
         <div className='w-full h-2/5 flex justify-center p-3'>
@@ -67,7 +69,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
           <p className='font-Line text-red-300 p-1 ml-4'>Store Address : 
           <span className='break-all text-gray-200 ml-2'>{waitMate.wmAddress} {waitMate.wmDetailAddress}</span></p>
           <p className='font-Line text-red-300 p-1 ml-4'>Date : 
-          <span className='break-all text-gray-200 ml-2'>{waitMate.waitTime}</span></p>
+          <span className='break-all text-gray-200 ml-2'>{changeDate}</span></p>
           <p className='font-Line text-red-300 p-1 ml-4'>Time : 
           <span className='break-all text-gray-200 ml-2'>{waitMate.startTime} ~ {waitMate.endTime}</span></p>
           <p className='font-Line text-red-300 p-1 ml-4'>pay : 

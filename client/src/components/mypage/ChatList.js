@@ -96,13 +96,13 @@ function ChatList() {
   return (
     <div className="ml-20 mr-20 mt-10 mb-10 background">
       <div className="flex justify-center mb-5">
-        <h1 className="text-primary text-3xl">My Chat List</h1>
+        <h1 className="text-primary text-3xl font-gmarket">My Chat List</h1>
       </div>
       <div className="w-full h-96 overflow-y-auto p-5 rounded-lg bg-white border-primary border-2">
         <div className="overflow-y-auto">
           {loading ? (
             <div className="flex justify-center items-center">
-              <div className="loader"></div>
+              <div className="loader font-gmarket"></div>
               채팅 목록을 가져오는 중...
             </div>
           ) : (
@@ -119,10 +119,10 @@ function ChatList() {
                   />
                   <div className="chat-item">
                     <div className="flex flex-row items-center">
-                      <div className="nickname">{chat.nickname}</div>
-                      <div className="time text-xs">{chat.time}</div>
+                      <div className="nickname font-Line">{chat.nickname}</div>
+                      <div className="time text-xs font-Line">{chat.time}</div>
                     </div>
-                    <div className="message">{chat.roomNumber}</div>
+                    <div className="message font-Line">{chat.roomNumber}</div>
                   </div>
                 </div>
               </Link>

@@ -8,8 +8,10 @@ export default function AddressSearchModal({
 }) {
   const apiKey = process.env.REACT_APP_REST_ADDRESS_KAKAO_API_KEY;
 
+  console.log("AddressSearchModal 들어옴!!!");
   const handleAddressChange = (data) => {
     setInputAddressValue(data.address);
+    console.log(data.address);
 
     // 주소 검색 결과로 가져온 위치 정보를 설정
     setLocationInfo({

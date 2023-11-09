@@ -22,14 +22,11 @@ import StarRating from './components/rating/StarRating';
 import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
 import Error404 from './static/404';
 import useUserStore from './store/useUserStore';
+import { useEffect } from 'react';
 
 function App() {
-  // const {id, nickname, photo, userId} = useUserStore();
-  const id = 1;
-  const nickname = 'user';
-  const photo = 'asdf';
-  const userId = 1;
-
+  const { id, nickname, photo, userId, setUserInfo, logout } = useUserStore();
+  
   return (
     <div className="bg-background">
       <BrowserRouter>
@@ -215,7 +212,6 @@ function App() {
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>
-        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );
