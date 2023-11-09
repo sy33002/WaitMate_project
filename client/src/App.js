@@ -28,7 +28,7 @@ function App({ id, nickname, photo, userId }) {
 
   return (
     <div className="bg-background">
-      <BrowserRouter>
+      <BrowserRouter basename='/waitmate'>
         <Routes>
           <Route path="/" element={<Main></Main>} />
           <Route

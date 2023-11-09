@@ -10,7 +10,7 @@ const UserListModal = ({ isOpen, onRequestClose, onUserSelect }) => {
   const loadUserList = () => {
     setIsLoading(true);
     axios
-      .get('http://localhost:8080/proxy/userList', {
+      .get('https://sesac-projects.site/wapi/proxy/userList', {
         params: {
           id,
         },
