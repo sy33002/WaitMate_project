@@ -67,7 +67,7 @@ export default function MapComponent({ id }) {
   return (
     <div className={`${isSmallScreen ? 'p-1' : 'p-4'} font-Line`}>
       <div className=" text-primary  flex w-full h-20 items-center">
-        <img src="./images/waitMate.png" alt="WaitMate" className='w-20'/>
+        <img src="https://sesac-projects.site/waitmate/images/waitMate.png" alt="WaitMate" className='w-20'/>
         <div>
         <p className={`${isSmallScreen ? 'text-[11px]' : 'text-[18px]'} flex`}>
         👈 내 위치 주변의 <p className='text-green'> 웨이트메이트 </p>를 찾아보세요!
@@ -79,7 +79,7 @@ export default function MapComponent({ id }) {
       </div>
       <div className=" text-primary  flex w-full h-16 items-center mb-3">
         <span className='flex w-full h-20 items-center'>
-          <img src="./images/proxy.png" alt="Proxy" className='w-40 p-4'/>
+          <img src="https://sesac-projects.site/waitmate/images/proxy.png" alt="Proxy" className='w-40 p-4'/>
           <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[18px]'}`}>
           👈 프록시
             모양의 핀은 "자신의 위치"입니다!</p>
@@ -105,7 +105,7 @@ export default function MapComponent({ id }) {
               position={userLocation}
               text="Your Location"
               image={{
-                src: './images/mapProxy.png',
+                src: 'https://sesac-projects.site/waitmate/images/mapProxy.png',
                 size: { width: 92, height: 76 },
               }}
             />
@@ -118,7 +118,7 @@ export default function MapComponent({ id }) {
                   key={index}
                   position={{ lat: data.lat, lng: data.lng }}
                   image={{
-                    src: './images/mapWaitMate.png',
+                    src: 'https://sesac-projects.site/waitmate/images/mapWaitMate.png',
                     size: { width: 64, height: 64 },
                   }}
                   onClick={() => openOverlay(data)} // Open the overlay on marker click
