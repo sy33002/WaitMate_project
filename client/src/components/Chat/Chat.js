@@ -18,6 +18,7 @@ export default function Chat() {
   const { roomNumber } = useParams();
   const [loading, setLoading] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isclick, setIsclick] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('거래중');
   const menuItems = ['예약중', '거래 완료', '거래중'];
   const apiUrl = process.env.REACT_APP_URL;
@@ -35,21 +36,44 @@ export default function Chat() {
   }, []);
   // Data loading
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Data loading and socket connection
-        const response = await axios({
-          url: `${apiUrl}/proxy/chat/${roomNumber}`,
-          method: 'GET',
-        });
-        setMessages(response.data.list);
-        console.log(response.data.list);
-        socket.emit('getRoomInfo', roomNumber);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
+    let newIsclick = isclick; // Initialize with the current state
+    if (buttonClicked === '예약중') {
+      const fetchData = async () => {
+        try {
+          // Data loading and socket connection
+          const response = await axios({
+            url: `${apiUrl}/proxy/chat/${roomNumber}`,
+            method: 'GET',
+          });
+          setMessages(response.data.list);
+          console.log(response.data.list);
+          socket.emit('getRoomInfo', roomNumber);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchData();
+      newIsclick = true; // Set isclick to true when '예약중' is clicked
+    } else if (buttonClicked === '거래중') {
+      const fetchData = async () => {
+        try {
+          // Data loading and socket connection
+          const response = await axios({
+            url: `${apiUrl}/proxy/chat/${roomNumber}`,
+            method: 'GET',
+          });
+          setMessages(response.data.list);
+          console.log(response.data.list);
+          socket.emit('getRoomInfo', roomNumber);
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchData();
+      newIsclick = false; // Set isclick to false when '거래중' is clicked
+    }
+
+    
   }, [roomNumber, id]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
@@ -105,6 +129,7 @@ export default function Chat() {
         createdAt: currentTime,
       };
       socket.emit('message', messageData);
+   
 
       // 메시지를 먼저 뷰에 표시
       const newMessage = {
@@ -123,6 +148,8 @@ export default function Chat() {
       // 입력값 초기화
       setInputValue('');
       inputReference.current.value = '';
+    }else{
+
     }
   };
   useEffect(() => {
@@ -159,7 +186,19 @@ export default function Chat() {
   const parseDate = (dateString) => {
     return dateString.slice(11, 16);
   };
+useEffect(()=>{
+  if(selectedStatus === '예약중'){
 
+    socket.emit('reserve',{wmId: wmId, proxyId: proxyId})
+    console.log("wmId",wmId);
+    console.log("proxyId",proxyId);
+  }else if(selectedStatus === '거래중'){
+    socket.emit('deleteReservation',{wmId: wmId}) 
+  }else if(selectedStatus === '거래완료'){
+    socket.emit('completed',{wmId: wmId, proxyId: proxyId})
+  }
+  
+},[selectedStatus])
   // const parseImgData = (dataStringImg) => {
 
   //   return dataStringImg
