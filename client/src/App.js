@@ -23,10 +23,9 @@ import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
 import Error404 from './static/404';
 import useUserStore from './store/useUserStore';
 import { useEffect } from 'react';
-
-function App() {
-  const { id, nickname, photo, userId, setUserInfo, logout } = useUserStore();
   
+function App({ id, nickname, photo, userId }) {
+
   return (
     <div className="bg-background">
       <BrowserRouter>
@@ -45,8 +44,6 @@ function App() {
               </Template>
             }
           ></Route>
-          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
-          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route
             path="/map"
             element={
@@ -70,7 +67,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-               </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -84,7 +81,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -97,7 +94,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -110,7 +107,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -123,7 +120,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                   </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -137,7 +134,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                   </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -150,7 +147,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                  </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -163,10 +160,11 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
-
+          <Route path="/register/SigninForm" element={<SigninForm />}></Route>
+          <Route path="/register/SignupForm" element={<SignupForm />}></Route>
           <Route
             path="/register/UserInfo"
             element={
@@ -177,7 +175,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                  </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -190,7 +188,7 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
           <Route
@@ -203,12 +201,10 @@ function App() {
                   photo={photo}
                   userId={userId}
                 />
-                 </Template>
+              </Template>
             }
           ></Route>
-
           <Route path="/rating/StarRating" element={<StarRating />}></Route>
-          <Route path="/*" element={<Error404 />} />
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>
@@ -216,5 +212,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

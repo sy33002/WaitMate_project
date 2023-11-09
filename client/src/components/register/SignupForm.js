@@ -251,7 +251,7 @@ function SignupForm() {
           <div className="flex flex-col items-center mt-4">
             <button
               type="submit"
-              className="p-2 w-full sm:w-auto sm:px-10 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
+              className="p-2 w-full sm:w-60 bg-background text-primary rounded-md border-2 border-primary shadow-lg"
             >
               Sign Up
             </button>
