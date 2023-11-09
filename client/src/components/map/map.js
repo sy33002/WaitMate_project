@@ -67,7 +67,7 @@ export default function MapComponent({ id }) {
     <>
       <div className="waitMate_letter">
         <span>
-          <img src="./images/waitMate.png" alt="WaitMate" />
+          <img src="/waitmate/images/waitMate.png" alt="WaitMate" />
         </span>
         내 위치 주변의 웨이트메이트를 찾아보세요!
         <p>
@@ -77,7 +77,7 @@ export default function MapComponent({ id }) {
       </div>
       <div className="waitMate_letter_second">
         <span>
-          <img src="./images/proxy.png" alt="Proxy" />
+          <img src="/waitmate/images/proxy.png" alt="Proxy" />
           프록시
           </span>
           <span className="waitMate_letter">
