@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { socket } from '../../socket';
 import useUserStore from '../../store/useUserStore';
-import chatListModal from '../Chat/chatListModal';
+import ChatListModal from '../Chat/ChatListModal';
+
 export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
@@ -64,7 +65,6 @@ export default function ProxyDetail() {
       .then((response) => response.json())
       .then((data) => {
         setProxy(data.result);
-        console.log(data.result);
       })
       .catch((error) => {
         console.error('데이터 가져오는 중 오류 발생!', error);
@@ -73,7 +73,7 @@ export default function ProxyDetail() {
   return (
     <>
       {isModalOpen && (
-        <chatListModal
+        <ChatListModal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
           onUserSelect={handleUserSelect}
