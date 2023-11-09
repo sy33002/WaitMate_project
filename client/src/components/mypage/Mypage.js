@@ -127,7 +127,7 @@ function Mypage() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('profileImg', file);
 
     try {
       const response = await axiosInstance.post('/user/profileImg', formData, {
