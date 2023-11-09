@@ -8,6 +8,7 @@ function UserInfo() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { userId, nickname, setUserInfo } = useUserStore();
+  const [id, setId] = useState(10);
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ function UserInfo() {
     const fetchUserData = async () => {
       try {
         const response = await axiosInstance.get('/user/myinfo', {
-          withCredentials : true
+          withCredentials: true,
         });
         const data = response.data;
         // 여기서 setUserInfo를 사용하여 id와 nickname을 업데이트합니다.

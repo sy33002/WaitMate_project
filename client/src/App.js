@@ -23,12 +23,12 @@ import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
 import Error404 from './static/404';
 import useUserStore from './store/useUserStore';
 import { useEffect } from 'react';
-  
-function App({ id, nickname, photo, userId }) {
+import ProxyUpdate from './components/proxy/ProxyUpdate';
 
+function App({ id, nickname, photo, userId }) {
   return (
     <div className="bg-background">
-      <BrowserRouter basename='/waitmate'>
+      <BrowserRouter basename="/waitmate">
         <Routes>
           <Route path="/" element={<Main></Main>} />
           <Route
@@ -101,7 +101,7 @@ function App({ id, nickname, photo, userId }) {
             path="/proxy/update/:proxyId"
             element={
               <Template>
-                <WaitMateUpdate
+                <ProxyUpdate
                   id={id}
                   nickname={nickname}
                   photo={photo}
