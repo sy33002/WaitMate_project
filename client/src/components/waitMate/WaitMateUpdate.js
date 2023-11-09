@@ -2,13 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
 import { useParams } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 export default function WaitMateUpdate({ id, nickname, photo, userId }) {
   const { wmId } = useParams();
   const { control, handleSubmit, setValue, formState } = useForm();
   const [waitMate, setWaitMate] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const [showModal, setShowModal] = useState(false);
+  const [imageFile, setImageFile] = useState(waitMate.photo);
+  const [inputAddressValue, setInputAddressValue] = useState(waitMate.wmAddress);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [clickRegister, setClickRegister] = useState(false);
+  const [locationInfo, setLocationInfo] = useState({});
   const apiUrl = process.env.REACT_APP_URL;
+  const navigate = useNavigate();
+
+  const handleModalConfirm = () => {
+    navigate('/mypage/Mypage')
+  };
 
   useEffect(() => {
     fetch(`${apiUrl}/waitMate/detail?wmId=${wmId}&id=${id}`)
@@ -22,11 +34,6 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
     });
   }, []);
 
-  const [imageFile, setImageFile] = useState(waitMate.photo);
-  const [inputAddressValue, setInputAddressValue] = useState(waitMate.wmAddress);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [clickRegister, setClickRegister] = useState(false);
-  const [locationInfo, setLocationInfo] = useState({});
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -47,40 +54,36 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
     }
   };
 
-    const onSubmit = async (data, event) => {
-      const wmAddress = inputAddressValue;
-      const formData = new FormData();
-      formData.append('id', id);
-      formData.append('wmId', wmId);
-      formData.append('title', data.title);
-      formData.append('wmAddress', wmAddress);
-      formData.append('wmDetailAddress', data.detailAddress);
-      formData.append('date', data.date);
-      formData.append('startTime', data.time_start);
-      formData.append('endTime', data.time_end);
-      formData.append('waitTime', 11);
-      formData.append('pay', data.pay);
-      formData.append('description', data.detail);
-      formData.append('photo', imageFile);
-      formData.append('lng', locationInfo.x);
-      formData.append('lat', locationInfo.y);
-
+  const onSubmit = async (data, event) => {
+    const wmAddress = inputAddressValue;
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('title', data.title);
+    formData.append('wmAddress', wmAddress);
+    formData.append('wmDetailAddress', data.detailAddress);
+    formData.append('date', data.date);
+    formData.append('startTime', data.time_start);
+    formData.append('endTime', data.time_end);
+    formData.append('pay', data.pay);
+    formData.append('description', data.detail);
+    formData.append('photo', imageFile);
+    formData.append('lng', locationInfo.x);
+    formData.append('lat', locationInfo.y);
     try {
-      const response = await fetch(`${apiUrl}/waitMate/`, {
-        method: 'PATCH',
+      const response = await fetch(`${apiUrl}/waitMate/register`, {
+        method: 'POST',
         body: formData,
       });
-      if (response === 'success') {
-        // const responseData = await response.json();
-        console.log('aaaa');
+      if (response.ok) {
+        setShowModal(true);
       } else {
-        console.error('Failed to submit the form');
         console.log(response.status);
       }
     } catch (error) {
       console.error('Error!');
     }
   };
+
 
   useEffect(() => {
     if (Object.keys(waitMate).length > 0) {
@@ -97,25 +100,30 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
   }, [waitMate]);
 
   return (
-    <div className="w-full p-6">
-      <p className="text-xs font-Line">you will be the best wait mate.</p>
+    <div className={`${isSmallScreen ? 'p-1 mt-3 ' : 'p-6'} w-full`}>
       <div >
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className={`p-4 border border-primary rounded-lg w-full`}
+          className={`p-4 border bg-primary border-primary rounded-lg w-full`}
         >
-          <div className={`${isSmallScreen ? 'flex flex-col ' : 'flex'} justify-center items-center`}>
+          <p className={`${isSmallScreen ? 'text-[15px]': 'text-[20px]'} text-green font-Line`}>
+            웨이트 메이트란 (Wait Mate) ?</p>
+          <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
+            대신 웨이팅 할 사람을 구하는 사람을 지칭하는 말입니다. </p>
+            <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[15px]'} text-background font-Line`}>
+            저희 프록시를 구해서 웨이팅 시간을 줄여보아요!</p>
+          <div className={`${isSmallScreen ? 'flex flex-col mt-6' : 'flex'}  justify-center items-center`}>
             <div className={`${isSmallScreen ? 'w-1/2' : 'w-1/2'} flex flex-col text-center pb-2`}>
               <div className="w-full">
                 {imageFile && (
                   <img
                     src={imageFile}
                     alt="Preview"
-                    className="border border-primary rounded-lg w-full"
+                    className="border mt-2 bg-background border-primary rounded-lg w-full"
                   />
                 )}
-                <label className="text-sm text-background m-1 relative cursor-pointer">
-                <span className="bg-primary text-white text-xs p-2 rounded-md font-Line">Upload your Image</span>
+                <label className="text-sm text-background relative cursor-pointer">
+                <span className="bg-primary text-white p-2 text-xs rounded-md font-Line">Upload your Image</span>
                 <input
                   type="file"
                   name="photo"
@@ -209,7 +217,7 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
                 <label className="text-sm text-green font-Line m-1">
                   * Waiting Time
                 </label><br />
-                <span className='text-xs text-background font-Line'>about </span>
+                <span className='text-xs text-background font-Line'>About </span>
                 <Controller
                   name="time_start"
                   control={control}
@@ -221,20 +229,19 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
                 rules={{ required: true }}
                 render={({ field }) => <input {...field} type="time" className='rounded-lg w-1/3'/>}
                 />
-                 {formState.errors.time_start && clickRegister && (
-                  <p className="text-red-300 text-xs p-2">시작 시간은 필수 항목입니다 :D</p>
-                )}{formState.errors.time_end && clickRegister && (
-                  <p className="text-red-300 text-xs p-2">끝날 시간은 필수 항목입니다 :D</p>
+                 {(formState.errors.time_start || formState.errors.time_end) && clickRegister && (
+                  <p className="text-red-300 text-xs p-2">시작 시간과 끝날 시간 필수 항목입니다 :D</p>
                 )}
               </div>
               <br />
               <div>
                 <label className="text-sm text-green font-Line m-1">Pay(시급)</label><br />
+                <p className="text-red-300 text-xs font-Line pl-1">숫자 형태로만 적어주세요!</p>
                 <Controller
                   name="pay"
                   control={control}
                   rules={{ required: false }}
-                  render={({ field }) => <input {...field} className='rounded-lg w-full'/>}
+                  render={({ field }) => <input {...field} placeholder=' 0000원' type='number' className='rounded-lg w-1/3'/>}
                 />
               </div>
               <br />
@@ -255,7 +262,7 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
               <br />
               <button
                 type="submit"
-                onClick={() => setClickRegister(true)}
+                onClick={() => {setClickRegister(true)}}
                 className="text-background text-lg border font-Line border-green p-2 rounded-lg w-full"
               >
                 register
@@ -264,6 +271,19 @@ export default function WaitMateUpdate({ id, nickname, photo, userId }) {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md w-1/3 text-center">
+            <p className="mb-4">등록 완료!</p>
+            <button
+              onClick={handleModalConfirm}
+              className="p-2 bg-primary text-white rounded-md"
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -20,7 +20,12 @@ import Mypage from './components/mypage/Mypage';
 import ChatList from './components/mypage/ChatList';
 import StarRating from './components/rating/StarRating';
 import WaitMateUpdate from './components/waitMate/WaitMateUpdate';
+import Error404 from './static/404';
+import useUserStore from './store/useUserStore';
+import { useEffect } from 'react';
+  
 function App({ id, nickname, photo, userId }) {
+
   return (
     <div className="bg-background">
       <BrowserRouter>
@@ -203,7 +208,6 @@ function App({ id, nickname, photo, userId }) {
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>
-        {/* <Footer /> */}
       </BrowserRouter>
     </div>
   );

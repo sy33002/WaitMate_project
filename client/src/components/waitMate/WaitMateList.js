@@ -2,23 +2,24 @@ import React, { useState, useEffect } from 'react';
 import WaitMateBox from './WaitMateBox';
 import { Link } from 'react-router-dom';
 import Select from "react-select";
+import { useCookies } from "react-cookie";
 
 export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState('');
+  const [cookies, setCookie] = useCookies(['address']);
+  const initialAddress = cookies.address || '';
+  const [address, setAddress] = useState(initialAddress);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const isSmallScreen = window.innerWidth < 700;
   const apiUrl = process.env.REACT_APP_URL;
-  console.log(apiUrl);
+  const itemsPerPage = 4;
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
   
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,34 +61,40 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
 
   return (
     <div className='h-screen p-4 mt-4 flex flex-col item-center justify-center text-center'>
-      <div className='flex justify-between items-center space-x-4 '>
-        <div>
         <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-green font-Line`}>
           근처에 있는 
             <span className='text-primary'>웨이트 메이트</span>
           를 찾아보세요!</p>
-          <select value={selectedOption} onChange={handleOption} 
-          className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
-            <option value='updatedAt'>최근 목록순</option>
-            <option value='pay'>시급순</option>
-            <option value='count'>조회순</option>
-          </select>
+      <div className='flex justify-between items-center space-x-4 text-center p-1'>
+        <div className={`${isSmallScreen? 'justify-between' : ''} flex w-full justify-between`}>
+            <select 
+            onChange={handleOption} 
+            className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
+              <option value='updatedAt'>최근 목록순</option>
+              <option value='pay'>시급순</option>
+              <option value='count'>조회순</option>
+            </select>
+            <div className='flex items-center w-64'>
+            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
+            <Select
+              defaultValue={cities.find(city => city.value === cookies.address)} 
+              className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-2/3'} text-primary font-Line text-sm'}`}
+              options={cities}
+              onChange={(selectedOption) => {
+                if (selectedOption) {
+                  setAddress(selectedOption.value);
+                  setCookie('address', selectedOption.value, 
+                  { path: '/', maxAge: 6000, secure: false });
+                } else {
+                  setAddress(null);
+                }
+              }}
+            />
+            </div>
+            <div className={`${isSmallScreen ? 'w-0' : 'w-20'}`}></div>
         </div>
-        <Select
-          className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-1/3'} text-primary font-Line text-sm'}`}
-          options={cities}
-          onChange={(selectedOption) => {
-            if (selectedOption) {
-              setAddress(selectedOption.value);
-            } else {
-              setAddress(null);
-            }
-          }}
-        />
-        <div></div>
-        <div></div>
       </div>
-      <div className='w-full h-full p-2 '>
+      <div className='w-full h-full p-2'>
       {currentItems.map((item, index) => {
         if (index % 2 === 0) {
           const nextItem = currentItems[index + 1];
