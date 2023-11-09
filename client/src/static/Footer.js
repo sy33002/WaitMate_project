@@ -23,7 +23,7 @@ export default function Footer() {
             <hr />
 
             <div>
-              <a href="https://github.com/kdm111">김준수</a>
+              <a href="https://github.com/kdm111">박준수</a>
             </div>
             <div>
               <a href="https://github.com/LOBSTER10000"></a>이동규

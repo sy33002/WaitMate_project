@@ -21,7 +21,6 @@ const useUserStore = create((set) => ({
       }
     } catch (error) {
       console.error('Failed to fetch user info:', error);
-      // 필요하다면 여기서 에러 핸들링을 할 수 있습니다.
     }
   },
   logout: async () => {

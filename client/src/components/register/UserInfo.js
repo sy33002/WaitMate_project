@@ -16,7 +16,9 @@ function UserInfo() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axiosInstance.get('/user/myinfo');
+        const response = await axiosInstance.get('/user/myinfo', {
+          withCredentials : true
+        });
         const data = response.data;
         // 여기서 setUserInfo를 사용하여 id와 nickname을 업데이트합니다.
         setUserInfo({ id: data.userId, nickname: data.nickname });
@@ -27,7 +29,7 @@ function UserInfo() {
 
     fetchUserData();
     setUserInfo();
-  }, [setUserInfo]);
+  }, []);
 
   const isPasswordMatch = () => password === confirmPassword;
   const isNicknameValid = () => nickname.length <= 8;
