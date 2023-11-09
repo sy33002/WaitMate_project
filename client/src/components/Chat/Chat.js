@@ -77,7 +77,7 @@ export default function Chat() {
               setUserPayId(data.sender.id);
               setReceiver(data.receiver);
               setProxy(data.proxyData.photo);
-              setProxyPayId(data.proxyData.id);
+              setProxyPayId(data.proxyData.proxyId);
               setLoading(false);
               setWm(data.wmData);
               console.log('wm', data.wmData);
