@@ -64,7 +64,6 @@ export default function ProxyDetail() {
       .then((response) => response.json())
       .then((data) => {
         setProxy(data.result);
-        console.log(data.result);
       })
       .catch((error) => {
         console.error('데이터 가져오는 중 오류 발생!', error);

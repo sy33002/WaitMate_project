@@ -11,13 +11,10 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [cookies, setCookie] = useCookies(['address']);
   const initialAddress = cookies.address || '';
   const [address, setAddress] = useState(initialAddress);
-  // const [address, setAddress] = useState('');
-  console.log(address);
   const [currentPage, setCurrentPage] = useState(1);
   const isSmallScreen = window.innerWidth < 700;
   const apiUrl = process.env.REACT_APP_URL;
   const itemsPerPage = 4;
-
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
@@ -33,7 +30,6 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         if (response.ok) {
           const {waitMates} = await response.json();
           setItems(waitMates);
-          console.log('waitMates >>', waitMates);
         } else {
           console.log('데이터 가져오기 실패!');
         }
@@ -71,7 +67,8 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
           를 찾아보세요!</p>
       <div className='flex justify-between items-center space-x-4 text-center p-1'>
         <div className={`${isSmallScreen? 'justify-between' : ''} flex w-full justify-between`}>
-            <select value={selectedOption} onChange={handleOption} 
+            <select 
+            onChange={handleOption} 
             className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
               <option value='updatedAt'>최근 목록순</option>
               <option value='pay'>시급순</option>
@@ -80,13 +77,13 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
             <div className='flex items-center w-64'>
             <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
             <Select
-              value={cookies.address}
+              defaultValue={cities.find(city => city.value === cookies.address)} 
               className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-2/3'} text-primary font-Line text-sm'}`}
               options={cities}
               onChange={(selectedOption) => {
                 if (selectedOption) {
                   setAddress(selectedOption.value);
-                  setCookie('address', address, 
+                  setCookie('address', selectedOption.value, 
                   { path: '/', maxAge: 6000, secure: false });
                 } else {
                   setAddress(null);
