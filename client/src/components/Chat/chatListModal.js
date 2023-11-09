@@ -10,7 +10,7 @@ const UserListModal = ({ isOpen, onRequestClose, onUserSelect }) => {
   const loadUserList = () => {
     setIsLoading(true);
     axios
-      .get('https://sesac-projects.site/wapi/proxy/userList', {
+      .get(`${process.env.REACT_APP_URL}/proxy/userList`, {
         params: {
           id,
         },
@@ -57,7 +57,7 @@ const UserListModal = ({ isOpen, onRequestClose, onUserSelect }) => {
               <div>
                 <h3>선택한 웨이트메이트</h3>
                 <br></br>
-                <img src={'http://localhost:8080/' + selectedUser.photo} alt={selectedUser.title} />
+                <img src={`${process.env.REACT_APP_URL}`+ selectedUser.photo} alt={selectedUser.title} />
                 <p>번호: {selectedUser.wmId}</p>
                 <p>타이틀: {selectedUser.title}</p>
                 <p>주소: {selectedUser.wmAddress}</p>
