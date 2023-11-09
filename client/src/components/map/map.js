@@ -69,12 +69,25 @@ export default function MapComponent({ id }) {
         <span>
           <img src="./images/waitMate.png" alt="WaitMate" />
         </span>
-         내 위치 주변의 웨이트메이트를 찾아보세요!
+        내 위치 주변의 웨이트메이트를 찾아보세요!
+        <p>
+          웨이트메이트는 프록시에게 웨이팅을 요청해 대신 웨이팅을 해주는
+          역할입니다.
+        </p>
       </div>
       <div className="waitMate_letter_second">
         <span>
           <img src="./images/proxy.png" alt="Proxy" />
-          프록시<span className="waitMate_letter">는 자신의 위치입니다!</span>
+          프록시
+          </span>
+          <span className="waitMate_letter">
+            는 자신의 위치입니다!
+            <p>채팅을 통해 프록시와 대화후 웨이팅을 요청해보세요!</p>
+            <span>
+              프록시는 자신의 위치를 기반으로 주변 웨이트메이트 공고를 찾아볼수
+              있습니다!
+            </span>
+          
         </span>
       </div>
 
