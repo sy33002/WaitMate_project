@@ -11,7 +11,8 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const [cookies, setCookie] = useCookies(['address']);
   const initialAddress = cookies.address || '';
   const [address, setAddress] = useState(initialAddress);
-  console.log(cookies.address);
+  // const [address, setAddress] = useState('');
+  console.log(address);
   const [currentPage, setCurrentPage] = useState(1);
   const isSmallScreen = window.innerWidth < 700;
   const apiUrl = process.env.REACT_APP_URL;
@@ -77,16 +78,16 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
               <option value='count'>조회순</option>
             </select>
             <div className='flex items-center w-64'>
-            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>{address}</span>
+            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
             <Select
-              value='서울 관악구'
+              value={cookies.address}
               className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-2/3'} text-primary font-Line text-sm'}`}
               options={cities}
               onChange={(selectedOption) => {
                 if (selectedOption) {
                   setAddress(selectedOption.value);
                   setCookie('address', address, 
-                  { path: '/', maxAge: 10, secure: false });
+                  { path: '/', maxAge: 6000, secure: false });
                 } else {
                   setAddress(null);
                 }
