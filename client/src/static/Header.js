@@ -26,7 +26,7 @@ function Header() {
     navigate('/');
   };
 
-  const profileImage = photo || '/waitmate/images/waitMate2.png';
+  const profileImage = photo || 'https://sesac-projects.site/waitmate/images/waitMate2.png';
 
   return (
     <div>
@@ -34,7 +34,7 @@ function Header() {
         <div>
           <Link to="/map">
             <img
-              src="/waitmate/images/logo_letter2.png"
+              src="https://sesac-projects.site/waitmate/images/logo_letter2.png"
               alt="로고"
               className="w-20 md:w-24 sm:w-20 bg-background rounded-none p-1"
             />

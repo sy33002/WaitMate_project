@@ -103,7 +103,7 @@ export default function ProxyDetail() {
             <div className="w-full p-3 flex justify-center">
               <img
                 className={`${isSmallScreen ? 'w-3/5 h-2/5' : 'w-full'}`}
-                src="/waitmate/images/whiteWaitMate.png"
+                src="https://sesac-projects.site/waitmate/images/whiteWaitMate.png"
               ></img>
             </div>
             <img
