@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { socket } from '../../socket';
 import useUserStore from '../../store/useUserStore';
-import chatListModal from '../Chat/chatListModal';
+import ChatListModal from '../Chat/chatListModal';
+
 
 export default function ProxyDetail() {
   const { proxyId } = useParams();
@@ -73,7 +74,7 @@ export default function ProxyDetail() {
   return (
     <>
       {isModalOpen && (
-        <chatListModal
+        <ChatListModal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
           onUserSelect={handleUserSelect}
