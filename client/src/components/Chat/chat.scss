@@ -90,7 +90,7 @@ textarea {
 }
 
 .input_send_btn {
-  background-image: url('../../../public/images/chatting_send_btn.png');
+  background-image: url('https://sesac-projects.site/waitmate/chatting_send_btn.png');
   background-size: 30px 30px; // 이미지가 버튼에 맞게 조절됩니다.
   background-repeat: no-repeat;
   background-position: center;
@@ -105,12 +105,12 @@ textarea {
   padding-bottom: 20px;
 }
 .waitMate_letter {
-  font-size: x-large;
+  font-size: large;
   color: #2f2772;
   font-weight: bold;
 }
 .waitMate_letter_second {
-  font-size: x-large;
+  font-size: large;
   color: #b3e443;
   font-weight: bold;
 }

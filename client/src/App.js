@@ -28,7 +28,7 @@ function App({ id, nickname, photo, userId }) {
 
   return (
     <div className="bg-background">
-      <BrowserRouter>
+      <BrowserRouter basename='/waitmate'>
         <Routes>
           <Route path="/" element={<Main></Main>} />
           <Route
@@ -205,6 +205,7 @@ function App({ id, nickname, photo, userId }) {
             }
           ></Route>
           <Route path="/rating/StarRating" element={<StarRating />}></Route>
+          <Route path="/*" element={<Error404 />}></Route>
           {/* <Route path='/waitMate/delete' element={<Template><waitMateRegister /></Template>}></Route> */}
           {/* <Route path='/waitMate/patch' element={<Template><waitMateRegister /></Template>}></Route> */}
         </Routes>

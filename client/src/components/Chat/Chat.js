@@ -37,23 +37,6 @@ export default function Chat() {
     }
   }, []);
   // Data loading
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Data loading and socket connection
-        const response = await axios({
-          url: `${apiUrl}/proxy/chat/${roomNumber}`,
-          method: 'GET',
-        });
-        setMessages(response.data.list);
-        console.log(response.data.list);
-        socket.emit('getRoomInfo', roomNumber);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    fetchData();
-  }, [roomNumber, id]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
@@ -132,6 +115,7 @@ export default function Chat() {
       // 입력값 초기화
       setInputValue('');
       inputReference.current.value = '';
+    } else {
     }
   };
   useEffect(() => {
@@ -168,6 +152,15 @@ export default function Chat() {
   const parseDate = (dateString) => {
     return dateString.slice(11, 16);
   };
+  useEffect(() => {
+    if (selectedStatus === '예약중') {
+      socket.emit('reserve', { wmId: wm.wmId, proxyId: proxyPayId });
+    } else if (selectedStatus === '거래중') {
+      socket.emit('deleteReservation', { wmId: wm.wmId });
+    } else if (selectedStatus === '거래 완료') {
+      socket.emit('completed', { wmId: wm.wmId, proxyId: proxyPayId });
+    }
+  }, [selectedStatus]);
 
   // const parseImgData = (dataStringImg) => {
 
@@ -196,7 +189,7 @@ export default function Chat() {
       console.error('wm나 proxy가 없습니다.');
     }
   };
- 
+
   return (
     <div className="container">
       {!id ? (
@@ -247,7 +240,9 @@ export default function Chat() {
                     <MessageBox
                       key={index}
                       className={msg.sender === sender.userId ? 'me' : 'other'}
-                      avatar={msg.receiver !== receiver.userId ? proxy.photo : null}
+                      avatar={
+                        msg.receiver !== receiver.userId ? proxy.photo : null
+                      }
                       type={msg.messageType}
                       text={msg.messageContent}
                       title={`${msg.sender} ${parseDate(msg.createdAt)}`}
@@ -269,15 +264,15 @@ export default function Chat() {
                     }
                   }}
                   leftButtons={
-                      id === userPayId && (
-                        <Button
-                          key="paymentButton"
-                          color="#4CAF50"
-                          backgroundColor="transparent"
-                          text="결제하기"
-                          onClick={PaymentsList}
-                        />
-                      )
+                    id === userPayId && (
+                      <Button
+                        key="paymentButton"
+                        color="#4CAF50"
+                        backgroundColor="transparent"
+                        text="결제하기"
+                        onClick={PaymentsList}
+                      />
+                    )
                   }
                   rightButtons={
                     <Button

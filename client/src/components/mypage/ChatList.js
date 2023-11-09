@@ -52,7 +52,7 @@ function ChatList() {
                 />
                 <div className="chat-item">
                   <div className="flex flex-row items-center">
-                  <div className="roomNumber font-Line">방번호 : {chat.roomNumber}번</div>
+                  <div className="roomNumber font-Line">방번호 : {chat.roomNumber}</div>
                     <div className="nickname font-Line">보낸사람 : {chat.sender}</div>
                     <div className="time text-xs font-Line">보낸시각 : {chat.createdAt}</div>
                   </div>

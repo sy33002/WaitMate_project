@@ -8,6 +8,7 @@ export default function MapComponent({ id }) {
   const [userAddress, setUserAddress] = useState([]);
   const [isOpen, setIsOpen] = useState(false); // Control the overlay visibility
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const isSmallScreen = window.innerWidth < 700;
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
 
@@ -64,36 +65,37 @@ export default function MapComponent({ id }) {
   };
 
   return (
-    <>
-      <div className="waitMate_letter">
-        <span>
-          <img src="./images/waitMate.png" alt="WaitMate" />
-        </span>
-        내 위치 주변의 웨이트메이트를 찾아보세요!
-        <p>
-          웨이트메이트는 프록시에게 웨이팅을 요청해 대신 웨이팅을 해주는
-          역할입니다.
+    <div className={`${isSmallScreen ? 'p-1' : 'p-4'} font-Line`}>
+      <div className=" text-primary  flex w-full h-20 items-center">
+        <img src="https://sesac-projects.site/waitmate/images/waitMate.png" alt="WaitMate" className='w-20'/>
+        <div>
+        <p className={`${isSmallScreen ? 'text-[11px]' : 'text-[18px]'} flex`}>
+        👈 내 위치 주변의 <p className='text-green'> 웨이트메이트 </p>를 찾아보세요!
         </p>
+        <p className={`${isSmallScreen ? 'text-[9px]' : 'text-[14px]'}`}>
+          * 웨이트메이트는 프록시에게 웨이팅을 요청하는 역할입니다.
+        </p>
+        </div>
       </div>
-      <div className="waitMate_letter_second">
-        <span>
-          <img src="./images/proxy.png" alt="Proxy" />
-          프록시
+      <div className=" text-primary  flex w-full h-16 items-center mb-3">
+        <span className='flex w-full h-20 items-center'>
+          <img src="https://sesac-projects.site/waitmate/images/proxy.png" alt="Proxy" className='w-40 p-4'/>
+          <p className={`${isSmallScreen ? 'text-[12px]' : 'text-[18px]'}`}>
+          👈 프록시
+            모양의 핀은 "자신의 위치"입니다!</p>
           </span>
-          <span className="waitMate_letter">
-            는 자신의 위치입니다!
-            <p>채팅을 통해 프록시와 대화후 웨이팅을 요청해보세요!</p>
-            <span>
+          </div>
+            <div className={`${isSmallScreen ? 'text-[9px]' : 'text-[14px]'} text-gray-600 mb-2`}>
+            <span>채팅을 통해 웨이트메이트와 대화후 웨이팅을 요청해보세요!</span>
+            <p>
               프록시는 자신의 위치를 기반으로 주변 웨이트메이트 공고를 찾아볼수
               있습니다!
-            </span>
-          
-        </span>
-      </div>
+            </p>
+            </div>        
 
-      <div className="container">
+      <div >
         <Map
-          className="map"
+          className="map z-10"
           level={3}
           center={userLocation || { lat: 0, lng: 0 }}
           style={{ width: '100%', height: getMapHeight() }}
@@ -103,8 +105,8 @@ export default function MapComponent({ id }) {
               position={userLocation}
               text="Your Location"
               image={{
-                src: './images/proxy.png',
-                size: { width: 64, height: 64 },
+                src: 'https://sesac-projects.site/waitmate/images/mapProxy.png',
+                size: { width: 92, height: 76 },
               }}
             />
           )}
@@ -116,7 +118,7 @@ export default function MapComponent({ id }) {
                   key={index}
                   position={{ lat: data.lat, lng: data.lng }}
                   image={{
-                    src: './images/waitMate.png',
+                    src: 'https://sesac-projects.site/waitmate/images/mapWaitMate.png',
                     size: { width: 64, height: 64 },
                   }}
                   onClick={() => openOverlay(data)} // Open the overlay on marker click
@@ -161,6 +163,6 @@ export default function MapComponent({ id }) {
           )}
         </Map>
       </div>
-    </>
+    </div>
   );
 }
