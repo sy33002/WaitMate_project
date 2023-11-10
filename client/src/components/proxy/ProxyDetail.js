@@ -13,6 +13,8 @@ export default function ProxyDetail() {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const apiUrl = process.env.REACT_APP_URL;
+
   const handleUserSelect = (user) => {
     setSelectedUser(user);
   };
@@ -58,8 +60,9 @@ export default function ProxyDetail() {
       });
     }
   };
+  
   useEffect(() => {
-    fetch(`http://localhost:8080/proxy/detail/${proxyId}`, {
+    fetch(`${apiUrl}/proxy/detail/${proxyId}`, {
       withCredentials: true,
     })
       .then((response) => response.json())

@@ -10,7 +10,7 @@ function AddressSearchModal({ setInputAddressValue }) {
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="modal-content bg-primary">
         <DaumPostcode autoClose onComplete={handleAddressChange} />
       </div>
     </div>
