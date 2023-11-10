@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
-import useUserStore from '../../store/useUserStore';
+
 import {  useNavigate } from 'react-router-dom';
 
 export default function ProxyRegister() {
@@ -11,7 +11,7 @@ export default function ProxyRegister() {
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
-  const {id} = useUserStore();
+  const id = 5;
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -56,17 +56,14 @@ export default function ProxyRegister() {
     } else {
       formData.append('photo', new File([''], '/images/proxy.png', { type: 'image/png' }));
     }
-    axios({
-      url: `https://sesac-projects.site/wapi/proxy/register`,
-      method: 'post',
-      data: formData,
-    })
-      .then((res) => {
-        setShowModal(true);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+
+    try{
+      const result = await axios.post('https://sesac-projects.site/wapi/proxy/register', formData);
+      console.log(result);
+    } 
+    catch(err){
+      console.error(err);
+    }
   };
 
   return (
