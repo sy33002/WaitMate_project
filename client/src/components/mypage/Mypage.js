@@ -39,12 +39,12 @@ function Mypage() {
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await fetch(`https://sesac-projects.site/wapi/id=${id}`, {
+  //       const response = await fetch(`https://sesac-projects.site/wapi/getProxyAll/id=${id}`, {
   //           method: 'GET',
   //         });
   //       if (response.ok) {
   //         const {list} = await response.json();
-  //         setItems(list);
+  //         setMyResume(list);
   //       } else {
   //         console.log('데이터 가져오기 실패!');
   //       }
@@ -55,7 +55,7 @@ function Mypage() {
   //     }
   //   }
   //   fetchData();
-  // }, [address, selectedOption]);
+  // }, []);
 
   return (
     <div className={`w-full h-screen text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}>
