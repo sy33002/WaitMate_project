@@ -9,7 +9,7 @@ function ChatList() {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/proxy/listChatting2`, {
+        const response = await axios.get(`https://sesac-projects.site/wapi/proxy/listChatting2`, {
           withCredentials: true,
         });
 
@@ -35,6 +35,26 @@ function ChatList() {
     fetchChats();
   }, [apiUrl]);
 
+  const formatCreatedAt = (createdAt, locale, timeZone) => {
+    const date = new Date(createdAt);
+    const options = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: false,
+    };
+  
+    const formattedDate = date.toLocaleString(locale, {
+      ...options,
+      timeZone: timeZone,
+    });
+    
+    return formattedDate;
+  };
+
   return (
     <div className="ml-20 mr-20 mt-10 mb-10 background">
       <div className="flex justify-center mb-5">
@@ -54,9 +74,10 @@ function ChatList() {
                   <div className="flex flex-row items-center">
                   <div className="roomNumber font-Line">방번호 : {chat.roomNumber}</div>
                     <div className="nickname font-Line">보낸사람 : {chat.sender}</div>
-                    <div className="time text-xs font-Line">보낸시각 : {chat.createdAt}</div>
+                   
                   </div>
                   <div className="message font-Line">{chat.messageContent}</div>
+                  <div className="time text-xs font-Line"> {formatCreatedAt(chat.createdAt, 'ko-KR', 'Asia/Seoul')}</div>
                 </div>
               </div>
             </Link>

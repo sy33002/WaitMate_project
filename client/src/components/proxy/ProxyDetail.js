@@ -62,7 +62,9 @@ export default function ProxyDetail() {
   };
   
   useEffect(() => {
-    fetch(`${apiUrl}/proxy/detail/${proxyId}`, {
+
+    fetch(`https://sesac-projects.site/wapi/proxy/detail/${proxyId}`, {
+
       withCredentials: true,
     })
       .then((response) => response.json())
