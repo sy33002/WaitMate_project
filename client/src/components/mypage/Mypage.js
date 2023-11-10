@@ -286,9 +286,13 @@ function Mypage() {
         <div
           className={`${
             isSmallScreen ? 'flex flex-row' : 'flex'
-          } justify-center w-full h-full items-center`}
+          } justify-center w-80 h-full items-center`}
         >
-          <div className="flex flex-row md:flex-row items-start mb-6 border-primary">
+          <div
+            className={`flex ${
+              isSmallScreen ? 'flex-col' : 'flex-row'
+            } items-start mb-6 border-primary`}
+          >
             <div
               className={`${
                 isSmallScreen
