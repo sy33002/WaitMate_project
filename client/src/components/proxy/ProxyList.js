@@ -3,8 +3,9 @@ import ProxyListBox from './ProxyListBox';
 import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import { useCookies } from "react-cookie";
+import useUserStore from '../../store/useUserStore';
 
-export default function WaitMateList({ cities, id, nickname, photo, userId }) {
+export default function WaitMateList() {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -13,6 +14,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
   const [address, setAddress] = useState(initialAddress);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  const { cities, id, nickname, photo, userId } = useUserStore();
   const isSmallScreen = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
 
