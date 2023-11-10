@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
-import axios from 'axios'; 
+import axios from 'axios';
 
 export default function ProxyRegister({ id, nickname, photo, userId }) {
-  const { control, handleSubmit, formState,setValue } = useForm();
+  const { control, handleSubmit, formState, setValue } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
   const [proxy, setProxy] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
+
     fetch(`https://sesac-projects.site/wapi/proxy/update/${id}`)
     .then(response => response.json())
     .then(data => {
@@ -31,10 +32,9 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     if (file) {
       if (!file.type.startsWith('image/')) {
         alert('이미지 파일을 넣어주십시오');
-       
+
         e.target.value = '';
       } else {
-        
         setValue('photo', e.target.files);
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -47,9 +47,9 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
 
   const onSubmit = async (data) => {
     const address = inputAddressValue;
-    const addressParts = address.split(" ");
-    const combinedAddress = addressParts[0] + " " + addressParts[1];
-  
+    const addressParts = address.split(' ');
+    const combinedAddress = addressParts[0] + ' ' + addressParts[1];
+
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
@@ -57,7 +57,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-   
+
     try {
       const response = await fetch(`https://sesac-projects.site/wapi/proxy/`, {
         method: 'PATCH',
@@ -86,110 +86,154 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     }
   }, [proxy]);
 
-
   return (
-    <div className='p-4'>
-      <p className='text-xs pl-1 pb-1 font-Line'>you are my best proxy.</p>
-      <div className='relative w-full'>
+    <div className="p-4">
+      <p className="text-xs pl-1 pb-1 font-Line">you are my best proxy.</p>
+      <div className="relative w-full">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="p-8 bg-primary rounded-lg"
         >
-          <p className='text-[12px] text-green font-Line'>
-            프록시란(Proxy)?</p>
-          <p className='text-[12px]  text-background font-Line'>
-            대신 웨이팅 할 사람을 지칭하는 말입니다! </p>
-            <p className='text-[12px]  text-background font-Line'>
-            저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!</p><br />
-          <div className={`${isSmallScreen ? 'flex flex-col' : 'flex'} justify-center items-center`}>
-            <div className={`flex flex-col ${isSmallScreen ? 'w-full' : 'w-1/3'}`}>
-              <div className='w-full h-28 bg-background p-2 rounded-lg'>
-                  {imageFile && <img src={imageFile} alt="Preview" 
-                  className="w-full h-full" />}
+          <p className="text-[12px] text-green font-Line">프록시란(Proxy)?</p>
+          <p className="text-[12px]  text-background font-Line">
+            대신 웨이팅 할 사람을 지칭하는 말입니다!{' '}
+          </p>
+          <p className="text-[12px]  text-background font-Line">
+            저희 웨이트 메이트를 위해 대신 줄서기를 하며 좋은 시간을 보내보아요!
+          </p>
+          <br />
+          <div
+            className={`${
+              isSmallScreen ? 'flex flex-col' : 'flex'
+            } justify-center items-center`}
+          >
+            <div
+              className={`flex flex-col ${isSmallScreen ? 'w-full' : 'w-1/3'}`}
+            >
+              <div className="w-full h-28 bg-background p-2 rounded-lg">
+                {imageFile && (
+                  <img
+                    src={imageFile}
+                    alt="Preview"
+                    className="w-full h-full"
+                  />
+                )}
               </div>
               <label className="text-sm text-background m-1 relative cursor-pointer">
-              <span className="bg-primary text-white px-3 py-1 rounded-md font-Line ">Upload your Image</span>
-              <input
-                type="file"
-                name="photo"
-                className="hidden" // 숨겨진 input 엘리먼트
-                onChange={(e) => {
-                  handleFileChange(e);
-                }}
-              />
-            </label>
-
-              </div>
-              <div className={`${isSmallScreen ? 'w-full' : 'w-2/3 pl-4'}`}>
-                <div className='w-full'>
-                    <label className='text-sm text-green m-1 font-Line'>* Title (100자 이내)</label><br/>
-                    <Controller
-                      name="title"
-                      control={control}
-                      rules={{ required: true,  maxLength: 100 }}
-                      render={({ field }) => <input {...field} 
-                        className='w-full rounded-lg'
-                        placeholder=" 자기소개에 대한 제목을 지어주세요!"/>}
-                    />
-                    {formState.errors.title && clickRegister && (
-                      <p className="text-red-300 text-xs p-2">
-                        {formState.errors.title.type === 'required'
-                          ? '제목은 필수 항목입니다 :D'
-                          : '제목은 100자 이내로 입력해주세요'}
-                      </p>
-                    )}
-                  </div><br />
-                <div>
-                <label className="text-sm text-green font-Line m-1">
-                  * Address
-                </label><br />
-                <button onClick={() => {setIsModalOpen(true); 
-                  setValue('address', '');}}
-                  className='bg-green p-1 font-Line rounded-lg mb-1'
-                  >주소 검색</button> <span className='text-red-300 text-xs font-Line pl-1'>저희는 구체적인 프록시의 주소는 받지 않아요!</span>
-                  <input
-                    name='Address'
-                    className='w-full rounded-lg'
-                    placeholder=" 주소"
-                    value={inputAddressValue}
-                    readOnly
-                    onChange={(e) => setInputAddressValue(e.target.value)}
-                  />
-                  {isModalOpen && (
-                    <AddressSearchModal
-                      setInputAddressValue={setInputAddressValue}
-                      isModalOpen={isModalOpen}
-                      setIsModalOpen={setIsModalOpen}
+                <span className="bg-primary text-white px-3 py-1 rounded-md font-Line ">
+                  Upload your Image
+                </span>
+                <input
+                  type="file"
+                  name="photo"
+                  className="hidden" // 숨겨진 input 엘리먼트
+                  onChange={(e) => {
+                    handleFileChange(e);
+                  }}
+                />
+              </label>
+            </div>
+            <div className={`${isSmallScreen ? 'w-full' : 'w-2/3 pl-4'}`}>
+              <div className="w-full">
+                <label className="text-sm text-green m-1 font-Line">
+                  * Title (100자 이내)
+                </label>
+                <br />
+                <Controller
+                  name="title"
+                  control={control}
+                  rules={{ required: true, maxLength: 100 }}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      className="w-full rounded-lg"
+                      placeholder=" 자기소개에 대한 제목을 지어주세요!"
                     />
                   )}
-                  {inputAddressValue === ''  && clickRegister && (<p className="text-red-300 text-xs p-2">주소는 필수 항목입니다 :D</p>)}
-                </div><br />
-                <div>
-                <label className='text-sm text-green font-Line m-1'>* Gender</label><br />
-                  <Controller
-                    name="gender"
-                    control={control}
-                    rules={{ required: true }}
-                    render={({ field }) => (
-                      <select {...field} className='w-1/2 rounded-lg'>
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    )}
+                />
+                {formState.errors.title && clickRegister && (
+                  <p className="text-red-300 text-xs p-2">
+                    {formState.errors.title.type === 'required'
+                      ? '제목은 필수 항목입니다 :D'
+                      : '제목은 100자 이내로 입력해주세요'}
+                  </p>
+                )}
+              </div>
+              <br />
+              <div>
+                <label className="text-sm text-green font-Line m-1">
+                  * Address
+                </label>
+                <br />
+                <button
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    setValue('address', '');
+                  }}
+                  className="bg-green p-1 font-Line rounded-lg mb-1"
+                >
+                  주소 검색
+                </button>{' '}
+                <span className="text-red-300 text-xs font-Line pl-1">
+                  저희는 구체적인 프록시의 주소는 받지 않아요!
+                </span>
+                <input
+                  name="Address"
+                  className="w-full rounded-lg"
+                  placeholder=" 주소"
+                  value={inputAddressValue}
+                  readOnly
+                  onChange={(e) => setInputAddressValue(e.target.value)}
+                />
+                {isModalOpen && (
+                  <AddressSearchModal
+                    setInputAddressValue={setInputAddressValue}
+                    isModalOpen={isModalOpen}
+                    setIsModalOpen={setIsModalOpen}
                   />
-                  {formState.errors.gender && clickRegister && (
-                      <p className="text-red-300 text-xs p-2">성별은 필수 항목입니다 :D</p>
-                    )}
-                </div><br />
-                <div>
-                <label className='text-sm text-green font-Line m-1'>* Age</label><br />
+                )}
+                {inputAddressValue === '' && clickRegister && (
+                  <p className="text-red-300 text-xs p-2">
+                    주소는 필수 항목입니다 :D
+                  </p>
+                )}
+              </div>
+              <br />
+              <div>
+                <label className="text-sm text-green font-Line m-1">
+                  * Gender
+                </label>
+                <br />
+                <Controller
+                  name="gender"
+                  control={control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <select {...field} className="w-1/2 rounded-lg">
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  )}
+                />
+                {formState.errors.gender && clickRegister && (
+                  <p className="text-red-300 text-xs p-2">
+                    성별은 필수 항목입니다 :D
+                  </p>
+                )}
+              </div>
+              <br />
+              <div>
+                <label className="text-sm text-green font-Line m-1">
+                  * Age
+                </label>
+                <br />
                 <Controller
                   name="age"
                   control={control}
                   rules={{ required: true }}
                   render={({ field }) => (
-                    <select {...field} className='w-1/2 rounded-lg'>
+                    <select {...field} className="w-1/2 rounded-lg">
                       <option value=""> Select Age</option>
                       <option value="10">10대</option>
                       <option value="20">20대</option>
@@ -201,24 +245,35 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
                   )}
                 />
                 {formState.errors.age && clickRegister && (
-                      <p className="text-red-300 text-xs p-2">나이는 필수 항목입니다 :D</p>
-                    )}
-              </div><br />
+                  <p className="text-red-300 text-xs p-2">
+                    나이는 필수 항목입니다 :D
+                  </p>
+                )}
+              </div>
+              <br />
               <div>
-              <label className='text-sm text-green font-Line m-1'>Introduce yourself!</label><br/>
+                <label className="text-sm text-green font-Line m-1">
+                  Introduce yourself!
+                </label>
+                <br />
                 <Controller
                   name="proxyMsg"
                   control={control}
                   rules={{ required: false }}
-                  render={({ field }) => <textarea {...field} className='rounded-lg'/>}
+                  render={({ field }) => (
+                    <textarea {...field} className="rounded-lg" />
+                  )}
                 />
-              </div><br />
-              <button type="submit" 
+              </div>
+              <br />
+              <button
+                type="submit"
                 onClick={() => setClickRegister(true)}
-                className="text-background text-lg border font-Line border-green p-2 rounded-lg w-full">
+                className="text-background text-lg border font-Line border-green p-2 rounded-lg w-full"
+              >
                 register
               </button>
-              </div>
+            </div>
           </div>
         </form>
       </div>

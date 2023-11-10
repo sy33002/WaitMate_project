@@ -7,7 +7,7 @@ import {  useNavigate } from 'react-router-dom';
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState,setValue } = useForm();
-  const [imageFile, setImageFile] = useState('/images/proxy.png');
+  const [imageFile, setImageFile] = useState('/waitmate/images/proxy.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
@@ -46,7 +46,7 @@ export default function ProxyRegister() {
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
-    formData.append('id', 2);
+    formData.append('id', id);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 function Mypage() {
   const {
-    id,
+    // id,
     userId,
     nickname,
     profileImg,
@@ -14,15 +14,17 @@ function Mypage() {
     setUserInfo,
     logout,
   } = useUserStore();
+  const [id, setId] = useState(10); // ID값 넣어 둔거
   const [activeTab, setActiveTab] = useState('');
   const [listItems, setListItems] = useState([]);
   const [error, setError] = useState('');
-  const [selectedEdit, setSelectedEdit] = useState([]);
+  const [selectedEdit, setSelectedEdit] = useState('');
   const [selectedItem, setSelectedItem] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showEditButton, setShowEditButton] = useState(false);
   const navigate = useNavigate();
   const [url, setUrl] = useState('');
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
 
   const basicButtonClasses =
     'py-2 px-4 text-white bg-primary border-2 border-primary rounded-lg transition-colors duration-300';
@@ -60,7 +62,13 @@ function Mypage() {
             .then((response) => response.json())
             .then((data) => {
               console.log(data);
-              setListItems(data);
+              if (Array.isArray(data)) {
+                console.log('hi');
+                setListItems(data);
+              } else {
+                console.log('bye');
+                setListItems([data.result]);
+              }
             })
             .catch((error) => {
               console.error('데이터 가져오는 중 오류 발생!', error);
@@ -78,6 +86,11 @@ function Mypage() {
     setUserInfo();
     fetchItems();
   }, [url, setUserInfo]);
+
+  const getProxy = () => {
+    // 나의 이력서
+    setUrl(`${process.env.REACT_APP_URL}/proxy/detail/33`);
+  };
 
   const getLikeWMList = () => {
     // 내가 찜한 웨메리스트
@@ -103,7 +116,7 @@ function Mypage() {
       return;
     }
 
-    const proxyId = selectedItem.id;
+    const proxyId = selectedItem.proxyId;
 
   };
 
@@ -120,7 +133,7 @@ function Mypage() {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('profileImg', file);
 
     try {
       const response = await axiosInstance.post('/user/profileImg', formData, {
@@ -138,10 +151,12 @@ function Mypage() {
 
   const handleMyResumeClick = () => {
     setSelectedEdit('proxy');
+    setActiveTab('proxy');
   };
 
   const handleMyWaitMateClick = () => {
     setSelectedEdit('waitmate');
+    setActiveTab('waitmate');
   };
 
   const toggleEditButton = () => {
@@ -156,7 +171,7 @@ function Mypage() {
     console.log(item);
     console.log(selectedItem);
     if (selectedItem) {
-      const proxyId = selectedItem.id; // proxyId를 얻어옴
+      const proxyId = selectedItem.proxyId; // proxyId를 얻어옴
       console.log(proxyId);
       navigate(`/proxy/update/${proxyId}`);
     }
@@ -165,7 +180,7 @@ function Mypage() {
   const handleEditWaitmate = () => {
     console.log(selectedItem);
     if (selectedItem) {
-      const wmId = selectedItem.id; // wmId를 얻어옴
+      const wmId = selectedItem.wmId; // wmId를 얻어옴
       navigate(`/waitMate/update/${wmId}`);
     }
   };
@@ -173,10 +188,25 @@ function Mypage() {
   const renderButtons = () => {
     if (activeTab === 'proxy') {
       return (
-        <div className="w-[600px] flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-          <div className="flex space-x-2 w-[600px]">
+        <div
+          className={`flex ${
+            isSmallScreen
+              ? 'flex-col space-y-2 mb-4 w-full'
+              : 'flex-row space-y-0 space-x-2 mb-4 w-[600px]'
+          }`}
+        >
+          <div
+            className={`flex ${
+              isSmallScreen
+                ? 'flex-row w-full h-20 space-x-1 space-y-2 text-sm '
+                : 'space-x-2 w-[600px] '
+            }`}
+          >
             <button
-              onClick={handleMyResumeClick}
+              onClick={() => {
+                getProxy();
+                handleMyResumeClick();
+              }}
               className={`${baseButtonClasses} ${responsiveButtonClasses}`}
             >
               나의 이력서
@@ -201,7 +231,10 @@ function Mypage() {
       return (
         <div className="flex space-x-2 mb-4">
           <button
-            onClick={getMyWMList}
+            onClick={() => {
+              getMyWMList();
+              handleMyWaitMateClick();
+            }}
             className={`${baseButtonClasses} ${responsiveButtonClasses}`}
           >
             내가 등록한 웨메 리스트
@@ -235,23 +268,39 @@ function Mypage() {
   const renderListItems = () => {
     return listItems.map((item, index) => (
       <div key={index} className="p-2" onClick={() => handleSelectItem(item)}>
-        <h4>{item.name}</h4>
+        <h4>{item.title}</h4>
         <p>{item.description}</p>
       </div>
     ));
   };
 
   return (
-    <div className="background min-h-screen ">
-      <h1 className="ml-10 mt-10 text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-semibold mb-2">
+    <div>
+      <h1
+        className={`mt-10 ${
+          isSmallScreen ? 'text-center text-4xl' : 'ml-10 text-3xl'
+        } sm:ml-10 sm:text-4xl md:text-5xl lg:text-6xl text-primary font-semibold mb-2`}
+      >
         My Page
       </h1>
 
-      <div className="mx-4 md:mx-10 flex flex-row">
-        <div className="w-60">
-          <div className="flex flex-col md:flex-row items-start mb-6 border-primary">
+      <div
+        className={`${
+          isSmallScreen ? 'flex flex-col' : 'flex flex-row'
+        } justify-center w-full h-full items-center`}
+      >
+        <div
+          className={`${
+            isSmallScreen ? 'flex flex-row' : 'flex'
+          } justify-center w-full h-full items-center`}
+        >
+          <div className="flex flex-row md:flex-row items-start mb-6 border-primary">
             <div
-              className={`ml-10 mr-4 flex flex-col items-center mb-6 md:mb-0 ${responsiveProfileClasses}`}
+              className={`${
+                isSmallScreen
+                  ? 'flex-col items-center mb-6'
+                  : 'ml-10 mr-4 flex flex-col items-center mb-6 md:mb-0'
+              } ${responsiveProfileClasses}`}
             >
               <img
                 src={profileImg}
@@ -266,12 +315,16 @@ function Mypage() {
                 style={{ display: 'none' }}
                 id="profile-upload"
               />
-              <label
-                htmlFor="profile-upload"
-                className="background text-primary w-44 h-8 py-1 rounded-lg text-center text-sm  border-2 border-primary cursor-pointer"
-              >
-                프로필 사진 Edit
-              </label>
+              <div className="flex justify-center items-center">
+                <label
+                  htmlFor="profile-upload"
+                  className={`background text-primary ${
+                    isSmallScreen ? 'w-44 ' : 'w-44'
+                  } h-8 py-1 rounded-lg text-center text-sm border-2 border-primary cursor-pointer`}
+                >
+                  프로필 사진 Edit
+                </label>
+              </div>
               <div className="flex flex-row w-44 py-2">
                 <div className="pr-2">
                   <button
@@ -293,13 +346,15 @@ function Mypage() {
             </div>
           </div>
         </div>
-        <div className="flex-grow">
+        <div className={`${isSmallScreen ? 'w-full h-auto' : 'w-[600px]'}  `}>
           <div
-            className={`${responsiveButtonContainer} justify-center md:justify-start`}
+            className={`${
+              isSmallScreen ? 'w-full h-auto' : 'w-[600px] h-12'
+            } ${responsiveButtonContainer} overflow-auto justify-center md:justify-start`}
           >
             <button
               onClick={() => setActiveTab('proxy')}
-              className={`${basicButtonClasses} ${responsiveButtonClasses}`}
+              className={`${basicButtonClasses} ${responsiveButtonClasses} `}
             >
               My Proxy
             </button>
@@ -313,7 +368,11 @@ function Mypage() {
 
           <div className="mt-4">{renderButtons()}</div>
 
-          <div className="bg-white rounded-lg mt-4 p-4 w-[600px] h-80 border-2 border-primary overflow-auto">
+          <div
+            className={`bg-white rounded-lg mt-4 p-4 ${
+              isSmallScreen ? 'w-full h-48' : 'w-[600px] h-80'
+            } border-2 border-primary overflow-auto`}
+          >
             {listItems.length === 0 ? (
               <p>데이터가 없습니다.</p>
             ) : (
@@ -323,8 +382,16 @@ function Mypage() {
                   className={`${responsiveListItem} cursor-pointer`}
                   onClick={() => handleSelectItem(item)}
                 >
-                  <h4>{item.name}</h4>
-                  <p>{item.description}</p>
+                  <div className="border-2 border-primary rounded-md">
+                    <h4>{item.title}</h4>
+                    <p>{item.description}</p>
+                    <h4>{item.likeId}</h4>
+                    <p>
+                      {item.createdAt}
+                      {item.wmId}
+                      {item.id}
+                    </p>
+                  </div>
                 </div>
               ))
             )}
