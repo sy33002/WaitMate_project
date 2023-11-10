@@ -24,7 +24,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${apiUrl}/proxy/list?address=${address}&order=${selectedOption}`, {
+        const response = await fetch(`https://sesac-projects.site/wapi/proxy/list?address=${address}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {

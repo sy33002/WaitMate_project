@@ -11,7 +11,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
-    fetch(`${apiUrl}/proxy/update/${id}`)
+    fetch(`https://sesac-projects.site/wapi/proxy/update/${id}`)
     .then(response => response.json())
     .then(data => {
       setProxy(data.result);
@@ -59,7 +59,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     formData.append('proxyMsg', data.proxyMsg);
    
     try {
-      const response = await fetch(`${apiUrl}/proxy/`, {
+      const response = await fetch(`https://sesac-projects.site/wapi/proxy/`, {
         method: 'PATCH',
         body: formData,
       });

@@ -57,7 +57,7 @@ export default function ProxyRegister() {
       formData.append('photo', new File([''], '/images/proxy.png', { type: 'image/png' }));
     }
     axios({
-      url: `${apiUrl}/proxy/register`,
+      url: `https://sesac-projects.site/wapi/proxy/register`,
       method: 'post',
       data: formData,
     })

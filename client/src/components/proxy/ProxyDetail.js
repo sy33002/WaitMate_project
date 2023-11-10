@@ -59,7 +59,7 @@ export default function ProxyDetail() {
     }
   };
   useEffect(() => {
-    fetch(`http://localhost:8080/proxy/detail/${proxyId}`, {
+    fetch(`https://sesac-projects.site/wapi/proxy/detail/${proxyId}`, {
       withCredentials: true,
     })
       .then((response) => response.json())

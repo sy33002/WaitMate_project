@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useUserStore from '../../store/useUserStore';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
+import axios from 'axios';
 
 function Mypage() {
   const {
@@ -38,11 +39,23 @@ function Mypage() {
     'flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2';
   const responsiveListItem = 'p-2';
 
+  console.log(id);
+  axios({
+    url : `https://sesac-projects.site/wapi/proxy/proxyOne/${id}`,
+    method : 'get'
+   })
+   .then((res)=>{
+    console.log(res.data);
+   })
+   .catch((err)=>{
+    console.error(err);
+   });
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
         if (url !== '') {
-          console.log('send request');
+          // 나머지 코드는 그대로 두고, 첫 번째 요청을 보내도록 수정
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -58,8 +71,10 @@ function Mypage() {
         console.error('Error:', error);
         setError('데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.');
       }
+  
+    
     };
-
+  
     setUserInfo();
     fetchItems();
   }, [url, setUserInfo]);
@@ -90,15 +105,6 @@ function Mypage() {
 
     const proxyId = selectedItem.id;
 
-    try {
-      const response = await axiosInstance.get(`/proxy/getter/${proxyId}`);
-      console.log('Proxy information: ', response.data);
-    } catch (error) {
-      console.error('Error fetching proxy information:', error);
-      setError(
-        '프록시 정보를 가져오는데 실패했습니다. 나중에 다시 시도해주세요.'
-      );
-    }
   };
 
   const handleMyLikedWaitMatesClick = async () => {
@@ -323,6 +329,8 @@ function Mypage() {
               ))
             )}
           </div>
+          
+
           <div className="mt-2">
             {selectedEdit === 'proxy' && (
               <button
@@ -333,6 +341,7 @@ function Mypage() {
               </button>
             )}
           </div>
+
           <div className="mt-2">
             {selectedEdit === 'waitmate' && (
               <button
