@@ -79,7 +79,8 @@ export default function Main() {
             <button
               class="kakao_login"
               onClick={() => {
-                window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${apiKey}&redirect_uri=${apiUrl}/user/kakao`;
+                const redirectUri = encodeURIComponent(`${apiUrl}/user/kakao`);
+                window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${apiKey}&redirect_uri=${redirectUri}`;
               }}
             ></button>
           </div>
