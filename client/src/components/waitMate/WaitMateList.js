@@ -69,13 +69,13 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         <div className={`${isSmallScreen? 'justify-between' : ''} flex w-full justify-between`}>
             <select 
             onChange={handleOption} 
-            className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
+            className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-primary p-2 font-Line bg-background'}`}>
               <option value='updatedAt'>최근 목록순</option>
               <option value='pay'>시급순</option>
               <option value='count'>조회순</option>
             </select>
             <div className='flex items-center w-64'>
-            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
+            <span className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} font-Line text-primary text-md pr-2`}>지역 검색</span>
             <Select
               defaultValue={cities.find(city => city.value === cookies.address)} 
               className={`${isSmallScreen ? 'text-[10px] w-2/3' : 'text-[12px] w-2/3'} text-primary font-Line text-sm'}`}
@@ -99,7 +99,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
         if (index % 2 === 0) {
           const nextItem = currentItems[index + 1];
           return (
-            <div key={item.wdId} className="flex w-full h-1/2justify-center item-center">
+            <div key={item.wdId} className="flex w-full h-1/2 justify-center item-center">
               <div className='w-1/2 p-1'>
               <Link to={`/waitMate/detail/${item.wmId}`}>
                 <WaitMateBox item={item} isSmallScreen={isSmallScreen} />
