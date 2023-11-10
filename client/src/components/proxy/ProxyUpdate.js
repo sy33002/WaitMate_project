@@ -11,15 +11,16 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
-    fetch(`${apiUrl}/proxy/update/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProxy(data.result);
-        console.log(data.result);
-      })
-      .catch((error) => {
-        console.error('데이터 가져오는 중 오류 발생!', error);
-      });
+
+    fetch(`https://sesac-projects.site/wapi/proxy/update/${id}`)
+    .then(response => response.json())
+    .then(data => {
+      setProxy(data.result);
+      console.log(data.result);
+    })
+    .catch(error => {
+      console.error('데이터 가져오는 중 오류 발생!', error);
+    });
   }, []);
 
   const [inputAddressValue, setInputAddressValue] = useState(proxy.address);
@@ -58,7 +59,7 @@ export default function ProxyRegister({ id, nickname, photo, userId }) {
     formData.append('proxyMsg', data.proxyMsg);
 
     try {
-      const response = await fetch(`${apiUrl}/proxy/`, {
+      const response = await fetch(`https://sesac-projects.site/wapi/proxy/`, {
         method: 'PATCH',
         body: formData,
       });

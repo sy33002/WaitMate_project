@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useUserStore from '../../store/useUserStore';
 import { useNavigate } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
+import axios from 'axios';
 
 function Mypage() {
   const {
@@ -40,11 +41,23 @@ function Mypage() {
     'flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2';
   const responsiveListItem = 'p-2';
 
+  console.log(id);
+  axios({
+    url : `https://sesac-projects.site/wapi/proxy/proxyOne/${id}`,
+    method : 'get'
+   })
+   .then((res)=>{
+    console.log(res.data);
+   })
+   .catch((err)=>{
+    console.error(err);
+   });
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
         if (url !== '') {
-          console.log('send request');
+          // 나머지 코드는 그대로 두고, 첫 번째 요청을 보내도록 수정
           fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -66,8 +79,10 @@ function Mypage() {
         console.error('Error:', error);
         setError('데이터를 불러오는데 실패했습니다. 나중에 다시 시도해주세요.');
       }
+  
+    
     };
-
+  
     setUserInfo();
     fetchItems();
   }, [url, setUserInfo]);
@@ -103,15 +118,6 @@ function Mypage() {
 
     const proxyId = selectedItem.proxyId;
 
-    try {
-      const response = await axiosInstance.get(`/proxy/getter/${proxyId}`);
-      console.log('Proxy information: ', response.data);
-    } catch (error) {
-      console.error('Error fetching proxy information:', error);
-      setError(
-        '프록시 정보를 가져오는데 실패했습니다. 나중에 다시 시도해주세요.'
-      );
-    }
   };
 
   const handleMyLikedWaitMatesClick = async () => {
@@ -260,12 +266,38 @@ function Mypage() {
   };
 
   const renderListItems = () => {
-    return listItems.map((item, index) => (
-      <div key={index} className="p-2" onClick={() => handleSelectItem(item)}>
-        <h4>{item.title}</h4>
-        <p>{item.description}</p>
-      </div>
-    ));
+    return listItems.map((item, index) => {
+      // '내가 찜한 웨메 리스트' 탭이 활성화된 경우에만 특정 데이터를 렌더링합니다.
+      if (activeTab === 'proxy') {
+        return (
+          <div
+            key={index}
+            className={`${responsiveListItem} cursor-pointer`}
+            onClick={() => handleSelectItem(item)}
+          >
+            <div className="border-2 border-primary rounded-md p-2">
+              {/* '내가 찜한 웨메 리스트' 탭에서는 wmId와 createdAt만 렌더링합니다. */}
+              <h4>내가 찜한 WaitMate {item.wmId}</h4>
+              <p>찜한 날! {item.createdAt}</p>
+            </div>
+          </div>
+        );
+      }
+      // 다른 탭에서는 다른 데이터를 렌더링하거나 다른 레이아웃을 적용할 수 있습니다.
+      // 여기서는 예시로 id, title, description을 렌더링하는 코드를 추가할 수 있습니다.
+      return (
+        <div
+          key={index}
+          className={`${responsiveListItem} cursor-pointer`}
+          onClick={() => handleSelectItem(item)}
+        >
+          <div className="border-2 border-primary rounded-md p-2">
+            <h4>{item.title}</h4>
+            <p>{item.description}</p>
+          </div>
+        </div>
+      );
+    });
   };
 
   return (
@@ -286,9 +318,13 @@ function Mypage() {
         <div
           className={`${
             isSmallScreen ? 'flex flex-row' : 'flex'
-          } justify-center w-full h-full items-center`}
+          } justify-center w-80 h-full items-center`}
         >
-          <div className="flex flex-row md:flex-row items-start mb-6 border-primary">
+          <div
+            className={`flex ${
+              isSmallScreen ? 'flex-col' : 'flex-row'
+            } items-start mb-6 border-primary`}
+          >
             <div
               className={`${
                 isSmallScreen
@@ -368,7 +404,7 @@ function Mypage() {
             } border-2 border-primary overflow-auto`}
           >
             {listItems.length === 0 ? (
-              <p>데이터가 없습니다.</p>
+              <p></p>
             ) : (
               listItems.map((item, index) => (
                 <div
@@ -377,20 +413,21 @@ function Mypage() {
                   onClick={() => handleSelectItem(item)}
                 >
                   <div className="border-2 border-primary rounded-md">
-                    <h4>{item.title}</h4>
+                    <h4>title : {item.title}</h4>
                     <p>{item.description}</p>
-                    <h4>{item.likeId}</h4>
-                    <p>
-                      {item.createdAt}
-                      {item.wmId}
-                      {item.id}
-                    </p>
+                    <h4> {item.wmId}</h4>
+                    <p> {item.createdAt}</p>
                   </div>
                 </div>
               ))
             )}
           </div>
+          
+
           <div className="mt-2">
+            <p className="text-md text-primary">
+              수정하고 싶은 list를 클릭 후 수정해주세요!
+            </p>
             {selectedEdit === 'proxy' && (
               <button
                 onClick={handleEditResume}
@@ -400,6 +437,7 @@ function Mypage() {
               </button>
             )}
           </div>
+
           <div className="mt-2">
             {selectedEdit === 'waitmate' && (
               <button
