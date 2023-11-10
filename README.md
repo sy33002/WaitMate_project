@@ -179,7 +179,7 @@ ex) header-#4
     <tbody>
      <tr>
      <td align="center">
-       메인페이지
+       메인페이지&로그인
       </td>
       <td align="center">
        로그인&회원가입
@@ -187,19 +187,19 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/82f9f92e-e467-4c41-9495-9e2bd44d699c">
      </td>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
       </td>
      </tr>
      <tr>
-      <td align="center">편지함 조회 및 페이징</td>
+      <td align="center">웨이트메이트(요청자) 공고 등록</td>
       <td align="center">마이페이지</td>
      </tr>
      <tr>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
       </td>
        <td>
          <img width="100%" height="30%" src="">
@@ -230,7 +230,7 @@ ex) header-#4
       </td>
      </tr>
      <tr>
-      <td align="center"> 404에러페이지 </td>
+      <td align="center"> 404 에러페이지 </td>
      </tr>
      <tr>
        <td>
