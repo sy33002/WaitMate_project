@@ -16,6 +16,7 @@ export default function Chat() {
   const [proxyPayId, setProxyPayId] = useState('');
   const [error, setError] = useState(null);
   const { id } = useUserStore();
+  console.log(id);
   const Navigate = useNavigate();
   const inputReference = useRef();
   const { roomNumber } = useParams();
