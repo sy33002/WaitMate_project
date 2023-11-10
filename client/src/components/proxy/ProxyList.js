@@ -24,7 +24,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${apiUrl}/proxy/list?address=${address}&order=${selectedOption}`, {
+        const response = await fetch(`https://sesac-projects.site/wapi/proxy/list?address=${address}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {
@@ -82,7 +82,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
                 if (selectedOption) {
                   setAddress(selectedOption.value);
                   setCookie('address', selectedOption.value, 
-                  { path: '/', maxAge: 6000, secure: false });
+                  { path: '/', maxAge: 600, secure: false });
                 } else {
                   setAddress(null);
                 }

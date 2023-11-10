@@ -46,7 +46,7 @@ export default function ProxyRegister() {
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
-    formData.append('id', 2);
+    formData.append('id', id);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
@@ -57,7 +57,7 @@ export default function ProxyRegister() {
       formData.append('photo', new File([''], '/images/proxy.png', { type: 'image/png' }));
     }
     axios({
-      url: `${apiUrl}/proxy/register`,
+      url: `https://sesac-projects.site/wapi/proxy/register`,
       method: 'post',
       data: formData,
     })
