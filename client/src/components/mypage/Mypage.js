@@ -7,6 +7,8 @@ import axios from 'axios';
 function Mypage() {
   const {  id, userId, nickname, profileImg, setProfileImage, setUserInfo, logout,} = useUserStore();
   const [myResume, setMyResume] = useState([]);
+  const [myLikeList, setMyLikeList] = useState([]);
+  const [myWaitMateList, setMyWaitMateList] = useState([]);
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
 
@@ -36,6 +38,7 @@ function Mypage() {
     }
   };
 
+  // My Proxy - 나의 이력서
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -45,6 +48,50 @@ function Mypage() {
   //       if (response.ok) {
   //         const {list} = await response.json();
   //         setMyResume(list);
+  //       } else {
+  //         console.log('데이터 가져오기 실패!');
+  //       }
+  //     } catch (error) {
+  //       console.log('데이터 가져오는 중 오류 발생', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  // My Proxy - 내가 찜한 웨이트메이트 list
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`https://sesac-projects.site/wapi/likeWait/list/id=${id}`, {
+  //           method: 'GET',
+  //         });
+  //       if (response.ok) {
+  //         const {getLikeWaitList} = await response.json();
+  //         setMyLikeList(getLikeWaitList);
+  //       } else {
+  //         console.log('데이터 가져오기 실패!');
+  //       }
+  //     } catch (error) {
+  //       console.log('데이터 가져오는 중 오류 발생', error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchData();
+  // }, []);
+
+  // My WaitMate - 내가 작성한 웨이트메이트 list
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`https://sesac-projects.site/wapi/waitMate/myWaitMate/id=${id}`, {
+  //           method: 'GET',
+  //         });
+  //       if (response.ok) {
+  //         const {myWaitMates} = await response.json();
+  //         setMyWaitMateList(myWaitMates);
   //       } else {
   //         console.log('데이터 가져오기 실패!');
   //       }
