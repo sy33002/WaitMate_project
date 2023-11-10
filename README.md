@@ -57,6 +57,68 @@
    
 ## 📢 컨벤션
 
+   <div>
+     <table>
+       <tr>
+        <td>
+          코딩 컨벤션
+        </td>
+        <td>
+          깃 컨벤션
+        </td>
+       </tr>
+       <tr>
+         <td>코딩 변수쪽
+
+1. 변수, 함수, 인스턴스를 작성할 때는 ‘카멜케이스’를 사용한다.
+
+  ex) camelCase
+
+ 2.  함수명을 작성할 때는 동사 + 명사 형태로 구성한다.
+
+ ex) getUserInfomation()
+
+1. Class, Constructor를 작성할 때는 *Pascal Case(=upper 카멜 케이스)*를 사용합니다
+
+ ex) CamelCase
+
+ **글자의 길이**
+
+글자의 길이는 20자 이내로 제한합니다. <br>
+4 단어 이상이 들어가거나, <br>
+부득이하게 20자 이상이 되는 경우 팀원과의 상의를 거칩시다.
+
+**약칭의 사용**
+
+약어는 되도록 명시성을 위해서 사용을 지양하도록 합니다.<br>
+부득이 약어가 필요한 경우에는 미리 말씀 부탁드립니다
+
+**따옴표의 사용**
+
+홑따옴표를 많이 이용할 것
+ </td>
+         <td>
+           1. 새로운 이슈 생성하기(이슈 설명 적기)<br>
+2. 이슈 번호를 PR 날릴 브랜치 이름(이슈 이름) + - # + 이슈번호
+ex) header-#4
+
+3. 해당 브랜치 PR날린 후 approve 되면 이슈 종료하기
+- git branch 브랜치 이름(이슈 이름) + -# + 이슈번호
+- ⭐️ git pull origin develop ⭐️
+- git add .
+- git commit -m “커밋 메세지 : description”(설명 자세히 해주시면 더 좋습니다)
+- git push origin branch (pr올릴 브랜치 이름)
+- 깃헙에서 PR작성
+- PR 날릴 브랜치로 merge하는 PR작성후 assignes 에서 레포지토리 멤버 선택
+- 한분이 approve 해주시면 merge 성공
+- 항상 git merge origin develop 해주시고 충돌시 vscode안에서 코드 비교후 병합 하신후 작업 진행하시면 됩니다.
+- 깃 브랜치 이동하실때 되도록이면 git commit 다 하시고 브랜치 이동 하시면 좋을것같습니다.
+- 만일 commit 올리기 전 변동 사항을 저장 하고 싶으시면 git stash 해서 저장 후 브랜치 이동하시면 됩니다!
+         </td>
+       </tr> 
+     </table>
+   </div>
+
 
 
 ## ⭕ 라이브러리
