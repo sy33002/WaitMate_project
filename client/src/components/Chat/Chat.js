@@ -97,6 +97,7 @@ export default function Chat() {
       });
     }
   }, [id, Navigate]);
+  
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
       const currentTime = new Date().toLocaleTimeString([], {

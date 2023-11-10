@@ -3,8 +3,9 @@ import WaitMateBox from './WaitMateBox';
 import { Link } from 'react-router-dom';
 import Select from "react-select";
 import { useCookies } from "react-cookie";
+import useUserStore from '../../store/useUserStore';
 
-export default function WaitMateList({cities, id, nickname, photo, userId }) {
+export default function WaitMateList() {
   const [selectedOption, setSelectedOption] = useState('updatedAt');
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ export default function WaitMateList({cities, id, nickname, photo, userId }) {
   const isSmallScreen = window.innerWidth < 700;
   const apiUrl = process.env.REACT_APP_URL;
   const itemsPerPage = 4;
+  const {cities, id, nickname, photo, userId } = useUserStore();
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
