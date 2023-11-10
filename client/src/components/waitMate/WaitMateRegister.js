@@ -243,7 +243,7 @@ export default function WaitMateRegister({ id, nickname, photo, userId }) {
       </div>
       {showModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-primary p-4 rounded-md w-1/3 text-center">
+          <div className="bg-white p-4 rounded-md w-1/3 text-center">
             <p className="mb-4">등록 완료!</p>
             <button
               onClick={handleModalConfirm}
