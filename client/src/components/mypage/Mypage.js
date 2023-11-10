@@ -260,12 +260,38 @@ function Mypage() {
   };
 
   const renderListItems = () => {
-    return listItems.map((item, index) => (
-      <div key={index} className="p-2" onClick={() => handleSelectItem(item)}>
-        <h4>{item.title}</h4>
-        <p>{item.description}</p>
-      </div>
-    ));
+    return listItems.map((item, index) => {
+      // '내가 찜한 웨메 리스트' 탭이 활성화된 경우에만 특정 데이터를 렌더링합니다.
+      if (activeTab === 'proxy') {
+        return (
+          <div
+            key={index}
+            className={`${responsiveListItem} cursor-pointer`}
+            onClick={() => handleSelectItem(item)}
+          >
+            <div className="border-2 border-primary rounded-md p-2">
+              {/* '내가 찜한 웨메 리스트' 탭에서는 wmId와 createdAt만 렌더링합니다. */}
+              <h4>내가 찜한 WaitMate {item.wmId}</h4>
+              <p>찜한 날! {item.createdAt}</p>
+            </div>
+          </div>
+        );
+      }
+      // 다른 탭에서는 다른 데이터를 렌더링하거나 다른 레이아웃을 적용할 수 있습니다.
+      // 여기서는 예시로 id, title, description을 렌더링하는 코드를 추가할 수 있습니다.
+      return (
+        <div
+          key={index}
+          className={`${responsiveListItem} cursor-pointer`}
+          onClick={() => handleSelectItem(item)}
+        >
+          <div className="border-2 border-primary rounded-md p-2">
+            <h4>{item.title}</h4>
+            <p>{item.description}</p>
+          </div>
+        </div>
+      );
+    });
   };
 
   return (
@@ -372,7 +398,7 @@ function Mypage() {
             } border-2 border-primary overflow-auto`}
           >
             {listItems.length === 0 ? (
-              <p>데이터가 없습니다.</p>
+              <p></p>
             ) : (
               listItems.map((item, index) => (
                 <div
@@ -381,20 +407,19 @@ function Mypage() {
                   onClick={() => handleSelectItem(item)}
                 >
                   <div className="border-2 border-primary rounded-md">
-                    <h4>{item.title}</h4>
+                    <h4>title : {item.title}</h4>
                     <p>{item.description}</p>
-                    <h4>{item.likeId}</h4>
-                    <p>
-                      {item.createdAt}
-                      {item.wmId}
-                      {item.id}
-                    </p>
+                    <h4> {item.wmId}</h4>
+                    <p> {item.createdAt}</p>
                   </div>
                 </div>
               ))
             )}
           </div>
           <div className="mt-2">
+            <p className="text-md text-primary">
+              수정하고 싶은 list를 클릭 후 수정해주세요!
+            </p>
             {selectedEdit === 'proxy' && (
               <button
                 onClick={handleEditResume}
