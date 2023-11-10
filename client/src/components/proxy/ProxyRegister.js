@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios'; 
-
+import useUserStore from '../../store/useUserStore';
 import {  useNavigate } from 'react-router-dom';
 
 export default function ProxyRegister() {
@@ -11,7 +11,8 @@ export default function ProxyRegister() {
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
-  const id = 5;
+  const { id } = useUserStore();
+  console.log('id값', id);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
