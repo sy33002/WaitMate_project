@@ -82,7 +82,7 @@ export default function WaitMateList({ cities, id, nickname, photo, userId }) {
                 if (selectedOption) {
                   setAddress(selectedOption.value);
                   setCookie('address', selectedOption.value, 
-                  { path: '/', maxAge: 6000, secure: false });
+                  { path: '/', maxAge: 600, secure: false });
                 } else {
                   setAddress(null);
                 }
