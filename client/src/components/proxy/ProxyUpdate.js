@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios';
+import useUserStore from '../../store/useUserStore';
 
-export default function ProxyRegister({ id, nickname, photo, userId }) {
+export default function ProxyRegister() {
   const { control, handleSubmit, formState, setValue } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
   const [proxy, setProxy] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
+  const { cities, id, nickname, photo, userId } = useUserStore();
 
   useEffect(() => {
 
