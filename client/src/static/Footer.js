@@ -1,10 +1,14 @@
 import React from 'react';
 import './footer.scss';
 export default function Footer() {
+  const isSmallScreen = window.innerWidth < 700;
+
   return (
     <footer class="bottom-0 h-10 w-full bg-gray-200 z-20">
-      <div className="footer-content">
-        <div className="footer-container">
+
+      <div className="title4 footer-content">
+        <div className={`${isSmallScreen ? 'text-[8px]' : 'text-[11px]'} footer-container`}>
+
           <div className="footer-item">
             <div className="footer-item-title">FE</div>
             <hr />
