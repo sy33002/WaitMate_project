@@ -5,7 +5,15 @@ import { axiosInstance } from '../common/axiosInstance';
 import axios from 'axios';
 
 function Mypage() {
-  const {  id, userId, nickname, profileImg, setProfileImage, setUserInfo, logout,} = useUserStore();
+  const {
+    id,
+    userId,
+    nickname,
+    profileImg,
+    setProfileImage,
+    setUserInfo,
+    logout,
+  } = useUserStore();
   const [myResume, setMyResume] = useState([]);
   const [myLikeList, setMyLikeList] = useState([]);
   const [myWaitMateList, setMyWaitMateList] = useState([]);
@@ -15,6 +23,11 @@ function Mypage() {
   const handleLogout = async () => {
     await logout();
     navigate('/');
+  };
+
+  const handelUserinfo = async () => {
+    await setUserInfo();
+    navigate('/register/UserInfo');
   };
 
   const handleImageUpload = async (event) => {
@@ -105,42 +118,113 @@ function Mypage() {
   // }, []);
 
   return (
-    <div className={`w-full h-screen text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}>
-      <h1 className={`${isSmallScreen? 'text-[20px]' : 'text-[30px] mt-3 p-4'}`}>My page</h1>
-    <div className={` w-full h-screen text-primary_dark font-Line flex ${isSmallScreen ? 'flex-col' : ''} m-1 p-1`}>
-      <div className={`flex ${isSmallScreen? 'w-full h-2/5 p-2' : 'w-1/3 h-4/5'}  items-center`}>
-        <div className={`flex flex-col items-center justify-center ${isSmallScreen? 'h-full' : 'h-4/5'}  w-full`}>
-          <div className={`${isSmallScreen? ' w-3/5 h-3/5' : 'h-1/4 w-4/5'} bg-white rounded-lg`}><img src={profileImg} alt="Profile" /></div>
-          <input type="file" onChange={handleImageUpload} id="profile-upload" />
-          <button onClick={handleLogout}>Log Out</button>
-        </div>
-      </div>
-      <div className='w-full h-4/5'>
-        <div className={`flex w-full ${isSmallScreen ? 'h-120' : 'h-24'}`}>
-          <div className={`${isSmallScreen? 'text-[16px]' : 'text-[16px]'} w-1/2`}>
-          <button className='bg-primary text-background px-2 rounded-lg'>My Proxy</button>
-            <div className={`flex  flex-col p-2 ${isSmallScreen? 'text-[10px]' : 'text-[14px]'}`}>
-              <button onClick={() => {}}>나의 이력서</button>
-              <button>내가 찜한 웨이트메이트 list</button>
+    <div
+      className={`w-full h-screen text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}
+    >
+      <h1
+        className={`${isSmallScreen ? 'text-[20px]' : 'text-[30px] mt-3 p-4'}`}
+      >
+        My page
+      </h1>
+      <div
+        className={` w-full h-screen text-primary_dark font-Line flex ${
+          isSmallScreen ? 'flex-col' : ''
+        } m-1 p-1`}
+      >
+        <div
+          className={`flex ${
+            isSmallScreen ? 'w-full h-2/5 p-2' : 'w-1/3 h-4/5'
+          }  items-center`}
+        >
+          <div
+            className={`flex flex-col items-center justify-center ${
+              isSmallScreen ? 'h-full' : 'h-4/5'
+            }  w-full`}
+          >
+            <div
+              className={`${
+                isSmallScreen ? ' w-3/5 h-3/5' : 'h-1/4 w-4/5'
+              } bg-white rounded-lg`}
+            >
+              <img src={profileImg} alt="Profile" />
+            </div>
+            <input
+              type="file"
+              onChange={handleImageUpload}
+              id="profile-upload"
+            />
+            <div className="flex flex-row space-x-2">
+              <button
+                onClick={handleLogout}
+                className="bg-primary text-background px-2 rounded-lg"
+              >
+                Log Out
+              </button>
+              <button
+                onClick={handelUserinfo}
+                className="bg-primary text-background px-2 rounded-lg"
+              >
+                회원정보 수정
+              </button>
             </div>
           </div>
-          <div className={`${isSmallScreen? 'text-[16px]' : 'text-[16px]'} w-1/2`}>
-          <button className='bg-primary text-background px-2 rounded-lg'>My WaitMate</button>
-          <div className={`flex flex-col p-2 ${isSmallScreen? 'text-[10px]' : 'text-[14px]'}`}>
-              <button>나의 웨이트메이트 목록</button>
-              <button>거래 완료 list</button>
+        </div>
+        <div className="w-full h-4/5">
+          <div className={`flex w-full ${isSmallScreen ? 'h-120' : 'h-24'}`}>
+            <div
+              className={`${
+                isSmallScreen ? 'text-[16px]' : 'text-[16px]'
+              } w-1/2`}
+            >
+              <button className="bg-primary text-background px-2 rounded-lg">
+                My Proxy
+              </button>
+              <div
+                className={`flex  flex-col p-2 ${
+                  isSmallScreen ? 'text-[10px]' : 'text-[14px]'
+                }`}
+              >
+                <button
+                  onClick={() => {}}
+                  className="border-2 border-primary rounded-lg"
+                >
+                  나의 이력서
+                </button>
+                <button className="border-2 border-primary rounded-lg">
+                  내가 찜한 웨이트메이트 list
+                </button>
+              </div>
+            </div>
+            <div
+              className={`${
+                isSmallScreen ? 'text-[16px]' : 'text-[16px]'
+              } w-1/2`}
+            >
+              <button className="bg-primary text-background px-2 rounded-lg">
+                My WaitMate
+              </button>
+              <div
+                className={`flex flex-col p-2 ${
+                  isSmallScreen ? 'text-[10px]' : 'text-[14px]'
+                }`}
+              >
+                <button className="border-2 border-primary rounded-lg">
+                  나의 웨이트메이트 목록
+                </button>
+                <button className="border-2 border-primary rounded-lg">
+                  거래 완료 list
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-        <div className='w-full h-4/5 border-2 border-primary_dark rounded-lg'>
-
-
-
+          <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg"></div>
+          <button className="bg-primary text-background px-2 rounded-lg mt-2">
+            수정하기
+          </button>
         </div>
       </div>
     </div>
-    </div>
-  )
+  );
 }
 
 export default Mypage;
