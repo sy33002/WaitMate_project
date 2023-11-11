@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import {  useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 
-export default function WaitMateUpdate() {
+export default function WaitMateUpdate({photo}) {
   const { wmId } = useParams();
   const { control, handleSubmit, setValue, formState } = useForm();
   const [waitMate, setWaitMate] = useState({});
@@ -18,7 +18,7 @@ export default function WaitMateUpdate() {
   const [locationInfo, setLocationInfo] = useState({});
   const apiUrl = process.env.REACT_APP_URL;
   const navigate = useNavigate();
-  const { id, nickname, photo, userId } = useUserStore();
+  const { id, nickname, userId } = useUserStore();
   const handleModalConfirm = () => {
     navigate('/mypage/Mypage')
   };

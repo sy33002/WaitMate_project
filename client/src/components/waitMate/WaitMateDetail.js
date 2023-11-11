@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore';
 
-export default function WaitMateDetail({ id, nickname, photo, userId }) {
+export default function WaitMateDetail({photo}) {
   const { wmId } = useParams();
   const [waitMate, setWaitMate] = useState({});
   const [liked, setLiked] = useState(false);
@@ -12,6 +13,7 @@ export default function WaitMateDetail({ id, nickname, photo, userId }) {
   const [state, setState] = useState(false);
   const [changeDate, setChangeDate] = useState('');
   const navigate = useNavigate();
+  const {id, nickname, userId} = useUserStore();
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
