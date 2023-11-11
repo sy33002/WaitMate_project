@@ -14,7 +14,7 @@ export default function ProxyDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const apiUrl = process.env.REACT_APP_URL;
-
+  console.log(id);
   const handleUserSelect = (user) => {
     setSelectedUser(user);
   };
@@ -42,6 +42,7 @@ export default function ProxyDetail() {
       navigate(`/proxy/detail/chat/${data.roomNumber}`);
     });
     if (selectedUser) {
+      console.log('웨메 설정',selectedUser);
       socket.emit('createRoom', {
         sender: parseInt(id),
         receiver: parseInt(proxy.id),

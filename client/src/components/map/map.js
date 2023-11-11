@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
 import useUserStore from '../../store/useUserStore';
 
@@ -41,6 +42,7 @@ export default function MapComponent() {
         setUserAddress(data);
         data.forEach((data) => {
           console.log('data.lat', data.lat);
+          console.log('id', data.id);
         });
       })
       .catch((error) => {
