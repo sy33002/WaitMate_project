@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
 
-export default function MapComponent({ id }) {
-  const [userLocation, setUserLocation] = useState(null);
-  const [userAddress, setUserAddress] = useState([]);
-  const [isOpen, setIsOpen] = useState(false); // Control the overlay visibility
+export default function MapComponent() {
+  const [userLocation, setUserLocation] = useState(null); //자신의 위치
+  const [userAddress, setUserAddress] = useState([]); // 웨이트메이트 위치
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const isSmallScreen = window.innerWidth < 700;
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
+  const { id } = useUserStore();
 
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
@@ -40,6 +42,7 @@ export default function MapComponent({ id }) {
         setUserAddress(data);
         data.forEach((data) => {
           console.log('data.lat', data.lat);
+          console.log('id', data.id);
         });
       })
       .catch((error) => {

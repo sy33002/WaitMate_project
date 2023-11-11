@@ -26,7 +26,7 @@ export default function Chat() {
   const apiUrl = process.env.REACT_APP_URL;
   const chatContainerRef = useRef();
 
-  // Create a reference for the container element that holds the chat messages
+
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -36,7 +36,7 @@ export default function Chat() {
         chatContainerRef.current.scrollHeight;
     }
   }, []);
-  // Data loading
+
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
@@ -142,7 +142,7 @@ export default function Chat() {
     };
   }, []);
 
-  // Check if chatContainerRef is defined before attempting to scroll
+  
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -162,17 +162,13 @@ export default function Chat() {
     }
   }, [selectedStatus]);
 
-  // const parseImgData = (dataStringImg) => {
-
-  //   return dataStringImg
-  // }
-
+ 
   //결제 기능
   const PaymentsList = () => {
     console.log('페이먼츠', wm.id, proxyPayId);
     if (wm && proxy) {
       axios({
-        url: `${process.env.REACT_APP_URL}/payment/kakao`,
+        url: `${apiUrl}/payment/kakao`,
         method: 'post',
         data: {
           wmId: wm.wmId,
@@ -230,7 +226,7 @@ export default function Chat() {
                 msg.receiver !== receiver.userId ? proxy.photo : null
               );
               return (
-                // <div key={index} className={msg.sender === sender.userId ? 'me' : 'other'}>{`${msg.sender} ${msg.createdAt}`} === {msg.messageContent}</div>
+              
                 <MessageBox
                   key={index}
                   className={msg.sender === sender.userId ? 'me' : 'other'}
@@ -258,10 +254,8 @@ export default function Chat() {
               leftButtons={
                 id === userPayId && (
                   <Button
-                    key="paymentButton"
-                    color="#4CAF50"
-                    backgroundColor="transparent"
-                    text="결제하기"
+                    className="paymentButton"
+                    text="결제"
                     onClick={PaymentsList}
                   />
                 )

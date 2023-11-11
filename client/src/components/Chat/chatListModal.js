@@ -54,16 +54,19 @@ const UserListModal = ({ isOpen, onRequestClose, onUserSelect }) => {
               ))}
             </ul>
             {selectedUser && (
-              <div>
-                <h3>선택한 웨이트메이트</h3>
-                <br></br>
-                <img src={'https://sesac-projects.site/wapi/' + selectedUser.photo} alt={selectedUser.title} />
+              <>
+              <h3 >선택한 웨이트메이트</h3>
+              <div className='modal-container'>
+                <img className="modal_waitMate_img" src={'https://sesac-projects.site/wapi/' + selectedUser.photo} alt={selectedUser.title} />
+                <div className='modal-second-content'>
                 <p>번호: {selectedUser.wmId}</p>
                 <p>타이틀: {selectedUser.title}</p>
                 <p>주소: {selectedUser.wmAddress}</p>
                 <p>{selectedUser.wmDetailAddress}</p>
+                </div>
                 <button onClick={handleConfirmClick}>확인</button>
               </div>
+              </>
             )}
           </>
         )}
