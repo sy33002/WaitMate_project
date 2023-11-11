@@ -58,12 +58,18 @@ export default function ProxyRegister() {
       formData.append('photo', new File([''], '/images/proxy.png', { type: 'image/png' }));
     }
 
-    try{
-      const result = await axios.post('https://sesac-projects.site/wapi/proxy/register', formData);
-      console.log(result);
-    } 
-    catch(err){
-      console.error(err);
+    try {
+      const response = await fetch(`${apiUrl}/proxy/register`, {
+        method: 'POST',
+        body: formData,
+      });
+      if (response.ok) {
+        setShowModal(true);
+      } else {
+        console.log(response.status);
+      }
+    } catch (error) {
+      console.error('Error!');
     }
   };
 

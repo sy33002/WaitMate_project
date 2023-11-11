@@ -30,17 +30,17 @@
  
 ## 👨‍👩‍👧‍👦멤버구성
 * 김지형(sy33002) 프론트: 
-   - 헤더/사이드바/웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지/ 프록시 등록,리스트, 디테일, 업데이트 페이지/ 마이페이지
+   - 헤더/사이드바/웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지/ 프록시 등록,리스트, 디테일, 업데이트 페이지
 * 박장혁(Vamos-Hyuk)  프론트: 
-   - 
+   마이페이지/평점 후기 모달 페이지/404페이지/ 캐릭터 및 로고 디자인/로그인 및 회원가입/ 회원 수정 페이지
 * 정채림(ellin45)  프론트: 
    - 메인 페이지 애니메이션 적용 및 반응형 작업, 채팅 페이지 react-chat-elements 라이브러리로 구현 채팅과  소켓 연결, 반응형적용 ,맵 페이지 kakao-map 라이브러로 맵 구현 및 맵에 사용자 기반위치 적용후 마크표시기능, 마커를 통해 웨이트메이트 공고와 연결 
 * 이동규(LOBSTER10000) 백엔드 : 
    - Mysql&시퀄라이즈 모델 생성 후 연동, MongoDB&몽구스 스키마 생성 후 연동, 채팅 기능, 프록시 CRUD
 * 박준수(kdm111) 백엔드 : 
-   -
+   - 유저 CRUD, jwt 로그인, 리뷰 CRUD 기능, 웹 서버 배포, 카카오페이 API 기능 
 * 김효중(rlagywnd4) 백엔드 : 
-   - 웨이트메이트crud, 관심기능, 소켓을 활용한 웨이트메이트 상태 변경 기능, 마이페이지 정보 연동
+   - 웨이트메이트crud, 관심기능, 소켓을 활용한 웨이트메이트 상태 
 
 
 
@@ -179,62 +179,66 @@ ex) header-#4
     <tbody>
      <tr>
      <td align="center">
-       메인페이지
+       메인페이지&로그인
       </td>
       <td align="center">
-       로그인&회원가입
+       맵
       </td>
      </tr>
      <tr>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/82f9f92e-e467-4c41-9495-9e2bd44d699c">
      </td>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/d0ce996b-5753-4ef1-8753-64dcabf466f2">
       </td>
      </tr>
      <tr>
-      <td align="center">편지함 조회 및 페이징</td>
-      <td align="center">마이페이지</td>
+      <td align="center">웨이트메이트(요청자) 공고 등록</td>
+      <td align="center">웨메 리스트</td>
      </tr>
      <tr>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
       </td>
        <td>
-         <img width="100%" height="30%" src="">
+         <img width="100%" height="30%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/7cdb7df5-7070-45af-8436-c58d2fd397b2">
       </td>
      </tr>
       <tr>
-      <td align="center">편지함(친구신청 및 목록 확인)</td>
-      <td align="center">편지쓰기</td>
+      <td align="center">프록시(대기자) 이력서 등록</td>
+      <td align="center">프록시 리스트</td>
      </tr>
      <tr>
       <td>
-       <img width="100%" src="">
+       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/122a3203-5bd0-46cd-b407-6f66c330c594">
       </td>
        <td>
-        <img width="100%" src="">
-      </td>
-     </tr>
-     <tr>
-      <td align="center">편지 확인</td>
-      <td align="center">공지 사항 글쓰기</td>
-     </tr>
-     <tr>
-       <td>
-        <img width="100%" src="">
-      </td>
-       <td>
-      <img width="100%" src="">
+        <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2a9858ff-15dd-4308-9fcb-f54f8d9c2921">
       </td>
      </tr>
      <tr>
-      <td align="center"> 404에러페이지 </td>
+      <td align="center">대화 요청</td>
+      <td align="center">채팅</td>
      </tr>
      <tr>
        <td>
-         <img width="100%" src="">
+        <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2686ec14-4c95-41eb-a156-113e4e9c0050">
+      </td>
+       <td>
+      <img width="100%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/083af4c9-e09e-454f-839e-d53610879319">
+      </td>
+     </tr>
+     <tr>
+      <td align="center"> 마이 페이지</td>
+      <td align="center"> 404 에러페이지 </td>
+     </tr>
+     <tr>
+       <td>
+           <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/0d83b3e3-aec4-4fbd-a877-2eb7a57c7a9f">
+       </td>
+       <td>
+         <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/ac194bf7-30f4-4bba-80e5-00abeea4722a">
       </td>
      </tr>
     </tbody>
