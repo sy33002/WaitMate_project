@@ -177,6 +177,7 @@ export default function Chat() {
       })
         .then((res) => {
           console.log(res.data);
+          window.location.href=`${res.data.redirectUrl}`;
         })
         .catch((err) => {
           console.error(err);
