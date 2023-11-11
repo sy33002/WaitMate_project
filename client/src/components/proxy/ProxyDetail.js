@@ -75,6 +75,7 @@ export default function ProxyDetail() {
         console.error('데이터 가져오는 중 오류 발생!', error);
       });
   }, [proxyId]);
+
   return (
     <>
       {isModalOpen && (
@@ -108,6 +109,7 @@ export default function ProxyDetail() {
               <img
                 className={`${isSmallScreen ? 'w-3/5 h-2/5' : 'w-full'}`}
                 src="https://sesac-projects.site/waitmate/images/whiteWaitMate.png"
+                alt='proxy'
               ></img>
             </div>
             <img
