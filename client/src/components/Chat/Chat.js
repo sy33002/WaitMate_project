@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
-import { socket } from '../../socket';
+import { getSocket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
 export default function Chat() {
+  const socket = getSocket();
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
   const [sender, setSender] = useState('');
