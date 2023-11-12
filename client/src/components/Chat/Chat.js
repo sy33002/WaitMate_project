@@ -38,6 +38,24 @@ export default function Chat() {
     }
   }, []);
 
+ // Data loading
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Data loading and socket connection
+      const response = await axios({
+        url: `${apiUrl}/proxy/chat/${roomNumber}`,
+        method: 'GET',
+      });
+      setMessages(response.data.list);
+      console.log(response.data.list);
+      socket.emit('getRoomInfo', roomNumber);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchData();
+}, [roomNumber, id]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
