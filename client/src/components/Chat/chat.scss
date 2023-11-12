@@ -12,7 +12,7 @@ img {
   margin: 0.3rem;
   height: 570px;
   max-height: 80vh;
-  border:none;
+  border: none;
 }
 
 textarea {
@@ -24,7 +24,6 @@ textarea {
   justify-content: center;
   align-items: center;
   padding: 10px;
-
 }
 
 .rce-input-textarea {
@@ -61,8 +60,8 @@ textarea {
     background-color: #2f2772;
     border-radius: 12px 0 12px 12px;
     color: white;
-    display: inline; /* 또는 inline-block */
-    padding: 4px 4px; /* 글씨 주변의 padding을 추가 */
+    display: inline; 
+    padding: 4px 4px;
   }
 }
 
@@ -79,8 +78,8 @@ textarea {
     background-color: #e8e8eb;
     border-radius: 12px 12px 0px 12px;
     color: black;
-    display: inline; /* 또는 inline-block */
-    padding: 4px 4px; /* 글씨 주변의 padding을 추가 */
+    display: inline; 
+    padding: 4px 4px; 
   }
 }
 
@@ -91,13 +90,13 @@ textarea {
 
 .input_send_btn {
   background-image: url('https://sesac-projects.site/waitmate/chatting_send_btn.png');
-  background-size: 30px 30px; // 이미지가 버튼에 맞게 조절됩니다.
+  background-size: 30px 30px; 
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
-  border: none; // 기본 버튼의 테두리를 제거
-  width: 44px; // 버튼의 너비 (이미지의 너비에 맞게 설정)
-  height: 40px; // 버튼의 높이 (이미지의 높이에 맞게 설정)
+  border: none;
+  width: 44px; 
+  height: 40px;
 }
 
 .container {
@@ -130,8 +129,8 @@ textarea {
 }
 
 .message_container {
-  max-height: 400px; /* Set a maximum height for the chat container */
-  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 400px;
+  overflow-y: auto;
 }
 
 .chat_header {
@@ -150,22 +149,19 @@ textarea {
 }
 
 .input_container {
-  position: relative;
-  
+  position: fixed;
+  top: 400px;
+  width: 82%;
   .input_item {
-    // Your existing styles...
+    .paymentButton {
+      color: #2f2772;
+      background-color: transparent;
+      border: 1px solid #2f2772;
+      padding: 8px;
 
-    leftButtons {
-      .paymentButton {
-        color: #4CAF50;
-        background-color: transparent;
-        border: 1px solid #4CAF50;
-        padding: 8px; // Adjust padding as needed
-
-        &:hover {
-          background-color: #2f2772;
-          border: 1px solid #2f2772;
-        }
+      &:hover {
+        background-color: #2f2772;
+        border: 1px solid #2f2772;
       }
     }
   }
