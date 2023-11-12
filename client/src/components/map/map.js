@@ -14,6 +14,7 @@ export default function MapComponent() {
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
   const { id } = useUserStore();
+
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -89,15 +90,15 @@ export default function MapComponent() {
     return { style, info_close, info_title, info_link };
   };
 
-  const openOverlay = (marker) => {
-    setSelectedMarker(marker);
-    setIsOpen(true);
-  };
+  // const openOverlay = (marker) => {
+  //   setSelectedMarker(marker);
+  //   setIsOpen(true);
+  // };
 
-  const closeOverlay = () => {
-    setSelectedMarker(null);
-    setIsOpen(false);
-  };
+  // const closeOverlay = () => {
+  //   setSelectedMarker(null);
+  //   setIsOpen(false);
+  // };
 
   // 화면 크기를 변경할 때 높이를 조정
   const getMapHeight = () => {
@@ -178,9 +179,9 @@ export default function MapComponent() {
                   }}
                   onClick={() => {
                     console.log('마커 클릭됨');
-                    openOverlay(data);
-                  }} // Open the overlay on marker click
-                />
+                    setIsOpen(true);
+                  }} 
+                ></MapMarker>
               );
             }
 
@@ -191,42 +192,43 @@ export default function MapComponent() {
                     lat: selectedMarker.lat,
                     lng: selectedMarker.lng,
                   }}
-                  style={{ zIndex: 1 }}
                 >
-                  <div className="wrap">
-                    <div className="info">
-                      <div
-                        className="title"
-                        style={stylingOverlay().info_title}
-                      >
-                        웨이트 메이트 장소
+                  <>
+                    <div className="wrap">
+                      <div className="info">
                         <div
-                          className="close"
-                          onClick={closeOverlay}
-                          title="닫기"
-                          style={stylingOverlay().info_close}
-                        ></div>
-                      </div>
-                      <div className="body">
-                        <div
-                          className="desc"
-                          style={stylingOverlay().info_link}
+                          className="title"
+                          style={stylingOverlay().info_title}
                         >
-                          <div>
-                            <a
-                              href={`${apiUrl}/waitMate/detail?wmId=${data.wmId}`}
-                              target="_blank"
-                              className="link"
-                              rel="noreferrer"
-                              style={stylingOverlay().info_link}
-                            >
-                              웨이트 메이트 공고 바로가기
-                            </a>
+                          웨이트 메이트 장소
+                          <div
+                            className="close"
+                            onClick={() => setIsOpen(false)}
+                            title="닫기"
+                            style={stylingOverlay().info_close}
+                          ></div>
+                        </div>
+                        <div className="body">
+                          <div
+                            className="desc"
+                            style={stylingOverlay().info_link}
+                          >
+                            <div>
+                              <a
+                                href={`${apiUrl}/waitMate/detail?wmId=${data.wmId}`}
+                                target="_blank"
+                                className="link"
+                                rel="noreferrer"
+                                style={stylingOverlay().info_link}
+                              >
+                                웨이트 메이트 공고 바로가기
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </>
                 </CustomOverlayMap>
               );
             }
