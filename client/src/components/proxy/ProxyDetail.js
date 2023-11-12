@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { socket } from '../../socket';
+import { getSocket } from '../../socket';
 import useUserStore from '../../store/useUserStore';
 import ChatListModal from '../Chat/chatListModal';
 
 export default function ProxyDetail() {
+  const socket = getSocket();
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
   const [roomNumber, setRoomNumber] = useState(null);
