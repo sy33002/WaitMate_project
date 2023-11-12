@@ -3,7 +3,7 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-import useUserStore from '../../store/useUserStore';
+// import useUserStore from '../../store/useUserStore';
 
 export default function MapComponent() {
   const [userLocation, setUserLocation] = useState(null);
@@ -13,7 +13,7 @@ export default function MapComponent() {
   const isSmallScreen = window.innerWidth < 700;
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
-  const {id} = useUserStore();
+  const { id } = useUserStore();
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -35,19 +35,23 @@ export default function MapComponent() {
   }, []);
 
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/waitMate/mapList`)
-      .then((res) => {
-        const data = res.data;
+    const updateData = async () => {
+      try {
+        const response = await axios({
+          url: `${apiUrl}/waitMate/mapList`,
+          metho: 'GET',
+        });
+        const data = response.data;
         setUserAddress(data);
         data.forEach((data) => {
           console.log('data.lat', data.lat);
           console.log('id', data.id);
         });
-      })
-      .catch((error) => {
-        console.error('데이터 가져오기 실패:', error);
-      });
+      } catch (err) {
+        console.error('데이터 가져오기 실패:', err);
+      }
+    };
+    updateData();
   }, [wmId]);
 
   const stylingOverlay = () => {
@@ -146,7 +150,6 @@ export default function MapComponent() {
 
       <div>
         <Map
-          className="map z-10"
           level={3}
           center={userLocation || { lat: 0, lng: 0 }}
           style={{ width: '100%', height: getMapHeight() }}
@@ -168,18 +171,28 @@ export default function MapComponent() {
                 <MapMarker
                   key={index}
                   position={{ lat: data.lat, lng: data.lng }}
+                  text={data.key}
                   image={{
                     src: 'https://sesac-projects.site/waitmate/images/mapWaitMate.png',
-                    size: { width: 64, height: 64 },
+                    size: { width: 34, height: 34 },
                   }}
-                  onClick={() => openOverlay(data)} // Open the overlay on marker click
+                  onClick={() => {
+                    console.log('마커 클릭됨');
+                    openOverlay(data);
+                  }} // Open the overlay on marker click
                 />
               );
             }
 
             {
-              isOpen && (
-                <CustomOverlayMap position={{ lat: data.lat, lng: data.lng }}>
+              isOpen && selectedMarker && (
+                <CustomOverlayMap
+                  position={{
+                    lat: selectedMarker.lat,
+                    lng: selectedMarker.lng,
+                  }}
+                  style={{ zIndex: 1 }}
+                >
                   <div className="wrap">
                     <div className="info">
                       <div
@@ -189,7 +202,7 @@ export default function MapComponent() {
                         웨이트 메이트 장소
                         <div
                           className="close"
-                          onClick={closeOverlay} // Close the overlay
+                          onClick={closeOverlay}
                           title="닫기"
                           style={stylingOverlay().info_close}
                         ></div>
@@ -201,7 +214,7 @@ export default function MapComponent() {
                         >
                           <div>
                             <a
-                              href={`${apiUrl}/waitMate/detail?wmId=${data.waitMate}`}
+                              href={`${apiUrl}/waitMate/detail?wmId=${data.wmId}`}
                               target="_blank"
                               className="link"
                               rel="noreferrer"
@@ -219,6 +232,8 @@ export default function MapComponent() {
             }
           })}
         </Map>
+        {console.log('Is Open:', isOpen)}
+        {console.log('Is Selected:', selectedMarker)}
       </div>
     </div>
   );
