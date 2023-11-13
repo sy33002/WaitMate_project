@@ -1,7 +1,12 @@
 import { io } from 'socket.io-client';
 
-const socket = io(`https://sesac-projects.site/`, {
-  withCredentials : true,
-});
-
-export { socket };
+let socketInstance = null;
+export const getSocket = () => {
+  if (!socketInstance) {
+    socketInstance = io(`https://sesac-projects.site/`, {
+      path: '/wapi/socket.io',
+      withCredentials : true,
+    });
+  }
+  return socketInstance;
+};

@@ -11,11 +11,7 @@ export default function Template({ children }) {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 700);
     };
-
-    // 이벤트 리스너 등록
     window.addEventListener('resize', handleResize);
-
-    // 컴포넌트가 언마운트될 때 이벤트 리스너 제거
     return () => {
       window.removeEventListener('resize', handleResize);
     };

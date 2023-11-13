@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
-import { socket } from '../../socket';
+import { getSocket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
 export default function Chat() {
+  const socket = getSocket();
   const [inputValue, setInputValue] = useState('');
   const [messages, setMessages] = useState([]);
   const [sender, setSender] = useState('');
@@ -37,6 +38,24 @@ export default function Chat() {
     }
   }, []);
 
+ // Data loading
+ useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Data loading and socket connection
+      const response = await axios({
+        url: `${apiUrl}/proxy/chat/${roomNumber}`,
+        method: 'GET',
+      });
+      setMessages(response.data.list);
+      console.log(response.data.list);
+      socket.emit('getRoomInfo', roomNumber);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchData();
+}, [roomNumber, id]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
