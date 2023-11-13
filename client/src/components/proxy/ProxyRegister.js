@@ -7,12 +7,12 @@ import {  useNavigate } from 'react-router-dom';
 
 export default function ProxyRegister() {
   const { control, handleSubmit, formState,setValue } = useForm();
-  const [imageFile, setImageFile] = useState('/waitmate/images/proxy.png');
+  const [imageFile, setImageFile] = useState('https://sesac-projects.site/waitmate/images/proxy.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
-  const { id } = useUserStore();
-  console.log('id값', id);
+  const {id} = useUserStore();
+  console.log(id);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -51,23 +51,21 @@ export default function ProxyRegister() {
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-    console.log(data);
+    console.log(data.photo);
     if (data.photo && data.photo[0]) {
       formData.append('photo', data.photo[0]);
     } else {
-      formData.append('photo', new File([''], '/images/proxy.png', { type: 'image/png' }));
+      formData.append('photo', 'https://sesac-projects.site/waitmate/images/proxy.png');
     }
 
     try {
-      const response = await fetch(`${apiUrl}/proxy/register`, {
-        method: 'POST',
-        body: formData,
+      const response = await axios.post(`${apiUrl}/proxy/register`, formData, {
+        Headers : {
+          'Content-Type': 'multipart/form-data'
+        }
       });
-      if (response.ok) {
-        setShowModal(true);
-      } else {
-        console.log(response.status);
-      }
+      console.log(response.data);
+      setIsModalOpen(true);
     } catch (error) {
       console.error('Error!');
     }
