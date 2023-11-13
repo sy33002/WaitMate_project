@@ -17,16 +17,6 @@ export default function ProxyRegister() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 700);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
