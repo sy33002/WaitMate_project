@@ -13,7 +13,7 @@ export default function WaitMateList({cities,photo}) {
   const initialAddress = cookies.address || '';
   const [address, setAddress] = useState(initialAddress);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isSmallScreen, setIsSmallScreen] = window.innerWidth < 700;
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
   const itemsPerPage = 4;
   const { id, nickname, userId } = useUserStore();
@@ -36,11 +36,12 @@ export default function WaitMateList({cities,photo}) {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${apiUrl}/waitMate/list?wmAddress=${address}&order=${selectedOption}`, {
+        const response = await fetch(`https://sesac-projects.site/wapi/waitMate/list?wmAddress=${address}&order=${selectedOption}`, {
             method: 'GET',
           });
         if (response.ok) {
-          const {waitMates} = await response.json();
+          const { waitMates } = await response.json();
+          console.log(waitMates);
           setItems(waitMates);
         } else {
           console.log('데이터 가져오기 실패!');
@@ -107,7 +108,7 @@ export default function WaitMateList({cities,photo}) {
         </div>
       </div>
       <div className='w-full h-full p-2'>
-      {currentItems.map((item, index) => {
+      {Array.isArray(currentItems) && currentItems.map((item, index) => {
         if (index % 2 === 0) {
           const nextItem = currentItems[index + 1];
           return (
