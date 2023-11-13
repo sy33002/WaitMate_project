@@ -32,9 +32,6 @@ export default function WaitMateList({cities, photo}) {
         if (response.ok) {
           const {list} = await response.json();
           setItems(list);
-          console.log(address);
-          console.log(selectedOption);
-          console.log('list 새로 요청 완료!!!');
         } else {
           console.log('데이터 가져오기 실패!');
         }
