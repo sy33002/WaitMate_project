@@ -19,6 +19,7 @@ function Mypage() {
   const [myWaitMateList, setMyWaitMateList] = useState([]);
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const apiUrl = process.env.REACT_APP_URL;
 
   const handleLogout = async () => {
     await logout();
@@ -49,12 +50,9 @@ function Mypage() {
   const proxyNotes = async () => {
     try {
       console.log('아이디값', id);
-      const response = await axios.get(
-        'http://localhost:8080/proxy/getProxyAll',
-        {
-          params: { id: id },
-        }
-      );
+      const response = await axios.get(`${apiUrl}/proxy/getProxyAll`, {
+        params: { id: id },
+      });
       if (!response) {
         console.log('정보값이 없습니다');
         return;
