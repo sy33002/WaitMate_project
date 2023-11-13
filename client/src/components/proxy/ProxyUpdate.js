@@ -3,26 +3,32 @@ import { useForm, Controller } from 'react-hook-form';
 import AddressSearchModal from '../proxy/AddressSearchModal';
 import axios from 'axios';
 import useUserStore from '../../store/useUserStore';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function ProxyRegister({cities, photo}) {
+export default function ProxyRegister({ cities, photo }) {
   const { control, handleSubmit, formState, setValue } = useForm();
   const [imageFile, setImageFile] = useState('/images/someone.png');
   const [proxy, setProxy] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
   const { id, nickname, userId } = useUserStore();
+  const { proxyId } = useParams();
+  console.log(proxyId);
 
   useEffect(() => {
-    fetch(`https://sesac-projects.site/wapi/proxy/update/${id}`)
-    .then(response => response.json())
-    .then(data => {
-      setProxy(data.result);
-      console.log(data.result);
-    })
-    .catch(error => {
-      console.error('데이터 가져오는 중 오류 발생!', error);
-    });
-  }, []);
+    const fetchData = async () => {
+      try {
+        const result = await axios.get(`${apiUrl}/proxy/updateGet/${proxyId}`);
+        console.log('result', result.data.result);
+        setProxy(result.data.result);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+  }, [proxyId]);
+
 
   const [inputAddressValue, setInputAddressValue] = useState(proxy.address);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,32 +53,35 @@ export default function ProxyRegister({cities, photo}) {
   };
 
   const onSubmit = async (data) => {
-    const address = inputAddressValue;
+    const address = inputAddressValue || '';
     const addressParts = address.split(' ');
     const combinedAddress = addressParts[0] + ' ' + addressParts[1];
 
+    console.log('데이터값', data);
+    console.log(combinedAddress);
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
-    formData.append('id', data.id);
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-
+    formData.append('photo', data.photo);
     try {
-      const response = await fetch(`https://sesac-projects.site/wapi/proxy/`, {
-        method: 'PATCH',
-        body: formData,
-      });
-      if (response === 'success') {
-        // const responseData = await response.json();
-        console.log('aaaa');
-      } else {
-        console.error('Failed to submit the form');
-        console.log(response.status);
-      }
+      console.log('찍힘?');
+      const response = await axios.patch(
+        `${apiUrl}/proxy/update2/${proxyId}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      console.log('찍힌듯', response);
+      console.log(response.data);
     } catch (error) {
-      console.error('Error!');
+      console.error('Error!', error);
     }
   };
 
