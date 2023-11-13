@@ -27,7 +27,7 @@ export default function Chat() {
   const apiUrl = process.env.REACT_APP_URL;
   const chatContainerRef = useRef();
 
-
+  
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -38,24 +38,24 @@ export default function Chat() {
     }
   }, []);
 
- // Data loading
- useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // Data loading and socket connection
-      const response = await axios({
-        url: `${apiUrl}/proxy/chat/${roomNumber}`,
-        method: 'GET',
-      });
-      setMessages(response.data.list);
-      console.log(response.data.list);
-      socket.emit('getRoomInfo', roomNumber);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  fetchData();
-}, [roomNumber, id]);
+  // Data loading
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Data loading and socket connection
+        const response = await axios({
+          url: `${apiUrl}/proxy/chat/${roomNumber}`,
+          method: 'GET',
+        });
+        setMessages(response.data.list);
+        console.log(response.data.list);
+        socket.emit('getRoomInfo', roomNumber);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, [roomNumber, id]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
@@ -161,7 +161,6 @@ export default function Chat() {
     };
   }, []);
 
-  
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -181,7 +180,6 @@ export default function Chat() {
     }
   }, [selectedStatus]);
 
- 
   //결제 기능
   const PaymentsList = () => {
     console.log('페이먼츠', wm.id, proxyPayId);
@@ -196,7 +194,7 @@ export default function Chat() {
       })
         .then((res) => {
           console.log(res.data);
-          window.location.href=`${res.data.redirectUrl}`;
+          window.location.href = `${res.data.redirectUrl}`;
         })
         .catch((err) => {
           console.error(err);
@@ -246,7 +244,6 @@ export default function Chat() {
                 msg.receiver !== receiver.userId ? proxy.photo : null
               );
               return (
-              
                 <MessageBox
                   key={index}
                   className={msg.sender === sender.userId ? 'me' : 'other'}
@@ -258,36 +255,36 @@ export default function Chat() {
                 ></MessageBox>
               );
             })}
-          </div>
-          <div className="input_container">
-            <Input
-              className="input_item"
-              referance={inputReference}
-              multiline={true}
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter') {
-                  sendMessage();
-                }
-              }}
-              leftButtons={
-                id === userPayId && (
+            <div className="input_container">
+              <Input
+                className="input_item"
+                referance={inputReference}
+                multiline={true}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    sendMessage();
+                  }
+                }}
+                leftButtons={
+                  id === userPayId && (
                   <Button
                     className="paymentButton"
                     text="결제"
                     onClick={PaymentsList}
                   />
-                )
-              }
-              rightButtons={
-                <Button
-                  className="input_send_btn"
-                  backgroundColor="transparent"
-                  onClick={sendMessage}
-                />
-              }
-            />
+                  )
+                }
+                rightButtons={
+                  <Button
+                    className="input_send_btn"
+                    backgroundColor="transparent"
+                    onClick={sendMessage}
+                  />
+                }
+              />
+            </div>
           </div>
         </div>
       </div>

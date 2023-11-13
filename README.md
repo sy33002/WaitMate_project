@@ -134,8 +134,10 @@ ex) header-#4
  * socket.io-client: 4.7.2,
  * sweetalert2: 11.9.0,
  * web-vitals: 2.1.4,
- * zustand: 4.4.6
-
+ * react-hook-form : 7.47.0,
+ * react-kakao-maps-sdk: 1.1.24,
+ * react-chat-elements: 12.0.10,
+ * react-daum-postcode: 3.1.3,
   백엔드
   
  * axios: 1.5.1,
@@ -152,7 +154,8 @@ ex) header-#4
  * sequelize: 6.33.0,
  * socket.io: 4.7.2,
  * swagger-jsdoc: 6.2.8,
-  
+ * zustand : 4.4.6,
+   
 ## 📙 개발 준비
 
    * <b>애자일 방법을 택하여 3주간 스프린트로 만들기로 결정</b>
@@ -187,10 +190,10 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/82f9f92e-e467-4c41-9495-9e2bd44d699c">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/82f9f92e-e467-4c41-9495-9e2bd44d699c">
      </td>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/d0ce996b-5753-4ef1-8753-64dcabf466f2">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/d0ce996b-5753-4ef1-8753-64dcabf466f2">
       </td>
      </tr>
      <tr>
@@ -199,10 +202,10 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
       </td>
        <td>
-         <img width="100%" height="30%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/7cdb7df5-7070-45af-8436-c58d2fd397b2">
+         <img width="400px" height="30%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/7cdb7df5-7070-45af-8436-c58d2fd397b2">
       </td>
      </tr>
       <tr>
@@ -211,10 +214,10 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/122a3203-5bd0-46cd-b407-6f66c330c594">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/122a3203-5bd0-46cd-b407-6f66c330c594">
       </td>
        <td>
-        <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2a9858ff-15dd-4308-9fcb-f54f8d9c2921">
+        <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2a9858ff-15dd-4308-9fcb-f54f8d9c2921">
       </td>
      </tr>
      <tr>
@@ -223,10 +226,10 @@ ex) header-#4
      </tr>
      <tr>
        <td>
-        <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2686ec14-4c95-41eb-a156-113e4e9c0050">
+        <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2686ec14-4c95-41eb-a156-113e4e9c0050">
       </td>
        <td>
-      <img width="100%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/083af4c9-e09e-454f-839e-d53610879319">
+      <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/083af4c9-e09e-454f-839e-d53610879319">
       </td>
      </tr>
      <tr>
@@ -235,10 +238,10 @@ ex) header-#4
      </tr>
      <tr>
        <td>
-           <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/0d83b3e3-aec4-4fbd-a877-2eb7a57c7a9f">
+           <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/0d83b3e3-aec4-4fbd-a877-2eb7a57c7a9f">
        </td>
        <td>
-         <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/ac194bf7-30f4-4bba-80e5-00abeea4722a">
+         <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/ac194bf7-30f4-4bba-80e5-00abeea4722a">
       </td>
      </tr>
     </tbody>
@@ -254,8 +257,10 @@ ex) header-#4
   
   🟩 <strong>맵</strong>
   
-    * 
-    * 
+    * 사용자 기반 위치 추적 기능으로 사용자 위치 표시 기능
+    * 웨이트메이트의 공고로 연결되는 웨이트메이트의 마크와 장소로 넘어가는 창 표시 기능
+    * Map과 MapMarker, CustomOverlayMap을 활용해 맵 표시 기능 
+    * axios로 받은 주소를 위도 경도 값으로 변환하여 마크 표시
     
   🟩 <strong>웨이트메이트(대기 요청자)</strong>
  
@@ -277,9 +282,8 @@ ex) header-#4
     
  🟩 <strong>결제 기능 & 리뷰 기능</strong>
  
-    * 
-    * 
-    * 
+    * 카카오 페이 API를 이용한 결제 기능과 트랜잭션을 통한 DB 무결성, 일관성 확보
+    * 대기자에 대한 리뷰와 별점을 남기고 별점의 평균을 내려 리스트 출력
     
  🟩 <strong>마이페이지</strong>
 
