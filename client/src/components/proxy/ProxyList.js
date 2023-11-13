@@ -15,12 +15,32 @@ export default function WaitMateList({cities, photo}) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const { id, nickname, userId } = useUserStore();
-  const isSmallScreen = useState(window.innerWidth < 700);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   };
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,7 +83,7 @@ export default function WaitMateList({cities, photo}) {
 
   return (
     <div className="h-2/3 p-4 mt-4 flex flex-col item-center justify-center text-center w-full">
-        <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-green font-Line`}>
+        <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[14px]'} text-green font-Line`}>
           근처에 있는 <span className="text-primary">프록시</span>를
           찾아보세요!</p>
           <div className='flex justify-between items-center space-x-4 text-center'>
@@ -71,7 +91,7 @@ export default function WaitMateList({cities, photo}) {
         <select 
             onChange={handleOption} 
             className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
-              <option value="latest">최근 목록순</option>
+              <option value="updatedAt">최근 목록순</option>
               <option value="star">평점순</option>
             </select>
             <div className='flex items-center w-64'>
