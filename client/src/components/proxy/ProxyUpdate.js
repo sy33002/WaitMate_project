@@ -64,11 +64,11 @@ export default function ProxyRegister({ cities, photo }) {
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-
+    formData.append('photo', data.photo);
     try {
       console.log('찍힘?');
       const response = await axios.patch(
-        `/upload/profile-image/${id}`,
+        `${apiUrl}/proxy/update2/${proxyId}`,
         formData,
         {
           headers: {
@@ -76,11 +76,6 @@ export default function ProxyRegister({ cities, photo }) {
           },
         }
       );
-      // const response = await axios({
-      //   method: 'patch',
-      //   url: `${apiUrl}/proxy/update2/${proxyId}`,
-      //   data: formData,
-      // });
 
       console.log('찍힌듯', response);
       console.log(response.data);
