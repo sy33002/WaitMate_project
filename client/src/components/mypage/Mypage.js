@@ -17,6 +17,8 @@ function Mypage() {
   const [myResume, setMyResume] = useState([]);
   const [myLikeList, setMyLikeList] = useState([]);
   const [myWaitMateList, setMyWaitMateList] = useState([]);
+  const [completedWaitMateList, setCompletedWaitMateList] = useState([]);
+
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [loading, setLoading] = useState(false);
@@ -145,6 +147,53 @@ function Mypage() {
     fetchData();
   }, []);
 
+  //  My WaitMate - 거래 완료 list
+  useEffect(() => {
+    const fetchCompletedWaitMateList = async () => {
+      try {
+        const response = await fetch(
+          `https://sesac-projects.site/wapi/waitMate/completedMyWaitMateList/id=${id}`,
+          {
+            method: 'GET',
+          }
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setCompletedWaitMateList(data.myCompletedWaitMates);
+        } else {
+          console.log('데이터 가져오기 실패!');
+        }
+      } catch (error) {
+        console.error('데이터 가져오는 중 오류 발생', error);
+      }
+    };
+
+    fetchCompletedWaitMateList();
+  }, [id]);
+
+  const renderSelectedList = () => {
+    switch (selectItem.type) {
+      case 'resume':
+        return myResume.map((resume, index) => (
+          <div key={index}>{/* 이력서 데이터 렌더링 */}</div>
+        ));
+      case 'likeList':
+        return myLikeList.map((like, index) => (
+          <div key={index}>{/* 찜한 리스트 데이터 렌더링 */}</div>
+        ));
+      case 'waitMate':
+        return myWaitMateList.map((waitMate, index) => (
+          <div key={index}>{/* 웨이트메이트 목록 데이터 렌더링 */}</div>
+        ));
+      case 'completedWaitMate':
+        return completedWaitMateList.map((completed, index) => (
+          <div key={index}>{/* 거래 완료 리스트 데이터 렌더링 */}</div>
+        ));
+      default:
+        return <div>선택된 항목이 없습니다.</div>;
+    }
+  };
+
   return (
     <div
       className={`w-full h-screen text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}
@@ -252,7 +301,9 @@ function Mypage() {
               </div>
             </div>
           </div>
-          <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg"></div>
+          <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg">
+            {renderSelectedList()}
+          </div>
           <button
             onClick={navigateToEdit}
             className="bg-primary text-background px-2 rounded-lg mt-2"
