@@ -16,6 +16,16 @@ export default function ProxyRegister({ cities, photo }) {
   console.log(proxyId);
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get(`${apiUrl}/proxy/updateGet/${proxyId}`);

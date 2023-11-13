@@ -10,7 +10,7 @@ export default function WaitMateBox({item, isSmallScreen}) {
         <img src={`${apiUrl}/${item.photo}`} className='w-full h-full rounded-lg'></img>
         </div>
         <p className='text-green font-Line text-sm mt-2'>{item.title}</p><br />
-        <p className='text-gray-300 font-Line text-xs'>{item.waitTime.split(' ')[0]}</p>
+        <p className='text-gray-300 font-Line text-xs'>{item.waitTime.split("T")[0]}</p>
         <p className='text-gray-300 font-Line text-xs'>{item.wmAddress}</p>
         <p className='text-gray-300 font-Line text-xs'> 시급 {item.pay}</p>
     </div>

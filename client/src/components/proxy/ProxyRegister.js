@@ -107,11 +107,11 @@ export default function ProxyRegister() {
               </div>
               <div className={`${isSmallScreen ? 'w-full' : 'w-2/3 pl-4'}`}>
                 <div className='w-full'>
-                    <label className='text-sm text-green m-1 font-Line'>* Title (100자 이내)</label><br/>
+                    <label className='text-sm text-green m-1 font-Line'>* Title (20자 이내)</label><br/>
                     <Controller
                       name="title"
                       control={control}
-                      rules={{ required: true,  maxLength: 100 }}
+                      rules={{ required: true,  maxLength: 20 }}
                       render={({ field }) => <input {...field} 
                         className='w-full rounded-lg'
                         placeholder=" 자기소개에 대한 제목을 지어주세요!"/>}
@@ -194,9 +194,12 @@ export default function ProxyRegister() {
                 <Controller
                   name="proxyMsg"
                   control={control}
-                  rules={{ required: false }}
+                  rules={{ required: false, maxLength: 180 }}
                   render={({ field }) => <textarea {...field} className='rounded-lg'/>}
                 />
+                {formState.errors.proxyMsg && clickRegister && (
+                      <p className="text-red-300 text-xs p-2">180자 이내로 작성해주세요</p>
+                    )}
               </div><br />
               <button type="submit" 
                 onClick={() => setClickRegister(true)}

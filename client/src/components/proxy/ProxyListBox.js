@@ -28,9 +28,9 @@ export default function ProxyListBox({item}) {
               <p className='font-Line text-gray-500 text-xs'>{item.age}</p>
           </div>
         {isHovered && (
-            <div className="z-3 hover-info w-full bg-opacity-80 absolute top-0 left-0 justify-center bg-gray-800 h-24 flex items-center"
+            <div className="z-3 hover-info w-full bg-opacity-80 absolute top-0 left-0 justify-center bg-gray-800 h-24 flex items-center p-4"
             style={{}}>
-              <div className='text-white'>{item.proxyMsg}</div>
+              <div className='text-white break-all'>{item.proxyMsg}</div>
             </div>
         )}
         </div>

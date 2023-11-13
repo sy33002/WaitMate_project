@@ -120,7 +120,7 @@ export default function WaitMateList({cities,photo}) {
               </div>
               <div className='w-1/2 p-1'>
               {nextItem && 
-              <Link to={`/waitMate/detail/${item.wmId}`}>
+              <Link to={`/waitMate/detail/${nextItem.wmId}`}>
                 <WaitMateBox item={nextItem} isSmallScreen={isSmallScreen} />
               </Link>
               }
