@@ -24,6 +24,7 @@ function Mypage() {
   const [selectItem, setSelectItem] = useState({ type: null, id: null });
   const [completedWaitMateList, setCompletedWaitMateList] = useState([]);
   const [pickedWaitMateList, setPickedWaitMateList] = useState([]);
+  const [waitMate, setWaitMate] = useState([]);
 
   const handleLogout = async () => {
     await logout();
@@ -79,140 +80,101 @@ function Mypage() {
   };
 
   // My Proxy - 내가 찜한 웨이트메이트 list
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://sesac-projects.site/wapi/likeWait/list/id=${id}`,
-          {
-            method: 'GET',
-          }
-        );
-        if (response.ok) {
-          const { getLikeWaitList } = await response.json();
-          setMyLikeList(getLikeWaitList);
-        } else {
-          console.log('데이터 가져오기 실패!');
-        }
-      } catch (error) {
-        console.log('데이터 가져오는 중 오류 발생', error);
-      } finally {
-        setLoading(false);
+  const fetchLikedWaitMateList = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/likeWait/list`, {
+        params: { id: id },
+      });
+      if (response.data) {
+        console.log('내가 찜한 웨이트메이트 목록:', response.data);
+        setMyLikeList(response.data.getLikeWaitList);
+      } else {
+        console.log('내가 찜한 웨이트메이트 목록이 비어 있습니다.');
       }
-    };
-    fetchData();
-  }, []);
+    } catch (err) {
+      console.error('내가 찜한 웨이트메이트 목록 불러오는 중 오류 발생', err);
+    }
+  };
 
   // My WaitMate - 내가 작성한 웨이트메이트 list
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          `https://sesac-projects.site/wapi/waitMate/myWaitMate/id=${id}`,
-          {
-            method: 'GET',
-          }
-        );
-        if (response.ok) {
-          console.log(response.json);
-          const { myWaitMates } = await response.json();
-          setMyWaitMateList(myWaitMates);
-        } else {
-          console.log('데이터 가져오기 실패!');
-        }
-      } catch (error) {
-        console.log('데이터 가져오는 중 오류 발생', error);
-      } finally {
-        setLoading(false);
+  const myWaitMateNotes = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/waitMate/myWaitMate`, {
+        params: { id: id },
+      });
+      if (!response) {
+        console.log('정보값이 없습니다');
+        return;
       }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchCompletedWaitMateList = async () => {
-      try {
-        const response = await fetch(
-          `https://sesac-projects.site/wapi/waitMate/completedMyWaitMateList/id=${id}`,
-          {
-            method: 'GET',
-          }
-        );
-        if (response.ok) {
-          const data = await response.json();
-          setCompletedWaitMateList(data.myCompletedWaitMates);
-        } else {
-          console.log('데이터 가져오기 실패!');
-        }
-      } catch (error) {
-        console.error('데이터 가져오는 중 오류 발생', error);
+      if (response.data === '') {
+        console.log('정보값이 비었습니다');
       }
-    };
 
-    fetchCompletedWaitMateList();
-  }, [id]);
+      console.log(response.data);
+      setMyWaitMateList(response.data.myWaitMates);
+    } catch (err) {
+      console.error('웨이트메이트 목록 불러오는 중 오류 발생', err);
+    }
+  };
 
+  // 거래완료 list
+  const fetchCompletedWaitMateList = async () => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/waitMate/completedMyWaitMateList`,
+        {
+          params: { id: id },
+        }
+      );
+      if (response.data) {
+        console.log('거래 완료 목록:', response.data);
+        setCompletedWaitMateList(response.data.completedMyWaitMateList);
+      } else {
+        console.log('거래 완료 목록이 비어 있습니다.');
+      }
+    } catch (err) {
+      console.error('거래 완료 목록 불러오는 중 오류 발생', err);
+    }
+  };
+
+  // 내가 픽한 웨메 list
   const fetchPickedWaitMateList = async () => {
     try {
-      const response = await fetch(
-        `https://sesac-projects.site/wapi/wmReservation/wmList/id=${id}`,
-        { method: 'GET' }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setPickedWaitMateList(data.pickedWaitMates);
+      const response = await axios.get(`${apiUrl}/wmReservation/wmList`, {
+        params: { id: id },
+      });
+      if (response.data) {
+        console.log('내가 픽한 웨메 리스트:', response.data);
+        setPickedWaitMateList(response.data.waitMateList);
       } else {
-        console.log('데이터 가져오기 실패!');
+        console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
       }
-    } catch (error) {
-      console.error('데이터 가져오는 중 오류 발생', error);
+    } catch (err) {
+      console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
     }
   };
 
   useEffect(() => {
-    fetchPickedWaitMateList();
-  }, [id]); // 의존성 배열에 id 포함
-
-  // fetchPickedWaitMateList();
-  const renderSelectedList = () => {
     switch (selectItem.type) {
-      // case 'resume':
-      //   return myResume.map((resume, index) => (
-      //     <div key={index}>{/* 이력서 데이터 렌더링 */}</div>
-      //   ));
-      case 'likeList':
-        return myLikeList.map((like, index) => (
-          <div key={index}>{/* 찜한 리스트 데이터 렌더링 */}</div>
-        ));
-      case 'waitMate':
-        return myWaitMateList.map((waitMate, index) => (
-          <div key={index}>
-            {/* 웨이트메이트 목록 데이터 렌더링 */}
-            <p>{waitMate.title}</p>
-            <button
-              onClick={() => navigate(`/waitMate/update/${waitMate.id}`)}
-              className="bg-primary text-white px-3 py-1 rounded-lg mt-2"
-            >
-              수정
-            </button>
-          </div>
-        ));
-      case 'completedWaitMate':
-        return completedWaitMateList.map((completed, index) => (
-          <div key={index}>{/* 거래 완료 리스트 데이터 렌더링 */}</div>
-        ));
-      case 'pickedWaitMate':
-        return pickedWaitMateList.map((picked, index) => (
-          <div key={index}>
-            {/* '내가 픽한 웨메' 정보를 렌더링하는 코드 */}
-            <p>{picked.title}</p>
-            {/* 다른 필요한 정보와 수정 버튼 등 */}
-          </div>
-        ));
+      case 'myResume':
+        proxyNotes();
+        break;
+      case 'myLikeList':
+        fetchLikedWaitMateList();
+        break;
+      case 'myWaitMateList':
+        myWaitMateNotes();
+        break;
+      case 'completedWaitMateList':
+        fetchCompletedWaitMateList();
+        break;
+      case 'pickedWaitMateList':
+        fetchPickedWaitMateList();
+        break;
       default:
-        return <div>선택된 항목이 없습니다.</div>;
+      // 기본값 혹은 아무 것도 하지 않음
     }
-  };
+  }, [selectItem]); // 의존성 배열에 selectItem 추가
 
   return (
     <div
@@ -284,14 +246,16 @@ function Mypage() {
                 }`}
               >
                 <button
-                  onClick={proxyNotes}
+                  onClick={() => setSelectItem({ type: 'myResume', id: null })}
                   className="border-primary border-2 rounded-lg"
                 >
                   나의 이력서
                 </button>
                 <button
                   className="border-primary border-2 rounded-lg"
-                  onClick={() => setSelectItem({ type: 'likeList', id: null })}
+                  onClick={() =>
+                    setSelectItem({ type: 'myLikeList', id: null })
+                  }
                 >
                   내가 찜한 웨이트메이트 list
                 </button>
@@ -314,14 +278,16 @@ function Mypage() {
               >
                 <button
                   className="border-primary border-2 rounded-lg"
-                  onClick={() => setSelectItem({ type: 'waitMate', id: null })}
+                  onClick={() =>
+                    setSelectItem({ type: 'myWaitMateList', id: null })
+                  }
                 >
                   나의 웨이트메이트 목록
                 </button>
                 <button
                   className="border-primary border-2 rounded-lg"
                   onClick={() =>
-                    setSelectItem({ type: 'completedWaitMate', id: null })
+                    setSelectItem({ type: 'completedWaitMateList', id: null })
                   }
                 >
                   거래 완료 list
@@ -329,7 +295,7 @@ function Mypage() {
                 <button
                   className="border-primary border-2 rounded-lg"
                   onClick={() =>
-                    setSelectItem({ type: 'pickedWaitMate', id: null })
+                    setSelectItem({ type: 'pickedWaitMateList', id: null })
                   }
                 >
                   내가 픽한 웨메 list
@@ -338,7 +304,9 @@ function Mypage() {
             </div>
           </div>
           <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg">
-            {myResume.length > 0 ? (
+            {selectItem.type === 'myResume' &&
+            myResume &&
+            myResume.length > 0 ? (
               <ul>
                 {myResume.map((item, index) => (
                   <li
@@ -368,13 +336,122 @@ function Mypage() {
                       >
                         수정
                       </button>
-                      {renderSelectedList()}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : selectItem.type === 'myLikeList' &&
+              myLikeList &&
+              myLikeList.length > 0 ? (
+              <ul>
+                {myLikeList.map((item, index) => (
+                  <li
+                    key={index}
+                    className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
+                  >
+                    <div className="w-1/4">
+                      <img
+                        src={item.photo}
+                        alt="Proxy"
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                    <div className="w-3/4 ml-4">
+                      <p>title: {item.title}</p>
+                      <p>주소: {item.wmAddress}</p>
+                      <p>시급: {item.pay}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : selectItem.type === 'myWaitMateList' &&
+              myWaitMateList &&
+              myWaitMateList.length > 0 ? (
+              <ul>
+                {myWaitMateList.map((item, index) => (
+                  <li
+                    key={index}
+                    className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
+                  >
+                    <div className="w-1/4">
+                      <img
+                        src={item.photo}
+                        alt="WaitMate"
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                    <div className="w-3/4 ml-4">
+                      <Link to={`/waitMate/update/${item.id}`}>
+                        <p>{item.title}</p>
+                        <p>웨이팅할 곳: {item.wmDetailAddress}</p>
+                        <p>부탁하는 말: {item.description}</p>
+                      </Link>
+                      <button
+                        onClick={() =>
+                          navigate(`/waitMate/update/${item.wmId}`)
+                        }
+                        className="bg-primary text-white px-3 py-1 rounded-lg mt-2"
+                      >
+                        수정
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : selectItem.type === 'completedWaitMateList' &&
+              completedWaitMateList &&
+              completedWaitMateList.length > 0 ? (
+              <ul>
+                {completedWaitMateList.map((completed, index) => (
+                  <li
+                    key={index}
+                    className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
+                  >
+                    <div className="w-1/4">
+                      <img
+                        src={completed.photo}
+                        alt="Proxy"
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                    <div className="w-3/4 ml-4">
+                      <p>title: {completed.title}</p>
+                      <p>주소: {completed.wmAddress}</p>
+                      <p>시작시간: {completed.startTime}</p>
+                      <p>종료시간: {completed.endTime}</p>
+                      {/* 여기에 필요한 다른 정보 추가 */}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : selectItem.type === 'pickedWaitMateList' &&
+              pickedWaitMateList &&
+              pickedWaitMateList.length > 0 ? (
+              <ul>
+                {pickedWaitMateList.map((picked, index) => (
+                  <li
+                    key={index}
+                    className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
+                  >
+                    <div className="w-1/4">
+                      <img
+                        src={picked.photo}
+                        alt="Proxy"
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                    <div className="w-3/4 ml-4">
+                      <p>title: {picked.title}</p>
+                      <p>주소: {picked.wmAddress}</p>
+                      <p>시작시간: {picked.startTime}</p>
+                      <p>종료시간: {picked.endTime}</p>
+                      <p>시급: {picked.pay}</p>
                     </div>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p>데이터가 없습니다.</p>
+              <p>List가 없습니다!</p>
             )}
           </div>
         </div>
