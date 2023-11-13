@@ -3,6 +3,8 @@ import useUserStore from '../../store/useUserStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
 import axios from 'axios';
+import { getSocket } from '../../socket';
+import StarRating from '../rating/StarRating';
 
 function Mypage() {
   const {
@@ -26,6 +28,27 @@ function Mypage() {
   const [pickedWaitMateList, setPickedWaitMateList] = useState([]);
   const [waitMate, setWaitMate] = useState([]);
   const [pickedProxyList, setPickedProxyList] = useState([]);
+  const [reviewId, setReviewId] = useState();
+  const [reviewNickname, setReviewNickname] = useState();
+  const [isReviewOpen, setIsReviewOpen] = useState();
+
+  const testing = async (pickedProxyId) => {
+    try {
+      const response = await axios.get(`${apiUrl}/review/check`, {
+        params: { userId: id, id: pickedProxyId },
+      });
+      console.log(response);
+      if (response.data.result === true) {
+        console.log(pickedProxyId);
+        console.log(response.data.User.nickname);
+        setReviewId(pickedProxyId);
+        setReviewNickname(response.data.User.nickname);
+        setIsReviewOpen(true);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -206,6 +229,13 @@ function Mypage() {
       >
         My page
       </h1>
+      {isReviewOpen && (
+        <StarRating
+          id={reviewId}
+          nickname={reviewNickname}
+          transactionCompleted={true}
+        />
+      )}
       <div
         className={` w-full h-screen text-primary_dark font-Line flex ${
           isSmallScreen ? 'flex-col' : ''
@@ -448,7 +478,6 @@ function Mypage() {
                       <p>주소: {completed.wmAddress}</p>
                       <p>시작시간: {completed.startTime}</p>
                       <p>종료시간: {completed.endTime}</p>
-                      {/* 여기에 필요한 다른 정보 추가 */}
                     </div>
                   </li>
                 ))}
@@ -502,6 +531,14 @@ function Mypage() {
                       <p>성별: {picked.gender}</p>
                       <p>프록시 한 마디!: {picked.proxyMsg}</p>
                     </div>
+                    <button
+                      onClick={() => {
+                        testing(picked.id);
+                      }}
+                      className="border-primary border-2 rounded-lg w-1/12 text-lg"
+                    >
+                      평점주기
+                    </button>
                   </li>
                 ))}
               </ul>
