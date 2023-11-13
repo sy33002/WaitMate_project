@@ -3,10 +3,7 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-<<<<<<< HEAD
-=======
 // import useUserStore from '../../store/useUserStore';
->>>>>>> origin
 
 export default function MapComponent() {
   const [userLocation, setUserLocation] = useState(null);
@@ -17,10 +14,6 @@ export default function MapComponent() {
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
   const { id } = useUserStore();
-<<<<<<< HEAD
-=======
-
->>>>>>> origin
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -186,7 +179,7 @@ export default function MapComponent() {
                   onClick={() => {
                     console.log('마커 클릭됨');
                     setIsOpen(true);
-                  }} 
+                  }}
                 ></MapMarker>
               );
             }
