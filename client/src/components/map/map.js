@@ -3,7 +3,6 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-import useUserStore from '../../store/useUserStore';
 
 export default function MapComponent() {
   const [userLocation, setUserLocation] = useState(null);
