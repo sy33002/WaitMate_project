@@ -21,6 +21,16 @@ export default function WaitMateList({cities, photo}) {
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   };
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,7 +83,7 @@ export default function WaitMateList({cities, photo}) {
 
   return (
     <div className="h-2/3 p-4 mt-4 flex flex-col item-center justify-center text-center w-full">
-        <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-green font-Line`}>
+        <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[14px]'} text-green font-Line`}>
           근처에 있는 <span className="text-primary">프록시</span>를
           찾아보세요!</p>
           <div className='flex justify-between items-center space-x-4 text-center'>
