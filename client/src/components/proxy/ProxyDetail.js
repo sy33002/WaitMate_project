@@ -16,6 +16,16 @@ export default function ProxyDetail() {
   const [selectedUser, setSelectedUser] = useState(null);
   const apiUrl = process.env.REACT_APP_URL;
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  
   console.log(id);
   const handleUserSelect = (user) => {
     setSelectedUser(user);
