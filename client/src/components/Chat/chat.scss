@@ -60,7 +60,7 @@ textarea {
     background-color: #2f2772;
     border-radius: 12px 0 12px 12px;
     color: white;
-    display: inline; 
+    display: inline;
     padding: 4px 4px;
   }
 }
@@ -78,8 +78,8 @@ textarea {
     background-color: #e8e8eb;
     border-radius: 12px 12px 0px 12px;
     color: black;
-    display: inline; 
-    padding: 4px 4px; 
+    display: inline;
+    padding: 4px 4px;
   }
 }
 
@@ -89,13 +89,13 @@ textarea {
 }
 
 .input_send_btn {
-  background-image: url('https://sesac-projects.site/waitmate/chatting_send_btn.png');
-  background-size: 30px 30px; 
+  background-image: url('https://sesac-projects.site/waitmate/images/chatting_send_btn.png');
+  background-size: 30px 30px;
   background-repeat: no-repeat;
   background-position: center;
   background-color: transparent;
   border: none;
-  width: 44px; 
+  width: 44px;
   height: 40px;
 }
 
@@ -149,11 +149,16 @@ textarea {
 }
 
 .input_container {
-  position: fixed;
-  top: 400px;
-  width: 82%;
   .input_item {
     .paymentButton {
+      background-image: url('https://sesac-projects.site/waitmate/images/pay.svg');
+      background-size: 30px 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: transparent;
+      border: none;
+      width: 44px;
+      height: 40px;
       color: #2f2772;
       background-color: transparent;
       border: 1px solid #2f2772;

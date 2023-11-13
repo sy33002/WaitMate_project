@@ -254,8 +254,10 @@ ex) header-#4
   
   🟩 <strong>맵</strong>
   
-    * 
-    * 
+    * 사용자 기반 위치 추적 기능으로 사용자 위치 표시 기능
+    * 웨이트메이트의 공고로 연결되는 웨이트메이트의 마크와 장소로 넘어가는 창 표시 기능
+    * Map과 MapMarker, CustomOverlayMap을 활용해 맵 표시 기능 
+    * axios로 받은 주소를 위도 경도 값으로 변환하여 마크 표시
     
   🟩 <strong>웨이트메이트(대기 요청자)</strong>
  
