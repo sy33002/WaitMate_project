@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm, Controller, set } from 'react-hook-form';
 import AddressSearchModal from './AddressSearchModal';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,16 @@ export default function WaitMateRegister() {
   const { id } = useUserStore();
   const apiUrl = process.env.REACT_APP_URL;
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -223,13 +233,16 @@ export default function WaitMateRegister() {
                       {...field}
                       type="date"
                       className="rounded-lg w-full"
+                      min={new Date().toISOString().split('T')[0]}
                     />
                   )}
                 />
                 {formState.errors.date && clickRegister && (
                   <p className="text-red-300 text-xs p-2">
-                    날짜는 필수 항목입니다 :D
-                  </p>
+                  {formState.errors.title.type === 'min'
+                    ? '지난 날짜는 등록되지 않습니다!'
+                    : '날짜는 필수 항목입니다 :D'}
+                </p>
                 )}
               </div>
               <br />
