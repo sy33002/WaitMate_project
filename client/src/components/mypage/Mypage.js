@@ -139,7 +139,6 @@ function Mypage() {
           }
         );
         if (response.ok) {
-          console.log(response.json);
           const data = await response.json();
           setCompletedWaitMateList(data.myCompletedWaitMates);
         } else {
@@ -174,7 +173,7 @@ function Mypage() {
     fetchPickedWaitMateList();
   }, [id]); // 의존성 배열에 id 포함
 
-  fetchPickedWaitMateList();
+  // fetchPickedWaitMateList();
   const renderSelectedList = () => {
     switch (selectItem.type) {
       // case 'resume':
