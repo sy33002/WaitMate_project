@@ -13,7 +13,6 @@ export default function ProxyRegister({cities, photo}) {
   const { id, nickname, userId } = useUserStore();
 
   useEffect(() => {
-
     fetch(`https://sesac-projects.site/wapi/proxy/update/${id}`)
     .then(response => response.json())
     .then(data => {
