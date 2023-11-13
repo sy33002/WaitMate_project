@@ -14,7 +14,6 @@ export default function MapComponent() {
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
   const { id } = useUserStore();
-
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -180,7 +179,7 @@ export default function MapComponent() {
                   onClick={() => {
                     console.log('마커 클릭됨');
                     setIsOpen(true);
-                  }} 
+                  }}
                 ></MapMarker>
               );
             }
