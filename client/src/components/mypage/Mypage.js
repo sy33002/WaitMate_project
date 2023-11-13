@@ -25,6 +25,7 @@ function Mypage() {
   const [completedWaitMateList, setCompletedWaitMateList] = useState([]);
   const [pickedWaitMateList, setPickedWaitMateList] = useState([]);
   const [waitMate, setWaitMate] = useState([]);
+  const [pickedProxyList, setPickedProxyList] = useState([]);
 
   const handleLogout = async () => {
     await logout();
@@ -96,6 +97,23 @@ function Mypage() {
     }
   };
 
+  // 내가 픽한 웨메 list
+  const fetchPickedWaitMateList = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/wmReservation/wmList`, {
+        params: { id: id },
+      });
+      if (response.data) {
+        console.log('내가 픽한 웨메 리스트:', response.data);
+        setPickedWaitMateList(response.data.waitMateList);
+      } else {
+        console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
+      }
+    } catch (err) {
+      console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
+    }
+  };
+
   // My WaitMate - 내가 작성한 웨이트메이트 list
   const myWaitMateNotes = async () => {
     try {
@@ -137,15 +155,15 @@ function Mypage() {
     }
   };
 
-  // 내가 픽한 웨메 list
-  const fetchPickedWaitMateList = async () => {
+  // 내가 픽한 프록시 list
+  const fetchPickedProxyList = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/wmReservation/wmList`, {
+      const response = await axios.get(`${apiUrl}/wmReservation/proxyList`, {
         params: { id: id },
       });
       if (response.data) {
         console.log('내가 픽한 웨메 리스트:', response.data);
-        setPickedWaitMateList(response.data.waitMateList);
+        setPickedProxyList(response.data.proxyList);
       } else {
         console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
       }
@@ -162,14 +180,17 @@ function Mypage() {
       case 'myLikeList':
         fetchLikedWaitMateList();
         break;
+      case 'pickedWaitMateList':
+        fetchPickedWaitMateList();
+        break;
       case 'myWaitMateList':
         myWaitMateNotes();
         break;
       case 'completedWaitMateList':
         fetchCompletedWaitMateList();
         break;
-      case 'pickedWaitMateList':
-        fetchPickedWaitMateList();
+      case 'pickedProxyList':
+        fetchPickedProxyList();
         break;
       default:
       // 기본값 혹은 아무 것도 하지 않음
@@ -259,6 +280,14 @@ function Mypage() {
                 >
                   내가 찜한 웨이트메이트 list
                 </button>
+                <button
+                  className="border-primary border-2 rounded-lg"
+                  onClick={() =>
+                    setSelectItem({ type: 'pickedWaitMateList', id: null })
+                  }
+                >
+                  내가 픽한 웨메 list
+                </button>
               </div>
             </div>
             <div
@@ -295,10 +324,10 @@ function Mypage() {
                 <button
                   className="border-primary border-2 rounded-lg"
                   onClick={() =>
-                    setSelectItem({ type: 'pickedWaitMateList', id: null })
+                    setSelectItem({ type: 'pickedProxyList', id: null })
                   }
                 >
-                  내가 픽한 웨메 list
+                  내가 픽한 프록시 list
                 </button>
               </div>
             </div>
@@ -446,6 +475,32 @@ function Mypage() {
                       <p>시작시간: {picked.startTime}</p>
                       <p>종료시간: {picked.endTime}</p>
                       <p>시급: {picked.pay}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : selectItem.type === 'pickedProxyList' &&
+              pickedProxyList &&
+              pickedProxyList.length > 0 ? (
+              <ul>
+                {pickedProxyList.map((picked, index) => (
+                  <li
+                    key={index}
+                    className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
+                  >
+                    <div className="w-1/4">
+                      <img
+                        src={picked.photo}
+                        alt="Proxy"
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                    <div className="w-3/4 ml-4">
+                      <p>title: {picked.title}</p>
+                      <p>나이: {picked.age}대</p>
+                      <p>프록시 주소: {picked.proxyAddress}</p>
+                      <p>성별: {picked.gender}</p>
+                      <p>프록시 한 마디!: {picked.proxyMsg}</p>
                     </div>
                   </li>
                 ))}
