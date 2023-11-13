@@ -15,6 +15,7 @@ export default function ProxyDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const apiUrl = process.env.REACT_APP_URL;
+
   console.log(id);
   const handleUserSelect = (user) => {
     setSelectedUser(user);
@@ -43,7 +44,7 @@ export default function ProxyDetail() {
       navigate(`/proxy/detail/chat/${data.roomNumber}`);
     });
     if (selectedUser) {
-      console.log('웨메 설정',selectedUser);
+      console.log('웨메 설정', selectedUser);
       socket.emit('createRoom', {
         sender: parseInt(id),
         receiver: parseInt(proxy.id),
@@ -62,11 +63,9 @@ export default function ProxyDetail() {
       });
     }
   };
-  
+
   useEffect(() => {
-
     fetch(`https://sesac-projects.site/wapi/proxy/detail/${proxyId}`, {
-
       withCredentials: true,
     })
       .then((response) => response.json())
@@ -111,7 +110,7 @@ export default function ProxyDetail() {
               <img
                 className={`${isSmallScreen ? 'w-3/5 h-2/5' : 'w-full'}`}
                 src="https://sesac-projects.site/waitmate/images/whiteWaitMate.png"
-                alt='proxy'
+                alt="proxy"
               ></img>
             </div>
             <img
