@@ -62,7 +62,7 @@ export default function WaitMateList({cities,photo}) {
   };
 
   return (
-    <div className='h-full p-4 mt-4 flex flex-col item-center justify-center text-center'>
+    <div className='h-full p-4 flex flex-col item-center justify-center text-center'>
         <p className={`${isSmallScreen ? 'text-[8px]' : 'text-[13px]'} text-green font-Line`}>
           근처에 있는 
             <span className='text-primary'>웨이트 메이트</span>
