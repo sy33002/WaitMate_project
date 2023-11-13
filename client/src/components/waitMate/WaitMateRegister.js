@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 
 export default function WaitMateRegister() {
-  const { control, handleSubmit, setValue, formState } = useForm();
+  const { control, handleSubmit, setValue, formState, watch } = useForm();
   const [imageFile, setImageFile] = useState('/waitmate/images/waitMate.png');
   const [inputAddressValue, setInputAddressValue] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,6 +13,7 @@ export default function WaitMateRegister() {
   const [locationInfo, setLocationInfo] = useState({});
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
+  const [validEndTime, setValidEndTime] = useState(false);
   const { id } = useUserStore();
   const apiUrl = process.env.REACT_APP_URL;
   const navigate = useNavigate();
@@ -48,6 +49,19 @@ export default function WaitMateRegister() {
   const handleModalConfirm = () => {
     navigate('/waitMate/list');
   };
+
+  const startTime = watch('time_start', '');
+  const endTime = watch('time_end', '');
+
+  useEffect(() => {
+    if (startTime && endTime) {
+      if (startTime > endTime) {
+        setValidEndTime(true);
+        console.log(validEndTime);
+        // setValue('time_end', ''); 
+      }
+    }
+  }, [startTime, endTime, setValue]);
 
   const onSubmit = async (data, event) => {
     const wmAddress = inputAddressValue;
@@ -133,7 +147,7 @@ export default function WaitMateRegister() {
                   <input
                     type="file"
                     name="photo"
-                    className="hidden" // 숨겨진 input 엘리먼트
+                    className="hidden"
                     onChange={(e) => {
                       handleFileChange(e);
                     }}
@@ -283,6 +297,11 @@ export default function WaitMateRegister() {
                   clickRegister && (
                     <p className="text-red-300 text-xs p-2">
                       시작 시간과 끝날 시간 필수 항목입니다 :D
+                    </p>
+                  )}
+                  {validEndTime && (
+                    <p className="text-red-300 text-xs p-2">
+                      끝날 시간은 시작 시간보다 뒤여야합니다!
                     </p>
                   )}
               </div>
