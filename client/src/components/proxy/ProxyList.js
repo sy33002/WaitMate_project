@@ -71,7 +71,7 @@ export default function WaitMateList({cities, photo}) {
         <select 
             onChange={handleOption} 
             className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
-              <option value="latest">최근 목록순</option>
+              <option value="updatedAt">최근 목록순</option>
               <option value="star">평점순</option>
             </select>
             <div className='flex items-center w-64'>
