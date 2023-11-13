@@ -15,12 +15,22 @@ export default function WaitMateList({cities, photo}) {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
   const { id, nickname, userId } = useUserStore();
-  const isSmallScreen = useState(window.innerWidth < 700);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
 
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
