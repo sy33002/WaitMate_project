@@ -24,7 +24,6 @@ import Error404 from './static/404';
 import useUserStore from './store/useUserStore';
 import { useEffect } from 'react';
 import ProxyUpdate from './components/proxy/ProxyUpdate';
-
 function App({ id, nickname, photo, userId }) {
   return (
     <div className="bg-background">

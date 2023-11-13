@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
 // import useUserStore from '../../store/useUserStore';
@@ -14,6 +14,7 @@ export default function MapComponent() {
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
   const { id } = useUserStore();
+  const Navigate = useNavigate();
 
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
@@ -57,8 +58,9 @@ export default function MapComponent() {
 
   const stylingOverlay = () => {
     const style = {
-      fontSize: 'x-large',
+      fontSize: 'large',
       fontWeight: 'bold',
+      borderRadius: '5px',
     };
     const info_close = {
       position: 'absolute',
@@ -73,32 +75,37 @@ export default function MapComponent() {
       fontWeight: 'bold',
     };
     const info_link = {
-      padding: '10px 0 50px 10px',
-      height: '80px', // Adjust the height as needed
-      background: '#FCFFF6',
+      padding: '10px 15px 50px 18px',
+      height: '60px', // Adjust the height as needed
+      background: 'white',
       borderBottom: '1px solid #ddd',
       fontSize: '17px',
       fontWeight: 'bold',
-      lineHeight: '80px', // Vertically center the content
+      lineHeight: '36px',
+      borderRadius: '5px',
+      fontFamily: 'hanna',
     };
     const info_title = {
-      padding: '5px 0 0 20px',
-      height: '30px',
+      padding: '0 0 0 40px',
+      height: '40px',
+      lineHeight: '40px',
       background: '#eee',
       borderBottom: '1px solid #ddd',
+      borderRadius: '5px',
+      fontFamily: 'hanna',
     };
     return { style, info_close, info_title, info_link };
   };
 
-  // const openOverlay = (marker) => {
-  //   setSelectedMarker(marker);
-  //   setIsOpen(true);
-  // };
+  const openOverlay = (marker) => {
+    setSelectedMarker(marker);
+    setIsOpen(true);
+  };
 
-  // const closeOverlay = () => {
-  //   setSelectedMarker(null);
-  //   setIsOpen(false);
-  // };
+  const closeOverlay = () => {
+    setSelectedMarker(null);
+    setIsOpen(false);
+  };
 
   // 화면 크기를 변경할 때 높이를 조정
   const getMapHeight = () => {
@@ -149,7 +156,7 @@ export default function MapComponent() {
         </p>
       </div>
 
-      <div>
+      <div className="marker-marker-container">
         <Map
           level={3}
           center={userLocation || { lat: 0, lng: 0 }}
@@ -161,7 +168,7 @@ export default function MapComponent() {
               text="Your Location"
               image={{
                 src: 'https://sesac-projects.site/waitmate/images/mapProxy.png',
-                size: { width: 92, height: 76 },
+                size: { width: 82, height: 76 },
               }}
             />
           )}
@@ -169,73 +176,74 @@ export default function MapComponent() {
           {userAddress.map((data, index) => {
             if (data.lat && data.lng) {
               return (
-                <MapMarker
-                  key={index}
-                  position={{ lat: data.lat, lng: data.lng }}
-                  text={data.key}
-                  image={{
-                    src: 'https://sesac-projects.site/waitmate/images/mapWaitMate.png',
-                    size: { width: 34, height: 34 },
-                  }}
-                  onClick={() => {
-                    console.log('마커 클릭됨');
-                    setIsOpen(true);
-                  }} 
-                ></MapMarker>
-              );
-            }
-
-            {
-              isOpen && selectedMarker && (
-                <CustomOverlayMap
-                  position={{
-                    lat: selectedMarker.lat,
-                    lng: selectedMarker.lng,
-                  }}
-                >
-                  <>
-                    <div className="wrap">
-                      <div className="info">
-                        <div
-                          className="title"
-                          style={stylingOverlay().info_title}
-                        >
-                          웨이트 메이트 장소
+                <>
+                  <MapMarker
+                    key={index}
+                    position={{ lat: data.lat, lng: data.lng }}
+                    text={data.key}
+                    image={{
+                      src: 'https://sesac-projects.site/waitmate/images/mapWaitMate.png',
+                      size: { width: 54, height: 54 },
+                    }}
+                    onClick={() => {
+                      openOverlay(data);
+                      console.log('마커 클릭됨');
+                    }}
+                  ></MapMarker>
+                  {isOpen && selectedMarker && (
+                    <CustomOverlayMap
+                      position={{
+                        lat: selectedMarker.lat,
+                        lng: selectedMarker.lng,
+                      }}
+                    >
+                      <div className="wrap marker-marker-test">
+                        <div className="info">
                           <div
-                            className="close"
-                            onClick={() => setIsOpen(false)}
-                            title="닫기"
-                            style={stylingOverlay().info_close}
-                          ></div>
-                        </div>
-                        <div className="body">
-                          <div
-                            className="desc"
-                            style={stylingOverlay().info_link}
+                            className="title"
+                            style={stylingOverlay().info_title}
                           >
-                            <div>
-                              <a
-                                href={`${apiUrl}/waitMate/detail?wmId=${data.wmId}`}
-                                target="_blank"
-                                className="link"
-                                rel="noreferrer"
-                                style={stylingOverlay().info_link}
-                              >
-                                웨이트 메이트 공고 바로가기
-                              </a>
+                            웨이트 메이트 장소
+                            <div
+                              className="close"
+                              onClick={() => closeOverlay()}
+                              title="닫기"
+                              style={stylingOverlay().info_close}
+                            ></div>
+                          </div>
+                          <div className="body">
+                            <div
+                              className="desc"
+                              style={stylingOverlay().info_link}
+                            >
+                              <div>
+                                <div
+                                  onClick={() =>
+                                    Navigate(
+                                      `/waitMate/detail/${selectedMarker.wmId}`
+                                    )
+                                  }
+                                  target="_blank"
+                                  className="link"
+                                  rel="noreferrer"
+                                >
+                                  웨이트 메이트 공고 바로가기
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                </CustomOverlayMap>
+                    </CustomOverlayMap>
+                  )}
+                </>
               );
             }
           })}
         </Map>
         {console.log('Is Open:', isOpen)}
         {console.log('Is Selected:', selectedMarker)}
+       
       </div>
     </div>
   );

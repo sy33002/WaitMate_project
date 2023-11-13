@@ -29,6 +29,7 @@ export default function ProxyRegister({ cities, photo }) {
     fetchData();
   }, [proxyId]);
 
+
   const [inputAddressValue, setInputAddressValue] = useState(proxy.address);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
