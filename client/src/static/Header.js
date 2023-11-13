@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import useUserStore from '../store/useUserStore';
 
 function Header() {
-  const { id, nickname, photo, userId, setUserInfo, logout } = useUserStore();
+  const { id, nickname, photo, userId, setUserInfo, logout, profileImg } =
+    useUserStore();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ function Header() {
     navigate('/');
   };
 
-  const profileImage = photo || 'https://sesac-projects.site/waitmate/images/waitMate2.png';
+  const profileImage =
+    profileImg || 'https://sesac-projects.site/waitmate/images/waitMate2.png';
 
   return (
     <div>
@@ -50,8 +52,7 @@ function Header() {
               />
             </div>
           </Link>
-          <div>
-          </div>
+          <div></div>
           <div className="flex flex-col">
             <button
               onClick={toggleMenu}
