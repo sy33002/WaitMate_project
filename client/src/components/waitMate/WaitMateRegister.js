@@ -64,7 +64,7 @@ export default function WaitMateRegister() {
     formData.append('photo', imageFile);
     formData.append('lng', locationInfo.x);
     formData.append('lat', locationInfo.y);
-
+    console.log(imageFile);
     try {
       const response = await fetch(`${apiUrl}/waitMate/register`, {
         method: 'POST',
