@@ -32,6 +32,9 @@ export default function WaitMateList({cities, photo}) {
         if (response.ok) {
           const {list} = await response.json();
           setItems(list);
+          console.log(address);
+          console.log(selectedOption);
+          console.log('list 새로 요청 완료!!!');
         } else {
           console.log('데이터 가져오기 실패!');
         }
@@ -71,7 +74,7 @@ export default function WaitMateList({cities, photo}) {
         <select 
             onChange={handleOption} 
             className={`${isSmallScreen ? 'text-[8px]' : 'text-[12px]'} text-primary p-2 font-Line bg-background'}`}>
-              <option value="latest">최근 목록순</option>
+              <option value="updatedAt">최근 목록순</option>
               <option value="star">평점순</option>
             </select>
             <div className='flex items-center w-64'>
