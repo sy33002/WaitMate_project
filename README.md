@@ -134,8 +134,10 @@ ex) header-#4
  * socket.io-client: 4.7.2,
  * sweetalert2: 11.9.0,
  * web-vitals: 2.1.4,
- * zustand: 4.4.6
-
+ * react-hook-form : 7.47.0,
+ * react-kakao-maps-sdk: 1.1.24,
+ * react-chat-elements: 12.0.10,
+ * react-daum-postcode: 3.1.3,
   백엔드
   
  * axios: 1.5.1,
@@ -152,7 +154,8 @@ ex) header-#4
  * sequelize: 6.33.0,
  * socket.io: 4.7.2,
  * swagger-jsdoc: 6.2.8,
-  
+ * zustand : 4.4.6,
+   
 ## 📙 개발 준비
 
    * <b>애자일 방법을 택하여 3주간 스프린트로 만들기로 결정</b>
