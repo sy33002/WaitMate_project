@@ -19,6 +19,25 @@ function Mypage() {
   const [myWaitMateList, setMyWaitMateList] = useState([]);
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
+  const [loading, setLoading] = useState(false);
+  const [selectItem, setSelectItem] = useState({ type: null, id: null });
+
+  const handleSelectItem = (itemType, itemId) => {
+    setSelectItem({ type: itemType, id: itemId });
+  };
+
+  const navigateToEdit = () => {
+    switch (selectItem.type) {
+      case 'resume':
+        navigate(`/proxy/update/${selectItem.id}`);
+        break;
+      case 'likeList':
+        navigate(`/waitMate/update/${selectItem.id}`);
+        break;
+      default:
+        console.log('알 수 없는 항목 타입');
+    }
+  };
 
   const handleLogout = async () => {
     await logout();
@@ -52,70 +71,79 @@ function Mypage() {
   };
 
   // My Proxy - 나의 이력서
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`https://sesac-projects.site/wapi/getProxyAll/id=${id}`, {
-  //           method: 'GET',
-  //         });
-  //       if (response.ok) {
-  //         const {list} = await response.json();
-  //         setMyResume(list);
-  //       } else {
-  //         console.log('데이터 가져오기 실패!');
-  //       }
-  //     } catch (error) {
-  //       console.log('데이터 가져오는 중 오류 발생', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://sesac-projects.site/wapi/getProxyAll/id=${id}`,
+          {
+            method: 'GET',
+          }
+        );
+        if (response.ok) {
+          const { list } = await response.json();
+          setMyResume(list);
+        } else {
+          console.log('데이터 가져오기 실패!');
+        }
+      } catch (error) {
+        console.log('데이터 가져오는 중 오류 발생', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   // My Proxy - 내가 찜한 웨이트메이트 list
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`https://sesac-projects.site/wapi/likeWait/list/id=${id}`, {
-  //           method: 'GET',
-  //         });
-  //       if (response.ok) {
-  //         const {getLikeWaitList} = await response.json();
-  //         setMyLikeList(getLikeWaitList);
-  //       } else {
-  //         console.log('데이터 가져오기 실패!');
-  //       }
-  //     } catch (error) {
-  //       console.log('데이터 가져오는 중 오류 발생', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://sesac-projects.site/wapi/likeWait/list/id=${id}`,
+          {
+            method: 'GET',
+          }
+        );
+        if (response.ok) {
+          const { getLikeWaitList } = await response.json();
+          setMyLikeList(getLikeWaitList);
+        } else {
+          console.log('데이터 가져오기 실패!');
+        }
+      } catch (error) {
+        console.log('데이터 가져오는 중 오류 발생', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   // My WaitMate - 내가 작성한 웨이트메이트 list
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`https://sesac-projects.site/wapi/waitMate/myWaitMate/id=${id}`, {
-  //           method: 'GET',
-  //         });
-  //       if (response.ok) {
-  //         const {myWaitMates} = await response.json();
-  //         setMyWaitMateList(myWaitMates);
-  //       } else {
-  //         console.log('데이터 가져오기 실패!');
-  //       }
-  //     } catch (error) {
-  //       console.log('데이터 가져오는 중 오류 발생', error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `https://sesac-projects.site/wapi/waitMate/myWaitMate/id=${id}`,
+          {
+            method: 'GET',
+          }
+        );
+        if (response.ok) {
+          const { myWaitMates } = await response.json();
+          setMyWaitMateList(myWaitMates);
+        } else {
+          console.log('데이터 가져오기 실패!');
+        }
+      } catch (error) {
+        console.log('데이터 가져오는 중 오류 발생', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div
@@ -180,12 +208,14 @@ function Mypage() {
                 My Proxy
               </button>
               <div
-                className={`flex  flex-col p-2 ${
-                  isSmallScreen ? 'text-[10px]' : 'text-[14px]'
+                className={`flex p-2 space-x-1 ${
+                  isSmallScreen
+                    ? 'text-[10px] flex-col'
+                    : 'text-[14px] flex-row'
                 }`}
               >
                 <button
-                  onClick={() => {}}
+                  onClick={() => handleSelectItem('resume')}
                   className="border-2 border-primary rounded-lg"
                 >
                   나의 이력서
@@ -204,11 +234,16 @@ function Mypage() {
                 My WaitMate
               </button>
               <div
-                className={`flex flex-col p-2 ${
-                  isSmallScreen ? 'text-[10px]' : 'text-[14px]'
+                className={`flex  p-2 space-x-1 ${
+                  isSmallScreen
+                    ? 'text-[10px] flex-col'
+                    : 'text-[14px] flex-row'
                 }`}
               >
-                <button className="border-2 border-primary rounded-lg">
+                <button
+                  onClick={() => handleSelectItem('likeList')}
+                  className="border-2 border-primary rounded-lg"
+                >
                   나의 웨이트메이트 목록
                 </button>
                 <button className="border-2 border-primary rounded-lg">
@@ -218,7 +253,10 @@ function Mypage() {
             </div>
           </div>
           <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg"></div>
-          <button className="bg-primary text-background px-2 rounded-lg mt-2">
+          <button
+            onClick={navigateToEdit}
+            className="bg-primary text-background px-2 rounded-lg mt-2"
+          >
             수정하기
           </button>
         </div>

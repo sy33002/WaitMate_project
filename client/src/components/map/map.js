@@ -3,7 +3,6 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useParams } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-import useUserStore from '../../store/useUserStore';
 
 export default function MapComponent() {
   const [userLocation, setUserLocation] = useState(null);
@@ -13,7 +12,7 @@ export default function MapComponent() {
   const isSmallScreen = window.innerWidth < 700;
   const { wmId } = useParams();
   const apiUrl = process.env.REACT_APP_URL;
-  const {id} = useUserStore();
+  const { id } = useUserStore();
   function getCurrentLocation(callback) {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
