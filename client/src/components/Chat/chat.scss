@@ -1,3 +1,5 @@
+@import '~include-media/dist/include-media';
+
 .avatar {
   display: flex;
   justify-content: flex-end;
@@ -133,6 +135,11 @@ textarea {
   min-height: 400px;
   max-height: 400px;
   overflow-y: auto;
+  @include media('<300px') {
+    min-height: 300px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
 }
 
 .chat_header {
@@ -141,6 +148,14 @@ textarea {
   color: white;
   padding: 15px;
   font-size: x-large;
+  @include media('<567px'){
+    padding:0;
+    font-size: medium;
+  }
+  @include media('<300px'){
+    padding:0;
+    font-size: medium;
+  }
 }
 .chat_header_status {
   background-color: transparent;
@@ -148,9 +163,17 @@ textarea {
   color: white;
   font-size: x-large;
   padding: 10px;
+  @include media('<567px'){
+    padding:0;
+    font-size: medium;
+  }
+  @include media('<300px'){
+    font-size: small;
+  }
 }
 
 .input_container {
+  box-shadow: 0px -2px 0px 0px rgba(140, 140, 140, 0.2);
   .input_item {
     .paymentButton {
       background-image: url('https://sesac-projects.site/waitmate/images/pay.svg');
@@ -172,4 +195,9 @@ textarea {
       }
     }
   }
+}
+
+.rce-button .paymentButton {
+  background-color: transparent;
+  border-color: none;
 }
