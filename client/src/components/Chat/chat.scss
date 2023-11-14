@@ -84,6 +84,7 @@ textarea {
 }
 
 .message_container {
+  min-height: 65vh;
   max-height: 75vh;
   overflow: auto;
 }
@@ -129,6 +130,7 @@ textarea {
 }
 
 .message_container {
+  min-height: 400px;
   max-height: 400px;
   overflow-y: auto;
 }
