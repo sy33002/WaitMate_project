@@ -5,7 +5,7 @@ import useUserStore from '../../store/useUserStore';
 
 function ChatList() {
   const [chats, setChats] = useState([]);
-  const id = 2;
+  const {id} = useUserStore();
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
