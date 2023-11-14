@@ -253,10 +253,21 @@ function Mypage() {
           >
             <div
               className={`${
+<<<<<<< HEAD
+                isSmallScreen ? ' w-3/5 h-3/5' : 'h-2/3 w-3/5'
+              } bg-white border-primary border-2 rounded-lg`}
+            >
+              <img
+                src={profileImg}
+                alt="Profile"
+                className="w-full h-auto object-cover"
+              />
+=======
                 isSmallScreen ? ' w-3/5 h-3/5' : 'h-1/4 w-4/5'
               } bg-white rounded-lg overflow-hidden`}
             >
               <img src={profileImg} alt="Profile" className='w-full h-full'/>
+>>>>>>> origin
             </div>
             <input
               type="file"
@@ -362,7 +373,7 @@ function Mypage() {
               </div>
             </div>
           </div>
-          <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg">
+          <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg overflow-y-auto">
             {selectItem.type === 'myResume' &&
             myResume &&
             myResume.length > 0 ? (
