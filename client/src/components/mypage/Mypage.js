@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useUserStore from '../../store/useUserStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
@@ -31,6 +31,13 @@ function Mypage() {
   const [reviewId, setReviewId] = useState();
   const [reviewNickname, setReviewNickname] = useState();
   const [isReviewOpen, setIsReviewOpen] = useState();
+  const fileInputRef = useRef(null);
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   const testing = async (pickedProxyId) => {
     try {
@@ -253,7 +260,6 @@ function Mypage() {
           >
             <div
               className={`${
-<<<<<<< HEAD
                 isSmallScreen ? ' w-3/5 h-3/5' : 'h-2/3 w-3/5'
               } bg-white border-primary border-2 rounded-lg`}
             >
@@ -262,17 +268,13 @@ function Mypage() {
                 alt="Profile"
                 className="w-full h-auto object-cover"
               />
-=======
-                isSmallScreen ? ' w-3/5 h-3/5' : 'h-1/4 w-4/5'
-              } bg-white rounded-lg overflow-hidden`}
-            >
-              <img src={profileImg} alt="Profile" className='w-full h-full'/>
->>>>>>> origin
             </div>
+            <button onClick={handleClick}>이미지 업로드</button>
             <input
               type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
               onChange={handleImageUpload}
-              id="profile-upload"
             />
             <div className="flex flex-row space-x-1">
               <button
@@ -303,18 +305,18 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'text-[10px] flex-col'
+                    ? 'text-[12px] flex-col space-y-1 items-stretch'
                     : 'flex-row text-[14px]'
                 }`}
               >
                 <button
                   onClick={() => setSelectItem({ type: 'myResume', id: null })}
-                  className="border-primary border-2 rounded-lg"
+                  className="border-primary border-2 rounded-lg w-4/5 "
                 >
                   나의 이력서
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg"
+                  className="border-primary border-2 rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'myLikeList', id: null })
                   }
@@ -322,7 +324,7 @@ function Mypage() {
                   내가 찜한 웨이트메이트 list
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg"
+                  className="border-primary border-2 rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'pickedWaitMateList', id: null })
                   }
@@ -342,12 +344,12 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'flex-col text-[10px]'
+                    ? 'flex-col text-[12px] space-y-1'
                     : 'flex-row text-[14px]'
                 }`}
               >
                 <button
-                  className="border-primary border-2 rounded-lg"
+                  className="border-primary border-2 rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'myWaitMateList', id: null })
                   }
@@ -355,7 +357,7 @@ function Mypage() {
                   나의 웨이트메이트 목록
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg"
+                  className="border-primary border-2 rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'completedWaitMateList', id: null })
                   }
@@ -363,7 +365,7 @@ function Mypage() {
                   거래 완료 list
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg"
+                  className="border-primary border-2 rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'pickedProxyList', id: null })
                   }
