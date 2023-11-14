@@ -29,25 +29,37 @@
  * 2023년 10월 18일 ~ 2023년 11월 10일
  
 ## 👨‍👩‍👧‍👦멤버구성
-* 김지형(sy33002) 프론트: 
-   - 헤더/사이드바/웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지/ 프록시 등록,리스트, 디테일, 업데이트 페이지
+* 김지형(sy33002) [팀장] 프론트: 
+   - 헤더/사이드바
+   - 웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지, 반응형 적용
+   - 프록시 등록,리스트, 디테일, 업데이트 페이지, 반응형 적용
 * 박장혁(Vamos-Hyuk)  프론트: 
-   마이페이지/평점 후기 모달 페이지/404페이지/ 캐릭터 및 로고 디자인/로그인 및 회원가입/ 회원 수정 페이지
+   - 마이페이지/로그인 및 회원가입/ 회원 수정 페이지
+   - 평점 후기 모달 페이지
+   - 404페이지/ 캐릭터 및 로고 담당
 * 정채림(ellin45)  프론트: 
-   - 메인 페이지 애니메이션 적용 및 반응형 작업, 채팅 페이지 react-chat-elements 라이브러리로 구현 채팅과  소켓 연결, 반응형적용 ,맵 페이지 kakao-map 라이브러로 맵 구현 및 맵에 사용자 기반위치 적용후 마크표시기능, 마커를 통해 웨이트메이트 공고와 연결 
+   - 메인 페이지 애니메이션 적용 및 반응형 작업
+   - 채팅 페이지 react-chat-elements 라이브러리로 구현 채팅과 소켓 연결, 반응형적용
+   - 맵 페이지 kakao-map 라이브러로 맵 구현 및 맵에 사용자 기반위치 적용후 마크표시기능, 마커를 통해 웨이트메이트 공고와 연결 
 * 이동규(LOBSTER10000) 백엔드 : 
-   - Mysql&시퀄라이즈 모델 생성 후 연동, MongoDB&몽구스 스키마 생성 후 연동, 채팅 기능, 프록시 CRUD
+   - Mysql&시퀄라이즈 모델 생성 후 연동, MongoDB&몽구스 스키마 생성 후 연동
+   - 소캣을 활용한 채팅 기능,
+   - 프록시 관련 CRUD
 * 박준수(kdm111) 백엔드 : 
-   - 유저 CRUD, jwt 로그인, 리뷰 CRUD 기능, 웹 서버 배포, 카카오페이 API 기능 
+   - 유저 CRUD, jwt 로그인
+   - 리뷰 CRUD 기능, 웹 서버 배포,
+   - 카카오페이 API 기능 
 * 김효중(rlagywnd4) 백엔드 : 
-   - 웨이트메이트crud, 관심기능, 소켓을 활용한 웨이트메이트 상태 
-
+   - 웨이트메이트 관련 crud, 관심기능
+   - 소켓을 활용한 웨이트메이트 상태 기능 구현
+   - 마이페이지 crud
 
 
 ## ⚙개발환경
  * Javascript : <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=Javascript&logoColor=white"/> Javascript
  * IDE : <img src="https://img.shields.io/badge/visualstudio-007ACC?style=flat-square&logo=visualstudio idea&logoColor=white"/> Visual Studio Code (1.81)
  * Framework : <img src="https://img.shields.io/badge/nodedotjs-339933?style=flat-square&logo=nodedotjs&logoColor=white"/> Node.js (20.5.0)
+ * CSS Framework : <img src="https://img.shields.io/badge/nodedotjs-339933?style=flat-square&logo=nodedotjs&logoColor=white"/> Tailwind (3.3.3)
  * Library : <img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=white"/> React (18.2.0)
  * Database : <img src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white"/> Mysql (workbench 8.0)
  * Database : <img src="https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=mongoDB&logoColor=white"/> MongoDB (6.1.0)
@@ -134,8 +146,10 @@ ex) header-#4
  * socket.io-client: 4.7.2,
  * sweetalert2: 11.9.0,
  * web-vitals: 2.1.4,
- * zustand: 4.4.6
-
+ * react-hook-form : 7.47.0,
+ * react-kakao-maps-sdk: 1.1.24,
+ * react-chat-elements: 12.0.10,
+ * react-daum-postcode: 3.1.3,
   백엔드
   
  * axios: 1.5.1,
@@ -152,7 +166,8 @@ ex) header-#4
  * sequelize: 6.33.0,
  * socket.io: 4.7.2,
  * swagger-jsdoc: 6.2.8,
-  
+ * zustand : 4.4.6,
+   
 ## 📙 개발 준비
 
    * <b>애자일 방법을 택하여 3주간 스프린트로 만들기로 결정</b>
@@ -187,10 +202,10 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/82f9f92e-e467-4c41-9495-9e2bd44d699c">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/82f9f92e-e467-4c41-9495-9e2bd44d699c">
      </td>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/d0ce996b-5753-4ef1-8753-64dcabf466f2">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/d0ce996b-5753-4ef1-8753-64dcabf466f2">
       </td>
      </tr>
      <tr>
@@ -199,10 +214,10 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/cd55f0bc-472c-491a-9422-4ea49a7ecbd0">
       </td>
        <td>
-         <img width="100%" height="30%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/7cdb7df5-7070-45af-8436-c58d2fd397b2">
+         <img width="400px" height="30%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/7cdb7df5-7070-45af-8436-c58d2fd397b2">
       </td>
      </tr>
       <tr>
@@ -211,10 +226,10 @@ ex) header-#4
      </tr>
      <tr>
       <td>
-       <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/122a3203-5bd0-46cd-b407-6f66c330c594">
+       <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/122a3203-5bd0-46cd-b407-6f66c330c594">
       </td>
        <td>
-        <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2a9858ff-15dd-4308-9fcb-f54f8d9c2921">
+        <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2a9858ff-15dd-4308-9fcb-f54f8d9c2921">
       </td>
      </tr>
      <tr>
@@ -223,10 +238,10 @@ ex) header-#4
      </tr>
      <tr>
        <td>
-        <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2686ec14-4c95-41eb-a156-113e4e9c0050">
+        <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/2686ec14-4c95-41eb-a156-113e4e9c0050">
       </td>
        <td>
-      <img width="100%" src="https://github.com/2nd-team-b/front-wait/assets/111476138/083af4c9-e09e-454f-839e-d53610879319">
+      <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/083af4c9-e09e-454f-839e-d53610879319">
       </td>
      </tr>
      <tr>
@@ -235,10 +250,10 @@ ex) header-#4
      </tr>
      <tr>
        <td>
-           <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/0d83b3e3-aec4-4fbd-a877-2eb7a57c7a9f">
+           <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/0d83b3e3-aec4-4fbd-a877-2eb7a57c7a9f">
        </td>
        <td>
-         <img width="480px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/ac194bf7-30f4-4bba-80e5-00abeea4722a">
+         <img width="400px" src="https://github.com/2nd-team-b/front-wait/assets/111476138/ac194bf7-30f4-4bba-80e5-00abeea4722a">
       </td>
      </tr>
     </tbody>
@@ -254,8 +269,10 @@ ex) header-#4
   
   🟩 <strong>맵</strong>
   
-    * 
-    * 
+    * 사용자 기반 위치 추적 기능으로 사용자 위치 표시 기능
+    * 웨이트메이트의 공고로 연결되는 웨이트메이트의 마크와 장소로 넘어가는 창 표시 기능
+    * Map과 MapMarker, CustomOverlayMap을 활용해 맵 표시 기능 
+    * axios로 받은 주소를 위도 경도 값으로 변환하여 마크 표시
     
   🟩 <strong>웨이트메이트(대기 요청자)</strong>
  
@@ -277,9 +294,8 @@ ex) header-#4
     
  🟩 <strong>결제 기능 & 리뷰 기능</strong>
  
-    * 
-    * 
-    * 
+    * 카카오 페이 API를 이용한 결제 기능과 트랜잭션을 통한 DB 무결성, 일관성 확보
+    * 대기자에 대한 리뷰와 별점을 남기고 별점의 평균을 내려 리스트 출력
     
  🟩 <strong>마이페이지</strong>
 

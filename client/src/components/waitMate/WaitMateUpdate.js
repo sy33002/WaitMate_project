@@ -19,9 +19,20 @@ export default function WaitMateUpdate({photo}) {
   const apiUrl = process.env.REACT_APP_URL;
   const navigate = useNavigate();
   const { id, nickname, userId } = useUserStore();
+  
   const handleModalConfirm = () => {
     navigate('/mypage/Mypage')
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   useEffect(() => {
     fetch(`${apiUrl}/waitMate/detail?wmId=${wmId}&id=${id}`)
