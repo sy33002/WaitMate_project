@@ -398,7 +398,7 @@ function Mypage() {
                         <p>주소 : {item.proxyAddress}</p>
                         <p>성별 : {item.gender}</p>
                         <p>나이 : {item.age}</p>
-                        <p>메세지 : {item.proxyMsg}</p>
+                        {item.proxyMsg && <p>메세지 : {item.proxyMsg}</p>}
                       </Link>
                       <button
                         onClick={() =>
@@ -423,8 +423,8 @@ function Mypage() {
                   >
                     <div className="w-1/4">
                       <img
-                        src={item.photo}
-                        alt="Proxy"
+                        src={`${apiUrl}${item.photo}`}
+                        alt="Waitmate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
@@ -447,7 +447,7 @@ function Mypage() {
                   >
                     <div className="w-1/4">
                       <img
-                        src={item.photo}
+                        src={`${apiUrl}${item.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
@@ -456,7 +456,9 @@ function Mypage() {
                       <Link to={`/waitMate/update/${item.id}`}>
                         <p>{item.title}</p>
                         <p>웨이팅할 곳: {item.wmDetailAddress}</p>
-                        <p>부탁하는 말: {item.description}</p>
+                        {item.description && (
+                          <p>부탁하는 말: {item.description}</p>
+                        )}
                       </Link>
                       <button
                         onClick={() =>
@@ -481,8 +483,8 @@ function Mypage() {
                   >
                     <div className="w-1/4">
                       <img
-                        src={completed.photo}
-                        alt="Proxy"
+                        src={`${apiUrl}${completed.photo}`}
+                        alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
@@ -506,8 +508,8 @@ function Mypage() {
                   >
                     <div className="w-1/4">
                       <img
-                        src={picked.photo}
-                        alt="Proxy"
+                        src={`${apiUrl}${picked.photo}`}
+                        alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
@@ -542,7 +544,9 @@ function Mypage() {
                       <p>나이: {picked.age}대</p>
                       <p>프록시 주소: {picked.proxyAddress}</p>
                       <p>성별: {picked.gender}</p>
-                      <p>프록시 한 마디!: {picked.proxyMsg}</p>
+                      {picked.proxyMsg && (
+                        <p>프록시 한 마디!: {picked.proxyMsg}</p>
+                      )}
                     </div>
                     <button
                       onClick={() => {
