@@ -65,7 +65,9 @@ export default function ProxyRegister() {
         }
       });
       console.log(response.data);
-      setIsModalOpen(true);
+      if(response.data){
+        setShowModal(true);
+      }
     } catch (error) {
       console.error('Error!');
     }
