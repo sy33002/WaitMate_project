@@ -56,13 +56,18 @@ export default function WaitMateRegister() {
     if (startTime && endTime) {
       if (startTime > endTime) {
         setValidEndTime(true);
-        console.log(validEndTime);
-        // setValue('time_end', ''); 
+        setValue('time_end', ''); 
       }
     }
   }, [startTime, endTime, setValue]);
 
   const onSubmit = async (data, event) => {
+
+      if (!formState.isValid) {
+        setClickRegister(false);
+        alert('폼이 유효하지 않으니 제대로 작성해주세요!');
+        return;
+    }
     const wmAddress = inputAddressValue;
     const formData = new FormData();
     formData.append('id', id);
@@ -90,9 +95,11 @@ export default function WaitMateRegister() {
       if (response.ok) {
         setShowModal(true);
       } else {
+        setClickRegister(false);
         console.log(response.status);
       }
     } catch (error) {
+      setClickRegister(false);
       console.error('Error!');
     }
   };
@@ -180,7 +187,9 @@ export default function WaitMateRegister() {
                   <p className="text-red-300 text-xs p-2">
                     {formState.errors.title.type === 'required'
                       ? '제목은 필수 항목입니다 :D'
-                      : '제목은 100자 이내로 입력해주세요'}
+                      : formState.errors.title.type === 'maxLength'
+                      ? '제목은 100자 이내로 입력해주세요'
+                      : '제목에 관한 에러가 발생했습니다.'}
                   </p>
                 )}
               </div>
@@ -193,6 +202,7 @@ export default function WaitMateRegister() {
                 <button
                   className="bg-green p-1 font-Line rounded-lg mb-1"
                   onClick={() => {
+                    setShowModal(false);
                     setIsModalOpen(true);
                     setValue('address', '');
                   }}
@@ -220,16 +230,17 @@ export default function WaitMateRegister() {
               <br />
               <div>
                 <label className="text-sm text-green font-Line ml-1">
-                  Detail Address
+                  * Detail Address
                 </label>
                 <br />
                 <span className="text-red-300 text-xs font-Line pl-1">
-                  웨이팅 장소는 최대한 상세하게 적어주세요!
+                  웨이팅 장소는 최대한 상세하게 적어주세요! (필수)
                 </span>
                 <br />
                 <Controller
                   name="detailAddress"
                   control={control}
+                  rules={{ required: false }}
                   render={({ field }) => (
                     <textarea {...field} className="rounded-lg w-full" />
                   )}
@@ -256,10 +267,10 @@ export default function WaitMateRegister() {
                 />
                 {formState.errors.date && clickRegister && (
                   <p className="text-red-300 text-xs p-2">
-                  {formState.errors.title.type === 'min'
-                    ? '지난 날짜는 등록되지 않습니다!'
-                    : '날짜는 필수 항목입니다 :D'}
-                </p>
+                    {formState.errors.date.type === 'min'
+                      ? '지난 날짜는 등록되지 않습니다!'
+                      : '날짜는 필수 항목입니다 :D'}
+                  </p>
                 )}
               </div>
               <br />
@@ -330,6 +341,11 @@ export default function WaitMateRegister() {
                     />
                   )}
                 />
+                {/* {formState.errors.pay && clickRegister && (
+                  <p className="text-red-300 text-xs p-2">
+                    pay는 필수 항목입니다 :D
+                  </p>
+                )} */}
               </div>
               <br />
               <div>
