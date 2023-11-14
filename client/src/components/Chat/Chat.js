@@ -254,6 +254,7 @@ export default function Chat() {
                 ></MessageBox>
               );
             })}
+          </div>
             <div className="input_container">
               <Input
                 className="input_item"
@@ -280,7 +281,6 @@ export default function Chat() {
                 }
               />
             </div>
-          </div>
         </div>
       </div>
     </div>
