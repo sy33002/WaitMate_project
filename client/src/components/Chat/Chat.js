@@ -85,6 +85,9 @@ export default function Chat() {
               setWm(data.wmData);
               console.log('wm', data.wmData);
               console.log('sender안녕' + data.proxyData.photo);
+              console.log('방을 만든 사람의 아이디값' + data.sender.id);
+              console.log('프록시인 사람의 아이디값' + data.receiver.id);
+              console.log('로그인한 사람의 아이디값' + id);
             } else if (data.receiver.id === id) {
               setSender(data.receiver);
               setProxy(data.proxyData);
