@@ -64,36 +64,40 @@ function ChatList() {
   };
 
   return (
-    <div className="mt-10 mb-10 sm:ml-5 sm:mr-5 md:ml-10 md:mr-10 lg:ml-20 lg:mr-20 background">
+    <div className=" mb-10 sm:mt-5 md:mt-10 sm:ml-5 sm:mr-5 md:ml-10 md:mr-10 lg:ml-20 lg:mr-20 ">
       <div className="flex justify-center mb-5">
-        <h1 className="text-primary text-3xl font-gmarket">My Chat List</h1>
+        <h1 className="text-primary text-xl sm:text-2xl md:text-3xl  font-gmarket">
+          My Chat List
+        </h1>
       </div>
-      <div className="w-full h-96 overflow-y-auto p-5 rounded-lg bg-white border-primary border-2">
-        <div className="overflow-y-auto">
+      <div className="w-full sm:w-11/12 md:w-full sm:h-64 md:h-96 overflow-y-auto p-5 rounded-lg bg-purple-100 border-primary border-2">
+        <div className="overflow-y-auto ">
           {chats.map((chat) => (
             <Link
               to={`/proxy/detail/chat/${chat.roomNumber}`}
               key={chat.roomNumber}
             >
-              <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
+              <div className="mb-4 p-4 bg-white rounded-lg flex items-center border-4 border-primary sm:h-20 ">
                 <img
                   src={
                     chat.photo ||
                     'https://sesac-projects.site/waitmate/images/someone.png'
                   }
                   alt={`${chat.nickname}의 프로필 사진`}
-                  className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
+                  className="rounded-full w-10 h-10 sm:w-14 sm:h-14 mr-2 sm:mr-4 border-2 border-primary  "
                 />
-                <div className="chat-item">
-                  <div className="flex flex-row items-center">
-                    <div className="roomNumber font-Line">
+                <div className="chat-item flex-grow min-w-0">
+                  <div className="flex flex-row items-center space-x-1 sm:space-x-2 ">
+                    <div className="roomNumber font-Line text-xs sm:text-sm overflow-hidden whitespace-nowrap overflow-ellipsis ">
                       방번호 : {chat.roomNumber}
                     </div>
-                    <div className="nickname font-Line">
+                    <div className="nickname font-Line text-xs sm:text-sm  whitespace-nowrap overflow-ellipsis ">
                       보낸사람 : {chat.sender}
                     </div>
                   </div>
-                  <div className="message font-Line">{chat.messageContent}</div>
+                  <div className="message font-Line text-xs sm:text-sm overflow-hidden whitespace-nowrap overflow-ellipsis">
+                    {chat.messageContent}
+                  </div>
                   <div className="time text-xs font-Line">
                     {' '}
                     {formatCreatedAt(chat.createdAt, 'ko-KR', 'Asia/Seoul')}
