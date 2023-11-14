@@ -215,7 +215,7 @@ export default function ProxyDetail() {
               </div>
               <div className="flex justify-center w-full p-4 items-center border-2 border-gray-200">
                 <span className="text-gray-700 font-Line text-md break-all">
-                  {proxy.proxyMsg}
+                {proxy.proxyMsg ? proxy.proxyMsg : '설명이 없습니다.'}
                 </span>
               </div>
             </div>
