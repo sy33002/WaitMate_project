@@ -12,7 +12,6 @@ export default function ProxyRegister() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [clickRegister, setClickRegister] = useState(false);
   const {id} = useUserStore();
-  console.log(id);
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -51,7 +50,6 @@ export default function ProxyRegister() {
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-    console.log(data.photo);
     if (data.photo && data.photo[0]) {
       formData.append('photo', data.photo[0]);
     } else {
@@ -64,8 +62,11 @@ export default function ProxyRegister() {
           'Content-Type': 'multipart/form-data'
         }
       });
+
       console.log(response.data);
-      setIsModalOpen(true);
+      if(response.data){
+        setShowModal(true);
+      }
     } catch (error) {
       console.error('Error!');
     }

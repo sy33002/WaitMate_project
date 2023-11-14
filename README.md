@@ -29,25 +29,37 @@
  * 2023년 10월 18일 ~ 2023년 11월 10일
  
 ## 👨‍👩‍👧‍👦멤버구성
-* 김지형(sy33002) 프론트: 
-   - 헤더/사이드바/웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지/ 프록시 등록,리스트, 디테일, 업데이트 페이지
+* 김지형(sy33002) [팀장] 프론트: 
+   - 헤더/사이드바
+   - 웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지, 반응형 적용
+   - 프록시 등록,리스트, 디테일, 업데이트 페이지, 반응형 적용
 * 박장혁(Vamos-Hyuk)  프론트: 
-   마이페이지/평점 후기 모달 페이지/404페이지/ 캐릭터 및 로고 디자인/로그인 및 회원가입/ 회원 수정 페이지
+   - 마이페이지/로그인 및 회원가입/ 회원 수정 페이지
+   - 평점 후기 모달 페이지
+   - 404페이지/ 캐릭터 및 로고 담당
 * 정채림(ellin45)  프론트: 
-   - 메인 페이지 애니메이션 적용 및 반응형 작업, 채팅 페이지 react-chat-elements 라이브러리로 구현 채팅과  소켓 연결, 반응형적용 ,맵 페이지 kakao-map 라이브러로 맵 구현 및 맵에 사용자 기반위치 적용후 마크표시기능, 마커를 통해 웨이트메이트 공고와 연결 
+   - 메인 페이지 애니메이션 적용 및 반응형 작업
+   - 채팅 페이지 react-chat-elements 라이브러리로 구현 채팅과 소켓 연결, 반응형적용
+   - 맵 페이지 kakao-map 라이브러로 맵 구현 및 맵에 사용자 기반위치 적용후 마크표시기능, 마커를 통해 웨이트메이트 공고와 연결 
 * 이동규(LOBSTER10000) 백엔드 : 
-   - Mysql&시퀄라이즈 모델 생성 후 연동, MongoDB&몽구스 스키마 생성 후 연동, 채팅 기능, 프록시 CRUD
+   - Mysql&시퀄라이즈 모델 생성 후 연동, MongoDB&몽구스 스키마 생성 후 연동
+   - 소캣을 활용한 채팅 기능,
+   - 프록시 관련 CRUD
 * 박준수(kdm111) 백엔드 : 
-   - 유저 CRUD, jwt 로그인, 리뷰 CRUD 기능, 웹 서버 배포, 카카오페이 API 기능 
+   - 유저 CRUD, jwt 로그인
+   - 리뷰 CRUD 기능, 웹 서버 배포,
+   - 카카오페이 API 기능 
 * 김효중(rlagywnd4) 백엔드 : 
-   - 웨이트메이트crud, 관심기능, 소켓을 활용한 웨이트메이트 상태 
-
+   - 웨이트메이트 관련 crud, 관심기능
+   - 소켓을 활용한 웨이트메이트 상태 기능 구현
+   - 마이페이지 crud
 
 
 ## ⚙개발환경
  * Javascript : <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=Javascript&logoColor=white"/> Javascript
  * IDE : <img src="https://img.shields.io/badge/visualstudio-007ACC?style=flat-square&logo=visualstudio idea&logoColor=white"/> Visual Studio Code (1.81)
  * Framework : <img src="https://img.shields.io/badge/nodedotjs-339933?style=flat-square&logo=nodedotjs&logoColor=white"/> Node.js (20.5.0)
+ * CSS Framework : <img src="https://img.shields.io/badge/nodedotjs-339933?style=flat-square&logo=nodedotjs&logoColor=white"/> Tailwind (3.3.3)
  * Library : <img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=white"/> React (18.2.0)
  * Database : <img src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white"/> Mysql (workbench 8.0)
  * Database : <img src="https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=mongoDB&logoColor=white"/> MongoDB (6.1.0)
