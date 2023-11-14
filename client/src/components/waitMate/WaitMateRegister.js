@@ -230,11 +230,11 @@ export default function WaitMateRegister() {
               <br />
               <div>
                 <label className="text-sm text-green font-Line ml-1">
-                  Detail Address
+                  * Detail Address
                 </label>
                 <br />
                 <span className="text-red-300 text-xs font-Line pl-1">
-                  웨이팅 장소는 최대한 상세하게 적어주세요!
+                  웨이팅 장소는 최대한 상세하게 적어주세요! (필수)
                 </span>
                 <br />
                 <Controller
