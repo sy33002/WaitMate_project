@@ -82,8 +82,8 @@ export default function WaitMateUpdate({photo}) {
     formData.append('lng', locationInfo.x);
     formData.append('lat', locationInfo.y);
     try {
-      const response = await fetch(`${apiUrl}/waitMate/register`, {
-        method: 'POST',
+      const response = await fetch(`${apiUrl}/waitMate/`, {
+        method: 'PATCH',
         body: formData,
       });
       if (response.ok) {
