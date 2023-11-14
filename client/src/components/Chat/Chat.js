@@ -27,7 +27,6 @@ export default function Chat() {
   const apiUrl = process.env.REACT_APP_URL;
   const chatContainerRef = useRef();
 
-  
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -269,11 +268,7 @@ export default function Chat() {
                 }}
                 leftButtons={
                   id === userPayId && (
-                  <Button
-                    className="paymentButton"
-                    text="결제"
-                    onClick={PaymentsList}
-                  />
+                    <Button className="paymentButton" onClick={PaymentsList} />
                   )
                 }
                 rightButtons={
