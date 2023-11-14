@@ -13,7 +13,7 @@ const useUserStore = create((set) => ({
       if (response.data) {
         const { id, userId, nickname, photo } = response.data;
         set({
-          id: 4,
+          id: id,
           userId: userId,
           nickname: nickname,
           profileImg: photo,
