@@ -271,7 +271,7 @@ function Mypage() {
             <div
               className={`${
                 isSmallScreen ? ' w-3/5 h-3/5' : 'h-2/3 w-full'
-              } bg-white border-primary border-2 rounded-lg overflow-hidden`}
+              } bg-white border-primary border-2 rounded-lg overflow-hidden flex items-center justify-center`}
             >
               <img
                 src={profileImg}
@@ -315,7 +315,7 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'text-[12px] flex-col space-y-1 items-stretch'
+                    ? 'text-[9px] flex-col space-y-1 items-stretch'
                     : 'flex-row text-[14px]'
                 }`}
               >
@@ -354,7 +354,7 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'flex-col text-[12px] space-y-1'
+                    ? 'flex-col text-[9px] space-y-1'
                     : 'flex-row text-[14px]'
                 }`}
               >
