@@ -11,7 +11,7 @@ function ChatList() {
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/proxy/listChatting2`, {
+        const response = await axios.get(`https://sesac-projects.site/wapi/proxy/listChatting2`, {
           params: { id },
         });
     
