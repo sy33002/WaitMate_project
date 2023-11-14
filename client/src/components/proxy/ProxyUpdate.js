@@ -75,7 +75,9 @@ export default function ProxyRegister({ cities, photo }) {
     formData.append('gender', data.gender);
     formData.append('age', data.age);
     formData.append('proxyMsg', data.proxyMsg);
-    formData.append('photo', data.photo);
+    if (data.photo && data.photo[0]) {
+      formData.append('photo', data.photo[0]);
+    }
     try {
       console.log('찍힘?');
       const response = await axios.patch(
@@ -83,7 +85,7 @@ export default function ProxyRegister({ cities, photo }) {
         formData,
         {
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
           },
         }
       );
