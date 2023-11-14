@@ -99,6 +99,7 @@ export default function Chat() {
       });
     }
   }, [id, Navigate]);
+
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
       const currentTime = new Date().toLocaleTimeString([], {
@@ -239,19 +240,19 @@ export default function Chat() {
               console.log('msg', msg);
               console.log('msg.receiver:', msg.receiver);
               console.log('receiver.userId:', receiver.userId);
-              console.log('proxy:', msg.photoData);
+              console.log('proxy:', msg.proxy);
               console.log(
                 'photo:',
-                msg.receiver !== receiver.userId ? proxy.photo : null
+                msg.receiver === receiver.userId ? proxy.photo : null
               );
               return (
                 <MessageBox
                   key={index}
                   className={msg.sender === sender.userId ? 'me' : 'other'}
-                  avatar={msg.receiver !== receiver.userId ? proxy.photo : null}
+                  avatar={msg.receiver === receiver.userId ? proxy.photo : null}
                   type={msg.messageType}
                   text={msg.messageContent}
-                  title={`${msg.sender} ${parseDate(msg.createdAt)}`}
+                  title={`${msg.sender} ${msg.createdAt}`}
                   notch={false}
                 ></MessageBox>
               );
