@@ -33,6 +33,16 @@ function Mypage() {
   const [isReviewOpen, setIsReviewOpen] = useState();
   const fileInputRef = useRef(null);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 700);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -244,14 +254,14 @@ function Mypage() {
         />
       )}
       <div
-        className={` w-full h-screen text-primary_dark font-Line flex ${
-          isSmallScreen ? 'flex-col' : ''
+        className={`w-full h-full text-primary_dark font-Line flex ${
+          isSmallScreen ? 'flex-col' : 'flex-row'
         } m-1 p-1`}
       >
         <div
           className={`flex ${
             isSmallScreen ? 'w-full h-2/5 p-2' : 'w-1/3 h-4/5'
-          }  items-center`}
+          }  items-center `}
         >
           <div
             className={`flex flex-col items-center justify-center ${
@@ -260,13 +270,13 @@ function Mypage() {
           >
             <div
               className={`${
-                isSmallScreen ? ' w-3/5 h-3/5' : 'h-2/3 w-3/5'
-              } bg-white border-primary border-2 rounded-lg`}
+                isSmallScreen ? ' w-3/5 h-3/5' : 'h-2/3 w-full'
+              } bg-white border-primary border-2 rounded-lg overflow-hidden`}
             >
               <img
                 src={profileImg}
                 alt="Profile"
-                className="w-full h-full object-cover"
+                className="w-full object-cover"
               />
             </div>
             <button onClick={handleClick}>이미지 업로드</button>
@@ -279,27 +289,27 @@ function Mypage() {
             <div className="flex flex-row space-x-1">
               <button
                 onClick={handleLogout}
-                className="bg-primary text-white rounded-lg"
+                className="bg-primary text-white rounded-lg p-1 m-1"
               >
                 Log Out
               </button>
               <button
                 onClick={handleUserinfo}
-                className="bg-primary text-white rounded-lg"
+                className="bg-primary text-white rounded-lg p-1 m-1"
               >
                 회원정보 수정
               </button>
             </div>
           </div>
         </div>
-        <div className="w-full h-4/5">
-          <div className={`flex w-full ${isSmallScreen ? 'h-120' : 'h-24'}`}>
+        <div className="w-full h-4/5 p-2 bg-purple-100 rounded-lg">
+          <div className={`flex w-full ${isSmallScreen ? 'h-1/4' : 'h-1/5'} `}>
             <div
               className={`${
-                isSmallScreen ? 'text-[16px]' : 'text-[16px]'
-              } w-1/2`}
+                isSmallScreen ? 'text-[14px]' : 'text-[16px]'
+              } w-1/2 `}
             >
-              <button className="bg-primary text-background px-2 rounded-lg">
+              <button className="bg-primary text-background px-2 py-1 rounded-lg">
                 My Proxy
               </button>
               <div
@@ -311,34 +321,34 @@ function Mypage() {
               >
                 <button
                   onClick={() => setSelectItem({ type: 'myResume', id: null })}
-                  className="border-primary border-2 rounded-lg w-4/5 "
+                  className="rounded-lg w-4/5 "
                 >
                   나의 이력서
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg w-4/5"
+                  className=" rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'myLikeList', id: null })
                   }
                 >
-                  내가 찜한 웨이트메이트 list
+                  내가 찜한 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg w-4/5"
+                  className=" rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'pickedWaitMateList', id: null })
                   }
                 >
-                  내가 픽한 웨메 list
+                  내가 픽한 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
                 </button>
               </div>
             </div>
             <div
               className={`${
-                isSmallScreen ? 'text-[16px]' : 'text-[16px]'
+                isSmallScreen ? 'text-[14px]' : 'text-[16px]'
               } w-1/2`}
             >
-              <button className="bg-primary text-background px-2 rounded-lg">
+              <button className="bg-primary text-background px-2 py-1 rounded-lg">
                 My WaitMate
               </button>
               <div
@@ -349,15 +359,15 @@ function Mypage() {
                 }`}
               >
                 <button
-                  className="border-primary border-2 rounded-lg w-4/5"
+                  className=" rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'myWaitMateList', id: null })
                   }
                 >
-                  나의 웨이트메이트 목록
+                  나의 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg w-4/5"
+                  className="rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'completedWaitMateList', id: null })
                   }
@@ -365,17 +375,18 @@ function Mypage() {
                   거래 완료 list
                 </button>
                 <button
-                  className="border-primary border-2 rounded-lg w-4/5"
+                  className="rounded-lg w-4/5"
                   onClick={() =>
                     setSelectItem({ type: 'pickedProxyList', id: null })
                   }
                 >
-                  내가 픽한 프록시 list
+                  내가 픽한 <br className={`${setIsSmallScreen? 'hidden' : ''}`} />proxy list
                 </button>
               </div>
             </div>
           </div>
-          <div className="w-full h-4/5 border-2 border-primary_dark rounded-lg overflow-y-auto">
+          <div className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2
+          ${isSmallScreen? 'h-3/4' : 'h-4/5'}`}>
             {selectItem.type === 'myResume' &&
             myResume &&
             myResume.length > 0 ? (
@@ -383,7 +394,7 @@ function Mypage() {
                 {myResume.map((item, index) => (
                   <li
                     key={index}
-                    className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
+                    className="mb-4 p-4 border-2 rounded-md flex"
                   >
                     <div className="w-1/4">
                       <img

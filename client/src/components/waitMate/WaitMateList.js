@@ -41,7 +41,6 @@ export default function WaitMateList({cities,photo}) {
           });
         if (response.ok) {
           const { waitMates } = await response.json();
-          console.log(waitMates);
           setItems(waitMates);
         } else {
           console.log('데이터 가져오기 실패!');

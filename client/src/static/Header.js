@@ -48,7 +48,7 @@ function Header() {
               <img
                 src={profileImage}
                 alt="프로필"
-                className="object-cover w-full h-full rounded-full border border-gray-300"
+                className="object-cover w-full rounded-full border border-gray-300"
               />
             </div>
           </Link>
