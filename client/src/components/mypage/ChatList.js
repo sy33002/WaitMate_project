@@ -66,7 +66,7 @@ function ChatList() {
             <Link to={`/proxy/detail/chat/${chat.roomNumber}`} key={chat.roomNumber}>
               <div className="mb-4 p-4 background rounded-lg flex items-center border-4 border-primary">
                 <img
-                  src={chat.profilePic || '/images/someone.png'}
+                  src={chat.photo || 'https://sesac-projects.site/waitmate/images/someone.png'}
                   alt={`${chat.nickname}의 프로필 사진`}
                   className="rounded-full w-14 h-14 mr-4 border-2 border-primary"
                 />
