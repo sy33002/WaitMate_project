@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
+const apiUrl = process.env.REACT_APP_URL;
 
 const StarRating = ({ nickname, transactionCompleted, id }) => {
   const [rating, setRating] = useState(0);
@@ -19,7 +20,7 @@ const StarRating = ({ nickname, transactionCompleted, id }) => {
   // 평점을 백엔드로 보내는 함수
   const sendRatingToServer = async (rating) => {
     try {
-      const response = await fetch('/review', {
+      const response = await fetch(`${apiUrl}/review`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,8 +58,8 @@ const StarRating = ({ nickname, transactionCompleted, id }) => {
   return (
     <>
       {showRatingModal && (
-        <div className="flex flex-col justify-center items-center h-screen">
-          <div className="border-4 border-primary p-4 rounded-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="border-4 border-primary p-4 rounded-lg bg-white">
             <h3 className="text-2xl mb-4 text-center ">
               방금만난 {nickname}님과의 거래 어떠셨나요?
             </h3>
