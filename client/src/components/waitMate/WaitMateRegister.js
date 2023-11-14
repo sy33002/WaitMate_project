@@ -33,7 +33,6 @@ export default function WaitMateRegister() {
     if (file) {
       if (!file.type.startsWith('image/')) {
         alert('이미지 파일을 넣어주십시오');
-
         e.target.value = '';
       } else {
         setValue('photo', e.target.files);
@@ -75,10 +74,14 @@ export default function WaitMateRegister() {
     formData.append('endTime', data.time_end);
     formData.append('pay', data.pay);
     formData.append('description', data.detail);
-    formData.append('photo', imageFile);
     formData.append('lng', locationInfo.x);
     formData.append('lat', locationInfo.y);
-    console.log(imageFile);
+    if (data.photo && data.photo[0]) {
+      formData.append('photo', data.photo[0]);
+    } else {
+      formData.append('photo', 'https://sesac-projects.site/waitmate/images/waitMate.png');
+    }
+    
     try {
       const response = await fetch(`${apiUrl}/waitMate/register`, {
         method: 'POST',

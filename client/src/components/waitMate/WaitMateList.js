@@ -13,15 +13,15 @@ export default function WaitMateList({cities,photo}) {
   const initialAddress = cookies.address || '';
   const [address, setAddress] = useState(initialAddress);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const apiUrl = process.env.REACT_APP_URL;
   const itemsPerPage = 4;
   const { id, nickname, userId } = useUserStore();
-
+  
   const handleOption = (e) => {
     setSelectedOption(e.target.value);
   }
   
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth < 700);
