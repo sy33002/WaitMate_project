@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useUserStore from '../../store/useUserStore';
 import { useNavigate, Link } from 'react-router-dom';
 import { axiosInstance } from '../common/axiosInstance';
@@ -31,6 +31,13 @@ function Mypage() {
   const [reviewId, setReviewId] = useState();
   const [reviewNickname, setReviewNickname] = useState();
   const [isReviewOpen, setIsReviewOpen] = useState();
+  const fileInputRef = useRef(null);
+
+  const handleClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
 
   const testing = async (pickedProxyId) => {
     try {
@@ -262,10 +269,12 @@ function Mypage() {
                 className="w-full h-auto object-cover"
               />
             </div>
+            <button onClick={handleClick}>이미지 업로드</button>
             <input
               type="file"
+              ref={fileInputRef}
+              style={{ display: 'none' }}
               onChange={handleImageUpload}
-              id="profile-upload"
             />
             <div className="flex flex-row space-x-1">
               <button
