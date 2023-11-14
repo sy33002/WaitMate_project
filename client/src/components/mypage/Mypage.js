@@ -254,9 +254,9 @@ function Mypage() {
             <div
               className={`${
                 isSmallScreen ? ' w-3/5 h-3/5' : 'h-1/4 w-4/5'
-              } bg-white rounded-lg`}
+              } bg-white rounded-lg overflow-hidden`}
             >
-              <img src={profileImg} alt="Profile" />
+              <img src={profileImg} alt="Profile" className='w-full h-full'/>
             </div>
             <input
               type="file"

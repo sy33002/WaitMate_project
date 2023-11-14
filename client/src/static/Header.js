@@ -42,9 +42,9 @@ function Header() {
             />
           </Link>
         </div>
-        <div className="flex items-center relative">
+        <div className="flex items-center relative ">
           <Link to="/mypage/myPage">
-            <div className="w-16 md:w-24 sm:w-20 p-3">
+            <div className="w-16 md:w-24 sm:w-20 p-3 overflow-hidden">
               <img
                 src={profileImage}
                 alt="프로필"
