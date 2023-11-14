@@ -17,7 +17,7 @@ export default function Chat() {
   const [proxyPayId, setProxyPayId] = useState('');
   const [error, setError] = useState(null);
   const { id } = useUserStore();
-  console.log(id);
+  console.log('로그인 된 아이디값', id);
   const Navigate = useNavigate();
   const inputReference = useRef();
   const { roomNumber } = useParams();
@@ -67,9 +67,9 @@ export default function Chat() {
           setError(data.error);
         } else {
           if (data.sender.id !== id && data.receiver.id !== id) {
-            console.log('d' + data.sender.id);
-            console.log('a' + data.receiver.id);
-            console.log('b' + id);
+            console.log('방을 만든 사람의 아이디값' + data.sender.id);
+            console.log('프록시인 사람의 아이디값' + data.receiver.id);
+            console.log('로그인한 사람의 아이디값' + id);
             alert(
               '잘못된 사용자입니다. 다른 사용자 정보로 접근할 수 없습니다.'
             );
@@ -240,16 +240,20 @@ export default function Chat() {
               console.log('msg', msg);
               console.log('msg.receiver:', msg.receiver);
               console.log('receiver.userId:', receiver.userId);
-              console.log('proxy:', msg.proxy);
+              console.log('proxy:', proxy);
               console.log(
                 'photo:',
                 msg.receiver === receiver.userId ? proxy.photo : null
+              );
+              console.log(
+                'photo2 :',
+                msg.sender === sender.userId ? wm.photo : null
               );
               return (
                 <MessageBox
                   key={index}
                   className={msg.sender === sender.userId ? 'me' : 'other'}
-                  avatar={msg.receiver === receiver.userId ? proxy.photo : null}
+                  avatar={msg.receiver === receiver.userId ? proxy.photo : null || msg.sender === sender.userId ? wm.photo : null}
                   type={msg.messageType}
                   text={msg.messageContent}
                   title={`${msg.sender} ${msg.createdAt}`}
