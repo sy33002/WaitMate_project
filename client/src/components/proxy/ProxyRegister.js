@@ -62,7 +62,11 @@ export default function ProxyRegister() {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setIsModalOpen(true);
+
+      console.log(response.data);
+      if(response.data){
+        setShowModal(true);
+      }
     } catch (error) {
       console.error('Error!');
     }
