@@ -266,7 +266,7 @@ function Mypage() {
               <img
                 src={profileImg}
                 alt="Profile"
-                className="w-full h-auto object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
             <button onClick={handleClick}>이미지 업로드</button>
