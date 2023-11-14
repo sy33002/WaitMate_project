@@ -1,30 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import useUserStore from '../../store/useUserStore';
 
 function ChatList() {
   const [chats, setChats] = useState([]);
+  const id = 2;
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await axios.get(`https://sesac-projects.site/wapi/proxy/listChatting2`, {
-          withCredentials: true,
+        const response = await axios.get(`http://localhost:8080/proxy/listChatting2`, {
+          params: { id },
         });
-
+    
         const chatListData = response.data.list;
         let latestMessages = [];
-
+    
         if (Array.isArray(chatListData)) {
-          
-          latestMessages = chatListData.map((chat) => chat.latestChat);
+          latestMessages = chatListData
+            .map((chat) => chat.latestChat)
+            .filter((latestChat) => latestChat !== null);
+    
           console.log('아하', latestMessages);
           setChats(latestMessages);
         } else {
           const chatList = Object.values(chatListData);
-          
-          latestMessages = chatList.map((chat) => chat.latestChat);
+    
+          latestMessages = chatList
+            .map((chat) => chat.latestChat)
+            .filter((latestChat) => latestChat !== null);
+    
+          console.log('아하', latestMessages);
           setChats(latestMessages);
         }
       } catch (error) {
