@@ -271,7 +271,7 @@ function Mypage() {
             <div
               className={`${
                 isSmallScreen ? ' w-3/5 h-3/5' : 'h-2/3 w-full'
-              } bg-white border-primary border-2 rounded-lg overflow-hidden`}
+              } bg-white border-primary border-2 rounded-lg overflow-hidden flex items-center justify-center`}
             >
               <img
                 src={profileImg}

@@ -78,7 +78,7 @@ export default function WaitMateDetail({photo}) {
           <span className='break-all text-gray-200 ml-2'>{waitMate.pay}</span></p><br />
           <hr className='border-1 border-gray-400'/>
           <p className='font-Line text-red-300 p-1 ml-4 mt-3'>detail <br /> 
-          <span className='break-all text-gray-200'>{waitMate.description}</span></p>
+          <span className='break-all text-gray-200'>{waitMate.description === 'undefined' ? '' : waitMate.description}</span></p>
         </div>
         <div className='w-full flex p-4 bg-primary_dark font-Line'>
           <div className='w-1/2 p-1'>
