@@ -69,6 +69,7 @@ function Mypage() {
 
   const handleLogout = async () => {
     await logout();
+    localStorage.clear();
     navigate('/');
   };
 
