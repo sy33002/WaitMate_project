@@ -63,14 +63,13 @@ export default function Chat() {
         if (data.error) {
           setError(data.error);
         } else {
-          if (data.sender.id !== localStorage.getItem('id') && data.receiver.id !== localStorage.getItem('id')) {
+          if (data.sender.id !== localStorage.getItem('id')) {
             console.log('방을 만든 사람의 아이디값' + data.sender.id);
             console.log('프록시인 사람의 아이디값' + data.receiver.id);
             console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
-            alert(
-              '잘못된 사용자입니다. 다른 사용자 정보로 접근할 수 없습니다.'
-            );
-            Navigate(-1);
+            if(data.receiver !== localStorage.getItem('id')){
+              console.log('여기는 잘못된 값입니다!');
+            }
           } else {
             if (data.sender.id === localStorage.getItem('id')) {
               setSender(data.sender);
