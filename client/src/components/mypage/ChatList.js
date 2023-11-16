@@ -11,6 +11,7 @@ function ChatList() {
   useEffect(() => {
     const fetchChats = async () => {
       try {
+        console.log('localStrorage id >>>>',localStorage.getItem('id'));
         const response = await axios.get(`${apiUrl}/proxy/listChatting2`, {
           params: { id },
         });

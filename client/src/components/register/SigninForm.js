@@ -27,6 +27,9 @@ function SigninForm() {
       if (response.status === 200) {
         // 로그인 성공 시 setUserInfo 함수를 호출하여 상태를 업데이트합니다.
         await setUserInfo();
+        localStorage.clear();
+        localStorage.setItem('id', response.data.user.id);
+        localStorage.setItem('userId', response.data.user.userId);
         navigate('/map'); // 성공적으로 로그인하면 맵 페이지로 리다이렉트합니다.
       }
     } catch (error) {
