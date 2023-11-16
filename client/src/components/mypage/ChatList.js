@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import useUserStore from '../../store/useUserStore';
+
 
 function ChatList() {
   const [chats, setChats] = useState([]);
-  const { id } = useUserStore();
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
@@ -13,7 +12,7 @@ function ChatList() {
       try {
         console.log('localStrorage id >>>>',localStorage.getItem('id'));
         const response = await axios.get(`${apiUrl}/proxy/listChatting2`, {
-          params: { id },
+          params: { id: localStorage.getItem('id') },
         });
 
         const chatListData = response.data.list;
