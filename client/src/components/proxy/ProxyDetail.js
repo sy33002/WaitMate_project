@@ -41,7 +41,7 @@ export default function ProxyDetail() {
       alert('로그인 먼저 진행하시기 바랍니다');
       return;
     }
-    if (localStorage.getItem('id') === proxy.id) {
+    if (parseInt(localStorage.getItem('id')) === proxy.id) {
       console.log(localStorage.getItem('id'), proxy.id);
       alert('둘의 정보값이 같아서 채팅 창을 만들 수 없습니다');
       return;
