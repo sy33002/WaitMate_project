@@ -3,7 +3,7 @@ import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
 import { getSocket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
-import useUserStore from '../../store/useUserStore';
+
 import axios from 'axios';
 export default function Chat() {
   const socket = getSocket();
@@ -16,8 +16,6 @@ export default function Chat() {
   const [userPayId, setUserPayId] = useState('');
   const [proxyPayId, setProxyPayId] = useState('');
   const [error, setError] = useState(null);
-  const { id } = useUserStore();
-  console.log('로그인 된 아이디값', id);
   const Navigate = useNavigate();
   const inputReference = useRef();
   const { roomNumber } = useParams();
@@ -55,26 +53,26 @@ export default function Chat() {
       }
     };
     fetchData();
-  }, [roomNumber, id]);
+  }, [roomNumber, localStorage.getItem('id')]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
-    if (id) {
+    if (localStorage.getItem('id')) {
       socket.emit('getRoomInfo', roomNumber);
       socket.on('roomInfo', (data) => {
         if (data.error) {
           setError(data.error);
         } else {
-          if (data.sender.id !== id && data.receiver.id !== id) {
+          if (data.sender.id !== localStorage.getItem('id') && data.receiver.id !== localStorage.getItem('id')) {
             console.log('방을 만든 사람의 아이디값' + data.sender.id);
             console.log('프록시인 사람의 아이디값' + data.receiver.id);
-            console.log('로그인한 사람의 아이디값' + id);
+            console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
             alert(
               '잘못된 사용자입니다. 다른 사용자 정보로 접근할 수 없습니다.'
             );
             Navigate(-1);
           } else {
-            if (data.sender.id === id) {
+            if (data.sender.id === localStorage.getItem('id')) {
               setSender(data.sender);
               setUserPayId(data.sender.id);
               setReceiver(data.receiver);
@@ -86,8 +84,8 @@ export default function Chat() {
               console.log('sender안녕' + data.proxyData.photo);
               console.log('방을 만든 사람의 아이디값' + data.sender.id);
               console.log('프록시인 사람의 아이디값' + data.receiver.id);
-              console.log('로그인한 사람의 아이디값' + id);
-            } else if (data.receiver.id === id) {
+              console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
+            } else if (data.receiver.id === localStorage.getItem('id')) {
               setSender(data.receiver);
               setProxy(data.proxyData);
               setWm(data.wmData);
@@ -100,7 +98,7 @@ export default function Chat() {
         }
       });
     }
-  }, [id, Navigate]);
+  }, [localStorage.getItem('id'), Navigate]);
 
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
@@ -277,7 +275,7 @@ export default function Chat() {
                   }
                 }}
                 leftButtons={
-                  id === userPayId && (
+                  localStorage.getItem('id') === userPayId && (
                     <Button className="paymentButton" onClick={PaymentsList} />
                   )
                 }
