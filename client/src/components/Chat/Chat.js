@@ -63,15 +63,13 @@ export default function Chat() {
         if (data.error) {
           setError(data.error);
         } else {
-          if (data.sender.id !== localStorage.getItem('id')) {
+          if (localStorage.getItem('id')!== data.sender.id && localStorage.getItem('id') !== data.receiver.id) {
             console.log('방을 만든 사람의 아이디값' + data.sender.id);
             console.log('프록시인 사람의 아이디값' + data.receiver.id);
             console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
-            if(data.receiver !== localStorage.getItem('id')){
-              console.log('여기는 잘못된 값입니다!');
-            }
+            console.log('잘못된 것 같음;; 왜지');
           } else {
-            if (data.sender.id === localStorage.getItem('id')) {
+            if (localStorage.getItem('id') === data.sender.id) {
               setSender(data.sender);
               setUserPayId(data.sender.id);
               setReceiver(data.receiver);
@@ -84,7 +82,7 @@ export default function Chat() {
               console.log('방을 만든 사람의 아이디값' + data.sender.id);
               console.log('프록시인 사람의 아이디값' + data.receiver.id);
               console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
-            } else if (data.receiver.id === localStorage.getItem('id')) {
+            } else if (localStorage.getItem('id') === data.receiver.id) {
               setSender(data.receiver);
               setProxy(data.proxyData);
               setWm(data.wmData);
