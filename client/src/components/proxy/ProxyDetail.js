@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSocket } from '../../socket';
-import useUserStore from '../../store/useUserStore';
 import ChatListModal from '../Chat/chatListModal';
 
 export default function ProxyDetail() {
@@ -9,7 +8,6 @@ export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
   const [roomNumber, setRoomNumber] = useState(null);
-  const { id } = useUserStore();
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +24,7 @@ export default function ProxyDetail() {
     };
   }, []);
   
-  console.log(id);
+  console.log(localStorage.getItem('id'));
   const handleUserSelect = (user) => {
     setSelectedUser(user);
   };
@@ -39,12 +37,12 @@ export default function ProxyDetail() {
     setIsModalOpen(true);
     handleUserSelect(selectedUser);
     const usedRoomNumbers = [];
-    if (!id) {
+    if (!localStorage.getItem('id')) {
       alert('로그인 먼저 진행하시기 바랍니다');
       return;
     }
-    if (id === proxy.id) {
-      console.log(id, proxy.id);
+    if (parseInt(localStorage.getItem('id')) === proxy.id) {
+      console.log(localStorage.getItem('id'), proxy.id);
       alert('둘의 정보값이 같아서 채팅 창을 만들 수 없습니다');
       return;
     }
@@ -56,7 +54,7 @@ export default function ProxyDetail() {
     if (selectedUser) {
       console.log('웨메 설정', selectedUser);
       socket.emit('createRoom', {
-        sender: parseInt(id),
+        sender: parseInt(localStorage.getItem('id')),
         receiver: parseInt(proxy.id),
         proxyId: parseInt(proxy.proxyId),
         wmId: parseInt(selectedUser.wmId),

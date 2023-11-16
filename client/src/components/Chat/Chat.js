@@ -63,16 +63,15 @@ export default function Chat() {
         if (data.error) {
           setError(data.error);
         } else {
-          if (data.sender.id !== localStorage.getItem('id') && data.receiver.id !== localStorage.getItem('id')) {
+        
+          if (parseInt(localStorage.getItem('id')) !== data.sender.id && parseInt(localStorage.getItem('id')) !== data.receiver.id) {
             console.log('방을 만든 사람의 아이디값' + data.sender.id);
             console.log('프록시인 사람의 아이디값' + data.receiver.id);
             console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
-            alert(
-              '잘못된 사용자입니다. 다른 사용자 정보로 접근할 수 없습니다.'
-            );
+            console.log('잘못된 것 같음;; 왜지');
             Navigate(-1);
           } else {
-            if (data.sender.id === localStorage.getItem('id')) {
+            if (parseInt(localStorage.getItem('id')) === data.sender.id) {
               setSender(data.sender);
               setUserPayId(data.sender.id);
               setReceiver(data.receiver);
@@ -85,7 +84,7 @@ export default function Chat() {
               console.log('방을 만든 사람의 아이디값' + data.sender.id);
               console.log('프록시인 사람의 아이디값' + data.receiver.id);
               console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
-            } else if (data.receiver.id === localStorage.getItem('id')) {
+            } else if (parseInt(localStorage.getItem('id')) === data.receiver.id) {
               setSender(data.receiver);
               setProxy(data.proxyData);
               setWm(data.wmData);
@@ -98,7 +97,7 @@ export default function Chat() {
         }
       });
     }
-  }, [localStorage.getItem('id'), Navigate]);
+  }, [parseInt(localStorage.getItem('id')), Navigate]);
 
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
