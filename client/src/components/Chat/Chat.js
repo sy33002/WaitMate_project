@@ -63,11 +63,15 @@ export default function Chat() {
         if (data.error) {
           setError(data.error);
         } else {
-        
-          if (parseInt(localStorage.getItem('id')) !== data.sender.id && parseInt(localStorage.getItem('id')) !== data.receiver.id) {
+          if (
+            parseInt(localStorage.getItem('id')) !== data.sender.id &&
+            parseInt(localStorage.getItem('id')) !== data.receiver.id
+          ) {
             console.log('방을 만든 사람의 아이디값' + data.sender.id);
             console.log('프록시인 사람의 아이디값' + data.receiver.id);
-            console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
+            console.log(
+              '로그인한 사람의 아이디값' + localStorage.getItem('id')
+            );
             console.log('잘못된 것 같음;; 왜지');
             Navigate(-1);
           } else {
@@ -83,8 +87,12 @@ export default function Chat() {
               console.log('sender안녕' + data.proxyData.photo);
               console.log('방을 만든 사람의 아이디값' + data.sender.id);
               console.log('프록시인 사람의 아이디값' + data.receiver.id);
-              console.log('로그인한 사람의 아이디값' + localStorage.getItem('id'));
-            } else if (parseInt(localStorage.getItem('id')) === data.receiver.id) {
+              console.log(
+                '로그인한 사람의 아이디값' + localStorage.getItem('id')
+              );
+            } else if (
+              parseInt(localStorage.getItem('id')) === data.receiver.id
+            ) {
               setSender(data.receiver);
               setProxy(data.proxyData);
               setWm(data.wmData);
@@ -252,41 +260,47 @@ export default function Chat() {
                 <MessageBox
                   key={index}
                   className={msg.sender === sender.userId ? 'me' : 'other'}
-                  avatar={msg.receiver === receiver.userId ? proxy.photo : null || msg.sender === sender.userId ? wm.photo : null}
+                  avatar={
+                    msg.receiver === receiver.userId
+                      ? proxy.photo
+                      : null || msg.sender === sender.userId
+                      ? wm.photo
+                      : null
+                  }
                   type={msg.messageType}
                   text={msg.messageContent}
-                  title={`${msg.sender} ${msg.createdAt}`}
+                  title={`${msg.sender} ${parseDate(msg.createdAt)}`}
                   notch={false}
                 ></MessageBox>
               );
             })}
           </div>
-            <div className="input_container">
-              <Input
-                className="input_item"
-                referance={inputReference}
-                multiline={true}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    sendMessage();
-                  }
-                }}
-                leftButtons={
-                  localStorage.getItem('id') === userPayId && (
-                    <Button className="paymentButton" onClick={PaymentsList} />
-                  )
+          <div className="input_container">
+            <Input
+              className="input_item"
+              referance={inputReference}
+              multiline={true}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  sendMessage();
                 }
-                rightButtons={
-                  <Button
-                    className="input_send_btn"
-                    backgroundColor="transparent"
-                    onClick={sendMessage}
-                  />
-                }
-              />
-            </div>
+              }}
+              leftButtons={
+                localStorage.getItem('id') === userPayId && (
+                  <Button className="paymentButton" onClick={PaymentsList} />
+                )
+              }
+              rightButtons={
+                <Button
+                  className="input_send_btn"
+                  backgroundColor="transparent"
+                  onClick={sendMessage}
+                />
+              }
+            />
+          </div>
         </div>
       </div>
     </div>
