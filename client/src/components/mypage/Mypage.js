@@ -54,16 +54,14 @@ function Mypage() {
       const response = await axios.get(`${apiUrl}/review/check`, {
         params: { userId: id, id: pickedProxyId },
       });
-      console.log(response);
+
       if (response.data.result === true) {
-        console.log(pickedProxyId);
-        console.log(response.data.User.nickname);
         setReviewId(pickedProxyId);
         setReviewNickname(response.data.User.nickname);
         setIsReviewOpen(true);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -102,19 +100,16 @@ function Mypage() {
   // 나의 이력서
   const proxyNotes = async () => {
     try {
-      console.log('아이디값', id);
       const response = await axios.get(`${apiUrl}/proxy/getProxyAll`, {
         params: { id: id },
       });
       if (!response) {
-        console.log('정보값이 없습니다');
-        return;
+        return '정보값이 없습니다';
       }
       if (response.data === '') {
-        console.log('정보값이 비었습니다');
+        return '정보값이 비었습니다';
       }
 
-      console.log(response.data);
       setMyResume(response.data);
     } catch (err) {
       console.error(err);
@@ -128,10 +123,8 @@ function Mypage() {
         params: { id: id },
       });
       if (response.data) {
-        console.log('내가 찜한 웨이트메이트 목록:', response.data);
         setMyLikeList(response.data.getLikeWaitList);
       } else {
-        console.log('내가 찜한 웨이트메이트 목록이 비어 있습니다.');
       }
     } catch (err) {
       console.error('내가 찜한 웨이트메이트 목록 불러오는 중 오류 발생', err);
@@ -145,10 +138,8 @@ function Mypage() {
         params: { id: id },
       });
       if (response.data) {
-        console.log('내가 픽한 웨메 리스트:', response.data);
         setPickedWaitMateList(response.data.waitMateList);
       } else {
-        console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
       }
     } catch (err) {
       console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
@@ -162,14 +153,12 @@ function Mypage() {
         params: { id: id },
       });
       if (!response) {
-        console.log('정보값이 없습니다');
-        return;
+        return '정보값이 없습니다';
       }
       if (response.data === '') {
-        console.log('정보값이 비었습니다');
+        return '정보값이 비었습니다';
       }
 
-      console.log(response.data);
       setMyWaitMateList(response.data.myWaitMates);
     } catch (err) {
       console.error('웨이트메이트 목록 불러오는 중 오류 발생', err);
@@ -186,10 +175,8 @@ function Mypage() {
         }
       );
       if (response.data) {
-        console.log('거래 완료 목록:', response.data);
         setCompletedWaitMateList(response.data.completedMyWaitMateList);
       } else {
-        console.log('거래 완료 목록이 비어 있습니다.');
       }
     } catch (err) {
       console.error('거래 완료 목록 불러오는 중 오류 발생', err);
@@ -203,10 +190,8 @@ function Mypage() {
         params: { id: id },
       });
       if (response.data) {
-        console.log('내가 픽한 웨메 리스트:', response.data);
         setPickedProxyList(response.data.proxyList);
       } else {
-        console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
       }
     } catch (err) {
       console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
@@ -332,7 +317,9 @@ function Mypage() {
                     setSelectItem({ type: 'myLikeList', id: null })
                   }
                 >
-                  내가 찜한 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
+                  내가 찜한{' '}
+                  <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  waitMate list
                 </button>
                 <button
                   className=" rounded-lg w-4/5"
@@ -340,7 +327,9 @@ function Mypage() {
                     setSelectItem({ type: 'pickedWaitMateList', id: null })
                   }
                 >
-                  내가 픽한 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
+                  내가 픽한{' '}
+                  <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  waitMate list
                 </button>
               </div>
             </div>
@@ -365,7 +354,8 @@ function Mypage() {
                     setSelectItem({ type: 'myWaitMateList', id: null })
                   }
                 >
-                  나의 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
+                  나의 <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  waitMate list
                 </button>
                 <button
                   className="rounded-lg w-4/5"
@@ -381,22 +371,23 @@ function Mypage() {
                     setSelectItem({ type: 'pickedProxyList', id: null })
                   }
                 >
-                  내가 픽한 <br className={`${setIsSmallScreen? 'hidden' : ''}`} />proxy list
+                  내가 픽한{' '}
+                  <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  proxy list
                 </button>
               </div>
             </div>
           </div>
-          <div className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2
-          ${isSmallScreen? 'h-3/4' : 'h-4/5'}`}>
+          <div
+            className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2
+          ${isSmallScreen ? 'h-3/4' : 'h-4/5'}`}
+          >
             {selectItem.type === 'myResume' &&
             myResume &&
             myResume.length > 0 ? (
               <ul>
                 {myResume.map((item, index) => (
-                  <li
-                    key={index}
-                    className="mb-4 p-4 border-2 rounded-md flex"
-                  >
+                  <li key={index} className="mb-4 p-4 border-2 rounded-md flex">
                     <div className="w-1/4">
                       <img
                         src={item.photo}
