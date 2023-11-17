@@ -46,7 +46,7 @@ export default function Chat() {
           method: 'GET',
         });
         setMessages(response.data.list);
-        console.log(response.data.list);
+
         socket.emit('getRoomInfo', roomNumber);
       } catch (err) {
         console.error(err);
@@ -67,12 +67,6 @@ export default function Chat() {
             parseInt(localStorage.getItem('id')) !== data.sender.id &&
             parseInt(localStorage.getItem('id')) !== data.receiver.id
           ) {
-            console.log('방을 만든 사람의 아이디값' + data.sender.id);
-            console.log('프록시인 사람의 아이디값' + data.receiver.id);
-            console.log(
-              '로그인한 사람의 아이디값' + localStorage.getItem('id')
-            );
-            console.log('잘못된 것 같음;; 왜지');
             Navigate(-1);
           } else {
             if (parseInt(localStorage.getItem('id')) === data.sender.id) {
@@ -83,13 +77,6 @@ export default function Chat() {
               setProxyPayId(data.proxyData.proxyId);
 
               setWm(data.wmData);
-              console.log('wm', data.wmData);
-              console.log('sender안녕' + data.proxyData.photo);
-              console.log('방을 만든 사람의 아이디값' + data.sender.id);
-              console.log('프록시인 사람의 아이디값' + data.receiver.id);
-              console.log(
-                '로그인한 사람의 아이디값' + localStorage.getItem('id')
-              );
             } else if (
               parseInt(localStorage.getItem('id')) === data.receiver.id
             ) {
@@ -97,9 +84,6 @@ export default function Chat() {
               setProxy(data.proxyData);
               setWm(data.wmData);
               setReceiver(data.sender);
-
-              console.log('wm', data.wmData);
-              console.log('receiver안녕' + data.proxyData.photo);
             }
           }
         }
@@ -134,8 +118,6 @@ export default function Chat() {
         receiver: receiver.userId,
         createdAt: currentTime,
       };
-      console.log('안정값', newMessage);
-      console.log('메세지값', inputValue);
 
       // setMessages((prevMessages) => [...prevMessages, newMessage]);
 
@@ -153,7 +135,7 @@ export default function Chat() {
         hour: '2-digit',
         minute: '2-digit',
       });
-      console.log('뭐가 찍히나요', messageData);
+
       const newMessage = {
         photo: messageData.photo || null,
         messageContent: messageData.messageContent || '',
@@ -163,7 +145,6 @@ export default function Chat() {
         createdAt: currentTime,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
-      console.log('receiver의 값', newMessage);
     });
     return () => {
       socket.off('smessage');
@@ -191,7 +172,6 @@ export default function Chat() {
 
   //결제 기능
   const PaymentsList = () => {
-    console.log('페이먼츠', wm.id, proxyPayId);
     if (wm && proxy) {
       axios({
         url: `${apiUrl}/payment/kakao`,
@@ -202,7 +182,6 @@ export default function Chat() {
         },
       })
         .then((res) => {
-          console.log(res.data);
           window.location.href = `${res.data.redirectUrl}`;
         })
         .catch((err) => {
@@ -244,18 +223,6 @@ export default function Chat() {
           </p>
           <div className="message_container" ref={chatContainerRef}>
             {messages.map((msg, index) => {
-              console.log('msg', msg);
-              console.log('msg.receiver:', msg.receiver);
-              console.log('receiver.userId:', receiver.userId);
-              console.log('proxy:', proxy);
-              console.log(
-                'photo:',
-                msg.receiver === receiver.userId ? proxy.photo : null
-              );
-              console.log(
-                'photo2 :',
-                msg.sender === sender.userId ? wm.photo : null
-              );
               return (
                 <MessageBox
                   key={index}

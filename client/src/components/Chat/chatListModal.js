@@ -17,11 +17,10 @@ const UserListModal = ({ isOpen, onRequestClose, onUserSelect }) => {
       })
       .then((response) => {
         setUserList(response.data);
-        console.log(response.data);
+
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Failed to fetch user list', error);
         setIsLoading(false);
       });
   };
@@ -49,23 +48,31 @@ const UserListModal = ({ isOpen, onRequestClose, onUserSelect }) => {
             <ul>
               {userList.map((user) => (
                 <li key={user.id}>
-                  <button onClick={() => handleUserClick(user)}>{user.title}</button>
+                  <button onClick={() => handleUserClick(user)}>
+                    {user.title}
+                  </button>
                 </li>
               ))}
             </ul>
             {selectedUser && (
               <>
-              <h3 >선택한 웨이트메이트</h3>
-              <div className='modal-container'>
-                <img className="modal_waitMate_img" src={'https://sesac-projects.site/wapi/' + selectedUser.photo} alt={selectedUser.title} />
-                <div className='modal-second-content'>
-                <p>번호: {selectedUser.wmId}</p>
-                <p>타이틀: {selectedUser.title}</p>
-                <p>주소: {selectedUser.wmAddress}</p>
-                <p>{selectedUser.wmDetailAddress}</p>
+                <h3>선택한 웨이트메이트</h3>
+                <div className="modal-container">
+                  <img
+                    className="modal_waitMate_img"
+                    src={
+                      'https://sesac-projects.site/wapi/' + selectedUser.photo
+                    }
+                    alt={selectedUser.title}
+                  />
+                  <div className="modal-second-content">
+                    <p>번호: {selectedUser.wmId}</p>
+                    <p>타이틀: {selectedUser.title}</p>
+                    <p>주소: {selectedUser.wmAddress}</p>
+                    <p>{selectedUser.wmDetailAddress}</p>
+                  </div>
+                  <button onClick={handleConfirmClick}>확인</button>
                 </div>
-                <button onClick={handleConfirmClick}>확인</button>
-              </div>
               </>
             )}
           </>
