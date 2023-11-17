@@ -288,7 +288,7 @@ export default function Chat() {
                 }
               }}
               leftButtons={
-                localStorage.getItem('id') === userPayId && (
+                parseInt(localStorage.getItem('id')) === userPayId && (
                   <Button className="paymentButton" onClick={PaymentsList} />
                 )
               }
