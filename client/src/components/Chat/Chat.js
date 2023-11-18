@@ -3,7 +3,7 @@ import { MessageBox, Input, Button } from 'react-chat-elements';
 import './chat.scss';
 import { getSocket } from '../../socket';
 import { useParams, useNavigate } from 'react-router-dom';
-import useUserStore from '../../store/useUserStore';
+
 import axios from 'axios';
 export default function Chat() {
   const socket = getSocket();
@@ -16,8 +16,6 @@ export default function Chat() {
   const [userPayId, setUserPayId] = useState('');
   const [proxyPayId, setProxyPayId] = useState('');
   const [error, setError] = useState(null);
-  const { id } = useUserStore();
-  console.log('로그인 된 아이디값', id);
   const Navigate = useNavigate();
   const inputReference = useRef();
   const { roomNumber } = useParams();
@@ -48,33 +46,30 @@ export default function Chat() {
           method: 'GET',
         });
         setMessages(response.data.list);
-        console.log(response.data.list);
+
         socket.emit('getRoomInfo', roomNumber);
       } catch (err) {
         console.error(err);
       }
     };
     fetchData();
-  }, [roomNumber, id]);
+  }, [roomNumber, localStorage.getItem('id')]);
 
   // id 값이 업데이트될 때 소켓 이벤트 처리
   useEffect(() => {
-    if (id) {
+    if (localStorage.getItem('id')) {
       socket.emit('getRoomInfo', roomNumber);
       socket.on('roomInfo', (data) => {
         if (data.error) {
           setError(data.error);
         } else {
-          if (data.sender.id !== id && data.receiver.id !== id) {
-            console.log('방을 만든 사람의 아이디값' + data.sender.id);
-            console.log('프록시인 사람의 아이디값' + data.receiver.id);
-            console.log('로그인한 사람의 아이디값' + id);
-            alert(
-              '잘못된 사용자입니다. 다른 사용자 정보로 접근할 수 없습니다.'
-            );
+          if (
+            parseInt(localStorage.getItem('id')) !== data.sender.id &&
+            parseInt(localStorage.getItem('id')) !== data.receiver.id
+          ) {
             Navigate(-1);
           } else {
-            if (data.sender.id === id) {
+            if (parseInt(localStorage.getItem('id')) === data.sender.id) {
               setSender(data.sender);
               setUserPayId(data.sender.id);
               setReceiver(data.receiver);
@@ -82,25 +77,19 @@ export default function Chat() {
               setProxyPayId(data.proxyData.proxyId);
 
               setWm(data.wmData);
-              console.log('wm', data.wmData);
-              console.log('sender안녕' + data.proxyData.photo);
-              console.log('방을 만든 사람의 아이디값' + data.sender.id);
-              console.log('프록시인 사람의 아이디값' + data.receiver.id);
-              console.log('로그인한 사람의 아이디값' + id);
-            } else if (data.receiver.id === id) {
+            } else if (
+              parseInt(localStorage.getItem('id')) === data.receiver.id
+            ) {
               setSender(data.receiver);
               setProxy(data.proxyData);
               setWm(data.wmData);
               setReceiver(data.sender);
-
-              console.log('wm', data.wmData);
-              console.log('receiver안녕' + data.proxyData.photo);
             }
           }
         }
       });
     }
-  }, [id, Navigate]);
+  }, [parseInt(localStorage.getItem('id')), Navigate]);
 
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
@@ -129,8 +118,6 @@ export default function Chat() {
         receiver: receiver.userId,
         createdAt: currentTime,
       };
-      console.log('안정값', newMessage);
-      console.log('메세지값', inputValue);
 
       // setMessages((prevMessages) => [...prevMessages, newMessage]);
 
@@ -148,7 +135,7 @@ export default function Chat() {
         hour: '2-digit',
         minute: '2-digit',
       });
-      console.log('뭐가 찍히나요', messageData);
+
       const newMessage = {
         photo: messageData.photo || null,
         messageContent: messageData.messageContent || '',
@@ -158,7 +145,6 @@ export default function Chat() {
         createdAt: currentTime,
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
-      console.log('receiver의 값', newMessage);
     });
     return () => {
       socket.off('smessage');
@@ -186,7 +172,6 @@ export default function Chat() {
 
   //결제 기능
   const PaymentsList = () => {
-    console.log('페이먼츠', wm.id, proxyPayId);
     if (wm && proxy) {
       axios({
         url: `${apiUrl}/payment/kakao`,
@@ -197,7 +182,6 @@ export default function Chat() {
         },
       })
         .then((res) => {
-          console.log(res.data);
           window.location.href = `${res.data.redirectUrl}`;
         })
         .catch((err) => {
@@ -239,57 +223,54 @@ export default function Chat() {
           </p>
           <div className="message_container" ref={chatContainerRef}>
             {messages.map((msg, index) => {
-              console.log('msg', msg);
-              console.log('msg.receiver:', msg.receiver);
-              console.log('receiver.userId:', receiver.userId);
-              console.log('proxy:', proxy);
-              console.log(
-                'photo:',
-                msg.receiver === receiver.userId ? proxy.photo : null
-              );
-              console.log(
-                'photo2 :',
-                msg.sender === sender.userId ? wm.photo : null
-              );
               return (
                 <MessageBox
                   key={index}
                   className={msg.sender === sender.userId ? 'me' : 'other'}
-                  avatar={msg.receiver === receiver.userId ? proxy.photo : null || msg.sender === sender.userId ? wm.photo : null}
+                  avatar={
+                    msg.receiver === receiver.userId
+                      ? proxy.photo
+                      : null || msg.sender === sender.userId
+                      ? wm.photo
+                      : null
+                  }
                   type={msg.messageType}
                   text={msg.messageContent}
-                  title={`${msg.sender} ${msg.createdAt}`}
+                  title={`${msg.sender} ${parseDate(msg.createdAt)}`}
                   notch={false}
                 ></MessageBox>
               );
             })}
           </div>
-            <div className="input_container">
-              <Input
-                className="input_item"
-                referance={inputReference}
-                multiline={true}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === 'Enter') {
-                    sendMessage();
-                  }
-                }}
-                leftButtons={
-                  id === userPayId && (
-                    <Button className="paymentButton" onClick={PaymentsList} />
-                  )
+          <div className="input_container">
+            <Input
+              className="input_item"
+              referance={inputReference}
+              multiline={true}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  sendMessage();
                 }
-                rightButtons={
+              }}
+              leftButtons={
+                parseInt(localStorage.getItem('id')) === userPayId && (
                   <Button
-                    className="input_send_btn"
-                    backgroundColor="transparent"
-                    onClick={sendMessage}
+                    className="paymentButton bg-transparent"
+                    onClick={PaymentsList}
                   />
-                }
-              />
-            </div>
+                )
+              }
+              rightButtons={
+                <Button
+                  className="input_send_btn"
+                  backgroundColor="transparent"
+                  onClick={sendMessage}
+                />
+              }
+            />
+          </div>
         </div>
       </div>
     </div>

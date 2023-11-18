@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getSocket } from '../../socket';
-import useUserStore from '../../store/useUserStore';
 import ChatListModal from '../Chat/chatListModal';
 
 export default function ProxyDetail() {
@@ -9,7 +8,6 @@ export default function ProxyDetail() {
   const { proxyId } = useParams();
   const [proxy, setProxy] = useState({});
   const [roomNumber, setRoomNumber] = useState(null);
-  const { id } = useUserStore();
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 700);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,8 +23,7 @@ export default function ProxyDetail() {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  
-  console.log(id);
+
   const handleUserSelect = (user) => {
     setSelectedUser(user);
   };
@@ -39,24 +36,21 @@ export default function ProxyDetail() {
     setIsModalOpen(true);
     handleUserSelect(selectedUser);
     const usedRoomNumbers = [];
-    if (!id) {
+    if (!localStorage.getItem('id')) {
       alert('로그인 먼저 진행하시기 바랍니다');
       return;
     }
-    if (id === proxy.id) {
-      console.log(id, proxy.id);
+    if (parseInt(localStorage.getItem('id')) === proxy.id) {
       alert('둘의 정보값이 같아서 채팅 창을 만들 수 없습니다');
       return;
     }
     socket.on('roomExists', (data) => {
-      console.log(`이미 존재하는 방 번호: ${data.roomNumber}`);
       alert('이미 존재하는 채팅방이 있습니다');
       navigate(`/proxy/detail/chat/${data.roomNumber}`);
     });
     if (selectedUser) {
-      console.log('웨메 설정', selectedUser);
       socket.emit('createRoom', {
-        sender: parseInt(id),
+        sender: parseInt(localStorage.getItem('id')),
         receiver: parseInt(proxy.id),
         proxyId: parseInt(proxy.proxyId),
         wmId: parseInt(selectedUser.wmId),
@@ -67,7 +61,7 @@ export default function ProxyDetail() {
         } else {
           setRoomNumber(data.roomNumber);
           usedRoomNumbers.push(data.roomNumber);
-          console.log('Room number:', data.roomNumber);
+
           navigate(`/proxy/detail/chat/${data.roomNumber}`);
         }
       });
@@ -215,7 +209,7 @@ export default function ProxyDetail() {
               </div>
               <div className="flex justify-center w-full p-4 items-center border-2 border-gray-200">
                 <span className="text-gray-700 font-Line text-md break-all">
-                {proxy.proxyMsg ? proxy.proxyMsg : '설명이 없습니다.'}
+                  {proxy.proxyMsg ? proxy.proxyMsg : '설명이 없습니다.'}
                 </span>
               </div>
             </div>

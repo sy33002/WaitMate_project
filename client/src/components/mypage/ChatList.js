@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import useUserStore from '../../store/useUserStore';
 
 function ChatList() {
   const [chats, setChats] = useState([]);
-  const { id } = useUserStore();
   const apiUrl = process.env.REACT_APP_URL;
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
         const response = await axios.get(`${apiUrl}/proxy/listChatting2`, {
-          params: { id },
+          params: { id: localStorage.getItem('id') },
         });
 
         const chatListData = response.data.list;
@@ -23,7 +21,6 @@ function ChatList() {
             .map((chat) => chat.latestChat)
             .filter((latestChat) => latestChat !== null);
 
-          console.log('아하', latestMessages);
           setChats(latestMessages);
         } else {
           const chatList = Object.values(chatListData);
@@ -32,7 +29,6 @@ function ChatList() {
             .map((chat) => chat.latestChat)
             .filter((latestChat) => latestChat !== null);
 
-          console.log('아하', latestMessages);
           setChats(latestMessages);
         }
       } catch (error) {

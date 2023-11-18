@@ -148,12 +148,12 @@ textarea {
   color: white;
   padding: 15px;
   font-size: x-large;
-  @include media('<567px'){
-    padding:0;
+  @include media('<567px') {
+    padding: 0;
     font-size: medium;
   }
-  @include media('<300px'){
-    padding:0;
+  @include media('<300px') {
+    padding: 0;
     font-size: medium;
   }
 }
@@ -163,11 +163,11 @@ textarea {
   color: white;
   font-size: x-large;
   padding: 10px;
-  @include media('<567px'){
-    padding:0;
+  @include media('<567px') {
+    padding: 0;
     font-size: medium;
   }
-  @include media('<300px'){
+  @include media('<300px') {
     font-size: small;
   }
 }
@@ -180,13 +180,11 @@ textarea {
       background-size: 30px 30px;
       background-repeat: no-repeat;
       background-position: center;
-      background-color: transparent;
+      background-color: #fffff8;
       border: none;
       width: 44px;
       height: 40px;
       color: #2f2772;
-      background-color: transparent;
-      border: 1px solid #2f2772;
       padding: 8px;
 
       &:hover {

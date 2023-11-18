@@ -65,6 +65,7 @@ function Mypage() {
 
   const handleLogout = async () => {
     await logout();
+    localStorage.clear();
     navigate('/');
   };
 
@@ -382,7 +383,7 @@ function Mypage() {
             </div>
           </div>
           <div
-            className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2 
+            className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2
           ${isSmallScreen ? 'h-3/4' : 'h-4/5'}`}
           >
             {selectItem.type === 'myResume' &&
@@ -391,9 +392,7 @@ function Mypage() {
               <ul>
                 {myResume.map((item, index) => (
                   <li key={index} className="mb-4 p-4 border-2 rounded-md flex">
-                    <div
-                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
-                    >
+                    <div className="w-1/4">
                       <img
                         src={item.photo}
                         alt="Proxy"

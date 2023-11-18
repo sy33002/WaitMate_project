@@ -33,6 +33,7 @@
    - 헤더/사이드바
    - 웨이트메이트 등록,리스트, 디테일 , 업데이트 페이지, 반응형 적용
    - 프록시 등록,리스트, 디테일, 업데이트 페이지, 반응형 적용
+   - 마이페이지, 유저 로그인 로컬 스토리지 관리
 * 박장혁(Vamos-Hyuk)  프론트: 
    - 마이페이지/로그인 및 회원가입/ 회원 수정 페이지
    - 평점 후기 모달 페이지
@@ -59,7 +60,7 @@
  * Javascript : <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=Javascript&logoColor=white"/> Javascript
  * IDE : <img src="https://img.shields.io/badge/visualstudio-007ACC?style=flat-square&logo=visualstudio idea&logoColor=white"/> Visual Studio Code (1.81)
  * Framework : <img src="https://img.shields.io/badge/nodedotjs-339933?style=flat-square&logo=nodedotjs&logoColor=white"/> Node.js (20.5.0)
- * CSS Framework : <img src="https://img.shields.io/badge/nodedotjs-339933?style=flat-square&logo=nodedotjs&logoColor=white"/> Tailwind (3.3.3)
+ * CSS Framework : <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white"/> Tailwind (3.3.3)
  * Library : <img src="https://img.shields.io/badge/react-61DAFB?style=flat-square&logo=react&logoColor=white"/> React (18.2.0)
  * Database : <img src="https://img.shields.io/badge/mysql-4479A1?style=flat-square&logo=mysql&logoColor=white"/> Mysql (workbench 8.0)
  * Database : <img src="https://img.shields.io/badge/mongoDB-47A248?style=flat-square&logo=mongoDB&logoColor=white"/> MongoDB (6.1.0)
@@ -150,7 +151,8 @@ ex) header-#4
  * react-kakao-maps-sdk: 1.1.24,
  * react-chat-elements: 12.0.10,
  * react-daum-postcode: 3.1.3,
-  백엔드
+
+백엔드
   
  * axios: 1.5.1,
  * bcrypt: 5.1.1,

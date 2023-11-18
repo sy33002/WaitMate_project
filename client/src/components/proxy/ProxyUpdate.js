@@ -13,7 +13,6 @@ export default function ProxyRegister({ cities, photo }) {
   const apiUrl = process.env.REACT_APP_URL;
   const { id, nickname, userId } = useUserStore();
   const { proxyId } = useParams();
-  console.log(proxyId);
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,12 +23,12 @@ export default function ProxyRegister({ cities, photo }) {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await axios.get(`${apiUrl}/proxy/updateGet/${proxyId}`);
-        console.log('result', result.data.result);
+
         setProxy(result.data.result);
       } catch (err) {
         console.error(err);
@@ -38,7 +37,6 @@ export default function ProxyRegister({ cities, photo }) {
 
     fetchData();
   }, [proxyId]);
-
 
   const [inputAddressValue, setInputAddressValue] = useState(proxy.address);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,8 +65,6 @@ export default function ProxyRegister({ cities, photo }) {
     const addressParts = address.split(' ');
     const combinedAddress = addressParts[0] + ' ' + addressParts[1];
 
-    console.log('데이터값', data);
-    console.log(combinedAddress);
     const formData = new FormData();
     formData.append('proxyAddress', combinedAddress);
     formData.append('title', data.title);
@@ -79,7 +75,6 @@ export default function ProxyRegister({ cities, photo }) {
       formData.append('photo', data.photo[0]);
     }
     try {
-      console.log('찍힘?');
       const response = await axios.patch(
         `${apiUrl}/proxy/update2/${proxyId}`,
         formData,
@@ -89,9 +84,6 @@ export default function ProxyRegister({ cities, photo }) {
           },
         }
       );
-
-      console.log('찍힌듯', response);
-      console.log(response.data);
     } catch (error) {
       console.error('Error!', error);
     }
