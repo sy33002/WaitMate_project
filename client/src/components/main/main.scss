@@ -116,7 +116,7 @@
     .character_character {
       display: block;
       text-align: center;
-      margin: 180px auto; /* 수평 가운데 정렬을 위해 사용 */
+      margin: 180px auto;
       padding: 20px;
       justify-content: center;
       width: 550px;
@@ -152,12 +152,6 @@
   .character_character_Group_2:hover {
     transform: rotateY(120deg);
   }
-  // .character_background {
-  //   width: 100%;
-  //   height: 100%;
-  //   position: absolute;
-  //   z-index: 5;
-  // }
 
   .character_character_Group_7 {
     position: relative;
@@ -167,7 +161,6 @@
     top: 30%;
     width: 530px;
     height: 830px;
-    // z-index: 8;
   }
   .character_character_Group_2 {
     position: relative;
@@ -177,7 +170,6 @@
     top: 30%;
     width: 530px;
     height: 830px;
-    // z-index: 8;
   }
   .character_group {
     margin: 0 auto;
@@ -249,7 +241,6 @@
     top: 30%;
     width: 530px;
     height: 830px;
-    // z-index: 8;
   }
   .character_column {
     flex-direction: column;
@@ -351,7 +342,6 @@
     top: 30%;
     width: 330px;
     height: 830px;
-    // z-index: 8;
   }
   .character_column {
     flex-direction: column;
