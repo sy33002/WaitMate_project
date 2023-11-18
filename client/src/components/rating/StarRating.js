@@ -30,7 +30,7 @@ const StarRating = ({ nickname, transactionCompleted, id }) => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Rating submitted:', data);
+
         // 추가적인 성공 처리 로직
       } else {
         // 서버에서 오류 응답을 받은 경우 처리 로직

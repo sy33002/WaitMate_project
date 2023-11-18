@@ -54,17 +54,13 @@ function Mypage() {
       const response = await axios.get(`${apiUrl}/review/check`, {
         params: { userId: id, id: pickedProxyId },
       });
-      console.log(response);
+
       if (response.data.result === true) {
-        console.log(pickedProxyId);
-        console.log(response.data.User.nickname);
         setReviewId(pickedProxyId);
         setReviewNickname(response.data.User.nickname);
         setIsReviewOpen(true);
       }
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   };
 
   const handleLogout = async () => {
@@ -94,29 +90,25 @@ function Mypage() {
       const newImageUrl = response.data.imageUrl;
       setProfileImage(newImageUrl);
     } catch (error) {
-      console.error('Error uploading image:', error);
+      // console.error('Error uploading image:', error);
     }
   };
 
   // 나의 이력서
   const proxyNotes = async () => {
     try {
-      console.log('아이디값', id);
       const response = await axios.get(`${apiUrl}/proxy/getProxyAll`, {
         params: { id: id },
       });
       if (!response) {
-        console.log('정보값이 없습니다');
         return;
       }
       if (response.data === '') {
-        console.log('정보값이 비었습니다');
       }
 
-      console.log(response.data);
       setMyResume(response.data);
     } catch (err) {
-      console.error(err);
+      // console.error(err);
     }
   };
 
@@ -127,13 +119,11 @@ function Mypage() {
         params: { id: id },
       });
       if (response.data) {
-        console.log('내가 찜한 웨이트메이트 목록:', response.data);
         setMyLikeList(response.data.getLikeWaitList);
       } else {
-        console.log('내가 찜한 웨이트메이트 목록이 비어 있습니다.');
       }
     } catch (err) {
-      console.error('내가 찜한 웨이트메이트 목록 불러오는 중 오류 발생', err);
+      // console.error('내가 찜한 웨이트메이트 목록 불러오는 중 오류 발생', err);
     }
   };
 
@@ -144,13 +134,11 @@ function Mypage() {
         params: { id: id },
       });
       if (response.data) {
-        console.log('내가 픽한 웨메 리스트:', response.data);
         setPickedWaitMateList(response.data.waitMateList);
       } else {
-        console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
       }
     } catch (err) {
-      console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
+      // console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
     }
   };
 
@@ -161,17 +149,14 @@ function Mypage() {
         params: { id: id },
       });
       if (!response) {
-        console.log('정보값이 없습니다');
         return;
       }
       if (response.data === '') {
-        console.log('정보값이 비었습니다');
       }
 
-      console.log(response.data);
       setMyWaitMateList(response.data.myWaitMates);
     } catch (err) {
-      console.error('웨이트메이트 목록 불러오는 중 오류 발생', err);
+      // console.error('웨이트메이트 목록 불러오는 중 오류 발생', err);
     }
   };
 
@@ -185,13 +170,11 @@ function Mypage() {
         }
       );
       if (response.data) {
-        console.log('거래 완료 목록:', response.data);
         setCompletedWaitMateList(response.data.completedMyWaitMateList);
       } else {
-        console.log('거래 완료 목록이 비어 있습니다.');
       }
     } catch (err) {
-      console.error('거래 완료 목록 불러오는 중 오류 발생', err);
+      // console.error('거래 완료 목록 불러오는 중 오류 발생', err);
     }
   };
 
@@ -202,13 +185,11 @@ function Mypage() {
         params: { id: id },
       });
       if (response.data) {
-        console.log('내가 픽한 웨메 리스트:', response.data);
         setPickedProxyList(response.data.proxyList);
       } else {
-        console.log('내가 픽한 웨메 리스트가 비어 있습니다.');
       }
     } catch (err) {
-      console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
+      // console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
     }
   };
 
@@ -239,7 +220,7 @@ function Mypage() {
 
   return (
     <div
-      className={`w-full h-screen text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}
+      className={`w-full h-screen flex-grow overflow-auto text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}
     >
       <h1
         className={`${isSmallScreen ? 'text-[20px]' : 'text-[30px] mt-3 p-4'}`}
@@ -289,24 +270,32 @@ function Mypage() {
             <div className="flex flex-row space-x-1">
               <button
                 onClick={handleLogout}
-                className="bg-primary text-white rounded-lg p-1 m-1"
+                className={`bg-primary text-white rounded-lg p-1 m-1 ${
+                  isSmallScreen ? 'text-[12px]' : 'text-[16px]'
+                } w-1/2 `}
               >
                 Log Out
               </button>
               <button
                 onClick={handleUserinfo}
-                className="bg-primary text-white rounded-lg p-1 m-1"
+                className={`bg-primary text-white rounded-lg p-1 m-1 whitespace-nowrap ${
+                  isSmallScreen ? 'text-[12px]' : 'text-[16px]'
+                } w-1/2 `}
               >
                 회원정보 수정
               </button>
             </div>
           </div>
         </div>
-        <div className="w-full h-4/5 p-2 bg-purple-100 rounded-lg">
-          <div className={`flex w-full ${isSmallScreen ? 'h-1/4' : 'h-1/5'} `}>
+        <div
+          className={`w-full  flex-grow p-2 bg-purple-100 rounded-lg overflow-y-auto ${
+            isSmallScreen ? 'h-4/5' : 'h-5/6'
+          }`}
+        >
+          <div className={`flex w-full ${isSmallScreen ? 'h-1/4' : 'h-1/6'} `}>
             <div
-              className={`${
-                isSmallScreen ? 'text-[14px]' : 'text-[16px]'
+              className={` whitespace-nowrap ${
+                isSmallScreen ? 'text-[10px]' : 'text-[16px]'
               } w-1/2 `}
             >
               <button className="bg-primary text-background px-2 py-1 rounded-lg">
@@ -315,8 +304,8 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'text-[9px] flex-col space-y-1 items-stretch'
-                    : 'flex-row text-[14px]'
+                    ? 'text-[8px] flex-col space-y-1 items-stretch '
+                    : 'flex-col text-[16px]'
                 }`}
               >
                 <button
@@ -331,7 +320,9 @@ function Mypage() {
                     setSelectItem({ type: 'myLikeList', id: null })
                   }
                 >
-                  내가 찜한 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
+                  내가 찜한{' '}
+                  <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  waitMate list
                 </button>
                 <button
                   className=" rounded-lg w-4/5"
@@ -339,13 +330,15 @@ function Mypage() {
                     setSelectItem({ type: 'pickedWaitMateList', id: null })
                   }
                 >
-                  내가 픽한 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
+                  내가 픽한{' '}
+                  <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  waitMate list
                 </button>
               </div>
             </div>
             <div
-              className={`${
-                isSmallScreen ? 'text-[14px]' : 'text-[16px]'
+              className={`whitespace-nowrap ${
+                isSmallScreen ? 'text-[10px]' : 'text-[16px]'
               } w-1/2`}
             >
               <button className="bg-primary text-background px-2 py-1 rounded-lg">
@@ -354,8 +347,8 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'flex-col text-[9px] space-y-1'
-                    : 'flex-row text-[14px]'
+                    ? 'flex-col text-[8px] space-y-1'
+                    : 'flex-col text-[16px]'
                 }`}
               >
                 <button
@@ -364,7 +357,8 @@ function Mypage() {
                     setSelectItem({ type: 'myWaitMateList', id: null })
                   }
                 >
-                  나의 <br className={`${setIsSmallScreen? 'hidden' : ''}`}/>waitMate list
+                  나의 <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  waitMate list
                 </button>
                 <button
                   className="rounded-lg w-4/5"
@@ -380,30 +374,37 @@ function Mypage() {
                     setSelectItem({ type: 'pickedProxyList', id: null })
                   }
                 >
-                  내가 픽한 <br className={`${setIsSmallScreen? 'hidden' : ''}`} />proxy list
+                  내가 픽한{' '}
+                  <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
+                  proxy list
                 </button>
               </div>
             </div>
           </div>
-          <div className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2
-          ${isSmallScreen? 'h-3/4' : 'h-4/5'}`}>
+          <div
+            className={`w-full border-2 border-primary_dark rounded-lg overflow-y-auto p-2 
+          ${isSmallScreen ? 'h-3/4' : 'h-4/5'}`}
+          >
             {selectItem.type === 'myResume' &&
             myResume &&
             myResume.length > 0 ? (
               <ul>
                 {myResume.map((item, index) => (
-                  <li
-                    key={index}
-                    className="mb-4 p-4 border-2 rounded-md flex"
-                  >
-                    <div className="w-1/4">
+                  <li key={index} className="mb-4 p-4 border-2 rounded-md flex">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={item.photo}
                         alt="Proxy"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 ${
+                        isSmallScreen ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
                       <Link to={`/proxy/update/${item.proxyId}`}>
                         <p>{item.title}</p>
                         <p>주소 : {item.proxyAddress}</p>
@@ -432,14 +433,20 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${item.photo}`}
                         alt="Waitmate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 ${
+                        isSmallScreen ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
                       <p>title: {item.title}</p>
                       <p>주소: {item.wmAddress}</p>
                       <p>시급: {item.pay}</p>
@@ -456,14 +463,20 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${item.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 ${
+                        isSmallScreen ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
                       <Link to={`/waitMate/update/${item.id}`}>
                         <p>{item.title}</p>
                         <p>웨이팅할 곳: {item.wmDetailAddress}</p>
@@ -492,14 +505,20 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${completed.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 ${
+                        isSmallScreen ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
                       <p>title: {completed.title}</p>
                       <p>주소: {completed.wmAddress}</p>
                       <p>시작시간: {completed.startTime}</p>
@@ -517,14 +536,20 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${picked.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 ${
+                        isSmallScreen ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
                       <p>title: {picked.title}</p>
                       <p>주소: {picked.wmAddress}</p>
                       <p>시작시간: {picked.startTime}</p>
@@ -543,14 +568,20 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={picked.photo}
                         alt="Proxy"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 ${
+                        isSmallScreen ? 'text-xs' : 'text-sm'
+                      }`}
+                    >
                       <p>title: {picked.title}</p>
                       <p>나이: {picked.age}대</p>
                       <p>프록시 주소: {picked.proxyAddress}</p>
@@ -563,7 +594,7 @@ function Mypage() {
                       onClick={() => {
                         testing(picked.id);
                       }}
-                      className="border-primary border-2 rounded-lg w-1/12 text-lg"
+                      className="border-primary border-2 rounded-lg w-1/6 sm:w-1/4 md:w-1/6 lg:w-1/12 text-sm sm:text-base md:text-md"
                     >
                       평점주기
                     </button>
