@@ -410,7 +410,7 @@ function Mypage() {
                     </div>
                     <div
                       className={`w-4/5 ml-2 text-center ${
-                        isSmallScreen ? 'text-xs' : 'text-sm'
+                        isSmallScreen ? 'text-xs' : 'text-lg'
                       }`}
                     >
                       <Link to={`/proxy/update/${item.proxyId}`}>
@@ -452,7 +452,7 @@ function Mypage() {
                     </div>
                     <div
                       className={`w-4/5 ml-2 text-center ${
-                        isSmallScreen ? 'text-xs' : 'text-sm'
+                        isSmallScreen ? 'text-xs' : 'text-lg'
                       }`}
                     >
                       <p>TITLE: {item.title}</p>
@@ -482,7 +482,7 @@ function Mypage() {
                     </div>
                     <div
                       className={`w-4/5 ml-2  text-center ${
-                        isSmallScreen ? 'text-xs' : 'text-sm'
+                        isSmallScreen ? 'text-xs' : 'text-lg'
                       }`}
                     >
                       <Link to={`/waitMate/update/${item.id}`}>
@@ -524,7 +524,7 @@ function Mypage() {
                     </div>
                     <div
                       className={`w-4/5 ml-2 text-center ${
-                        isSmallScreen ? 'text-xs' : 'text-sm'
+                        isSmallScreen ? 'text-xs' : 'text-lg'
                       }`}
                     >
                       <p>TITLE: {completed.title}</p>
@@ -555,7 +555,7 @@ function Mypage() {
                     </div>
                     <div
                       className={`w-4/5 ml-2 text-center ${
-                        isSmallScreen ? 'text-xs' : 'text-sm'
+                        isSmallScreen ? 'text-xs' : 'text-lg'
                       }`}
                     >
                       <p>TITLE: {picked.title}</p>
@@ -587,7 +587,7 @@ function Mypage() {
                     </div>
                     <div
                       className={`w-4/5 ml-2 text-center ${
-                        isSmallScreen ? 'text-xs' : 'text-sm'
+                        isSmallScreen ? 'text-xs' : 'text-lg'
                       }`}
                     >
                       <p>TITLE: {picked.title}</p>
