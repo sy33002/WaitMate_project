@@ -91,7 +91,7 @@ function Mypage() {
       const newImageUrl = response.data.imageUrl;
       setProfileImage(newImageUrl);
     } catch (error) {
-      // console.error('Error uploading image:', error);
+      console.error('Error uploading image:', error);
     }
   };
 
@@ -109,7 +109,7 @@ function Mypage() {
 
       setMyResume(response.data);
     } catch (err) {
-      // console.error(err);
+      console.error(err);
     }
   };
 
@@ -124,7 +124,7 @@ function Mypage() {
       } else {
       }
     } catch (err) {
-      // console.error('내가 찜한 웨이트메이트 목록 불러오는 중 오류 발생', err);
+      console.error('내가 찜한 웨이트메이트 목록 불러오는 중 오류 발생', err);
     }
   };
 
@@ -139,7 +139,7 @@ function Mypage() {
       } else {
       }
     } catch (err) {
-      // console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
+      console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
     }
   };
 
@@ -157,7 +157,7 @@ function Mypage() {
 
       setMyWaitMateList(response.data.myWaitMates);
     } catch (err) {
-      // console.error('웨이트메이트 목록 불러오는 중 오류 발생', err);
+      console.error('웨이트메이트 목록 불러오는 중 오류 발생', err);
     }
   };
 
@@ -175,7 +175,7 @@ function Mypage() {
       } else {
       }
     } catch (err) {
-      // console.error('거래 완료 목록 불러오는 중 오류 발생', err);
+      console.error('거래 완료 목록 불러오는 중 오류 발생', err);
     }
   };
 
@@ -190,7 +190,7 @@ function Mypage() {
       } else {
       }
     } catch (err) {
-      // console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
+      console.error('내가 픽한 웨메 리스트 불러오는 중 오류 발생', err);
     }
   };
 
