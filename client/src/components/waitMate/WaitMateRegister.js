@@ -96,7 +96,6 @@ export default function WaitMateRegister() {
         setShowModal(true);
       } else {
         setClickRegister(false);
-        console.log(response.status);
       }
     } catch (error) {
       setClickRegister(false);

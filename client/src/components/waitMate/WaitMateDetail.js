@@ -25,7 +25,6 @@ export default function WaitMateDetail({photo}) {
       setWaitMateApplyCount(data.waitMateApplyCount);
       setIsLikeWait(data.isLikeWait);
       setChangeDate(data.waitMate.waitTime.split("T")[0]);
-      console.log(wmId);
     })
     .catch(error => {
       console.error('데이터 가져오는 중 오류 발생!', error);
