@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './main.scss';
-// import Footer from '../../static/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 export default function Main() {
   const apiUrl = process.env.REACT_APP_URL;
@@ -33,16 +32,16 @@ export default function Main() {
 
     const handleScroll = (e) => {
       if (scrollPos >= startStopPosition) {
-        e.preventDefault(); // 스크롤 이벤트를 중단
+        e.preventDefault(); 
         setTimeout(() => {
-          // 일정 시간(2초) 후에 다시 스크롤 이벤트를 허용
-          window.removeEventListener('scroll', handleScroll); // 스크롤 이벤트 제거
-        }, 5000); // 2초 (2000 밀리초)
+          
+          window.removeEventListener('scroll', handleScroll); 
+        }, 5000); 
       }
     };
 
     if (scrollPos >= startStopPosition) {
-      window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 리스너 추가
+      window.addEventListener('scroll', handleScroll);
     }
   }, [scrollPos]);
   return (
@@ -109,7 +108,7 @@ export default function Main() {
             src="https://sesac-projects.site/waitmate/images/main/Group_2.png"
           />
 
-          {/* <img class="character_background" src="./images/main/Group 8.png" /> */}
+      
         </div>
         <br />
 
@@ -137,7 +136,7 @@ export default function Main() {
             src="https://sesac-projects.site/waitmate/images/main/Group_4.png"
           />
         </div>
-        {/* <Footer /> */}
+  
       </div>
     </>
   );

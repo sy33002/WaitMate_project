@@ -3,13 +3,12 @@ import { Map, MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import { useNavigate, useParams } from 'react-router-dom';
 import useUserStore from '../../store/useUserStore';
 import axios from 'axios';
-// import useUserStore from '../../store/useUserStore';
 
 
 export default function MapComponent() {
   const [userLocation, setUserLocation] = useState(null);
   const [userAddress, setUserAddress] = useState([]);
-  const [isOpen, setIsOpen] = useState(false); // Control the overlay visibility
+  const [isOpen, setIsOpen] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const isSmallScreen = window.innerWidth < 700;
   const { wmId } = useParams();
@@ -77,7 +76,7 @@ export default function MapComponent() {
     };
     const info_link = {
       padding: '10px 15px 50px 18px',
-      height: '60px', // Adjust the height as needed
+      height: '60px', 
       background: 'white',
       borderBottom: '1px solid #ddd',
       fontSize: '17px',
@@ -108,7 +107,6 @@ export default function MapComponent() {
     setIsOpen(false);
   };
 
-  // 화면 크기를 변경할 때 높이를 조정
   const getMapHeight = () => {
     return window.innerWidth > 768 ? '800px' : '400px';
   };
@@ -242,8 +240,6 @@ export default function MapComponent() {
             }
           })}
         </Map>
-        {console.log('Is Open:', isOpen)}
-        {console.log('Is Selected:', selectedMarker)}
        
       </div>
     </div>
