@@ -39,7 +39,6 @@ export default function WaitMateUpdate({photo}) {
     .then(response => response.json())
     .then(data => {
       setWaitMate(data.waitMate);
-      console.log(data.waitMate);
     })
     .catch(error => {
       console.error('데이터 가져오는 중 오류 발생!', error);
