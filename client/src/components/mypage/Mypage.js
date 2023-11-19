@@ -32,6 +32,13 @@ function Mypage() {
   const [reviewNickname, setReviewNickname] = useState();
   const [isReviewOpen, setIsReviewOpen] = useState();
   const fileInputRef = useRef(null);
+  const [activeButton, setActiveButton] = useState(null);
+
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType);
+    setSelectItem({ type: buttonType, id: null });
+    // 여기에 추가적인 로직을 넣을 수 있습니다.
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -60,9 +67,7 @@ function Mypage() {
         setReviewNickname(response.data.User.nickname);
         setIsReviewOpen(true);
       }
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   };
 
   const handleLogout = async () => {
@@ -104,10 +109,9 @@ function Mypage() {
         params: { id: id },
       });
       if (!response) {
-        return '정보값이 없습니다';
+        return;
       }
       if (response.data === '') {
-        return '정보값이 비었습니다';
       }
 
       setMyResume(response.data);
@@ -153,10 +157,9 @@ function Mypage() {
         params: { id: id },
       });
       if (!response) {
-        return '정보값이 없습니다';
+        return;
       }
       if (response.data === '') {
-        return '정보값이 비었습니다';
       }
 
       setMyWaitMateList(response.data.myWaitMates);
@@ -225,7 +228,7 @@ function Mypage() {
 
   return (
     <div
-      className={`w-full h-screen text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}
+      className={`w-full h-screen flex-grow overflow-auto text-primary_dark font-Line m-1 p-1 flex flex-col items-center`}
     >
       <h1
         className={`${isSmallScreen ? 'text-[20px]' : 'text-[30px] mt-3 p-4'}`}
@@ -275,24 +278,32 @@ function Mypage() {
             <div className="flex flex-row space-x-1">
               <button
                 onClick={handleLogout}
-                className="bg-primary text-white rounded-lg p-1 m-1"
+                className={`bg-primary text-white rounded-lg p-1 m-1 ${
+                  isSmallScreen ? 'text-[12px]' : 'text-[16px]'
+                } w-1/2 `}
               >
                 Log Out
               </button>
               <button
                 onClick={handleUserinfo}
-                className="bg-primary text-white rounded-lg p-1 m-1"
+                className={`bg-primary text-white rounded-lg p-1 m-1 whitespace-nowrap ${
+                  isSmallScreen ? 'text-[12px]' : 'text-[16px]'
+                } w-1/2 `}
               >
                 회원정보 수정
               </button>
             </div>
           </div>
         </div>
-        <div className="w-full h-4/5 p-2 bg-purple-100 rounded-lg">
-          <div className={`flex w-full ${isSmallScreen ? 'h-1/4' : 'h-1/5'} `}>
+        <div
+          className={`w-full  flex-grow p-2 bg-purple-100 rounded-lg overflow-y-auto ${
+            isSmallScreen ? 'h-4/5' : 'h-5/6'
+          }`}
+        >
+          <div className={`flex w-full ${isSmallScreen ? 'h-1/4' : 'h-1/6'} `}>
             <div
-              className={`${
-                isSmallScreen ? 'text-[14px]' : 'text-[16px]'
+              className={` whitespace-nowrap ${
+                isSmallScreen ? 'text-[10px]' : 'text-[16px]'
               } w-1/2 `}
             >
               <button className="bg-primary text-background px-2 py-1 rounded-lg">
@@ -301,31 +312,33 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'text-[9px] flex-col space-y-1 items-stretch'
-                    : 'flex-row text-[14px]'
+                    ? 'text-[10px] flex-col space-y-1 items-stretch '
+                    : 'flex-col text-[16px]'
                 }`}
               >
                 <button
-                  onClick={() => setSelectItem({ type: 'myResume', id: null })}
-                  className="rounded-lg w-4/5 "
+                  onClick={() => handleButtonClick('myResume')}
+                  className={`rounded-lg w-4/5 ${
+                    activeButton === 'myResume' ? 'underline' : ''
+                  }`}
                 >
                   나의 이력서
                 </button>
                 <button
-                  className=" rounded-lg w-4/5"
-                  onClick={() =>
-                    setSelectItem({ type: 'myLikeList', id: null })
-                  }
+                  onClick={() => handleButtonClick('myLikeList')}
+                  className={`rounded-lg w-4/5 ${
+                    activeButton === 'myLikeList' ? 'underline' : ''
+                  }`}
                 >
                   내가 찜한{' '}
                   <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
                   waitMate list
                 </button>
                 <button
-                  className=" rounded-lg w-4/5"
-                  onClick={() =>
-                    setSelectItem({ type: 'pickedWaitMateList', id: null })
-                  }
+                  onClick={() => handleButtonClick('pickedWaitMateList')}
+                  className={`rounded-lg w-4/5 ${
+                    activeButton === 'pickedWaitMateList' ? 'underline' : ''
+                  }`}
                 >
                   내가 픽한{' '}
                   <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
@@ -334,8 +347,8 @@ function Mypage() {
               </div>
             </div>
             <div
-              className={`${
-                isSmallScreen ? 'text-[14px]' : 'text-[16px]'
+              className={`whitespace-nowrap ${
+                isSmallScreen ? 'text-[10px]' : 'text-[16px]'
               } w-1/2`}
             >
               <button className="bg-primary text-background px-2 py-1 rounded-lg">
@@ -344,32 +357,32 @@ function Mypage() {
               <div
                 className={`flex p-2 space-x-2 ${
                   isSmallScreen
-                    ? 'flex-col text-[9px] space-y-1'
-                    : 'flex-row text-[14px]'
+                    ? 'flex-col text-[10px] space-y-1'
+                    : 'flex-col text-[16px]'
                 }`}
               >
                 <button
-                  className=" rounded-lg w-4/5"
-                  onClick={() =>
-                    setSelectItem({ type: 'myWaitMateList', id: null })
-                  }
+                  onClick={() => handleButtonClick('myWaitMateList')}
+                  className={`rounded-lg w-4/5 ${
+                    activeButton === 'myWaitMateList' ? 'underline' : ''
+                  }`}
                 >
                   나의 <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
                   waitMate list
                 </button>
                 <button
-                  className="rounded-lg w-4/5"
-                  onClick={() =>
-                    setSelectItem({ type: 'completedWaitMateList', id: null })
-                  }
+                  onClick={() => handleButtonClick('completedWaitMateList')}
+                  className={`rounded-lg w-4/5 ${
+                    activeButton === 'completedWaitMateList' ? 'underline' : ''
+                  }`}
                 >
                   거래 완료 list
                 </button>
                 <button
-                  className="rounded-lg w-4/5"
-                  onClick={() =>
-                    setSelectItem({ type: 'pickedProxyList', id: null })
-                  }
+                  onClick={() => handleButtonClick('pickedProxyList')}
+                  className={`rounded-lg w-4/5 ${
+                    activeButton === 'pickedProxyList' ? 'underline' : ''
+                  }`}
                 >
                   내가 픽한{' '}
                   <br className={`${setIsSmallScreen ? 'hidden' : ''}`} />
@@ -395,7 +408,11 @@ function Mypage() {
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2 text-center ${
+                        isSmallScreen ? 'text-xs' : 'text-lg'
+                      }`}
+                    >
                       <Link to={`/proxy/update/${item.proxyId}`}>
                         <p>{item.title}</p>
                         <p>주소 : {item.proxyAddress}</p>
@@ -424,15 +441,21 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${item.photo}`}
                         alt="Waitmate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
-                      <p>title: {item.title}</p>
+                    <div
+                      className={`w-4/5 ml-2 text-center ${
+                        isSmallScreen ? 'text-xs' : 'text-lg'
+                      }`}
+                    >
+                      <p>TITLE: {item.title}</p>
                       <p>주소: {item.wmAddress}</p>
                       <p>시급: {item.pay}</p>
                     </div>
@@ -448,14 +471,20 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${item.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
+                    <div
+                      className={`w-4/5 ml-2  text-center ${
+                        isSmallScreen ? 'text-xs' : 'text-lg'
+                      }`}
+                    >
                       <Link to={`/waitMate/update/${item.id}`}>
                         <p>{item.title}</p>
                         <p>웨이팅할 곳: {item.wmDetailAddress}</p>
@@ -484,15 +513,21 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${completed.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
-                      <p>title: {completed.title}</p>
+                    <div
+                      className={`w-4/5 ml-2 text-center ${
+                        isSmallScreen ? 'text-xs' : 'text-lg'
+                      }`}
+                    >
+                      <p>TITLE: {completed.title}</p>
                       <p>주소: {completed.wmAddress}</p>
                       <p>시작시간: {completed.startTime}</p>
                       <p>종료시간: {completed.endTime}</p>
@@ -509,15 +544,21 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={`${apiUrl}${picked.photo}`}
                         alt="WaitMate"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
-                      <p>title: {picked.title}</p>
+                    <div
+                      className={`w-4/5 ml-2 text-center ${
+                        isSmallScreen ? 'text-xs' : 'text-lg'
+                      }`}
+                    >
+                      <p>TITLE: {picked.title}</p>
                       <p>주소: {picked.wmAddress}</p>
                       <p>시작시간: {picked.startTime}</p>
                       <p>종료시간: {picked.endTime}</p>
@@ -535,30 +576,36 @@ function Mypage() {
                     key={index}
                     className="mb-4 p-4 border-2 border-gray-300 rounded-md flex"
                   >
-                    <div className="w-1/4">
+                    <div
+                      className={`w-1/4 ${isSmallScreen ? 'w-1/6' : 'w-1/4'}`}
+                    >
                       <img
                         src={picked.photo}
                         alt="Proxy"
                         className="w-full h-auto rounded-md"
                       />
                     </div>
-                    <div className="w-3/4 ml-4">
-                      <p>title: {picked.title}</p>
+                    <div
+                      className={`w-4/5 ml-2 text-center ${
+                        isSmallScreen ? 'text-xs' : 'text-lg'
+                      }`}
+                    >
+                      <p>TITLE: {picked.title}</p>
                       <p>나이: {picked.age}대</p>
                       <p>프록시 주소: {picked.proxyAddress}</p>
                       <p>성별: {picked.gender}</p>
                       {picked.proxyMsg && (
                         <p>프록시 한 마디!: {picked.proxyMsg}</p>
                       )}
+                      <button
+                        onClick={() => {
+                          testing(picked.id);
+                        }}
+                        className="border-primary border-2 rounded-lg w-2/6 sm:w-1/6 md:w-1/6 lg:w-1/6 text-sm sm:text-base md:text-md"
+                      >
+                        평점주기
+                      </button>
                     </div>
-                    <button
-                      onClick={() => {
-                        testing(picked.id);
-                      }}
-                      className="border-primary border-2 rounded-lg w-1/12 text-lg"
-                    >
-                      평점주기
-                    </button>
                   </li>
                 ))}
               </ul>
