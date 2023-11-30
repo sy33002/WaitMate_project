@@ -1,5 +1,5 @@
 ## Sessac X Coding on B_Team_Project 대기
-> node.js + express + React를 이용한 온라인 웨이팅 사이트
+> node.js + express + React를 이용한 온라인 웨이팅 구인구직 알바 사이트
 
 
 <img width="60%" src="https://github.com/2nd-team-b/back-wait/assets/111476138/94e4023a-00e5-4200-8428-b413f0c5f870">
